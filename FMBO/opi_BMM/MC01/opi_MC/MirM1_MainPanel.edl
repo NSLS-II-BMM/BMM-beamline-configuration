@@ -1,0 +1,1990 @@
+4 0 1
+beginScreenProperties
+major 4
+minor 0
+release 1
+x 203
+y 107
+w 640
+h 710
+font "helvetica-bold-r-12.0"
+ctlFont "helvetica-bold-r-12.0"
+btnFont "helvetica-bold-r-12.0"
+fgColor index 14
+bgColor index 3
+textColor index 14
+ctlFgColor1 index 14
+ctlFgColor2 index 0
+ctlBgColor1 index 0
+ctlBgColor2 index 14
+topShadowColor index 0
+botShadowColor index 14
+title "MCS8+ Main Panel"
+showGrid
+snapToGrid
+gridSize 5
+disableScroll
+endScreenProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 0
+y 0
+w 640
+h 25
+font "helvetica-bold-r-18.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 6
+value {
+  "Single Axis Interface"
+}
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 0
+y 20
+w 640
+h 30
+controlPv "$(P)$(T)NAME"
+font "helvetica-bold-r-18.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 6
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+id "testing"
+endObjectProperties
+
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 5
+y 90
+w 630
+h 160
+lineColor index 14
+fillColor index 0
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 525
+y 120
+w 100
+h 20
+fgColor index 44
+bgColor index 3
+topShadowColor index 0
+botShadowColor index 10
+font "helvetica-bold-r-12.0"
+buttonLabel "Motor Scan"
+numPvs 4
+pv {
+  0 "$(S)GSCAN:SCANREC_SP.P1PV"
+}
+value {
+  0 "$(P)$(R)$(A1)_SP"
+}
+numDsps 1
+displayFileName {
+  0 "opi_genericScan/generic_scan.edl"
+}
+symbols {
+  0 "DEVICE=$(S)GSCAN"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 525
+y 195
+w 100
+h 20
+fgColor index 44
+bgColor index 3
+topShadowColor index 0
+botShadowColor index 10
+font "helvetica-bold-r-12.0"
+buttonLabel "Motor Scan"
+numPvs 4
+pv {
+  0 "$(S)GSCAN:SCANREC_SP.P1PV"
+}
+value {
+  0 "$(P)$(R)$(A4)_SP"
+}
+numDsps 1
+displayFileName {
+  0 "opi_genericScan/generic_scan.edl"
+}
+symbols {
+  0 "DEVICE=$(S)GSCAN"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 525
+y 170
+w 100
+h 20
+fgColor index 44
+bgColor index 3
+topShadowColor index 0
+botShadowColor index 10
+font "helvetica-bold-r-12.0"
+buttonLabel "Motor Scan"
+numPvs 4
+pv {
+  0 "$(S)GSCAN:SCANREC_SP.P1PV"
+}
+value {
+  0 "$(P)$(R)$(A3)_SP"
+}
+numDsps 1
+displayFileName {
+  0 "opi_genericScan/generic_scan.edl"
+}
+symbols {
+  0 "DEVICE=$(S)GSCAN"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 525
+y 145
+w 100
+h 20
+fgColor index 44
+bgColor index 3
+topShadowColor index 0
+botShadowColor index 10
+font "helvetica-bold-r-12.0"
+buttonLabel "Motor Scan"
+numPvs 4
+pv {
+  0 "$(S)GSCAN:SCANREC_SP.P1PV"
+}
+value {
+  0 "$(P)$(R)$(A2)_SP"
+}
+numDsps 1
+displayFileName {
+  0 "opi_genericScan/generic_scan.edl"
+}
+symbols {
+  0 "DEVICE=$(S)GSCAN"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 415
+y 195
+w 100
+h 20
+fgColor index 44
+bgColor index 3
+topShadowColor index 0
+botShadowColor index 11
+font "helvetica-bold-r-12.0"
+xPosOffset 645
+yPosOffset -24
+buttonLabel "Motor Panel"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "SAI_MRec_Motor_S.edl"
+}
+setPosition {
+  0 "parentWindow"
+}
+symbols {
+  0 "P=$(P),R=$(R),AXIS=$(A4)"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 415
+y 170
+w 100
+h 20
+fgColor index 44
+bgColor index 3
+topShadowColor index 0
+botShadowColor index 11
+font "helvetica-bold-r-12.0"
+xPosOffset 645
+yPosOffset -24
+buttonLabel "Motor Panel"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "SAI_MRec_Motor_S.edl"
+}
+setPosition {
+  0 "parentWindow"
+}
+symbols {
+  0 "P=$(P),R=$(R),AXIS=$(A3)"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 415
+y 145
+w 100
+h 20
+fgColor index 44
+bgColor index 3
+topShadowColor index 0
+botShadowColor index 11
+font "helvetica-bold-r-12.0"
+xPosOffset 645
+yPosOffset -24
+buttonLabel "Motor Panel"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "SAI_MRec_Motor_S.edl"
+}
+setPosition {
+  0 "parentWindow"
+}
+symbols {
+  0 "P=$(P),R=$(R),AXIS=$(A2)"
+}
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 15
+y 125
+w 125
+h 15
+controlPv "$(P)$(R)$(A1).DESC"
+font "helvetica-bold-r-14.0"
+fgColor index 14
+bgColor index 52
+useDisplayBg
+autoHeight
+limitsFromDb
+nullColor index 0
+smartRefresh
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+noExecuteClipMask
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 15
+y 100
+w 615
+h 15
+font "helvetica-bold-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Motor                          Position                         Status                "
+}
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 145
+y 150
+w 100
+h 10
+controlPv "$(P)$(R)$(A2).RBV"
+font "courier-medium-r-12.0"
+fontAlign "right"
+fgColor index 15
+bgColor index 10
+autoHeight
+limitsFromDb
+nullColor index 0
+smartRefresh
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+noExecuteClipMask
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 15
+y 150
+w 125
+h 15
+controlPv "$(P)$(R)$(A2).DESC"
+font "helvetica-bold-r-14.0"
+fgColor index 14
+bgColor index 52
+useDisplayBg
+autoHeight
+limitsFromDb
+nullColor index 0
+smartRefresh
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+noExecuteClipMask
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 15
+y 170
+w 125
+h 15
+controlPv "$(P)$(R)$(A3).DESC"
+font "helvetica-bold-r-14.0"
+fgColor index 14
+bgColor index 52
+useDisplayBg
+autoHeight
+limitsFromDb
+nullColor index 0
+smartRefresh
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+noExecuteClipMask
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 145
+y 175
+w 100
+h 10
+controlPv "$(P)$(R)$(A3).RBV"
+font "courier-medium-r-12.0"
+fontAlign "right"
+fgColor index 15
+bgColor index 10
+autoHeight
+limitsFromDb
+nullColor index 0
+smartRefresh
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+noExecuteClipMask
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 145
+y 195
+w 100
+h 10
+controlPv "$(P)$(R)$(A4).RBV"
+font "courier-medium-r-12.0"
+fontAlign "right"
+fgColor index 15
+bgColor index 10
+autoHeight
+limitsFromDb
+nullColor index 0
+smartRefresh
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+noExecuteClipMask
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 15
+y 195
+w 125
+h 15
+controlPv "$(P)$(R)$(A4).DESC"
+font "helvetica-bold-r-14.0"
+fgColor index 14
+bgColor index 52
+useDisplayBg
+autoHeight
+limitsFromDb
+nullColor index 0
+smartRefresh
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+noExecuteClipMask
+endObjectProperties
+
+# (Text Update)
+object TextupdateClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 280
+y 195
+w 120
+h 20
+controlPv "$(P)$(R)$(A4)_AXIS_STS"
+fgColor index 15
+fgAlarm
+bgColor index 10
+colorPv "$(P)$(R)$(A4)_AXIS_STS"
+fill
+font "helvetica-bold-r-12.0"
+fontAlign "center"
+endObjectProperties
+
+# (Text Update)
+object TextupdateClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 280
+y 170
+w 120
+h 20
+controlPv "$(P)$(R)$(A3)_AXIS_STS"
+fgColor index 15
+fgAlarm
+bgColor index 10
+colorPv "$(P)$(R)$(A3)_AXIS_STS"
+fill
+font "helvetica-bold-r-12.0"
+fontAlign "center"
+endObjectProperties
+
+# (Text Update)
+object TextupdateClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 280
+y 145
+w 120
+h 20
+controlPv "$(P)$(R)$(A2)_AXIS_STS"
+fgColor index 15
+fgAlarm
+bgColor index 10
+colorPv "$(P)$(R)$(A2)_AXIS_STS"
+fill
+font "helvetica-bold-r-12.0"
+fontAlign "center"
+endObjectProperties
+
+# (Text Update)
+object TextupdateClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 280
+y 125
+w 120
+h 20
+controlPv "$(P)$(R)$(A1)_AXIS_STS"
+fgColor index 15
+fgAlarm
+bgColor index 10
+colorPv "$(P)$(R)$(A1)_AXIS_STS"
+fill
+font "helvetica-bold-r-12.0"
+fontAlign "center"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 145
+y 125
+w 100
+h 15
+controlPv "$(P)$(R)$(A1).RBV"
+font "courier-medium-r-12.0"
+fontAlign "right"
+fgColor index 15
+bgColor index 10
+autoHeight
+limitsFromDb
+nullColor index 0
+smartRefresh
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+noExecuteClipMask
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 250
+y 125
+w 30
+h 15
+controlPv "$(P)$(R)$(A1).EGU"
+font "helvetica-bold-r-12.0"
+fgColor index 14
+bgColor index 3
+autoHeight
+nullColor index 0
+smartRefresh
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+noExecuteClipMask
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 250
+y 150
+w 30
+h 15
+controlPv "$(P)$(R)$(A2).EGU"
+font "helvetica-bold-r-12.0"
+fgColor index 14
+bgColor index 3
+autoHeight
+nullColor index 0
+smartRefresh
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+noExecuteClipMask
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 250
+y 175
+w 30
+h 15
+controlPv "$(P)$(R)$(A3).EGU"
+font "helvetica-bold-r-12.0"
+fgColor index 14
+bgColor index 3
+autoHeight
+nullColor index 0
+smartRefresh
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+noExecuteClipMask
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 250
+y 195
+w 30
+h 15
+controlPv "$(P)$(R)$(A4).EGU"
+font "helvetica-bold-r-12.0"
+fgColor index 14
+bgColor index 3
+autoHeight
+nullColor index 0
+smartRefresh
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+noExecuteClipMask
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 415
+y 120
+w 100
+h 20
+fgColor index 44
+bgColor index 3
+topShadowColor index 0
+botShadowColor index 11
+font "helvetica-bold-r-12.0"
+xPosOffset 645
+yPosOffset -24
+buttonLabel "Motor Panel"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "SAI_MRec_Motor_S.edl"
+}
+setPosition {
+  0 "parentWindow"
+}
+symbols {
+  0 "P=$(P),R=$(R),AXIS=$(A1)"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 525
+y 220
+w 100
+h 20
+fgColor index 44
+bgColor index 3
+topShadowColor index 0
+botShadowColor index 10
+font "helvetica-bold-r-12.0"
+buttonLabel "Motor Scan"
+numPvs 4
+pv {
+  0 "$(S)GSCAN:SCANREC_SP.P1PV"
+}
+value {
+  0 "$(P)$(R)$(A5)_SP"
+}
+numDsps 1
+displayFileName {
+  0 "opi_genericScan/generic_scan.edl"
+}
+symbols {
+  0 "DEVICE=$(S)GSCAN"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 415
+y 220
+w 100
+h 20
+fgColor index 44
+bgColor index 3
+topShadowColor index 0
+botShadowColor index 11
+font "helvetica-bold-r-12.0"
+xPosOffset 645
+yPosOffset -24
+buttonLabel "Motor Panel"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "SAI_MRec_Motor_S.edl"
+}
+setPosition {
+  0 "parentWindow"
+}
+symbols {
+  0 "P=$(P),R=$(R),AXIS=$(A5)"
+}
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 15
+y 220
+w 125
+h 15
+controlPv "$(P)$(R)$(A5).DESC"
+font "helvetica-bold-r-14.0"
+fgColor index 14
+bgColor index 52
+useDisplayBg
+autoHeight
+limitsFromDb
+nullColor index 0
+smartRefresh
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+noExecuteClipMask
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 145
+y 220
+w 100
+h 10
+controlPv "$(P)$(R)$(A5).RBV"
+font "courier-medium-r-12.0"
+fontAlign "right"
+fgColor index 15
+bgColor index 10
+autoHeight
+limitsFromDb
+nullColor index 0
+smartRefresh
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+noExecuteClipMask
+endObjectProperties
+
+# (Text Update)
+object TextupdateClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 280
+y 220
+w 120
+h 20
+controlPv "$(P)$(R)$(A5)_AXIS_STS"
+fgColor index 15
+fgAlarm
+bgColor index 10
+colorPv "$(P)$(R)$(A5)_AXIS_STS"
+fill
+font "helvetica-bold-r-12.0"
+fontAlign "center"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 250
+y 220
+w 30
+h 15
+controlPv "$(P)$(R)$(A5).EGU"
+font "helvetica-bold-r-12.0"
+fgColor index 14
+bgColor index 3
+autoHeight
+nullColor index 0
+smartRefresh
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+noExecuteClipMask
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 400
+y 305
+w 205
+h 271
+
+beginGroup
+
+# (PNG Image)
+object activePngClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 445
+y 310
+w 160
+h 252
+file "Slits_Coor_160.png"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 505
+y 305
+w 66
+h 28
+font "helvetica-bold-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "+ve Y"
+  "Translation"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 485
+y 550
+w 66
+h 28
+font "helvetica-bold-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "+ve X"
+  "Translation"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 400
+y 370
+w 91
+h 14
+font "helvetica-bold-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Beam Direction"
+}
+autoSize
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 590
+y 5
+w 46
+h 12
+font "helvetica-bold-r-10.0"
+fgColor index 10
+bgColor index 0
+useDisplayBg
+value {
+  "V1.6.1.28"
+}
+autoSize
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 0
+y 50
+w 635
+h 30
+
+beginGroup
+
+# (Exit Button)
+object activeExitButtonClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 505
+y 50
+w 130
+h 30
+fgColor index 45
+bgColor index 3
+topShadowColor index 0
+botShadowColor index 11
+label "Close This Panel"
+font "helvetica-bold-r-12.0"
+3d
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 0
+y 50
+w 130
+h 30
+fgColor index 44
+bgColor index 3
+topShadowColor index 0
+botShadowColor index 11
+font "helvetica-bold-r-12.0"
+buttonLabel "IOC Health"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "opi_uIOCSystem/IOCSystemHealth.edl"
+}
+symbols {
+  0 "IOCNAME=$(MC)"
+}
+replaceSymbols {
+  0 1
+}
+propagateMacros {
+  0 0
+}
+endObjectProperties
+
+# (Message Button)
+object activeMessageButtonClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 260
+y 50
+w 130
+h 30
+fgColor index 45
+onColor index 3
+offColor index 3
+topShadowColor index 0
+botShadowColor index 11
+controlPv "$(P)$(T)KILL_CMD.PROC"
+pressValue "1"
+onLabel "Kill All Motors"
+offLabel "Kill All Motors"
+3d
+font "helvetica-bold-r-12.0"
+endObjectProperties
+
+# (Message Button)
+object activeMessageButtonClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 130
+y 50
+w 130
+h 30
+fgColor index 45
+onColor index 3
+offColor index 3
+topShadowColor index 0
+botShadowColor index 11
+controlPv "$(P)$(T)STOP_CMD.PROC"
+pressValue "1"
+onLabel "Stop All Motors"
+offLabel "Stop All Motors"
+3d
+font "helvetica-bold-r-12.0"
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 390
+y 50
+w 115
+h 30
+fgColor index 44
+bgColor index 3
+topShadowColor index 0
+botShadowColor index 11
+font "helvetica-bold-r-12.0"
+buttonLabel "Digital IO"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "Digital_IO.edl"
+}
+symbols {
+  0 "R=$(R1)"
+}
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 415
+y 630
+w 215
+h 65
+
+beginGroup
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 480
+y 630
+w 91
+h 14
+font "helvetica-bold-r-12.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Operation Mode"
+}
+autoSize
+endObjectProperties
+
+# (Text Update)
+object TextupdateClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 415
+y 650
+w 212
+h 18
+controlPv "$(P)$(T)OP_MODE_STS"
+fgColor index 15
+fgAlarm
+bgColor index 10
+colorPv "$(P)$(R)$(A8)_AXIS_STS"
+fill
+font "helvetica-bold-r-12.0"
+fontAlign "center"
+endObjectProperties
+
+# (Message Button)
+object activeMessageButtonClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 414
+y 675
+w 212
+h 20
+fgColor index 25
+onColor index 3
+offColor index 3
+topShadowColor index 0
+botShadowColor index 11
+controlPv "$(P)$(T)OP_MODE_CMD.A"
+pressValue "3600"
+onLabel "Enable Expert Mode"
+offLabel "Enable Expert Mode"
+3d
+useEnumNumeric
+password "nist"
+font "helvetica-bold-r-12.0"
+visPv "$(P)$(T)OP_MODE_STS"
+visMin "0"
+visMax "1"
+endObjectProperties
+
+# (Message Button)
+object activeMessageButtonClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 415
+y 675
+w 212
+h 20
+fgColor index 25
+onColor index 3
+offColor index 3
+topShadowColor index 0
+botShadowColor index 14
+controlPv "$(P)$(T)OP_MODE_CMD.A"
+pressValue "0"
+onLabel "Return to User-Mode"
+offLabel "Return to User-Mode"
+3d
+useEnumNumeric
+font "helvetica-bold-r-12.0"
+visPv "$(P)$(T)OP_MODE_STS"
+visMin "1"
+visMax "2"
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (PNG Image)
+object activePngClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 475
+y 0
+w 165
+h 36
+file "logofmbo_wide_dith_grey3.png"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 475
+y 35
+w 166
+h 14
+font "helvetica-bold-r-12.0"
+fgColor index 29
+bgColor index 50
+useDisplayBg
+value {
+  "www . f m b - o x f o r d . com"
+}
+autoSize
+endObjectProperties
+
+# (PNG Image)
+object activePngClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 20
+y 255
+w 350
+h 441
+file "BMM M1_350.png"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 280
+y 290
+w 28
+h 28
+font "helvetica-bold-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Jack"
+  "3"
+}
+autoSize
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 165
+y 550
+w 75
+h 75
+
+beginGroup
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 164
+y 555
+w 73
+h 73
+lineColor index 0
+fillColor index 0
+lineWidth 3
+numPoints 2
+xPoints {
+  0 237
+  1 164
+}
+yPoints {
+  0 555
+  1 628
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 164
+y 555
+w 73
+h 73
+lineColor index 14
+fillColor index 0
+lineWidth 2
+numPoints 2
+xPoints {
+  0 237
+  1 164
+}
+yPoints {
+  0 555
+  1 628
+}
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 170
+y 305
+w 115
+h 115
+
+beginGroup
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 171
+y 310
+w 111
+h 111
+lineColor index 0
+fillColor index 0
+lineWidth 3
+numPoints 2
+xPoints {
+  0 282
+  1 171
+}
+yPoints {
+  0 310
+  1 421
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 171
+y 310
+w 111
+h 111
+lineColor index 14
+fillColor index 0
+lineWidth 2
+numPoints 2
+xPoints {
+  0 282
+  1 171
+}
+yPoints {
+  0 310
+  1 421
+}
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 145
+y 635
+w 39
+h 14
+font "helvetica-bold-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Jack 1"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 15
+y 610
+w 39
+h 14
+font "helvetica-bold-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Jack 2"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 85
+y 630
+w 41
+h 28
+font "helvetica-bold-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Lateral"
+  "2"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 280
+y 630
+w 41
+h 28
+font "helvetica-bold-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Lateral"
+  "1"
+}
+autoSize
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 255
+y 515
+w 45
+h 110
+
+beginGroup
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 260
+y 585
+w 40
+h 40
+
+beginGroup
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 260
+y 585
+w 42
+h 42
+lineColor index 0
+fillColor index 0
+lineWidth 3
+numPoints 2
+xPoints {
+  0 302
+  1 260
+}
+yPoints {
+  0 627
+  1 585
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 260
+y 585
+w 42
+h 42
+lineColor index 14
+fillColor index 0
+lineWidth 2
+numPoints 2
+xPoints {
+  0 302
+  1 260
+}
+yPoints {
+  0 627
+  1 585
+}
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 255
+y 515
+w 10
+h 70
+
+beginGroup
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 255
+y 515
+w 6
+h 70
+lineColor index 0
+fillColor index 0
+lineWidth 4
+numPoints 2
+xPoints {
+  0 261
+  1 261
+}
+yPoints {
+  0 515
+  1 585
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 255
+y 515
+w 6
+h 70
+lineColor index 80
+fillColor index 0
+lineWidth 2
+numPoints 2
+xPoints {
+  0 261
+  1 261
+}
+yPoints {
+  0 515
+  1 585
+}
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 30
+y 480
+w 95
+h 125
+
+beginGroup
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 30
+y 570
+w 5
+h 35
+
+beginGroup
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 30
+y 570
+w 4
+h 35
+lineColor index 0
+fillColor index 0
+lineWidth 4
+numPoints 2
+xPoints {
+  0 34
+  1 34
+}
+yPoints {
+  0 605
+  1 570
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 30
+y 570
+w 4
+h 35
+lineColor index 80
+fillColor index 0
+lineWidth 2
+numPoints 2
+xPoints {
+  0 34
+  1 34
+}
+yPoints {
+  0 605
+  1 570
+}
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 35
+y 480
+w 90
+h 90
+
+beginGroup
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 35
+y 484
+w 88
+h 88
+lineColor index 0
+fillColor index 0
+lineWidth 3
+numPoints 2
+xPoints {
+  0 123
+  1 35
+}
+yPoints {
+  0 484
+  1 572
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 35
+y 484
+w 88
+h 88
+lineColor index 14
+fillColor index 0
+lineWidth 2
+numPoints 2
+xPoints {
+  0 123
+  1 35
+}
+yPoints {
+  0 484
+  1 572
+}
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 105
+y 480
+w 55
+h 145
+
+beginGroup
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 105
+y 570
+w 55
+h 55
+
+beginGroup
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 105
+y 569
+w 57
+h 57
+lineColor index 0
+fillColor index 0
+lineWidth 3
+numPoints 2
+xPoints {
+  0 105
+  1 162
+}
+yPoints {
+  0 626
+  1 569
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 105
+y 569
+w 57
+h 57
+lineColor index 14
+fillColor index 0
+lineWidth 2
+numPoints 2
+xPoints {
+  0 105
+  1 162
+}
+yPoints {
+  0 626
+  1 569
+}
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 160
+y 480
+w 0
+h 90
+
+beginGroup
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 160
+y 480
+w 0
+h 90
+lineColor index 0
+fillColor index 0
+lineWidth 4
+numPoints 2
+xPoints {
+  0 160
+  1 160
+}
+yPoints {
+  0 480
+  1 570
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 160
+y 480
+w 0
+h 90
+lineColor index 80
+fillColor index 0
+lineWidth 2
+numPoints 2
+xPoints {
+  0 160
+  1 160
+}
+yPoints {
+  0 480
+  1 570
+}
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+

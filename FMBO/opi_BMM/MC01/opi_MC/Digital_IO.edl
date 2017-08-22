@@ -1,0 +1,1132 @@
+4 0 1
+beginScreenProperties
+major 4
+minor 0
+release 1
+x 747
+y 349
+w 500
+h 420
+font "helvetica-medium-r-18.0"
+ctlFont "helvetica-medium-r-18.0"
+btnFont "helvetica-medium-r-18.0"
+fgColor index 14
+bgColor index 3
+textColor index 14
+ctlFgColor1 index 14
+ctlFgColor2 index 0
+ctlBgColor1 index 0
+ctlBgColor2 index 14
+topShadowColor index 0
+botShadowColor index 14
+title "Digital I/O Panel"
+endScreenProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 5
+release 0
+x 0
+y 0
+w 500
+h 25
+controlPv "$(P)$(T)NAME"
+font "helvetica-bold-r-14.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 6
+limitsFromDb
+nullColor index 0
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+noExecuteClipMask
+endObjectProperties
+
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 10
+y 40
+w 480
+h 330
+lineColor index 14
+fillColor index 0
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 131
+y 265
+w 239
+h 77
+
+beginGroup
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 131
+y 265
+w 105
+h 77
+
+beginGroup
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 132
+y 265
+w 29
+h 13
+lineColor index 14
+fillColor index 0
+lineWidth 2
+numPoints 3
+xPoints {
+  0 132
+  1 153
+  2 161
+}
+yPoints {
+  0 278
+  1 278
+  2 265
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 131
+y 266
+w 56
+h 33
+lineColor index 14
+fillColor index 0
+lineWidth 2
+numPoints 3
+xPoints {
+  0 131
+  1 172
+  2 187
+}
+yPoints {
+  0 299
+  1 299
+  2 266
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 131
+y 266
+w 80
+h 54
+lineColor index 14
+fillColor index 0
+lineWidth 2
+numPoints 3
+xPoints {
+  0 131
+  1 189
+  2 211
+}
+yPoints {
+  0 320
+  1 320
+  2 266
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 131
+y 265
+w 105
+h 77
+lineColor index 14
+fillColor index 0
+lineWidth 2
+numPoints 3
+xPoints {
+  0 131
+  1 207
+  2 236
+}
+yPoints {
+  0 342
+  1 342
+  2 265
+}
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 265
+y 265
+w 105
+h 77
+
+beginGroup
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 340
+y 265
+w 29
+h 13
+lineColor index 14
+fillColor index 0
+lineWidth 2
+numPoints 3
+xPoints {
+  0 369
+  1 348
+  2 340
+}
+yPoints {
+  0 278
+  1 278
+  2 265
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 314
+y 266
+w 56
+h 33
+lineColor index 14
+fillColor index 0
+lineWidth 2
+numPoints 3
+xPoints {
+  0 370
+  1 329
+  2 314
+}
+yPoints {
+  0 299
+  1 299
+  2 266
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 290
+y 266
+w 80
+h 54
+lineColor index 14
+fillColor index 0
+lineWidth 2
+numPoints 3
+xPoints {
+  0 370
+  1 312
+  2 290
+}
+yPoints {
+  0 320
+  1 320
+  2 266
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 265
+y 265
+w 105
+h 77
+lineColor index 14
+fillColor index 0
+lineWidth 2
+numPoints 3
+xPoints {
+  0 370
+  1 294
+  2 265
+}
+yPoints {
+  0 342
+  1 342
+  2 265
+}
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 48
+y 270
+w 42
+h 80
+
+beginGroup
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 48
+y 270
+w 75
+h 14
+font "helvetica-medium-r-12.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Not Assigned"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 48
+y 292
+w 75
+h 14
+font "helvetica-medium-r-12.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Not Assigned"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 48
+y 314
+w 75
+h 14
+font "helvetica-medium-r-12.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Not Assigned"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 48
+y 336
+w 75
+h 14
+font "helvetica-medium-r-12.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Not Assigned"
+}
+autoSize
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 380
+y 336
+w 75
+h 14
+font "helvetica-medium-r-12.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Not Assigned"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 380
+y 314
+w 75
+h 14
+font "helvetica-medium-r-12.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Not Assigned"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 380
+y 292
+w 75
+h 14
+font "helvetica-medium-r-12.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Not Assigned"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 380
+y 270
+w 75
+h 14
+font "helvetica-medium-r-12.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Not Assigned"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 208
+y 210
+w 85
+h 14
+font "helvetica-medium-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Outputs (M7-0)"
+}
+autoSize
+endObjectProperties
+
+# (Byte)
+object ByteClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 150
+y 230
+w 200
+h 25
+controlPv "$(MC)DO_MON.VAL"
+lineColor index 14
+onColor index 15
+offColor index 5
+numBits 8
+endObjectProperties
+
+# (Exit Button)
+object activeExitButtonClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 392
+y 380
+w 100
+h 30
+fgColor index 45
+bgColor index 3
+topShadowColor index 0
+botShadowColor index 11
+label "Close"
+font "helvetica-bold-r-12.0"
+3d
+endObjectProperties
+
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 10
+y 385
+w 20
+h 20
+lineColor index 14
+fill
+fillColor index 15
+endObjectProperties
+
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 150
+y 385
+w 20
+h 20
+lineColor index 14
+fill
+fillColor index 5
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 45
+y 389
+w 51
+h 14
+font "helvetica-medium-r-12.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "ON State"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 186
+y 389
+w 58
+h 14
+font "helvetica-medium-r-12.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "OFF State"
+}
+autoSize
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 131
+y 105
+w 239
+h 77
+
+beginGroup
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 131
+y 105
+w 105
+h 77
+
+beginGroup
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 132
+y 105
+w 29
+h 13
+lineColor index 14
+fillColor index 0
+lineWidth 2
+numPoints 3
+xPoints {
+  0 132
+  1 153
+  2 161
+}
+yPoints {
+  0 118
+  1 118
+  2 105
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 131
+y 106
+w 56
+h 33
+lineColor index 14
+fillColor index 0
+lineWidth 2
+numPoints 3
+xPoints {
+  0 131
+  1 172
+  2 187
+}
+yPoints {
+  0 139
+  1 139
+  2 106
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 131
+y 106
+w 80
+h 54
+lineColor index 14
+fillColor index 0
+lineWidth 2
+numPoints 3
+xPoints {
+  0 131
+  1 189
+  2 211
+}
+yPoints {
+  0 160
+  1 160
+  2 106
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 131
+y 105
+w 105
+h 77
+lineColor index 14
+fillColor index 0
+lineWidth 2
+numPoints 3
+xPoints {
+  0 131
+  1 207
+  2 236
+}
+yPoints {
+  0 182
+  1 182
+  2 105
+}
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 265
+y 105
+w 105
+h 77
+
+beginGroup
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 340
+y 105
+w 29
+h 13
+lineColor index 14
+fillColor index 0
+lineWidth 2
+numPoints 3
+xPoints {
+  0 369
+  1 348
+  2 340
+}
+yPoints {
+  0 118
+  1 118
+  2 105
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 314
+y 106
+w 56
+h 33
+lineColor index 14
+fillColor index 0
+lineWidth 2
+numPoints 3
+xPoints {
+  0 370
+  1 329
+  2 314
+}
+yPoints {
+  0 139
+  1 139
+  2 106
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 290
+y 106
+w 80
+h 54
+lineColor index 14
+fillColor index 0
+lineWidth 2
+numPoints 3
+xPoints {
+  0 370
+  1 312
+  2 290
+}
+yPoints {
+  0 160
+  1 160
+  2 106
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 265
+y 105
+w 105
+h 77
+lineColor index 14
+fillColor index 0
+lineWidth 2
+numPoints 3
+xPoints {
+  0 370
+  1 294
+  2 265
+}
+yPoints {
+  0 182
+  1 182
+  2 105
+}
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 380
+y 110
+w 42
+h 80
+
+beginGroup
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 380
+y 176
+w 75
+h 14
+font "helvetica-medium-r-12.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Not Assigned"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 380
+y 154
+w 75
+h 14
+font "helvetica-medium-r-12.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Not Assigned"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 380
+y 132
+w 75
+h 14
+font "helvetica-medium-r-12.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Not Assigned"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 380
+y 110
+w 75
+h 14
+font "helvetica-medium-r-12.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Not Assigned"
+}
+autoSize
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 48
+y 110
+w 42
+h 80
+
+beginGroup
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 48
+y 110
+w 75
+h 14
+font "helvetica-medium-r-12.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Not Assigned"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 48
+y 132
+w 75
+h 14
+font "helvetica-medium-r-12.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Not Assigned"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 48
+y 154
+w 75
+h 14
+font "helvetica-medium-r-12.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Not Assigned"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 48
+y 176
+w 75
+h 14
+font "helvetica-medium-r-12.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Not Assigned"
+}
+autoSize
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Byte)
+object ByteClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 150
+y 72
+w 200
+h 25
+controlPv "$(MC)DI_MON.VAL"
+lineColor index 14
+onColor index 15
+offColor index 5
+numBits 8
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 210
+y 52
+w 82
+h 14
+
+beginGroup
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 210
+y 52
+w 82
+h 14
+font "helvetica-medium-r-12.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Inputs (M15-8)"
+}
+autoSize
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+

@@ -1,0 +1,909 @@
+4 0 1
+beginScreenProperties
+major 4
+minor 0
+release 1
+x 798
+y 216
+w 640
+h 660
+font "helvetica-bold-r-12.0"
+ctlFont "helvetica-bold-r-12.0"
+btnFont "helvetica-bold-r-12.0"
+fgColor index 14
+bgColor index 3
+textColor index 14
+ctlFgColor1 index 14
+ctlFgColor2 index 0
+ctlBgColor1 index 0
+ctlBgColor2 index 14
+topShadowColor index 0
+botShadowColor index 14
+title "MCS8+ Main Panel"
+showGrid
+snapToGrid
+gridSize 5
+disableScroll
+endScreenProperties
+
+# (Rectangle)
+object activeRectangleClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 5
+y 90
+w 630
+h 60
+lineColor index 14
+fillColor index 0
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 15
+y 95
+w 614
+h 16
+font "helvetica-bold-r-14.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Motor                          Position                         Status                "
+}
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 10
+y 115
+w 610
+h 21
+
+beginGroup
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 520
+y 115
+w 100
+h 20
+fgColor index 44
+bgColor index 3
+topShadowColor index 0
+botShadowColor index 10
+font "helvetica-bold-r-12.0"
+buttonLabel "Motor Scan"
+numPvs 4
+pv {
+  0 "$(S)GSCAN:SCANREC_SP.P1PV"
+}
+value {
+  0 "$(P)$(R)$(A7)_SP"
+}
+numDsps 1
+displayFileName {
+  0 "opi_genericScan/generic_scan.edl"
+}
+symbols {
+  0 "DEVICE=$(S)GSCAN"
+}
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 410
+y 115
+w 100
+h 20
+fgColor index 44
+bgColor index 3
+topShadowColor index 0
+botShadowColor index 11
+font "helvetica-bold-r-12.0"
+xPosOffset 645
+yPosOffset -24
+buttonLabel "Motor Panel"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "SAI_MRec_Motor_S.edl"
+}
+setPosition {
+  0 "parentWindow"
+}
+symbols {
+  0 "P=$(P),R=$(R),AXIS=$(A7)"
+}
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 10
+y 120
+w 125
+h 16
+controlPv "$(P)$(R)$(A7).DESC"
+font "helvetica-bold-r-14.0"
+fgColor index 14
+bgColor index 52
+useDisplayBg
+autoHeight
+limitsFromDb
+nullColor index 0
+smartRefresh
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+noExecuteClipMask
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 140
+y 120
+w 100
+h 11
+controlPv "$(P)$(R)$(A7).RBV"
+font "courier-medium-r-12.0"
+fontAlign "right"
+fgColor index 15
+bgColor index 10
+autoHeight
+limitsFromDb
+nullColor index 0
+smartRefresh
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+noExecuteClipMask
+endObjectProperties
+
+# (Text Update)
+object TextupdateClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 275
+y 115
+w 119
+h 18
+controlPv "$(P)$(R)$(A7)_AXIS_STS"
+fgColor index 15
+fgAlarm
+bgColor index 10
+colorPv "$(P)$(R)$(A7)_AXIS_STS"
+fill
+font "helvetica-bold-r-12.0"
+fontAlign "center"
+endObjectProperties
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 245
+y 120
+w 30
+h 13
+controlPv "$(P)$(R)$(A7).EGU"
+font "helvetica-bold-r-12.0"
+fgColor index 14
+bgColor index 3
+autoHeight
+nullColor index 0
+smartRefresh
+fastUpdate
+useHexPrefix
+newPos
+objType "monitors"
+noExecuteClipMask
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 0
+y 0
+w 641
+h 80
+
+beginGroup
+
+# (Text Monitor)
+object activeXTextDspClass:noedit
+beginObjectProperties
+major 4
+minor 7
+release 0
+x 0
+y 20
+w 640
+h 30
+controlPv "$(P)$(T)NAME"
+font "helvetica-bold-r-18.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 6
+limitsFromDb
+nullColor index 0
+useHexPrefix
+newPos
+objType "monitors"
+id "testing"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 0
+y 0
+w 640
+h 25
+font "helvetica-bold-r-18.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 6
+value {
+  "Single Axis Interface"
+}
+endObjectProperties
+
+# (Exit Button)
+object activeExitButtonClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 505
+y 50
+w 130
+h 30
+fgColor index 45
+bgColor index 3
+topShadowColor index 0
+botShadowColor index 11
+label "Close This Panel"
+font "helvetica-bold-r-12.0"
+3d
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 0
+y 50
+w 130
+h 30
+fgColor index 44
+bgColor index 3
+topShadowColor index 0
+botShadowColor index 11
+font "helvetica-bold-r-12.0"
+buttonLabel "IOC Health"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "opi_uIOCSystem/IOCSystemHealth.edl"
+}
+symbols {
+  0 "IOCNAME=$(MC)"
+}
+replaceSymbols {
+  0 1
+}
+propagateMacros {
+  0 0
+}
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 590
+y 5
+w 46
+h 12
+font "helvetica-bold-r-10.0"
+fgColor index 10
+bgColor index 0
+useDisplayBg
+value {
+  "V1.6.1.28"
+}
+autoSize
+endObjectProperties
+
+# (Message Button)
+object activeMessageButtonClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 260
+y 50
+w 130
+h 30
+fgColor index 45
+onColor index 3
+offColor index 3
+topShadowColor index 0
+botShadowColor index 11
+controlPv "$(P)$(T)KILL_CMD.PROC"
+pressValue "1"
+onLabel "Kill All Motors"
+offLabel "Kill All Motors"
+3d
+font "helvetica-bold-r-12.0"
+endObjectProperties
+
+# (Message Button)
+object activeMessageButtonClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 130
+y 50
+w 130
+h 30
+fgColor index 45
+onColor index 3
+offColor index 3
+topShadowColor index 0
+botShadowColor index 11
+controlPv "$(P)$(T)STOP_CMD.PROC"
+pressValue "1"
+onLabel "Stop All Motors"
+offLabel "Stop All Motors"
+3d
+font "helvetica-bold-r-12.0"
+endObjectProperties
+
+# (Related Display)
+object relatedDisplayClass
+beginObjectProperties
+major 4
+minor 4
+release 0
+x 390
+y 50
+w 115
+h 30
+fgColor index 44
+bgColor index 3
+topShadowColor index 0
+botShadowColor index 11
+font "helvetica-bold-r-12.0"
+buttonLabel "Digital IO"
+numPvs 4
+numDsps 1
+displayFileName {
+  0 "Digital_IO.edl"
+}
+symbols {
+  0 "R=$(R1)"
+}
+endObjectProperties
+
+# (PNG Image)
+object activePngClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 475
+y 0
+w 165
+h 36
+file "logofmbo_wide_dith_grey3.png"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 475
+y 35
+w 166
+h 14
+font "helvetica-bold-r-12.0"
+fgColor index 29
+bgColor index 50
+useDisplayBg
+value {
+  "www . f m b - o x f o r d . com"
+}
+autoSize
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (PNG Image)
+object activePngClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 50
+y 160
+w 200
+h 488
+file "BMM_DM2_200.png"
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 185
+y 515
+w 75
+h 75
+
+beginGroup
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 183
+y 518
+w 73
+h 73
+lineColor index 0
+fillColor index 0
+lineWidth 3
+numPoints 2
+xPoints {
+  0 256
+  1 183
+}
+yPoints {
+  0 518
+  1 591
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 183
+y 518
+w 73
+h 73
+lineColor index 14
+fillColor index 0
+lineWidth 2
+numPoints 2
+xPoints {
+  0 256
+  1 183
+}
+yPoints {
+  0 518
+  1 591
+}
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 225
+y 475
+w 69
+h 42
+font "helvetica-bold-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Fluorescent"
+  "Screen"
+  "FS02"
+}
+autoSize
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 55
+y 530
+w 95
+h 95
+
+beginGroup
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 56
+y 534
+w 92
+h 92
+lineColor index 0
+fillColor index 0
+lineWidth 3
+numPoints 2
+xPoints {
+  0 56
+  1 148
+}
+yPoints {
+  0 534
+  1 626
+}
+endObjectProperties
+
+# (Lines)
+object activeLineClass
+beginObjectProperties
+major 4
+minor 0
+release 1
+x 56
+y 534
+w 92
+h 92
+lineColor index 14
+fillColor index 0
+lineWidth 2
+numPoints 2
+xPoints {
+  0 56
+  1 148
+}
+yPoints {
+  0 534
+  1 626
+}
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 20
+y 505
+w 54
+h 14
+font "helvetica-bold-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Foil Rack"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 30
+y 520
+w 54
+h 14
+font "helvetica-bold-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Ni"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 30
+y 535
+w 54
+h 14
+font "helvetica-bold-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Al"
+}
+autoSize
+endObjectProperties
+
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 370
+y 180
+w 236
+h 383
+
+beginGroup
+
+# (PNG Image)
+object activePngClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 400
+y 215
+w 200
+h 315
+file "Slits_Coor_200.png"
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 540
+y 180
+w 66
+h 28
+font "helvetica-bold-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "+ve Y"
+  "Translation"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 370
+y 535
+w 66
+h 28
+font "helvetica-bold-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "+ve X"
+  "Translation"
+}
+autoSize
+endObjectProperties
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 380
+y 290
+w 91
+h 14
+font "helvetica-bold-r-12.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Beam Direction"
+}
+autoSize
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
+# (Group)
+object activeGroupClass
+beginObjectProperties
+major 4
+minor 0
+release 0
+x 310
+y 605
+w 320
+h 45
+
+beginGroup
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 310
+y 607
+w 91
+h 14
+font "helvetica-bold-r-12.0"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "Operation Mode"
+}
+autoSize
+endObjectProperties
+
+# (Text Update)
+object TextupdateClass
+beginObjectProperties
+major 10
+minor 0
+release 0
+x 420
+y 605
+w 212
+h 18
+controlPv "$(P)$(T)OP_MODE_STS"
+fgColor index 15
+fgAlarm
+bgColor index 10
+colorPv "$(P)$(R)$(A8)_AXIS_STS"
+fill
+font "helvetica-bold-r-12.0"
+fontAlign "center"
+endObjectProperties
+
+# (Message Button)
+object activeMessageButtonClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 418
+y 630
+w 212
+h 20
+fgColor index 25
+onColor index 3
+offColor index 3
+topShadowColor index 0
+botShadowColor index 11
+controlPv "$(P)$(T)OP_MODE_CMD.A"
+pressValue "3600"
+onLabel "Enable Expert Mode"
+offLabel "Enable Expert Mode"
+3d
+useEnumNumeric
+password "nist"
+font "helvetica-bold-r-12.0"
+visPv "$(P)$(T)OP_MODE_STS"
+visMin "0"
+visMax "1"
+endObjectProperties
+
+# (Message Button)
+object activeMessageButtonClass
+beginObjectProperties
+major 4
+minor 1
+release 0
+x 420
+y 630
+w 212
+h 20
+fgColor index 25
+onColor index 3
+offColor index 3
+topShadowColor index 0
+botShadowColor index 14
+controlPv "$(P)$(T)OP_MODE_CMD.A"
+pressValue "0"
+onLabel "Return to User-Mode"
+offLabel "Return to User-Mode"
+3d
+useEnumNumeric
+font "helvetica-bold-r-12.0"
+visPv "$(P)$(T)OP_MODE_STS"
+visMin "1"
+visMax "2"
+endObjectProperties
+
+endGroup
+
+endObjectProperties
+
