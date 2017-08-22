@@ -1,0 +1,9 @@
+#!/bin/sed -ne s/^Exec=//e
+[Desktop Entry]
+Type=Application
+Exec=/opt/epics/opi/opi_BMM/MC06/opi_MC/start_opi_MC06_DM3.sh
+Icon=/opt/epics/opi/opi_BMM/MC06/opi_MC/BMM_DM3_340.png
+Name=DM3 Vertical Stage
+GenericName=DM3 Vertical Stage
+Categories=Apps;
+Name[en_GB]=DM3 Vertical Stage

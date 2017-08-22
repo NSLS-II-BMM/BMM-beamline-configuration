@@ -1,0 +1,9 @@
+#!/bin/sed -ne s/^Exec=//e
+[Desktop Entry]
+Type=Application
+Exec=/opt/epics/opi/opi_BMM/MC03/opi_MC/start_opi_MC03_Slt01.sh
+Icon=/opt/epics/opi/opi_BMM/MC03/opi_MC/InFlange_Slit_340.png
+Name=DM2 Slits
+GenericName=DM2 Slits
+Categories=Apps;
+Name[en_GB]=DM2 Slits

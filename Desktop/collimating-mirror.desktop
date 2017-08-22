@@ -1,0 +1,9 @@
+#!/bin/sed -ne s/^Exec=//e
+[Desktop Entry]
+Type=Application
+Exec=/opt/epics/opi/opi_BMM/MC01/opi_MC/start_opi_MirM1.sh
+Icon=/opt/epics/opi/opi_BMM/MC01/opi_MC/BMM M1_350.png
+Name=Front End Collimating Mirror
+GenericName=Front End Collimating Mirror
+Categories=Apps;
+Name[en_GB]=Front End Collimating Mirror

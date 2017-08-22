@@ -1,0 +1,9 @@
+#!/bin/sed -ne s/^Exec=//e
+[Desktop Entry]
+Type=Application
+Exec=/opt/epics/opi/opi_BMM/MC02/opi_MC/start_opi_DCM.sh
+Icon=/opt/epics/opi/opi_BMM/MC02/opi_MC/DCM_HE_430.png
+Name=Monochromator
+GenericName=Monochromator
+Categories=Apps;
+Name[en_GB]=Monochromator

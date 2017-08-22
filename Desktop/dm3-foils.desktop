@@ -1,0 +1,9 @@
+#!/bin/sed -ne s/^Exec=//e
+[Desktop Entry]
+Type=Application
+Exec=/opt/epics/opi/opi_BMM/MC06/opi_MC/start_opi_IM.sh
+Icon=/opt/epics/opi/opi_BMM/MC06/opi_MC/BMM-foils-260.png
+Name=DM3 Foils
+GenericName=DM3 Foils
+Categories=Apps;
+Name[en_GB]=DM3 Foils

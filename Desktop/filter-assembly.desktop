@@ -1,0 +1,9 @@
+#!/bin/sed -ne s/^Exec=//e
+[Desktop Entry]
+Type=Application
+Exec=/opt/epics/opi/opi_BMM/MC05/opi_MC/start_opi_DM1.sh
+Icon=/opt/epics/opi/opi_BMM/MC05/opi_MC/BMM_Filter_300.png
+Name=Filter Assembly
+GenericName=Filter Assembly
+Categories=Apps;
+Name[en_GB]=Filter Assembly
