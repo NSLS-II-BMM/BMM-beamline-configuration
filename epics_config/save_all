@@ -1,0 +1,8 @@
+
+fields='OFF HLM LLM VELO ACCL DHLM DLLM'
+for f in $fields; do
+    echo saving $f
+    ./save-em-all.sh $f > PDS.$f.dat
+done
+
+#~/save-em-all.sh ACCL
