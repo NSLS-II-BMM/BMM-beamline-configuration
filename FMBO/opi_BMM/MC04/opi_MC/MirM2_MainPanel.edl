@@ -202,7 +202,7 @@ buttonLabel "Motor Panel"
 numPvs 4
 numDsps 1
 displayFileName {
-  0 "SAI_MRec_Motor_S.edl"
+  0 "SAI_MRec_Motor_L.edl"
 }
 setPosition {
   0 "parentWindow"
@@ -233,7 +233,7 @@ buttonLabel "Motor Panel"
 numPvs 4
 numDsps 1
 displayFileName {
-  0 "SAI_MRec_Motor_S.edl"
+  0 "SAI_MRec_Motor_L.edl"
 }
 setPosition {
   0 "parentWindow"
@@ -264,7 +264,7 @@ buttonLabel "Motor Panel"
 numPvs 4
 numDsps 1
 displayFileName {
-  0 "SAI_MRec_Motor_S.edl"
+  0 "SAI_MRec_Motor_L.edl"
 }
 setPosition {
   0 "parentWindow"
@@ -698,7 +698,7 @@ buttonLabel "Motor Panel"
 numPvs 4
 numDsps 1
 displayFileName {
-  0 "SAI_MRec_Motor_S.edl"
+  0 "SAI_MRec_Motor_L.edl"
 }
 setPosition {
   0 "parentWindow"
@@ -793,7 +793,7 @@ buttonLabel "Motor Panel"
 numPvs 4
 numDsps 1
 displayFileName {
-  0 "SAI_MRec_Motor_S.edl"
+  0 "SAI_MRec_Motor_L.edl"
 }
 setPosition {
   0 "parentWindow"
@@ -824,7 +824,7 @@ buttonLabel "Motor Panel"
 numPvs 4
 numDsps 1
 displayFileName {
-  0 "SAI_MRec_Motor_S.edl"
+  0 "SAI_MRec_Motor_L.edl"
 }
 setPosition {
   0 "parentWindow"
