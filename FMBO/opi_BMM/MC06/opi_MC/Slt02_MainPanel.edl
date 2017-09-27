@@ -167,6 +167,28 @@ major 4
 minor 1
 release 1
 x 25
+y 255
+w 81
+h 14
+font "helvetica-bold-r-18.0"
+fontAlign "center"
+fgColor index 14
+bgColor index 0
+useDisplayBg
+value {
+  "DM3 Slits"
+}
+autoSize
+endObjectProperties
+
+
+# (Static Text)
+object activeXTextClass
+beginObjectProperties
+major 4
+minor 1
+release 1
+x 25
 y 285
 w 81
 h 14
