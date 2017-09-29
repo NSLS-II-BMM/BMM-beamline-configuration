@@ -1,68 +1,77 @@
-| Instrument | PV                                  | Motor Description         | controller           | motor number |
-|------------+-------------------------------------+---------------------------+----------------------+--------------|
-| F.E. slits | FE:C06B-OP{Slt:12-Ax:X}size         | horizontal size           | geobrick (mezzanine) |      virtual |
-|            | FE:C06B-OP{Slt:12-Ax:X}center       | horizontal center         | geobrick (mezzanine) |      virtual |
-|            | FE:C06B-OP{Slt:12-Ax:Y}size         | vertical size             | geobrick (mezzanine) |      virtual |
-|            | FE:C06B-OP{Slt:12-Ax:Y}center       | vertical center           | geobrick (mezzanine) |      virtual |
-|            | FE:C06B-OP{Slt:1-Ax:Hrz}Mtr.VAL     | Slit 1 horizontal         | geobrick (mezzanine) |              |
-|            | FE:C06B-OP{Slt:1-Ax:Inc}Mtr.VAL     | Slit 1 incline            | geobrick (mezzanine) |              |
-|            | FE:C06B-OP{Slt:1-Ax:O}Mtr.VAL       | Slit 1 X outboard         | geobrick (mezzanine) |              |
-|            | FE:C06B-OP{Slt:1-Ax:T}Mtr.VAL       | Slit 1 Y top              | geobrick (mezzanine) |              |
-|            | FE:C06B-OP{Slt:2-Ax:Hrz}Mtr.VAL     | Slit 2 horizontal         | geobrick (mezzanine) |              |
-|            | FE:C06B-OP{Slt:2-Ax:Inc}Mtr.VAL     | Slit 2 incline            | geobrick (mezzanine) |              |
-|            | FE:C06B-OP{Slt:2-Ax:I}Mtr.VAL       | Slit 2 X inboard          | geobrick (mezzanine) |              |
-|            | FE:C06B-OP{Slt:2-Ax:B}Mtr.VAL       | Slit 2 Y bottom           | geobrick (mezzanine) |              |
-|------------+-------------------------------------+---------------------------+----------------------+--------------|
-|            | XF:06BM-OP{Mir:M1-Ax:YU}Mtr         | upstream jack             | MC01 (mezzanine)     |            1 |
-|            | XF:06BM-OP{Mir:M1-Ax:YDO}Mtr        | downstream, outboard jack | MC01 (mezzanine)     |            2 |
-|            | XF:06BM-OP{Mir:M1-Ax:YDI}Mtr        | downstream, inboard jack  | MC01 (mezzanine)     |            3 |
-|            | XF:06BM-OP{Mir:M1-Ax:XU}Mtr         | upstream lateral          | MC01 (mezzanine)     |            4 |
-|            | XF:06BM-OP{Mir:M1-Ax:XD}Mtr         | downstream lateral        | MC01 (mezzanine)     |            5 |
-|------------+-------------------------------------+---------------------------+----------------------+--------------|
-|            | XF:06BMA-BI{Fltr:01-Ax:Y1}Mtr       | assembly #1               | MC05 (RGA)           |            6 |
-|            | XF:06BMA-BI{Fltr:01-Ax:Y2}Mtr       | assembly #2               | MC05 (RGA)           |            7 |
-|------------+-------------------------------------+---------------------------+----------------------+--------------|
-|            | XF:06BMA-OP{Mono:DCM1-Ax:Bragg}Mtr  | DCM Bragg                 | MC02 (RGA)           |            1 |
-|            | XF:06BMA-OP{Mono:DCM1-Ax:Bragg2}Mtr | Bragg second encoder      | MC02 (RGA            |              |
-|            | XF:06BMA-OP{Mono:DCM1-Ax:P2}Mtr     | 2nd crystal pitch         | MC02 (RGA)           |            3 |
-|            | XF:06BMA-OP{Mono:DCM1-Ax:R2}Mtr     | 2nd crystal roll          | MC02 (RGA)           |            4 |
-|            | XF:06BMA-OP{Mono:DCM1-Ax:Per2}Mtr   | 2nd crystal perpendicular | MC02 (RGA)           |            5 |
-|            | XF:06BMA-OP{Mono:DCM1-Ax:Par2}Mtr   | 2nd crystal parallel      | MC02 (RGA)           |            6 |
-|            | XF:06BMA-OP{Mono:DCM1-Ax:X}Mtr      | lateral translation       | MC02 (RGA)           |            7 |
-|            | XF:06BMA-OP{Mono:DCM1-Ax:Y}Mtr      | vertical translation      | MC02 (RGA)           |            8 |
-|------------+-------------------------------------+---------------------------+----------------------+--------------|
-|            | XF:06BMA-OP{Slt:01-Ax:O}Mtr         | outboard                  | MC03 (RGA)           |            1 |
-|            | XF:06BMA-OP{Slt:01-Ax:I}Mtr         | inboard                   | MC03 (RGA)           |            2 |
-|            | XF:06BMA-OP{Slt:01-Ax:T}Mtr         | top                       | MC03 (RGA)           |            3 |
-|            | XF:06BMA-OP{Slt:01-Ax:B}Mtr         | bottom                    | MC03 (RGA)           |            4 |
-|------------+-------------------------------------+---------------------------+----------------------+--------------|
-|            | XF:06BMA-BI{Diag:02-Ax:Y}Mtr        | vertical actuator         | MC04 (RGA)           |            7 |
-|------------+-------------------------------------+---------------------------+----------------------+--------------|
-|            | XF:06BMA-OP{Mir:M2-Ax:YU}Mtr        | upstream jack             | MC04 (RGA)           |            1 |
-|            | XF:06BMA-OP{Mir:M2-Ax:YDO}Mtr       | downstream, outboard jack | MC04 (RGA)           |            2 |
-|            | XF:06BMA-OP{Mir:M2-Ax:YDI}Mtr       | downstream, inboard jack  | MC04 (RGA)           |            3 |
-|            | XF:06BMA-OP{Mir:M2-Ax:XU}Mtr        | upstream lateral          | MC04 (RGA)           |            4 |
-|            | XF:06BMA-OP{Mir:M2-Ax:XD}Mtr        | downstream lateral        | MC04 (RGA)           |            5 |
-|            | XF:06BMA-OP{Mir:M2-Ax:Bend}Mtr      | bender                    | MC04 (RGA)           |            6 |
-|------------+-------------------------------------+---------------------------+----------------------+--------------|
-|            | XF:06BMA-OP{Mir:M3-Ax:YU}Mtr        | upstream jack             | MC05 (RGA)           |            1 |
-|            | XF:06BMA-OP{Mir:M3-Ax:YDO}Mtr       | downstream, outboard jack | MC05 (RGA)           |            2 |
-|            | XF:06BMA-OP{Mir:M3-Ax:YDI}Mtr       | downstream, inboard jack  | MC05 (RGA)           |            3 |
-|            | XF:06BMA-OP{Mir:M3-Ax:XU}Mtr        | upstream lateral          | MC05 (RGA)           |            4 |
-|            | XF:06BMA-OP{Mir:M3-Ax:XD}Mtr        | downstream lateral        | MC05 (RGA)           |            5 |
-|------------+-------------------------------------+---------------------------+----------------------+--------------|
-|            | XF:06BM-BI{FS:03-Ax:Y}Mtr           | fluorescent screen        | MC06 (RGC1)          |            1 |
-|------------+-------------------------------------+---------------------------+----------------------+--------------|
-|            | XF:06BM-BI{Slt:02-Ax:O}Mtr          | outboard                  | MC06 (RGC1)          |            5 |
-|            | XF:06BM-BI{Slt:02-Ax:I}Mtr          | inboard                   | MC06 (RGC1)          |            6 |
-|            | XF:06BM-BI{Slt:02-Ax:T}Mtr          | top                       | MC06 (RGC1)          |            7 |
-|            | XF:06BM-BI{Slt:02-Ax:B}Mtr          | bottom                    | MC06 (RGC1)          |            8 |
-|------------+-------------------------------------+---------------------------+----------------------+--------------|
-|            | XF:06BM-BI{Fltr:01-Ax:Y}Mtr         | foils actuator            | MC06 (RGC1)          |            4 |
-|            | XF:06BM-BI{BCT-Ax:Y}Mtr             | vertical stage            | MC06 (RGC1)          |            3 |
-|            | XF:06BM-BI{BPM:1-Ax:Y}Mtr           | NanoBPM                   | MC06 (RGC1)          |            2 |
-|------------+-------------------------------------+---------------------------+----------------------+--------------|
-|            | XF:06BM-PPS{Sh:FE}Pos-Sts           | front end shutter         | PPS                  |              |
-|            | XF:06BM-PPS{Sh:A}Pos-Sts            | A hutch shutter           | PPS                  |              |
-|            | XF:06BMA-OP{FS:1}Pos-Sts            | fluorescent screen        | EPS                  |              |
-|------------+-------------------------------------+---------------------------+----------------------+--------------|
+
+
+* Overview of BMM motor configuration
+
+The contents of the folder are the Delta Tau save files for each of
+the motor controllers.  The following table maps the physical axes to
+the various controllers. 
+
+
+| Instrument         | PV                                  | Motor Description         | controller           | motor number |
+|--------------------+-------------------------------------+---------------------------+----------------------+--------------|
+| F.E. slits         | FE:C06B-OP{Slt:12-Ax:X}size         | horizontal size           | geobrick (mezzanine) |      virtual |
+|                    | FE:C06B-OP{Slt:12-Ax:X}center       | horizontal center         | geobrick (mezzanine) |      virtual |
+|                    | FE:C06B-OP{Slt:12-Ax:Y}size         | vertical size             | geobrick (mezzanine) |      virtual |
+|                    | FE:C06B-OP{Slt:12-Ax:Y}center       | vertical center           | geobrick (mezzanine) |      virtual |
+|                    | FE:C06B-OP{Slt:1-Ax:Hrz}Mtr.VAL     | Slit 1 horizontal         | geobrick (mezzanine) |              |
+|                    | FE:C06B-OP{Slt:1-Ax:Inc}Mtr.VAL     | Slit 1 incline            | geobrick (mezzanine) |              |
+|                    | FE:C06B-OP{Slt:1-Ax:O}Mtr.VAL       | Slit 1 X outboard         | geobrick (mezzanine) |              |
+|                    | FE:C06B-OP{Slt:1-Ax:T}Mtr.VAL       | Slit 1 Y top              | geobrick (mezzanine) |              |
+|                    | FE:C06B-OP{Slt:2-Ax:Hrz}Mtr.VAL     | Slit 2 horizontal         | geobrick (mezzanine) |              |
+|                    | FE:C06B-OP{Slt:2-Ax:Inc}Mtr.VAL     | Slit 2 incline            | geobrick (mezzanine) |              |
+|                    | FE:C06B-OP{Slt:2-Ax:I}Mtr.VAL       | Slit 2 X inboard          | geobrick (mezzanine) |              |
+|                    | FE:C06B-OP{Slt:2-Ax:B}Mtr.VAL       | Slit 2 Y bottom           | geobrick (mezzanine) |              |
+|--------------------+-------------------------------------+---------------------------+----------------------+--------------|
+| Mirror 1           | XF:06BM-OP{Mir:M1-Ax:YU}Mtr         | upstream jack             | MC01 (mezzanine)     |            1 |
+|                    | XF:06BM-OP{Mir:M1-Ax:YDO}Mtr        | downstream, outboard jack | MC01 (mezzanine)     |            2 |
+|                    | XF:06BM-OP{Mir:M1-Ax:YDI}Mtr        | downstream, inboard jack  | MC01 (mezzanine)     |            3 |
+|                    | XF:06BM-OP{Mir:M1-Ax:XU}Mtr         | upstream lateral          | MC01 (mezzanine)     |            4 |
+|                    | XF:06BM-OP{Mir:M1-Ax:XD}Mtr         | downstream lateral        | MC01 (mezzanine)     |            5 |
+|--------------------+-------------------------------------+---------------------------+----------------------+--------------|
+| Filters            | XF:06BMA-BI{Fltr:01-Ax:Y1}Mtr       | assembly #1               | MC05 (RGA)           |            6 |
+|                    | XF:06BMA-BI{Fltr:01-Ax:Y2}Mtr       | assembly #2               | MC05 (RGA)           |            7 |
+|--------------------+-------------------------------------+---------------------------+----------------------+--------------|
+| DCM                | XF:06BMA-OP{Mono:DCM1-Ax:Bragg}Mtr  | DCM Bragg                 | MC02 (RGA)           |            1 |
+|                    | XF:06BMA-OP{Mono:DCM1-Ax:Bragg2}Mtr | Bragg second encoder      | MC02 (RGA            |              |
+|                    | XF:06BMA-OP{Mono:DCM1-Ax:P2}Mtr     | 2nd crystal pitch         | MC02 (RGA)           |            3 |
+|                    | XF:06BMA-OP{Mono:DCM1-Ax:R2}Mtr     | 2nd crystal roll          | MC02 (RGA)           |            4 |
+|                    | XF:06BMA-OP{Mono:DCM1-Ax:Per2}Mtr   | 2nd crystal perpendicular | MC02 (RGA)           |            5 |
+|                    | XF:06BMA-OP{Mono:DCM1-Ax:Par2}Mtr   | 2nd crystal parallel      | MC02 (RGA)           |            6 |
+|                    | XF:06BMA-OP{Mono:DCM1-Ax:X}Mtr      | lateral translation       | MC02 (RGA)           |            7 |
+|                    | XF:06BMA-OP{Mono:DCM1-Ax:Y}Mtr      | vertical translation      | MC02 (RGA)           |            8 |
+|--------------------+-------------------------------------+---------------------------+----------------------+--------------|
+| DM2 slits          | XF:06BMA-OP{Slt:01-Ax:O}Mtr         | outboard                  | MC03 (RGA)           |            1 |
+|                    | XF:06BMA-OP{Slt:01-Ax:I}Mtr         | inboard                   | MC03 (RGA)           |            2 |
+|                    | XF:06BMA-OP{Slt:01-Ax:T}Mtr         | top                       | MC03 (RGA)           |            3 |
+|                    | XF:06BMA-OP{Slt:01-Ax:B}Mtr         | bottom                    | MC03 (RGA)           |            4 |
+|--------------------+-------------------------------------+---------------------------+----------------------+--------------|
+| DM2 screen         | XF:06BMA-BI{Diag:02-Ax:Y}Mtr        | vertical actuator         | MC04 (RGA)           |            7 |
+|--------------------+-------------------------------------+---------------------------+----------------------+--------------|
+| Mirror 2           | XF:06BMA-OP{Mir:M2-Ax:YU}Mtr        | upstream jack             | MC04 (RGA)           |            1 |
+|                    | XF:06BMA-OP{Mir:M2-Ax:YDO}Mtr       | downstream, outboard jack | MC04 (RGA)           |            2 |
+|                    | XF:06BMA-OP{Mir:M2-Ax:YDI}Mtr       | downstream, inboard jack  | MC04 (RGA)           |            3 |
+|                    | XF:06BMA-OP{Mir:M2-Ax:XU}Mtr        | upstream lateral          | MC04 (RGA)           |            4 |
+|                    | XF:06BMA-OP{Mir:M2-Ax:XD}Mtr        | downstream lateral        | MC04 (RGA)           |            5 |
+|                    | XF:06BMA-OP{Mir:M2-Ax:Bend}Mtr      | bender                    | MC04 (RGA)           |            6 |
+|--------------------+-------------------------------------+---------------------------+----------------------+--------------|
+| Mirror 3           | XF:06BMA-OP{Mir:M3-Ax:YU}Mtr        | upstream jack             | MC05 (RGA)           |            1 |
+|                    | XF:06BMA-OP{Mir:M3-Ax:YDO}Mtr       | downstream, outboard jack | MC05 (RGA)           |            2 |
+|                    | XF:06BMA-OP{Mir:M3-Ax:YDI}Mtr       | downstream, inboard jack  | MC05 (RGA)           |            3 |
+|                    | XF:06BMA-OP{Mir:M3-Ax:XU}Mtr        | upstream lateral          | MC05 (RGA)           |            4 |
+|                    | XF:06BMA-OP{Mir:M3-Ax:XD}Mtr        | downstream lateral        | MC05 (RGA)           |            5 |
+|--------------------+-------------------------------------+---------------------------+----------------------+--------------|
+| E.S. FS            | XF:06BM-BI{FS:03-Ax:Y}Mtr           | fluorescent screen        | MC06 (RGC1)          |            1 |
+|--------------------+-------------------------------------+---------------------------+----------------------+--------------|
+| DM3 slits          | XF:06BM-BI{Slt:02-Ax:O}Mtr          | outboard                  | MC06 (RGC1)          |            5 |
+|                    | XF:06BM-BI{Slt:02-Ax:I}Mtr          | inboard                   | MC06 (RGC1)          |            6 |
+|                    | XF:06BM-BI{Slt:02-Ax:T}Mtr          | top                       | MC06 (RGC1)          |            7 |
+|                    | XF:06BM-BI{Slt:02-Ax:B}Mtr          | bottom                    | MC06 (RGC1)          |            8 |
+|--------------------+-------------------------------------+---------------------------+----------------------+--------------|
+| DM3                | XF:06BM-BI{Fltr:01-Ax:Y}Mtr         | foils actuator            | MC06 (RGC1)          |            4 |
+|                    | XF:06BM-BI{BCT-Ax:Y}Mtr             | vertical stage            | MC06 (RGC1)          |            3 |
+|                    | XF:06BM-BI{BPM:1-Ax:Y}Mtr           | NanoBPM                   | MC06 (RGC1)          |            2 |
+|--------------------+-------------------------------------+---------------------------+----------------------+--------------|
+| shutters & screens | XF:06BM-PPS{Sh:FE}Pos-Sts           | front end shutter         | PPS                  |              |
+|                    | XF:06BM-PPS{Sh:A}Pos-Sts            | A hutch shutter           | PPS                  |              |
+|                    | XF:06BMA-OP{FS:1}Pos-Sts            | fluorescent screen        | EPS                  |              |
+|--------------------+-------------------------------------+---------------------------+----------------------+--------------|
