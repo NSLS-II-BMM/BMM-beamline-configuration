@@ -6,6 +6,9 @@ The contents of the folder are the Delta Tau save files for each of
 the motor controllers.  The following table maps the physical axes to
 the various controllers. 
 
+To Do: Include end station axes and motor controllers in RGC1.
+Eventually include gonio axes and RGC2
+
 
 | Instrument         | PV                                  | Motor Description         | controller           | motor number |
 |--------------------+-------------------------------------+---------------------------+----------------------+--------------|
