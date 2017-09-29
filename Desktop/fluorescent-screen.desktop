@@ -1,0 +1,9 @@
+#!/bin/sed -ne s/^Exec=//e
+[Desktop Entry]
+Type=Application
+Exec=/opt/epics/opi/opi_BMM/MC06/opi_MC/start_opi_MC06_FS.sh
+Icon=/opt/epics/opi/opi_BMM/MC06/opi_MC/BMM-fs-220.png
+Name=End Station Fluorescence Screen
+GenericName=End Station Fluorescence Screen
+Categories=Apps;
+Name[en_GB]=End Station Fluorescence Screen
