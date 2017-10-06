@@ -1,0 +1,11 @@
+record(bi,"$(Sys){$(Dev)}$(Sig)") {
+    field(DESC, "$(DESC)")
+    field(SCAN, "1 second")
+    field(DTYP, "EtherIP")
+    field(INP, "@$(PLC) $(Tag) S 1")
+    field(ZNAM,"$(ZNAM)")
+    field(ONAM,"$(ONAM)")
+    field(ZSV,"$(ZSV)")
+    field(OSV,"$(OSV)")
+}
+

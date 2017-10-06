@@ -1,0 +1,5 @@
+file /opt/epics/modules/SAI/db/SAI_Global.db {
+pattern { ASYNPORT,TMOT, SCAN,		P,		R,		T,		NAME,						A1,		A2,		A3,		A4,		A5,		A6,		A7,		A8}
+        { "pmac",  "1",	".2 second",	"XF:06BMA-OP",	"{MC:02-Ax:",	"{Mono:DCM1}",	"Mono:DCM1",	"Bragg}Mtr",	"Bragg2}Mtr",	"P2}Mtr",	"R2}Mtr",		"Per2}Mtr",	"Par2}Mtr",	"X}Mtr",	"Y}Mtr"}
+}
+#EOF

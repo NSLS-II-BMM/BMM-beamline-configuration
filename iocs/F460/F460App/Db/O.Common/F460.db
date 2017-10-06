@@ -1,0 +1,2303 @@
+# F460 db
+# vim: ts=2 sw=2
+# ID string is > 40 chars. Thus the waveform here.
+record(waveform,"$(Sys,undefined)$(Dev,undefined)IDN-I") {
+  field(DESC, "Identification string")
+  field(DTYP, "stream")
+  field(PINI, "$(PINI,recursive)")
+  field(FTVL, "CHAR")
+  field(NELM, "100")
+  field(SCAN, "Passive")
+  field(INP, "@F460.protocol getId(100) $(PORT) 0")
+}
+
+record(bo,"$(Sys,undefined)$(Dev,undefined)Cmd:RdIDN") {
+  field(DESC, "Identification string")
+  field(DTYP, "stream")
+  field(PINI, "$(PINI,recursive)")
+  field(OUT, "@F460.protocol parseId($(Sys,undefined)$(Dev,undefined)) $(PORT) 0")
+  field(ZNAM, "Read version")
+  field(ONAM, "Read version")
+}
+
+record(stringin, "$(Sys,undefined)$(Dev,undefined)Model-I") {
+  field(DESC, "Model number")
+}
+record(stringin, "$(Sys,undefined)$(Dev,undefined)Serial-I") {
+  field(DESC, "Serial number")
+}
+record(stringin, "$(Sys,undefined)$(Dev,undefined)Firmware-I") {
+  field(DESC, "Firmware revision")
+}
+
+record(longin, "$(Sys,undefined)$(Dev,undefined)ErrCode-Sts") {
+  field(DESC, "Last error code")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)BErrors-I")
+}
+
+record(stringin, "$(Sys,undefined)$(Dev,undefined)ErrDesc-Sts") {
+  field(DESC, "Last error description")
+}
+
+record(bo, "$(Sys,undefined)$(Dev,undefined)Cmd:AckErr") {
+  field(DESC, "Acknowledge error")
+  field(ZNAM, "Acknowledge error")
+  field(ONAM, "Acknowledge error")
+  
+#  field(TPRO, 1)
+  field(DTYP, "stream")
+  field(OUT, "@F460.protocol readError($(Sys,undefined)$(Dev,undefined)) $(PORT) 0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)ErrCount-I")
+  field(ZSV, "NO_ALARM")
+  field(OSV, "NO_ALARM")
+}
+
+record(compress, "$(Sys,undefined)$(Dev,undefined)BErrors-I") {
+  field(DESC, "Previous errors")
+
+  field(ALG, "Circular Buffer")
+  field(INP, "$(Sys,undefined)$(Dev,undefined)ErrCode-Sts.VAL NPP")
+  field(NSAM, "$(BUFSZ)")
+}
+
+record(bo,"$(Sys,undefined)$(Dev,undefined)Cmd:Abort") {
+  field(DESC, "Abort")
+  field(DTYP, "stream")
+  field(OUT, "@F460.protocol abort($(Sys,undefined)$(Dev,undefined)) $(PORT) 0")
+  field(ZNAM, "Abort")
+  field(ONAM, "Abort")
+}
+
+# State commands: init, save, recall, reset
+record(bo, "$(Sys,undefined)$(Dev,undefined)Cmd:Init") {
+  field(DESC, "Initiate on valid trigger")
+  field(DTYP, "stream")
+  field(ZNAM, "Init")
+  field(ONAM, "Init")
+  field(OUT, "@F460.protocol init() $(PORT) 0")
+}
+
+record(bo, "$(Sys,undefined)$(Dev,undefined)Cmd:Save") {
+  field(DESC, "Save state to flash")
+  field(DTYP, "stream")
+  field(ZNAM, "Save")
+  field(ONAM, "Save")
+  field(OUT, "@F460.protocol save() $(PORT) 0")
+}
+
+record(bo, "$(Sys,undefined)$(Dev,undefined)Cmd:Recall") {
+  field(DESC, "Recall state from flash")
+  field(DTYP, "stream")
+  field(ZNAM, "Recall")
+  field(ONAM, "Recall")
+  field(OUT, "@F460.protocol recall() $(PORT) 0")
+}
+
+record(bo, "$(Sys,undefined)$(Dev,undefined)Cmd:Reset") {
+  field(DESC, "Reset device")
+  field(DTYP, "stream")
+  field(ZNAM, "Reset")
+  field(ONAM, "Reset")
+  field(OUT, "@F460.protocol reset() $(PORT) 0")
+}
+
+record(seq, "$(Sys,undefined)$(Dev,undefined)Cmd:ResetSeq") {
+  field(DESC, "Reset sequence")
+  field(DLY1, "0.0")
+  field(LNK1, "$(Sys,undefined)$(Dev,undefined)Cmd:Save PP")
+  field(DLY2, "3.0")
+  field(LNK2, "$(Sys,undefined)$(Dev,undefined)Cmd:Reset PP")
+  field(DLY3, "4.0")
+  field(LNK3, "$(Sys,undefined)$(Dev,undefined)Cmd:Recall PP")
+  field(DLY4, "5.0")
+  field(LNK4, "$(Sys,undefined)$(Dev,undefined)Cmd:Init PP")
+}
+
+# CALIB:COMP Compensation write for all channels
+record(calcout, "$(Sys,undefined)$(Dev,undefined)DB:WrtComp_") {
+  field(DESC, "Gain/offset compensation (all ch)")
+  field(DTYP, "stream")
+  field(CALC, "0")
+  field(INPA, "$(Sys,undefined)$(Dev,undefined)CH0:GAIN_OUT.VAL")
+  field(INPB, "$(Sys,undefined)$(Dev,undefined)CH0:OFF_OUT.VAL")
+  field(INPC, "$(Sys,undefined)$(Dev,undefined)CH1:GAIN_OUT.VAL")
+  field(INPD, "$(Sys,undefined)$(Dev,undefined)CH1:OFF_OUT.VAL")
+  field(INPE, "$(Sys,undefined)$(Dev,undefined)CH2:GAIN_OUT.VAL")
+  field(INPF, "$(Sys,undefined)$(Dev,undefined)CH2:OFF_OUT.VAL")
+  field(INPG, "$(Sys,undefined)$(Dev,undefined)CH3:GAIN_OUT.VAL")
+  field(INPH, "$(Sys,undefined)$(Dev,undefined)CH3:OFF_OUT.VAL")
+  field(OUT, "@F460.protocol setComp($(Sys,undefined)$(Dev,undefined)) $(PORT) 0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Cmd:RdComp")
+}
+
+record(bo, "$(Sys,undefined)$(Dev,undefined)Cmd:WrtComp") {
+  field(DESC, "Gain/offset compensation (all ch)")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)DB:WrtComp_")
+  field(ZNAM, "Write")
+  field(ONAM, "Write")
+}
+
+# CALIB:COMP Read all channels compensation settings
+record(fanout, "$(Sys,undefined)$(Dev,undefined)Cmd:RdComp") {
+  field(LNK1, "$(Sys,undefined)$(Dev,undefined)Ch0:RdComp")
+  field(LNK2, "$(Sys,undefined)$(Dev,undefined)Ch1:RdComp")
+  field(LNK3, "$(Sys,undefined)$(Dev,undefined)Ch2:RdComp")
+  field(LNK4, "$(Sys,undefined)$(Dev,undefined)Ch3:RdComp")
+}
+
+## CALIB:SOUR : get/set internal calibration source
+record(mbbo, "$(Sys,undefined)$(Dev,undefined)IntSrc-SP") {
+  field(DESC, "Internal calibration source")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(OUT, "@F460.protocol writeInt($(Sys,undefined)$(Dev,undefined),CALIB:SOUR) $(PORT) 0")
+  field(ZRST, "Channel 0")
+  field(ONST, "Channel 1")
+  field(TWST, "Channel 2")
+  field(THST, "Channel 3")
+  field(FRST, "External")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)IntSrc-I")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(mbbi, "$(Sys,undefined)$(Dev,undefined)IntSrc-I") {
+  field(DESC, "Internal calibration source")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(INP, "@F460.protocol readInt($(Sys,undefined)$(Dev,undefined),CALIB:SOUR) $(PORT) 0")
+  field(ZRST, "Channel 0")
+  field(ONST, "Channel 1")
+  field(TWST, "Channel 2")
+  field(THST, "Channel 3")
+}
+
+record(bo, "$(Sys,undefined)$(Dev,undefined)Cmd:ExtSrc") {
+  field(DESC, "External source")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(ONAM, "Set ext source")
+  field(ZNAM, "Set ext source")
+  field(OUT, "@F460.protocol writeIntArg($(Sys,undefined)$(Dev,undefined),CALIB:SOUR,5) $(PORT) 0")
+}
+
+## OUT:FREQuency (0~3) 
+record(mbbo, "$(Sys,undefined)$(Dev,undefined)Freq-SP") {
+  field(DESC, "TTL mapping frequency monitoring")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(OUT, "@F460.protocol writeInt($(Sys,undefined)$(Dev,undefined),OUT:FREQ) $(PORT) 0")
+  field(ZRST, "Bipolar")
+  field(ONST, "Positive only")
+  field(TWST, "Negative only")
+  field(THST, "Absolute")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Freq-I")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(mbbi, "$(Sys,undefined)$(Dev,undefined)Freq-I") {
+  field(DESC, "TTL mapping frequency monitoring")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(INP, "@F460.protocol readInt($(Sys,undefined)$(Dev,undefined),OUT:FREQ) $(PORT) 0")
+  field(ZRST, "Bipolar")
+  field(ONST, "Positive only")
+  field(TWST, "Negative only")
+  field(THST, "Absolute")
+}
+
+# ## OUT:HIVOltage:MAXvalue (not yet supported)
+# record(ao, "$(Sys,undefined)$(Dev,undefined)HIVO_MAX_OUT") {
+#   field(DESC, "Max ext HV setting")
+#   field(DTYP, "stream")
+#   field(SCAN, "Passive")
+#   field(OUT, "@F460.protocol writeFloat($(Sys,undefined)$(Dev,undefined),OUT:HIVO:MAX) $(PORT) 0")
+#   field(EGU, "V")
+#   field(FLNK, "$(Sys,undefined)$(Dev,undefined)HIVO_MAX_IN")
+#   field(PREC, "$(PREC,recursive)")
+#   info(autosaveFields_pass0, "VAL")
+# }
+# 
+# record(ai, "$(Sys,undefined)$(Dev,undefined)HIVO_MAX_IN") {
+#   field(DESC, "Max ext HV setting")
+#   field(DTYP, "stream")
+#   field(SCAN, "Passive")
+#   field(PINI, "$(PINI,recursive)")
+#   field(EGU, "V")
+#   field(INP, "@F460.protocol readFloat($(Sys,undefined)$(Dev,undefined),OUT:HIVO:MAX) $(PORT) 0")
+#   field(PREC, "$(PREC,recursive)")
+# }
+
+## OUT:HIVOltage:SUPply? (maximum allowable external HV)
+record(ai, "$(Sys,undefined)$(Dev,undefined)HiVoSup-I") {
+  field(DESC, "Max external HV setting")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(EGU, "V")
+  field(INP, "@F460.protocol readFloatEGU($(Sys,undefined)$(Dev,undefined),OUT:HIVO:SUP,V) $(PORT) 0")
+  field(PREC, "$(PREC,recursive)")
+}
+
+## OUT:HIVOltage:VOLts
+record(ao, "$(Sys,undefined)$(Dev,undefined)HiVo-SP") {
+  field(DESC, "HV1 voltage")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(OUT, "@F460.protocol writeFloat($(Sys,undefined)$(Dev,undefined),OUT:HIVO:VOL) $(PORT) 0")
+  field(EGU, "V")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)HiVo-I")
+  field(PREC, "$(PREC,recursive)")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)HiVo-I") {
+  field(DESC, "HV1 voltage")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(EGU, "V")
+  field(INP, "@F460.protocol readFloatEGU($(Sys,undefined)$(Dev,undefined),OUT:HIVO:VOL,V) $(PORT) 0")
+  field(PREC, "$(PREC,recursive)")
+}
+
+## FET:HIVOltage? 
+#     Read HV readback ADC.  Returns {HV1}.
+record(ai, "$(Sys,undefined)$(Dev,undefined)HiVoVolRbv-I") {
+  field(DESC, "HV1 setting")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(EGU, "V")
+  field(INP, "@F460.protocol readFloatEGU($(Sys,undefined)$(Dev,undefined),FET:HIVO,V) $(PORT) 0")
+  field(PREC, "$(PREC,recursive)")
+}
+
+## OUT:HIVO:ENable - enable/disable HV power supply
+record(bo, "$(Sys,undefined)$(Dev,undefined)Cmd:HiVoEn") {
+  field(DESC, "HV supply enable")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(OUT, "@F460.protocol writeInt($(Sys,undefined)$(Dev,undefined),OUT:HIVO:EN) $(PORT) 0")
+  field(ZNAM, "Disabled")
+  field(ONAM, "Enabled")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)HiVoEn-I")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(bi, "$(Sys,undefined)$(Dev,undefined)HiVoEn-I") {
+  field(DESC, "HV supply enable")
+  field(DTYP, "stream")
+  field(PINI, "$(PINI,recursive)")
+  field(INP, "@F460.protocol readInt($(Sys,undefined)$(Dev,undefined),OUT:HIVO:EN) $(PORT) 0")
+  field(ZNAM, "Disabled")
+  field(ONAM, "Enabled")
+}
+
+## OUT:MONitor get/set position function
+#      Set (query) the position function that is performed internally by the F460, and thus 
+#       the signals that are put out on the analog voltage and frequency monitor outputs.
+#      0 = no position calculation, monitor outputs map the input currents
+#      1 = no position calculation, monitor outputs map the compensated input currents
+#      2 = monitor outputs A and B map X and Y positions based on the currently set calculation
+#      3 = monitor outputs are controlled or using PID
+#
+record(mbbo, "$(Sys,undefined)$(Dev,undefined)Mon-SP") {
+  field(DESC, "Position function")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(OUT, "@F460.protocol writeInt($(Sys,undefined)$(Dev,undefined),OUT:MON) $(PORT) 0")
+  field(ZRST, "Map input")
+  field(ONST, "Map compensated")
+  field(TWST, "Mon A,B map X,Y")
+  field(THST, "PID")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Mon-I")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(mbbi, "$(Sys,undefined)$(Dev,undefined)Mon-I") {
+  field(DESC, "Position function")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(ZRST, "Map input")
+  field(ONST, "Map compensated")
+  field(TWST, "Mon A,B map X,Y")
+  field(THST, "PID")
+  field(INP, "@F460.protocol readInt($(Sys,undefined)$(Dev,undefined),OUT:MON) $(PORT) 0")
+}
+
+## CONFigure:PERiod
+# Set (query) averaging period Per in seconds.  Applies to all ranges.  
+# Value will be corrected for 1/ADCrate granularity. 
+record(ai, "$(Sys,undefined)$(Dev,undefined)Per-I") {
+  field(DESC, "Averaging period for all ranges")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(EGU, "sec")
+  field(INP, "@F460.protocol readFloat($(Sys,undefined)$(Dev,undefined),CONF:PER) $(PORT) 0")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ao, "$(Sys,undefined)$(Dev,undefined)Per-SP") {
+  field(DESC, "Averaging period for all ranges")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(OUT, "@F460.protocol writeFloat($(Sys,undefined)$(Dev,undefined),CONF:PER) $(PORT) 0")
+  field(EGU, "sec")
+  field(DRVL, "0.0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Per-I")
+  field(PREC, "$(PREC,recursive)")
+  info(autosaveFields_pass0, "VAL")
+}
+
+
+## FET:ANAlogIn? [numSamples]
+#     Returns analog inputs for the numSamples most recent triggers for the two analog inputs.  
+#     Returns: numSamples *{averaging period, anaIn1, anaIn2, timestamp, trigger count, CR LF}.  It is only possible to request multiple samples if TRIGger:BUFfer > 0.  Otherwise, numSamples  should be omitted.
+#     Returns up to 12 samples.  If numSamples and TRIGger:BUFfer are greater than that, this command may be used multiple times to drain the buffer.
+#
+record(bo, "$(Sys,undefined)$(Dev,undefined)Cmd:RdAna") {
+  field(DESC, "Analog inputs")
+  field(DTYP, "stream")
+  #field(SCAN, "Passive")
+  #field(SCAN, "1 second")
+  field(PINI, "$(PINI,recursive)")
+  field(ZNAM, "Read analog")
+  field(ONAM, "Read analog")
+  field(OUT, "@F460.protocol get1Ana($(Sys,undefined)$(Dev,undefined),Ana) $(PORT) 0")
+  #field(TPRO, 1)
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ana:Per") {
+  field(DESC, "Analog input averaging period")
+  field(EGU, "sec")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ana:Ai1") {
+  field(DESC, "Analog input 1")
+  field(EGU, "V")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ana:Ai2") {
+  field(DESC, "Analog input 2")
+  field(EGU, "V")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ana:Time-I") {
+  field(DESC, "Analog input timestamp")
+  field(EGU, "sec")
+  field(PREC, "3")
+}
+
+record(longin, "$(Sys,undefined)$(Dev,undefined)Ana:TrigCnt-I") {
+  field(DESC, "Analog input trigger count")
+  #field(TPRO, 1)
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Ana:BPer-I")
+}
+
+#-
+record(compress, "$(Sys,undefined)$(Dev,undefined)Ana:BPer-I") {
+  field(DESC, "Analog input averaging period")
+  field(EGU, "sec")
+  field(ALG, "Circular Buffer")
+  field(INP, "$(Sys,undefined)$(Dev,undefined)Ana:Per.VAL NPP")
+  field(NSAM, "$(BUFSZ)")
+
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Ana:BAi1-I")
+}
+
+record(compress, "$(Sys,undefined)$(Dev,undefined)Ana:BAi1-I") {
+  field(DESC, "Analog input 1")
+  field(EGU, "V")
+
+  field(ALG, "Circular Buffer")
+  field(INP, "$(Sys,undefined)$(Dev,undefined)Ana:Ai1.VAL NPP")
+  field(NSAM, "$(BUFSZ)")
+
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Ana:BAi2-I")
+}
+
+record(compress, "$(Sys,undefined)$(Dev,undefined)Ana:BAi2-I") {
+  field(DESC, "Analog input 2")
+  field(EGU, "V")
+
+  field(ALG, "Circular Buffer")
+  field(INP, "$(Sys,undefined)$(Dev,undefined)Ana:Ai2.VAL NPP")
+  field(NSAM, "$(BUFSZ)")
+
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Ana:BTime")
+}
+
+record(compress, "$(Sys,undefined)$(Dev,undefined)Ana:BTime") {
+  field(DESC, "Analog input timestamp")
+  field(EGU, "sec")
+
+  field(ALG, "Circular Buffer")
+  field(INP, "$(Sys,undefined)$(Dev,undefined)Ana:Time-I.VAL NPP")
+  field(NSAM, "$(BUFSZ)")
+
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Ana:BNum-I")
+}
+
+record(compress, "$(Sys,undefined)$(Dev,undefined)Ana:BNum-I") {
+  field(DESC, "Analog input number of samples")
+  field(ALG, "Circular Buffer")
+  field(INP, "$(Sys,undefined)$(Dev,undefined)Ana:TrigCnt-I.VAL NPP")
+  field(NSAM, "$(BUFSZ)")
+}
+
+#
+## FET:SENsor? [numSamples] 
+#
+#     Returns currents for the numSamples  most recent triggers for the four current input channels.  
+#     Returns: numSamples *{averaging period, curr1, curr2, curr3, curr4, timestamp, trigger count, CR LF}.  It is only possible to request multiple samples if TRIGger:BUFfer > 0.  Otherwise, numSamples  should be omitted. 
+#     Returns up to 12 samples.  If numSamples and TRIGger:BUFfer are greater than that, this command may be used multiple times to drain the buffer.
+#
+record(bo, "$(Sys,undefined)$(Dev,undefined)Cmd:RdSen") {
+  field(DESC, "Read sensor inputs")
+  field(DTYP, "stream")
+  field(PINI, "$(PINI,recursive)")
+  #field(SCAN, "Passive")
+  #field(SCAN, "1 second")
+  field(ZNAM, "Read sensor")
+  field(ONAM, "Read sensor")
+  field(OUT, "@F460.protocol get1Sen($(Sys,undefined)$(Dev,undefined),Sen,SEN) $(PORT) 0")
+  #field(TPRO, 1)
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Sen:Per") {
+  field(DESC, "Sensor input averaging period")
+  field(EGU, "sec")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Sen:I0-I") {
+  field(DESC, "Sensor input 0")
+  field(EGU, "V")
+  field(PREC, "$(PREC,recursive)")
+  #field(TPRO, 1)
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Sen:I1-I") {
+  field(DESC, "Sensor input 1")
+  field(EGU, "V")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Sen:I2-I") {
+  field(DESC, "Sensor input 2")
+  field(EGU, "V")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Sen:I3-I") {
+  field(DESC, "Sensor input 3")
+  field(EGU, "V")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Sen:Time-I") {
+  field(DESC, "Sensor input timestamp")
+  field(EGU, "sec")
+  field(PREC, "3")
+}
+
+record(longin, "$(Sys,undefined)$(Dev,undefined)Sen:TrigCnt-I") {
+  field(DESC, "Sensor input trigger count")
+  #field(TPRO, 1)
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Sen:BPer-I")
+}
+
+#-
+record(compress, "$(Sys,undefined)$(Dev,undefined)Sen:BPer-I") {
+  field(DESC, "Sensor input averaging period")
+  field(EGU, "sec")
+  field(ALG, "Circular Buffer")
+  field(INP, "$(Sys,undefined)$(Dev,undefined)Sen:Per.VAL NPP")
+  field(NSAM, "$(BUFSZ)")
+
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Sen:BI0-I")
+}
+
+record(compress, "$(Sys,undefined)$(Dev,undefined)Sen:BI0-I") {
+  field(DESC, "Sensor input 0 buffer")
+  field(EGU, "V")
+
+  field(ALG, "Circular Buffer")
+  field(INP, "$(Sys,undefined)$(Dev,undefined)Sen:I0-I.VAL NPP")
+  field(NSAM, "$(BUFSZ)")
+
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Sen:BI1-I")
+}
+
+record(compress, "$(Sys,undefined)$(Dev,undefined)Sen:BI1-I") {
+  field(DESC, "Sensor input 1 buffer")
+  field(EGU, "V")
+
+  field(ALG, "Circular Buffer")
+  field(INP, "$(Sys,undefined)$(Dev,undefined)Sen:I1-I.VAL NPP")
+  field(NSAM, "$(BUFSZ)")
+
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Sen:BI2-I")
+}
+record(compress, "$(Sys,undefined)$(Dev,undefined)Sen:BI2-I") {
+  field(DESC, "Sensor input 2 buffer")
+  field(EGU, "V")
+
+  field(ALG, "Circular Buffer")
+  field(INP, "$(Sys,undefined)$(Dev,undefined)Sen:I2-I.VAL NPP")
+  field(NSAM, "$(BUFSZ)")
+
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Sen:BI3-I")
+}
+record(compress, "$(Sys,undefined)$(Dev,undefined)Sen:BI3-I") {
+  field(DESC, "Sensor input 3 buffer")
+  field(EGU, "V")
+
+  field(ALG, "Circular Buffer")
+  field(INP, "$(Sys,undefined)$(Dev,undefined)Sen:I3-I.VAL NPP")
+  field(NSAM, "$(BUFSZ)")
+
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Sen:BTime-I")
+}
+
+record(compress, "$(Sys,undefined)$(Dev,undefined)Sen:BTime-I") {
+  field(DESC, "Sensor input timestamp")
+  field(EGU, "sec")
+
+  field(ALG, "Circular Buffer")
+  field(INP, "$(Sys,undefined)$(Dev,undefined)Sen:Time-I.VAL NPP")
+  field(NSAM, "$(BUFSZ)")
+
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Sen:BNum-I")
+}
+
+record(compress, "$(Sys,undefined)$(Dev,undefined)Sen:BNum-I") {
+  field(DESC, "Sensor input number of samples")
+  field(ALG, "Circular Buffer")
+  field(INP, "$(Sys,undefined)$(Dev,undefined)Sen:TrigCnt-I.VAL NPP")
+  field(NSAM, "$(BUFSZ)")
+}
+
+#
+#
+## FET:CURrents? [numSamples]
+#
+#     Returns uncompensated currents for the numSamples  most recent triggers for the four current input channels.  
+#     Returns: numSamples *{averaging period, curr1, curr2, curr3, curr4, timestamp, trigger count, CR LF}.  It is only possible to request multiple samples if TRIGger:BUFfer > 0.  Otherwise, numSamples  should be omitted.
+#    
+#     Returns up to 12 samples.  If numSamples and TRIGger:BUFfer are greater than that, this command may be used multiple times to drain the buffer.
+record(bo, "$(Sys,undefined)$(Dev,undefined)Cmd:RdCur") {
+  field(DESC, "Read current inputs")
+  field(DTYP, "stream")
+  field(PINI, "$(PINI,recursive)")
+  field(ZNAM, "Read current")
+  field(ONAM, "Read current")
+  field(OUT, "@F460.protocol get1Sen($(Sys,undefined)$(Dev,undefined),Cur,CUR) $(PORT) 0")
+  #field(TPRO, 1)
+  #field(SCAN, "Passive")
+  #field(SCAN, "1 second")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Cur:Per") {
+  field(DESC, "Current input averaging period")
+  field(EGU, "sec")
+  field(PREC, "3")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Cur:I0-I") {
+  field(DESC, "Current input 0")
+  field(EGU, "V")
+  field(PREC, "$(PREC,recursive)")
+  #field(TPRO, 1)
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Cur:I1-I") {
+  field(DESC, "Current input 1")
+  field(EGU, "V")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Cur:I2-I") {
+  field(DESC, "Current input 2")
+  field(EGU, "V")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Cur:I3-I") {
+  field(DESC, "Current input 3")
+  field(EGU, "V")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Cur:Time-I") {
+  field(DESC, "Current input timestamp")
+  field(EGU, "sec")
+  field(PREC, "3")
+}
+
+record(longin, "$(Sys,undefined)$(Dev,undefined)Cur:TrigCnt-I") {
+  field(DESC, "Current input trigger count")
+#  field(TPRO, 1)
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Cur:BPer-I")
+}
+
+#-
+record(compress, "$(Sys,undefined)$(Dev,undefined)Cur:BPer-I") {
+  field(DESC, "Current input averaging period")
+  field(EGU, "sec")
+  field(ALG, "Circular Buffer")
+  field(INP, "$(Sys,undefined)$(Dev,undefined)Cur:Per.VAL NPP")
+  field(NSAM, "$(BUFSZ)")
+
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Cur:BI0-I")
+}
+
+record(compress, "$(Sys,undefined)$(Dev,undefined)Cur:BI0-I") {
+  field(DESC, "Current input 0 buffer")
+  field(EGU, "V")
+
+  field(ALG, "Circular Buffer")
+  field(INP, "$(Sys,undefined)$(Dev,undefined)Cur:I0-I.VAL NPP")
+  field(NSAM, "$(BUFSZ)")
+
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Cur:BI1-I")
+}
+
+record(compress, "$(Sys,undefined)$(Dev,undefined)Cur:BI1-I") {
+  field(DESC, "Current input 1 buffer")
+  field(EGU, "V")
+
+  field(ALG, "Circular Buffer")
+  field(INP, "$(Sys,undefined)$(Dev,undefined)Cur:I1-I.VAL NPP")
+  field(NSAM, "$(BUFSZ)")
+
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Cur:BI2-I")
+}
+record(compress, "$(Sys,undefined)$(Dev,undefined)Cur:BI2-I") {
+  field(DESC, "Current input 2 buffer")
+  field(EGU, "V")
+
+  field(ALG, "Circular Buffer")
+  field(INP, "$(Sys,undefined)$(Dev,undefined)Cur:I2-I.VAL NPP")
+  field(NSAM, "$(BUFSZ)")
+
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Cur:BI3-I")
+}
+record(compress, "$(Sys,undefined)$(Dev,undefined)Cur:BI3-I") {
+  field(DESC, "Current input 3 buffer")
+  field(EGU, "V")
+
+  field(ALG, "Circular Buffer")
+  field(INP, "$(Sys,undefined)$(Dev,undefined)Cur:I3-I.VAL NPP")
+  field(NSAM, "$(BUFSZ)")
+
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Cur:BTime-I")
+}
+
+record(compress, "$(Sys,undefined)$(Dev,undefined)Cur:BTime-I") {
+  field(DESC, "Current input timestamp")
+  field(EGU, "sec")
+
+  field(ALG, "Circular Buffer")
+  field(INP, "$(Sys,undefined)$(Dev,undefined)Cur:Time-I.VAL NPP")
+  field(NSAM, "$(BUFSZ)")
+
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Cur:BNum-I")
+}
+
+record(compress, "$(Sys,undefined)$(Dev,undefined)Cur:BNum-I") {
+  field(DESC, "Current input number of samples")
+  field(ALG, "Circular Buffer")
+  field(INP, "$(Sys,undefined)$(Dev,undefined)Cur:TrigCnt-I.VAL NPP")
+  field(NSAM, "$(BUFSZ)")
+}
+#
+#
+#
+## FET:DIGital?
+# Read digital status bits.
+#   0 Connected
+#   1 Pending/Busy
+#   2 Error
+#   3 Reserved
+#   4 Output changed (NOT SUPPORTED)
+#   5 Reserved
+#   6 Urgent device error (NOT SUPPORTED)
+#   7 Reserved
+#   8 Updating firmware
+#   9 Starting up
+#   10-15 Reserved
+#   16  Acquisition Running (Measuring)
+#   17  Acquisition Paused  (Waiting for trigger)
+#   18  Acquisition Stopped
+#   23  BNC gate toggling (Triggering)
+# note: mbbiDirect is only 16-bit, need two records and bit shifting with calcout
+
+record(longin, "$(Sys,undefined)$(Dev,undefined)DigStat-I") {
+  field(DESC, "Digital status information")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  #field(PINI, "YES")
+  field(INP, "@F460.protocol readInt($(Sys,undefined)$(Dev,undefined),FET:DIG) $(PORT) 0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)DigCalc1")
+}
+
+record(calcout, "$(Sys,undefined)$(Dev,undefined)DigCalc1") {
+  field(INPA, "$(Sys,undefined)$(Dev,undefined)DigStat-I")
+  field(CALC, "A & 0x0F")
+  field(OUT, "$(Sys,undefined)$(Dev,undefined)DigStat1-I")
+  field(OOPT, "On Change")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)DigCalc2")
+}
+
+record(calcout, "$(Sys,undefined)$(Dev,undefined)DigCalc2") {
+  field(INPA, "$(Sys,undefined)$(Dev,undefined)DigStat-I")
+  field(CALC, "(A >> 16) & 0x0F")
+  field(OUT, "$(Sys,undefined)$(Dev,undefined)DigStat2-I")
+  field(OOPT, "On Change")
+}
+
+record(mbbiDirect, "$(Sys,undefined)$(Dev,undefined)DigStat1-I") {
+  field(DESC, "Lower byte of status")
+  #field(FLNK, "$(Sys,undefined)$(Dev,undefined)DIG_STAT_1_FAN")
+}
+
+record(mbbiDirect, "$(Sys,undefined)$(Dev,undefined)DigStat2-I") {
+  field(DESC, "Upper byte of status")
+  #field(FLNK, "$(Sys,undefined)$(Dev,undefined)DIG_STAT_2_FAN")
+}
+
+#record(fanout, "$(Sys,undefined)$(Dev,undefined)DIG_STAT_1_FAN") {
+#  field(LNK1, "$(Sys,undefined)$(Dev,undefined)CONNECTED_IN")
+#}
+#
+#record(fanout, "$(Sys,undefined)$(Dev,undefined)DIG_STAT_2_FAN") {
+#}
+#
+#record(bi, "$(Sys,undefined)$(Dev,undefined)CONNECTED_IN") {
+#  
+#}
+
+# TODO status bit PVs
+#   0 Connected
+#   1 Pending/Busy
+#   2 Error
+#   3 Reserved
+#   4 Output changed (NOT SUPPORTED)
+#   5 Reserved
+#   6 Urgent device error (NOT SUPPORTED)
+#   7 Reserved
+#   8 Updating firmware
+#   9 Starting up
+#   10-15 Reserved
+#   16  Acquisition Running (Measuring)
+#   17  Acquisition Paused  (Waiting for trigger)
+#   18  Acquisition Stopped
+#   23  BNC gate toggling (Triggering)
+
+
+
+## SYST:COMMunication:TIMEout
+#     Set (query) timeout in seconds.  0 = timeout disabled.  F460 will turn HV off if no valid message is received in the timeout period.  
+record(ai, "$(Sys,undefined)$(Dev,undefined)Timeout-I") {
+  field(DESC, "Comm timeout")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(EGU, "sec")
+  field(INP, "@F460.protocol readFloat($(Sys,undefined)$(Dev,undefined),SYST:COMM:TIME) $(PORT) 0")
+  field(PREC, "3")
+}
+
+record(ao, "$(Sys,undefined)$(Dev,undefined)Timeout-SP") {
+  field(DESC, "Comm timeout")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(OUT, "@F460.protocol writeFloat($(Sys,undefined)$(Dev,undefined),SYST:COMM:TIME) $(PORT) 0")
+  field(EGU, "sec")
+  field(DRVL, "0.0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Timeout-I")
+  field(PREC, "$(PREC,recursive)")
+  info(autosaveFields_pass0, "VAL")
+}
+
+## SYST:COMMunication:IPMODE DHCP|Static
+# Set (query) the IP address setting mode. NOTE: Changing this setting may cause loss of communication with the device for several seconds.
+record(mbbo, "$(Sys,undefined)$(Dev,undefined)IpMode-SP") {
+  field(DESC, "(TCP/IP) IP mode")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(OUT, "@F460.protocol writeStr($(Sys,undefined)$(Dev,undefined),SYST:COMM:IPMODE) $(PORT) 0")
+  field(ZRST, "DHCP")
+  field(ONST, "Static")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Ipmode-I")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(mbbi, "$(Sys,undefined)$(Dev,undefined)Ipmode-I") {
+  field(DESC, "(TCP/IP) IP mode")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  #field(PINI, "YES")
+  field(PINI, "$(PINI,recursive)")
+  field(INP, "@F460.protocol readStr($(Sys,undefined)$(Dev,undefined),SYST:COMM:IPMODE) $(PORT) 0")
+  field(ZRST, "DHCP")
+  field(ONST, "Static")
+}
+
+
+#
+## SYST:COMMunication:IPaddress x.x.x.x
+# Set (query) the IP address.
+record(stringout, "$(Sys,undefined)$(Dev,undefined)Ip-SP") {
+  field(DTYP, "stream")
+  field(DESC, "(TCP/IP) IP")
+  field(OUT, "@F460.protocol writeStr($(Sys,undefined)$(Dev,undefined),SYST:COMM:IP) $(PORT) 0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Ip-I")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(stringin, "$(Sys,undefined)$(Dev,undefined)Ip-I") {
+  field(DTYP, "stream")
+  field(DESC, "(TCP/IP) IP")
+  #field(PINI, "YES")
+  field(PINI, "$(PINI,recursive)")
+  field(INP,"@F460.protocol readStr($(Sys,undefined)$(Dev,undefined),SYST:COMM:IP) $(PORT) 0")
+}
+#
+## SYST:COMMunication:NETmask x.x.x.x
+# Set (query) the subnet mask.
+record(stringout, "$(Sys,undefined)$(Dev,undefined)Netmask-SP") {
+  field(DTYP, "stream")
+  field(DESC, "(TCP/IP) Netmask")
+  field(OUT, "@F460.protocol writeStr($(Sys,undefined)$(Dev,undefined),SYST:COMM:NET) $(PORT) 0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Netmask-I")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(stringin, "$(Sys,undefined)$(Dev,undefined)Netmask-I") {
+  field(DTYP, "stream")
+  field(DESC, "(TCP/IP) Netmask")
+  field(PINI, "$(PINI,recursive)")
+  field(INP,"@F460.protocol readStr($(Sys,undefined)$(Dev,undefined),SYST:COMM:NET) $(PORT) 0")
+}
+#
+## SYST:COMMunication:GATEway x.x.x.x
+# Set (query) the default gateway if IPMODE is Static.
+record(stringout, "$(Sys,undefined)$(Dev,undefined)Gate-SP") {
+  field(DTYP, "stream")
+  field(DESC, "(TCP/IP) Gateway")
+  field(OUT, "@F460.protocol writeStr($(Sys,undefined)$(Dev,undefined),SYST:COMM:GATE) $(PORT) 0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Gate-I")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(stringin, "$(Sys,undefined)$(Dev,undefined)Gate-I") {
+  field(DTYP, "stream")
+  field(DESC, "(TCP/IP) Gateway")
+  field(PINI, "$(PINI,recursive)")
+  field(INP,"@F460.protocol readStr($(Sys,undefined)$(Dev,undefined),SYST:COMM:GATE) $(PORT) 0")
+}
+
+## SYST:COMMunication:LOGipaddress x.x.x.x
+# Set (query) the system log IP address.
+record(stringout, "$(Sys,undefined)$(Dev,undefined)LogIp-SP") {
+  field(DTYP, "stream")
+  field(DESC, "(TCP/IP) Log IP")
+  field(OUT, "@F460.protocol writeStr($(Sys,undefined)$(Dev,undefined),SYST:COMM:LOG) $(PORT) 0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)LogIp-I")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(stringin, "$(Sys,undefined)$(Dev,undefined)LogIp-I") {
+  field(DTYP, "stream")
+  field(DESC, "(TCP/IP) Log IP")
+  field(PINI, "$(PINI,recursive)")
+  field(INP,"@F460.protocol readStr($(Sys,undefined)$(Dev,undefined),SYST:COMM:LOG) $(PORT) 0")
+}
+
+## SYST:SERIALnumber?
+# Query the serial number of the F460.
+record(stringin, "$(Sys,undefined)$(Dev,undefined)Serial-I") {
+  field(DTYP, "stream")
+  field(DESC, "Serial number")
+  field(PINI, "$(PINI,recursive)")
+  field(INP,"@F460.protocol readStr($(Sys,undefined)$(Dev,undefined),SYST:SERIAL) $(PORT) 0")
+}
+
+#
+## SYST:ERRor:COUNt?
+# Query the error/event queue for the number of unread items.  As errors and events may occur at any time, more items may be present in the queue at the time it is actually read.
+record(longin, "$(Sys,undefined)$(Dev,undefined)ErrCount-I") {
+  field(DESC, "Error count")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  #field(PINI, "YES")
+  field(INP, "@F460.protocol readInt($(Sys,undefined)$(Dev,undefined),SYST:ERR:COUN) $(PORT) 0")
+}
+
+## TRIGger:BUFfer {size}  
+# Set (query) the F460 on-board data buffer size (stop count).
+# Setting a buffer size > 0 enables buffered mode.
+record(longout, "$(Sys,undefined)$(Dev,undefined)BufSz-SP") {
+  field(DESC, "Trigger buffer size")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(OUT, "@F460.protocol writeInt($(Sys,undefined)$(Dev,undefined),TRIG:BUF) $(PORT) 0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)BufSz-I")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(longin, "$(Sys,undefined)$(Dev,undefined)BufSz-I") {
+  field(DESC, "Trigger buffer size")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  #field(PINI, "YES")
+  field(INP, "@F460.protocol readInt($(Sys,undefined)$(Dev,undefined),TRIG:BUF) $(PORT) 0")
+}
+
+## TRIGger:BURst {count}  
+# Set (query) the number of samples acquired in a burst (i.e. before a pause).  This is 1 in EXTERNAL_START_HOLD mode.
+#
+record(longout, "$(Sys,undefined)$(Dev,undefined)Burst-SP") {
+  field(DESC, "Trigger burst samples")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(OUT, "@F460.protocol writeInt($(Sys,undefined)$(Dev,undefined),TRIG:BUR) $(PORT) 0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Burst-I")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(longin, "$(Sys,undefined)$(Dev,undefined)Burst-I") {
+  field(DESC, "Trigger burst samples")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  #field(PINI, "YES")
+  field(INP, "@F460.protocol readInt($(Sys,undefined)$(Dev,undefined),TRIG:BUR) $(PORT) 0")
+}
+#
+#
+## TRIGger:MODE {mode}  
+# Set (query) the trigger mode to mode .  The options are: CUSTom, INTernal, EXTERNAL_START, EXTERNAL_START_STOP, EXTERNAL_START_HOLD, EXTERNAL_WINDOWED, 
+record(mbbo, "$(Sys,undefined)$(Dev,undefined)Cmd:TrigMode") {
+  field(DESC, "Trigger mode")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(OUT, "@F460.protocol writeStr($(Sys,undefined)$(Dev,undefined),TRIG:MODE) $(PORT) 0")
+
+  field(ZRST, "CUSTom")
+  field(ONST, "INTernal")
+  field(TWST, "EXTERNAL_START")
+  field(THST, "EXTERNAL_START_STOP")
+  field(FRST, "EXTERNAL_START_HOLD")
+  field(FVST, "EXTERNAL_WINDOWED")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)TrigMode-I")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(mbbi, "$(Sys,undefined)$(Dev,undefined)TrigMode-I") {
+  field(DESC, "Trigger mode")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  #field(PINI, "$(PINI,recursive)")
+  field(PINI, "YES")
+  field(INP, "@F460.protocol readStr($(Sys,undefined)$(Dev,undefined),TRIG:MODE) $(PORT) 0")
+
+  field(ZRST, "CUSTom")
+  field(ONST, "INTernal")
+  field(TWST, "EXTERNAL_START")
+  field(THST, "EXTERNAL_START_STOP")
+  field(FRST, "EXTERNAL_START_HOLD")
+  field(FVST, "EXTERNAL_WINDOWED")
+}
+
+## TRIGger:POLarity {0|1} 
+# Set (query) external gate polarity (external trigger only). 0 = rising edge, 1 = falling edge (invert BNC trigger)
+record(bo, "$(Sys,undefined)$(Dev,undefined)TrigPol-SP") {
+  field(DESC, "Trigger polarity")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(OUT, "@F460.protocol writeInt($(Sys,undefined)$(Dev,undefined),TRIG:POL) $(PORT) 0")
+  field(ZNAM, "Rising")
+  field(ONAM, "Falling")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)TrigPol-I")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(bi, "$(Sys,undefined)$(Dev,undefined)TrigPol-I") {
+  field(DESC, "Read trigger polarity")
+  field(DTYP, "stream")
+  field(PINI, "$(PINI,recursive)")
+  field(INP, "@F460.protocol readInt($(Sys,undefined)$(Dev,undefined),TRIG:POL) $(PORT) 0")
+  field(ZNAM, "Rising")
+  field(ONAM, "Falling")
+}
+#
+#
+#
+## TRIGger:SOURce:STARt {INTernal|BNC}
+# Set (query) the start trigger source.  Used in CUSTom, EXTERNAL_START, EXTERNAL_STARTSTOP, EXTERNAL_START_HOLD, and EXTERNAL_WINDOWED modes.
+record(mbbo, "$(Sys,undefined)$(Dev,undefined)Cmd:TrigStart") {
+  field(DESC, "Trigger start")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(OUT, "@F460.protocol writeStr($(Sys,undefined)$(Dev,undefined),TRIG:SOUR:STAR) $(PORT) 0")
+  field(ZRST, "INTernal")
+  field(ONST, "BNC")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)TrigStart-I")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(mbbi, "$(Sys,undefined)$(Dev,undefined)TrigStart-I") {
+  field(DESC, "Trigger start")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  #field(PINI, "YES")
+  field(PINI, "$(PINI,recursive)")
+  field(INP, "@F460.protocol readStr($(Sys,undefined)$(Dev,undefined),TRIG:SOUR:STAR) $(PORT) 0")
+  field(ZRST, "INTernal")
+  field(ONST, "BNC")
+}
+#
+#
+## TRIGger:SOURce:STOP {INTernal|BNC}
+# Set (query) the stop trigger source.  Used in CUSTom and EXTERNAL_STARTSTOP modes.
+record(mbbo, "$(Sys,undefined)$(Dev,undefined)Cmd:TrigStop") {
+  field(DESC, "Trigger stop")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(OUT, "@F460.protocol writeStr($(Sys,undefined)$(Dev,undefined),TRIG:SOUR:STOP) $(PORT) 0")
+  field(ZRST, "INTernal")
+  field(ONST, "BNC")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)TrigStop-I")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(mbbi, "$(Sys,undefined)$(Dev,undefined)TrigStop-I") {
+  field(DESC, "Trigger stop")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  #field(PINI, "YES")
+  field(PINI, "$(PINI,recursive)")
+  field(INP, "@F460.protocol readStr($(Sys,undefined)$(Dev,undefined),TRIG:SOUR:STOP) $(PORT) 0")
+  field(ZRST, "INTernal")
+  field(ONST, "BNC")
+}
+#
+## TRIGger:SOURce:PAUse {INTernal|BNC}
+# Set (query) the pause/burst trigger source.  Used in CUSTom and EXTERNAL_WINDOWED modes.
+
+record(mbbo, "$(Sys,undefined)$(Dev,undefined)Cmd:TrigPause") {
+  field(DESC, "Trigger pause")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(OUT, "@F460.protocol writeStr($(Sys,undefined)$(Dev,undefined),TRIG:SOUR:PAU) $(PORT) 0")
+  field(ZRST, "INTernal")
+  field(ONST, "BNC")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)TrigPause-I")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(mbbi, "$(Sys,undefined)$(Dev,undefined)TrigPause-I") {
+  field(DESC, "Trigger pause")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(INP, "@F460.protocol readStr($(Sys,undefined)$(Dev,undefined),TRIG:SOUR:PAU) $(PORT) 0")
+  field(ZRST, "INTernal")
+  field(ONST, "BNC")
+}
+
+
+## Single reading mode
+record(seq, "$(Sys,undefined)$(Dev,undefined)Cmd:Single") {
+  field(DESC, "Single reading mode")
+
+  field(DLY1, "0.05")
+  field(DOL1, "1")
+  field(LNK1, "$(Sys,undefined)$(Dev,undefined)Cmd:Init.PROC")
+
+  field(DLY2, "0.00")
+  field(DOL2, "1")
+  field(LNK2, "$(Sys,undefined)$(Dev,undefined)BufSz-SP.VAL")
+
+  field(DLY3, "0.10")
+  field(DOL3, "1")
+  field(LNK3, "$(Sys,undefined)$(Dev,undefined)Cmd:RdCur.PROC")
+
+  info(autosaveFields_pass0, "SCAN")
+}
+# F460 per-channel settings
+# vim: ts=2 sw=2
+
+## CALIB:COMP? -- gains and offsets
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch0:Gain-I") {
+  field(DESC, "Ch0 gain")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch0:Off-I") {
+  field(DESC, "Ch0 offset")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ao, "$(Sys,undefined)$(Dev,undefined)Ch0:Gain-SP") {
+  field(DESC, "Ch0 gain setpoint")
+  field(PREC, "$(PREC,recursive)")
+
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)DB:WrtComp_")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(ao, "$(Sys,undefined)$(Dev,undefined)Ch0:Off-SP") {
+  field(DESC, "Ch0 offset setpoint")
+  field(PREC, "$(PREC,recursive)")
+
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)DB:WrtComp_")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(bo, "$(Sys,undefined)$(Dev,undefined)Ch0:RdComp") {
+  field(DESC, "Read compensation")
+  field(DTYP, "stream")
+  field(OUT, "@F460.protocol getComp($(Sys,undefined)$(Dev,undefined),0,Ch0:Gain-I,Ch0:Off-I) $(PORT) 0")
+  field(PINI, "$(PINI,recursive)")
+  field(ZNAM, "Read")
+  field(ONAM, "Read")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Ch0:RdRange")
+}
+
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch0:R1:Gain-I") {
+  field(DESC, "Ch0 gain range 1")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch0:R2:Gain-I") {
+  field(DESC, "Ch0 gain range 2")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch0:R3:Gain-I") {
+  field(DESC, "Ch0 gain range 3")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch0:R4:Gain-I") {
+  field(DESC, "Ch0 gain range 4")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch0:R1:Off-I") {
+  field(DESC, "Ch0 offset range 1")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch0:R2:Off-I") {
+  field(DESC, "Ch0 offset range 2")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch0:R3:Off-I") {
+  field(DESC, "Ch0 offset range 3")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch0:R4:Off-I") {
+  field(DESC, "Ch0 offset range 4")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(bo, "$(Sys,undefined)$(Dev,undefined)Ch0:RdRange") {
+  field(DESC, "Read range")
+  field(DTYP, "stream")
+  field(ZNAM, "Read")
+  field(ONAM, "Read")
+  field(OUT, "@F460.protocol getRGain($(Sys,undefined)$(Dev,undefined),Ch0:R,0,Gain-I,Off-I) $(PORT) 0")
+  field(TPRO, 1)
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Ch0:RdMax")
+}
+
+## CALIB:RAN? -- range maxes
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch0:R1:Max-I") {
+  field(DESC, "Ch0 max range 1")
+  #field(TPRO, "1")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch0:R2:Max-I") {
+  field(DESC, "Ch0 max range 2")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch0:R3:Max-I") {
+  field(DESC, "Ch0 max range 3")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch0:R4:Max-I") {
+  field(DESC, "Ch0 max range 4")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(bo, "$(Sys,undefined)$(Dev,undefined)Ch0:RdMax") {
+  field(DESC, "Read range max")
+  field(DTYP, "stream")
+  field(OUT, "@F460.protocol getRangeMax($(Sys,undefined)$(Dev,undefined),Ch0:R,0,Max-I) $(PORT) 0")
+  field(ZNAM, "Read")
+  field(ONAM, "Read")
+}
+
+## CONF:RANge chan range -- which number range to use
+record(mbbo, "$(Sys,undefined)$(Dev,undefined)Ch0:Range-SP") {
+  field(DTYP, "stream")
+  field(DESC, "Ch0 range")
+  field(OUT, "@F460.protocol writeChInt($(Sys,undefined)$(Dev,undefined),CONF:RAN,0) $(PORT) 0")
+  field(ZRST, "Range 1")
+  field(ONST, "Range 2")
+  field(TWST, "Range 3")
+  field(THST, "Range 4")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Ch0:Range-I")
+  
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(mbbi, "$(Sys,undefined)$(Dev,undefined)Ch0:Range-I") {
+  field(DTYP, "stream")
+  field(DESC, "Ch0 range")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(ZRST, "Range 1")
+  field(ONST, "Range 2")
+  field(TWST, "Range 3")
+  field(THST, "Range 4")
+  field(INP, "@F460.protocol readChInt($(Sys,undefined)$(Dev,undefined),CONF:RAN,0) $(PORT) 0")
+}
+
+## OUT:ANAlog 
+# Only available if OUTput:MONitor is set to mode 3 and
+# PID is not being run for the particular output.
+# Otherwise, these outputs are active as monitors.
+record(ao, "$(Sys,undefined)$(Dev,undefined)Ch0:Ana-SP") {
+  field(DESC, "Analog output value")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(OUT, "@F460.protocol writeChFloat($(Sys,undefined)$(Dev,undefined),OUT:ANA,0) $(PORT) 0")
+  field(EGU, "V")
+  field(DRVH, "10.0")
+  field(DRVL, "-10.0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Ch0:Ana-I")
+  field(PREC, "$(PREC,recursive)")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch0:Ana-I") {
+  field(DESC, "Analog output value")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(EGU, "V")
+  field(INP, "@F460.protocol readChFloat($(Sys,undefined)$(Dev,undefined),OUT:ANA,0) $(PORT) 0")
+  field(PREC, "$(PREC,recursive)")
+}
+
+# F460 per-channel settings
+# vim: ts=2 sw=2
+
+## CALIB:COMP? -- gains and offsets
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch1:Gain-I") {
+  field(DESC, "Ch1 gain")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch1:Off-I") {
+  field(DESC, "Ch1 offset")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ao, "$(Sys,undefined)$(Dev,undefined)Ch1:Gain-SP") {
+  field(DESC, "Ch1 gain setpoint")
+  field(PREC, "$(PREC,recursive)")
+
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)DB:WrtComp_")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(ao, "$(Sys,undefined)$(Dev,undefined)Ch1:Off-SP") {
+  field(DESC, "Ch1 offset setpoint")
+  field(PREC, "$(PREC,recursive)")
+
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)DB:WrtComp_")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(bo, "$(Sys,undefined)$(Dev,undefined)Ch1:RdComp") {
+  field(DESC, "Read compensation")
+  field(DTYP, "stream")
+  field(OUT, "@F460.protocol getComp($(Sys,undefined)$(Dev,undefined),1,Ch1:Gain-I,Ch1:Off-I) $(PORT) 0")
+  field(PINI, "$(PINI,recursive)")
+  field(ZNAM, "Read")
+  field(ONAM, "Read")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Ch1:RdRange")
+}
+
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch1:R1:Gain-I") {
+  field(DESC, "Ch1 gain range 1")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch1:R2:Gain-I") {
+  field(DESC, "Ch1 gain range 2")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch1:R3:Gain-I") {
+  field(DESC, "Ch1 gain range 3")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch1:R4:Gain-I") {
+  field(DESC, "Ch1 gain range 4")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch1:R1:Off-I") {
+  field(DESC, "Ch1 offset range 1")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch1:R2:Off-I") {
+  field(DESC, "Ch1 offset range 2")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch1:R3:Off-I") {
+  field(DESC, "Ch1 offset range 3")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch1:R4:Off-I") {
+  field(DESC, "Ch1 offset range 4")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(bo, "$(Sys,undefined)$(Dev,undefined)Ch1:RdRange") {
+  field(DESC, "Read range")
+  field(DTYP, "stream")
+  field(ZNAM, "Read")
+  field(ONAM, "Read")
+  field(OUT, "@F460.protocol getRGain($(Sys,undefined)$(Dev,undefined),Ch1:R,1,Gain-I,Off-I) $(PORT) 0")
+  field(TPRO, 1)
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Ch1:RdMax")
+}
+
+## CALIB:RAN? -- range maxes
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch1:R1:Max-I") {
+  field(DESC, "Ch1 max range 1")
+  #field(TPRO, "1")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch1:R2:Max-I") {
+  field(DESC, "Ch1 max range 2")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch1:R3:Max-I") {
+  field(DESC, "Ch1 max range 3")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch1:R4:Max-I") {
+  field(DESC, "Ch1 max range 4")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(bo, "$(Sys,undefined)$(Dev,undefined)Ch1:RdMax") {
+  field(DESC, "Read range max")
+  field(DTYP, "stream")
+  field(OUT, "@F460.protocol getRangeMax($(Sys,undefined)$(Dev,undefined),Ch1:R,1,Max-I) $(PORT) 0")
+  field(ZNAM, "Read")
+  field(ONAM, "Read")
+}
+
+## CONF:RANge chan range -- which number range to use
+record(mbbo, "$(Sys,undefined)$(Dev,undefined)Ch1:Range-SP") {
+  field(DTYP, "stream")
+  field(DESC, "Ch1 range")
+  field(OUT, "@F460.protocol writeChInt($(Sys,undefined)$(Dev,undefined),CONF:RAN,1) $(PORT) 0")
+  field(ZRST, "Range 1")
+  field(ONST, "Range 2")
+  field(TWST, "Range 3")
+  field(THST, "Range 4")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Ch1:Range-I")
+  
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(mbbi, "$(Sys,undefined)$(Dev,undefined)Ch1:Range-I") {
+  field(DTYP, "stream")
+  field(DESC, "Ch1 range")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(ZRST, "Range 1")
+  field(ONST, "Range 2")
+  field(TWST, "Range 3")
+  field(THST, "Range 4")
+  field(INP, "@F460.protocol readChInt($(Sys,undefined)$(Dev,undefined),CONF:RAN,1) $(PORT) 0")
+}
+
+## OUT:ANAlog 
+# Only available if OUTput:MONitor is set to mode 3 and
+# PID is not being run for the particular output.
+# Otherwise, these outputs are active as monitors.
+record(ao, "$(Sys,undefined)$(Dev,undefined)Ch1:Ana-SP") {
+  field(DESC, "Analog output value")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(OUT, "@F460.protocol writeChFloat($(Sys,undefined)$(Dev,undefined),OUT:ANA,1) $(PORT) 0")
+  field(EGU, "V")
+  field(DRVH, "10.0")
+  field(DRVL, "-10.0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Ch1:Ana-I")
+  field(PREC, "$(PREC,recursive)")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch1:Ana-I") {
+  field(DESC, "Analog output value")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(EGU, "V")
+  field(INP, "@F460.protocol readChFloat($(Sys,undefined)$(Dev,undefined),OUT:ANA,1) $(PORT) 0")
+  field(PREC, "$(PREC,recursive)")
+}
+
+# F460 per-channel settings
+# vim: ts=2 sw=2
+
+## CALIB:COMP? -- gains and offsets
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch2:Gain-I") {
+  field(DESC, "Ch2 gain")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch2:Off-I") {
+  field(DESC, "Ch2 offset")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ao, "$(Sys,undefined)$(Dev,undefined)Ch2:Gain-SP") {
+  field(DESC, "Ch2 gain setpoint")
+  field(PREC, "$(PREC,recursive)")
+
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)DB:WrtComp_")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(ao, "$(Sys,undefined)$(Dev,undefined)Ch2:Off-SP") {
+  field(DESC, "Ch2 offset setpoint")
+  field(PREC, "$(PREC,recursive)")
+
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)DB:WrtComp_")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(bo, "$(Sys,undefined)$(Dev,undefined)Ch2:RdComp") {
+  field(DESC, "Read compensation")
+  field(DTYP, "stream")
+  field(OUT, "@F460.protocol getComp($(Sys,undefined)$(Dev,undefined),2,Ch2:Gain-I,Ch2:Off-I) $(PORT) 0")
+  field(PINI, "$(PINI,recursive)")
+  field(ZNAM, "Read")
+  field(ONAM, "Read")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Ch2:RdRange")
+}
+
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch2:R1:Gain-I") {
+  field(DESC, "Ch2 gain range 1")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch2:R2:Gain-I") {
+  field(DESC, "Ch2 gain range 2")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch2:R3:Gain-I") {
+  field(DESC, "Ch2 gain range 3")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch2:R4:Gain-I") {
+  field(DESC, "Ch2 gain range 4")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch2:R1:Off-I") {
+  field(DESC, "Ch2 offset range 1")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch2:R2:Off-I") {
+  field(DESC, "Ch2 offset range 2")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch2:R3:Off-I") {
+  field(DESC, "Ch2 offset range 3")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch2:R4:Off-I") {
+  field(DESC, "Ch2 offset range 4")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(bo, "$(Sys,undefined)$(Dev,undefined)Ch2:RdRange") {
+  field(DESC, "Read range")
+  field(DTYP, "stream")
+  field(ZNAM, "Read")
+  field(ONAM, "Read")
+  field(OUT, "@F460.protocol getRGain($(Sys,undefined)$(Dev,undefined),Ch2:R,2,Gain-I,Off-I) $(PORT) 0")
+  field(TPRO, 1)
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Ch2:RdMax")
+}
+
+## CALIB:RAN? -- range maxes
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch2:R1:Max-I") {
+  field(DESC, "Ch2 max range 1")
+  #field(TPRO, "1")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch2:R2:Max-I") {
+  field(DESC, "Ch2 max range 2")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch2:R3:Max-I") {
+  field(DESC, "Ch2 max range 3")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch2:R4:Max-I") {
+  field(DESC, "Ch2 max range 4")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(bo, "$(Sys,undefined)$(Dev,undefined)Ch2:RdMax") {
+  field(DESC, "Read range max")
+  field(DTYP, "stream")
+  field(OUT, "@F460.protocol getRangeMax($(Sys,undefined)$(Dev,undefined),Ch2:R,2,Max-I) $(PORT) 0")
+  field(ZNAM, "Read")
+  field(ONAM, "Read")
+}
+
+## CONF:RANge chan range -- which number range to use
+record(mbbo, "$(Sys,undefined)$(Dev,undefined)Ch2:Range-SP") {
+  field(DTYP, "stream")
+  field(DESC, "Ch2 range")
+  field(OUT, "@F460.protocol writeChInt($(Sys,undefined)$(Dev,undefined),CONF:RAN,2) $(PORT) 0")
+  field(ZRST, "Range 1")
+  field(ONST, "Range 2")
+  field(TWST, "Range 3")
+  field(THST, "Range 4")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Ch2:Range-I")
+  
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(mbbi, "$(Sys,undefined)$(Dev,undefined)Ch2:Range-I") {
+  field(DTYP, "stream")
+  field(DESC, "Ch2 range")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(ZRST, "Range 1")
+  field(ONST, "Range 2")
+  field(TWST, "Range 3")
+  field(THST, "Range 4")
+  field(INP, "@F460.protocol readChInt($(Sys,undefined)$(Dev,undefined),CONF:RAN,2) $(PORT) 0")
+}
+
+## OUT:ANAlog 
+# Only available if OUTput:MONitor is set to mode 3 and
+# PID is not being run for the particular output.
+# Otherwise, these outputs are active as monitors.
+record(ao, "$(Sys,undefined)$(Dev,undefined)Ch2:Ana-SP") {
+  field(DESC, "Analog output value")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(OUT, "@F460.protocol writeChFloat($(Sys,undefined)$(Dev,undefined),OUT:ANA,2) $(PORT) 0")
+  field(EGU, "V")
+  field(DRVH, "10.0")
+  field(DRVL, "-10.0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Ch2:Ana-I")
+  field(PREC, "$(PREC,recursive)")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch2:Ana-I") {
+  field(DESC, "Analog output value")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(EGU, "V")
+  field(INP, "@F460.protocol readChFloat($(Sys,undefined)$(Dev,undefined),OUT:ANA,2) $(PORT) 0")
+  field(PREC, "$(PREC,recursive)")
+}
+
+# F460 per-channel settings
+# vim: ts=2 sw=2
+
+## CALIB:COMP? -- gains and offsets
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch3:Gain-I") {
+  field(DESC, "Ch3 gain")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch3:Off-I") {
+  field(DESC, "Ch3 offset")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ao, "$(Sys,undefined)$(Dev,undefined)Ch3:Gain-SP") {
+  field(DESC, "Ch3 gain setpoint")
+  field(PREC, "$(PREC,recursive)")
+
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)DB:WrtComp_")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(ao, "$(Sys,undefined)$(Dev,undefined)Ch3:Off-SP") {
+  field(DESC, "Ch3 offset setpoint")
+  field(PREC, "$(PREC,recursive)")
+
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)DB:WrtComp_")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(bo, "$(Sys,undefined)$(Dev,undefined)Ch3:RdComp") {
+  field(DESC, "Read compensation")
+  field(DTYP, "stream")
+  field(OUT, "@F460.protocol getComp($(Sys,undefined)$(Dev,undefined),3,Ch3:Gain-I,Ch3:Off-I) $(PORT) 0")
+  field(PINI, "$(PINI,recursive)")
+  field(ZNAM, "Read")
+  field(ONAM, "Read")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Ch3:RdRange")
+}
+
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch3:R1:Gain-I") {
+  field(DESC, "Ch3 gain range 1")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch3:R2:Gain-I") {
+  field(DESC, "Ch3 gain range 2")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch3:R3:Gain-I") {
+  field(DESC, "Ch3 gain range 3")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch3:R4:Gain-I") {
+  field(DESC, "Ch3 gain range 4")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch3:R1:Off-I") {
+  field(DESC, "Ch3 offset range 1")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch3:R2:Off-I") {
+  field(DESC, "Ch3 offset range 2")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch3:R3:Off-I") {
+  field(DESC, "Ch3 offset range 3")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch3:R4:Off-I") {
+  field(DESC, "Ch3 offset range 4")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(bo, "$(Sys,undefined)$(Dev,undefined)Ch3:RdRange") {
+  field(DESC, "Read range")
+  field(DTYP, "stream")
+  field(ZNAM, "Read")
+  field(ONAM, "Read")
+  field(OUT, "@F460.protocol getRGain($(Sys,undefined)$(Dev,undefined),Ch3:R,3,Gain-I,Off-I) $(PORT) 0")
+  field(TPRO, 1)
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Ch3:RdMax")
+}
+
+## CALIB:RAN? -- range maxes
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch3:R1:Max-I") {
+  field(DESC, "Ch3 max range 1")
+  #field(TPRO, "1")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch3:R2:Max-I") {
+  field(DESC, "Ch3 max range 2")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch3:R3:Max-I") {
+  field(DESC, "Ch3 max range 3")
+  field(PREC, "$(PREC,recursive)")
+}
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch3:R4:Max-I") {
+  field(DESC, "Ch3 max range 4")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(bo, "$(Sys,undefined)$(Dev,undefined)Ch3:RdMax") {
+  field(DESC, "Read range max")
+  field(DTYP, "stream")
+  field(OUT, "@F460.protocol getRangeMax($(Sys,undefined)$(Dev,undefined),Ch3:R,3,Max-I) $(PORT) 0")
+  field(ZNAM, "Read")
+  field(ONAM, "Read")
+}
+
+## CONF:RANge chan range -- which number range to use
+record(mbbo, "$(Sys,undefined)$(Dev,undefined)Ch3:Range-SP") {
+  field(DTYP, "stream")
+  field(DESC, "Ch3 range")
+  field(OUT, "@F460.protocol writeChInt($(Sys,undefined)$(Dev,undefined),CONF:RAN,3) $(PORT) 0")
+  field(ZRST, "Range 1")
+  field(ONST, "Range 2")
+  field(TWST, "Range 3")
+  field(THST, "Range 4")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Ch3:Range-I")
+  
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(mbbi, "$(Sys,undefined)$(Dev,undefined)Ch3:Range-I") {
+  field(DTYP, "stream")
+  field(DESC, "Ch3 range")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(ZRST, "Range 1")
+  field(ONST, "Range 2")
+  field(TWST, "Range 3")
+  field(THST, "Range 4")
+  field(INP, "@F460.protocol readChInt($(Sys,undefined)$(Dev,undefined),CONF:RAN,3) $(PORT) 0")
+}
+
+## OUT:ANAlog 
+# Only available if OUTput:MONitor is set to mode 3 and
+# PID is not being run for the particular output.
+# Otherwise, these outputs are active as monitors.
+record(ao, "$(Sys,undefined)$(Dev,undefined)Ch3:Ana-SP") {
+  field(DESC, "Analog output value")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(OUT, "@F460.protocol writeChFloat($(Sys,undefined)$(Dev,undefined),OUT:ANA,3) $(PORT) 0")
+  field(EGU, "V")
+  field(DRVH, "10.0")
+  field(DRVL, "-10.0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Ch3:Ana-I")
+  field(PREC, "$(PREC,recursive)")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Ch3:Ana-I") {
+  field(DESC, "Analog output value")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(EGU, "V")
+  field(INP, "@F460.protocol readChFloat($(Sys,undefined)$(Dev,undefined),OUT:ANA,3) $(PORT) 0")
+  field(PREC, "$(PREC,recursive)")
+}
+
+# PID settings
+#
+## CONFigure:PID:MODE {Mode}
+#        Set (query) the PID mode for PID number PIDNo, PIDNo = 1 or 2.
+#        Mode options for process variable:
+#        0:  Custom
+#        1:  I1
+#        2:  I1+I2
+#        3:  I1-I2
+#        4:  I1/I2
+#        5:  X
+#        6:  Y
+#        7:  I1+I2+I3+I4
+#        
+#        8:  Custom
+#        9:  I1
+#       10:  I1+I2
+#       11:  I1-I2
+#       12:  I1/I2
+#       13:  X
+#       14:  Y
+#       15:  I1+I2+I3+I4
+record(mbbo, "$(Sys,undefined)$(Dev,undefined)Pid:Mode-SP") {
+  field(DESC, "PID mode")
+  field(SCAN, "Passive")
+  field(DTYP, "stream")
+  field(OUT, "@F460.protocol writeInt($(Sys,undefined)$(Dev,undefined),CONF:PID:MOD) $(PORT) 0")
+
+  field(ZRVL, 0)
+  field(ONVL, 1)
+  field(TWVL, 2)
+  field(THVL, 3)
+  field(FRVL, 4)
+  field(FVVL, 5)
+  field(SXVL, 6)
+  field(SVVL, 7)
+  field(EIVL, 257)
+  field(NIVL, 258)
+  field(TEVL, 258)
+  field(ELVL, 260)
+  field(TVVL, 261)
+  field(TTVL, 262)
+  field(FTVL, 263)
+
+  field(ZRST, "Off")
+  field(ONST, "PID I1")
+  field(TWST, "PID I1+I2")
+  field(THST, "PID I1-I2")
+  field(FRST, "PID I1/I2")
+  field(FVST, "PID X")
+  field(SXST, "PID Y")
+  field(SVST, "PID I1+I2+I3+I4")
+  field(EIST, "Profile I1")
+  field(NIST, "Profile I1+I2")
+  field(TEST, "Profile I1-I2")
+  field(ELST, "Profile I1/I2")
+  field(TVST, "Profile X")
+  field(TTST, "Profile Y")
+  field(FTST, "Profile I1+I2+I3+I4")
+
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(mbbi, "$(Sys,undefined)$(Dev,undefined)Pid:Mode-I") {
+  field(DESC, "PID mode")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(INP, "@F460.protocol readInt($(Sys,undefined)$(Dev,undefined),CONF:PID:MOD) $(PORT) 0")
+
+  field(ZRVL, 0)
+  field(ONVL, 1)
+  field(TWVL, 2)
+  field(THVL, 3)
+  field(FRVL, 4)
+  field(FVVL, 5)
+  field(SXVL, 6)
+  field(SVVL, 7)
+  field(EIVL, 257)
+  field(NIVL, 258)
+  field(TEVL, 258)
+  field(ELVL, 260)
+  field(TVVL, 261)
+  field(TTVL, 262)
+  field(FTVL, 263)
+
+  field(ZRST, "Off")
+  field(ONST, "PID I1")
+  field(TWST, "PID I1+I2")
+  field(THST, "PID I1-I2")
+  field(FRST, "PID I1/I2")
+  field(FVST, "PID X")
+  field(SXST, "PID Y")
+  field(SVST, "PID I1+I2+I3+I4")
+  field(EIST, "Profile I1")
+  field(NIST, "Profile I1+I2")
+  field(TEST, "Profile I1-I2")
+  field(ELST, "Profile I1/I2")
+  field(TVST, "Profile X")
+  field(TTST, "Profile Y")
+  field(FTST, "Profile I1+I2+I3+I4")
+  field(ZRST, "Off")
+}
+
+
+# CONF:PID:LIMit {LO, HI}
+#     Set (query) the control output analog limits for servo PIDNo to LO and HI (in range -10V to +10V). 
+#     Control output for PIDNo=1 is analog output 1
+#     Control output for PIDNo=2 is analog output 2
+record(ai, "$(Sys,undefined)$(Dev,undefined)Pid:Lo-I") {
+  field(DESC, "PID low limit")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(EGU, "V")
+  field(INP, "@F460.protocol getLimit($(Sys,undefined)$(Dev,undefined),Pid:,CONF:PID:LIM) $(PORT) 0")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Pid:Hi-I") {
+  field(DESC, "PID high limit")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(EGU, "V")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ao, "$(Sys,undefined)$(Dev,undefined)Pid:Lo-SP") {
+  field(DESC, "PID low lim")
+  field(DTYP, "Soft Channel")
+  field(SCAN, "Passive")
+  field(EGU, "V")
+  field(DRVH, "10.0")
+  field(DRVL, "-10.0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Pid:Cmd:Lim")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(ao, "$(Sys,undefined)$(Dev,undefined)Pid:Hi-SP") {
+  field(DESC, "PID high lim")
+  field(DTYP, "Soft Channel")
+  field(SCAN, "Passive")
+  field(EGU, "V")
+  field(DRVH, "10.0")
+  field(DRVL, "-10.0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Pid:Cmd:Lim")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(calcout, "$(Sys,undefined)$(Dev,undefined)Pid:Cmd:Lim") {
+  field(DESC, "PID write limits")
+  field(DTYP, "stream")
+  field(CALC, "0")
+  field(INPA, "$(Sys,undefined)$(Dev,undefined)Pid:Lo-SP")
+  field(INPB, "$(Sys,undefined)$(Dev,undefined)Pid:Hi-SP")
+  field(OUT, "@F460.protocol setLimit($(Sys,undefined)$(Dev,undefined),PID,CONF:PID:LIM) $(PORT) 0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Pid:Lo-I")
+  info(autosaveFields_pass0, "VAL A B")
+}
+
+# CONF:PID:ILOW {SigI}
+#     Set (query) the sum SigI amps of the input currents used to form the process variable for PIDNo  
+#     in the selected mode, below which the servo will be suspended
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Pid:Sig-I") {
+  field(DESC, "PID SigI")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(EGU, "A")
+  field(INP, "@F460.protocol readFloat($(Sys,undefined)$(Dev,undefined),CONF:PID:ILOW) $(PORT) 0")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ao, "$(Sys,undefined)$(Dev,undefined)Pid:Sig-SP") {
+  field(DESC, "PID SigI")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(OUT, "@F460.protocol writeFloat($(Sys,undefined)$(Dev,undefined),CONF:PID:ILOW) $(PORT) 0")
+  field(EGU, "A")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Pid:Sig-I")
+  info(autosaveFields_pass0, "VAL")
+}
+
+# CONF:PID:KP {Prop}
+#     Set (query) the proportional parameter for servo PIDNo to Prop.
+#
+record(ai, "$(Sys,undefined)$(Dev,undefined)Pid:Kp-I") {
+  field(DESC, "PID KP")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(INP, "@F460.protocol readFloat($(Sys,undefined)$(Dev,undefined),CONF:PID:KP) $(PORT) 0")
+  field(TPRO, 1)
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ao, "$(Sys,undefined)$(Dev,undefined)Pid:Kp-SP") {
+  field(DESC, "PID KP")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(OUT, "@F460.protocol writeFloat($(Sys,undefined)$(Dev,undefined),CONF:PID:KP) $(PORT) 0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Pid:Kp-I")
+  field(TPRO, 1)
+  info(autosaveFields_pass0, "VAL")
+}
+
+# CONF:PID:KI {Prop}
+#     Set (query) the integral parameter for servo PIDNo to Int.
+record(ai, "$(Sys,undefined)$(Dev,undefined)Pid:Ki-I") {
+  field(DESC, "PID KI")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(INP, "@F460.protocol readFloat($(Sys,undefined)$(Dev,undefined),CONF:PID:KI) $(PORT) 0")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ao, "$(Sys,undefined)$(Dev,undefined)Pid:Ki-SP") {
+  field(DESC, "PID KI")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(OUT, "@F460.protocol writeFloat($(Sys,undefined)$(Dev,undefined),CONF:PID:KI) $(PORT) 0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Pid:Ki-I")
+  info(autosaveFields_pass0, "VAL")
+}
+
+# CONF:PID:REF
+#     Set (query) the reference value that is divided out from all
+#     sensor values for PID
+record(ai, "$(Sys,undefined)$(Dev,undefined)Pid:Ref-I") {
+  field(DESC, "PID reference")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(INP, "@F460.protocol readFloat($(Sys,undefined)$(Dev,undefined),CONF:PID:REF) $(PORT) 0")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ao, "$(Sys,undefined)$(Dev,undefined)Pid:Ref-SP") {
+  field(DESC, "PID reference")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(OUT, "@F460.protocol writeFloat($(Sys,undefined)$(Dev,undefined),CONF:PID:REF) $(PORT) 0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Pid:Ref-I")
+  info(autosaveFields_pass0, "VAL")
+}
+
+# CONF:PID:PROF:LIMit LO, HI, NumPts
+#     Set (query) the low and high DAC limits in volts for the automated sweep for servo PIDNo.  
+#     The sweep will use the number of points set as the buffer size.
+#     TODO: cannot query with this command
+record(ai, "$(Sys,undefined)$(Dev,undefined)Pid:DacLo-I") {
+  field(DESC, "Profile low DAC limit")
+  field(DTYP, "stream")
+  field(INP, "@F460.protocol getProfLimit($(Sys,undefined)$(Dev,undefined),Pid:) $(PORT) 0")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(EGU, "V")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Pid:DacHi-I") {
+  field(DESC, "Profile high DAC limit")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(EGU, "V")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(longin, "$(Sys,undefined)$(Dev,undefined)Pid:Npt-I") {
+  field(DESC, "Profile points")
+  field(DTYP, "Soft Channel")
+}
+
+record(ao, "$(Sys,undefined)$(Dev,undefined)Pid:DacLo-SP") {
+  field(DESC, "Profile DAC low")
+  field(DTYP, "Soft Channel")
+  field(SCAN, "Passive")
+  field(EGU, "V")
+  field(DRVH, "10.0")
+  field(DRVL, "-10.0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Pid:WrDaclim")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(ao, "$(Sys,undefined)$(Dev,undefined)Pid:DacHi-SP") {
+  field(DESC, "Profile DAC high")
+  field(DTYP, "Soft Channel")
+  field(SCAN, "Passive")
+  field(EGU, "V")
+  field(DRVH, "10.0")
+  field(DRVL, "-10.0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Pid:WrDaclim")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(longout, "$(Sys,undefined)$(Dev,undefined)Pid:Npt-SP") {
+  field(DESC, "Profile points")
+  field(DTYP, "Soft Channel")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Pid:WrDaclim")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(calcout, "$(Sys,undefined)$(Dev,undefined)Pid:WrDaclim") {
+  field(DESC, "PID Write DAC limits")
+  field(DTYP, "stream")
+  field(CALC, "0")
+  field(INPA, "$(Sys,undefined)$(Dev,undefined)Pid:DacLo-SP")
+  field(INPB, "$(Sys,undefined)$(Dev,undefined)Pid:DacHi-SP")
+  field(OUT, "@F460.protocol setProfLimit($(Sys,undefined)$(Dev,undefined),PID) $(PORT) 0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Pid:DacLo-I")
+  info(autosaveFields_pass0, "VAL A B")
+}
+
+## PID:PROFile pidno 0|1
+#     Set (query) automatic profile state for servo PIDNo
+#     The profile will remain enabled until either turned off by this command, or 
+#     when all data points have been read and the profile is completed.
+
+record(bo, "$(Sys,undefined)$(Dev,undefined)Pid:Prof-SP") {
+  field(DESC, "PID profile enable")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(OUT, "@F460.protocol writeInt($(Sys,undefined)$(Dev,undefined),PID:PROF) $(PORT) 0")
+  field(ZNAM, "Profile off")
+  field(ONAM, "Profile on")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Pid:Prof-I")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(bi, "$(Sys,undefined)$(Dev,undefined)Pid:Prof-I") {
+  field(DESC, "PID Profile enable")
+  field(DTYP, "stream")
+  field(PINI, "$(PINI,recursive)")
+  field(INP, "@F460.protocol readInt($(Sys,undefined)$(Dev,undefined),PID:PROF) $(PORT) 0")
+  field(ZNAM, "Profile off")
+  field(ONAM, "Profile on")
+}
+
+
+# CONF:PID:RATE {Per}
+# Set (query) the servo period for PIDNo to Per seconds (Per >= 1/200) 
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Pid:Rate-I") {
+  field(DESC, "PID servo period")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(EGU, "sec")
+  field(INP, "@F460.protocol readFloat($(Sys,undefined)$(Dev,undefined),CONF:PID:RATE) $(PORT) 0")
+  field(PREC, "$(PREC,recursive)")
+}
+
+record(ao, "$(Sys,undefined)$(Dev,undefined)Pid:Rate-SP") {
+  field(DESC, "PID servo period")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(OUT, "@F460.protocol writeFloat($(Sys,undefined)$(Dev,undefined),CONF:PID:RATE) $(PORT) 0")
+  field(EGU, "sec")
+  field(DRVL, "5e-4")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Pid:Rate-I")
+  info(autosaveFields_pass0, "VAL")
+}
+
+
+# PID:SERV
+#   Set (query) servo state
+#   0 = disable
+#   1 = enable
+record(bo, "$(Sys,undefined)$(Dev,undefined)Pid:Enable-Out") {
+  field(DESC, "PID enable")
+  field(DTYP, "stream")
+  field(SCAN, "Passive")
+  field(PINI, "$(PINI,recursive)")
+  field(OUT, "@F460.protocol writeInt($(Sys,undefined)$(Dev,undefined),PID:SERV) $(PORT) 0")
+  field(ZNAM, "PID off")
+  field(ONAM, "PID on")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Pid:Enable-I")
+  info(autosaveFields_pass0, "VAL")
+}
+
+record(bi, "$(Sys,undefined)$(Dev,undefined)Pid:Enable-I") {
+  field(DESC, "PID enable")
+  field(DTYP, "stream")
+  field(PINI, "$(PINI,recursive)")
+  field(INP, "@F460.protocol readInt($(Sys,undefined)$(Dev,undefined),PID:SERV) $(PORT) 0")
+  field(ZNAM, "PID off")
+  field(ONAM, "PID on")
+}
+
+
+#
+#
+## FET:PID? [numSamples]
+#    Fetch the running servo data.
+#    {PID Enabled, DAC initial V, DAC V, AnalogIn1 V, Measured process value f(I1,I2,I3,I4), 
+#     Target process value f(I1,I2,I3,I4), Sum of (TargetProcessValue-ActualProcessValue), 
+#     Following error (TargetProcessValue-ActualProcessValue),DAC low limit hit (0|1), 
+#     DAC high limit hit (0|1), low current limit hit (0|1),timestamp,time-slice number
+#    May have additional fields if second PID is enabled.
+#    Returns up to 9 samples.
+
+record(bo, "$(Sys,undefined)$(Dev,undefined)Pid:Cmd:Rd") {
+  field(DESC, "Read PID inputs")
+  field(DTYP, "stream")
+  field(PINI, "$(PINI,recursive)")
+  field(ZNAM, "Read PID")
+  field(ONAM, "Read PID")
+  field(OUT, "@F460.protocol get1PID($(Sys,undefined)$(Dev,undefined),Pid,PID) $(PORT) 0")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Pid:Enabled-I")
+#  field(TPRO, 1)
+  #field(SCAN, "Passive")
+  #field(SCAN, "1 second")
+}
+
+record(bi, "$(Sys,undefined)$(Dev,undefined)Pid:Enabled-I") {
+  # Enabled according to fetch
+  #field(DESC, "(PID enabled)")
+  field(ONAM, "PID Enabled")
+  field(ONAM, "PID Disabled")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Pid:InitV-I")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Pid:InitV-I") {
+  field(DESC, "PID initial voltage")
+  field(EGU, "V")
+  field(PREC, "$(PREC,recursive)")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Pid:Volts-I")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Pid:Volts-I") {
+  field(DESC, "PID input voltage")
+  field(EGU, "V")
+  field(PREC, "$(PREC,recursive)")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Pid:An1-I")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Pid:An1-I") {
+  field(DESC, "PID analog in 1")
+  field(EGU, "V")
+  field(PREC, "$(PREC,recursive)")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Pid:Proc:Meas-I")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Pid:Proc:Meas-I") {
+  field(DESC, "PID measured process value")
+  field(EGU, "")
+  field(PREC, "$(PREC,recursive)")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Pid:Proc:Tgt-I")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Pid:Proc:Tgt-I") {
+  field(DESC, "PID target process value")
+  field(EGU, "sec")
+  field(PREC, "3")
+  field(FLNK, "$(Sys,undefined)$(Dev,undefined)Pid:Proc:Diff-I")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Pid:Proc:Diff-I") {
+  field(DESC, "PID target-actual")
+  #field(FLNK, "$(Sys,undefined)$(Dev,undefined)Pid:FolErr-I")
+  field(TPRO, 1)
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Pid:FolErr-I") {
+  field(DESC, "PID following error")
+  field(TPRO, 1)
+}
+
+record(bi, "$(Sys,undefined)$(Dev,undefined)Pid:LowDac-I") {
+  field(DESC, "PID low DAC limit")
+  field(ZSV, "NO_ALARM")
+  field(OSV, "MINOR")
+  field(ZNAM, "Normal")
+  field(ONAM, "Low limit")
+}
+
+record(bi, "$(Sys,undefined)$(Dev,undefined)Pid:HiDac-I") {
+  field(DESC, "PID high DAC limit")
+  field(ZSV, "NO_ALARM")
+  field(OSV, "MINOR")
+  field(ZNAM, "Normal")
+  field(ONAM, "High limit")
+}
+
+record(bi, "$(Sys,undefined)$(Dev,undefined)Pid:LowI-I") {
+  field(DESC, "PID low current limit")
+  field(ZSV, "NO_ALARM")
+  field(OSV, "MINOR")
+  field(ZNAM, "Normal")
+  field(ONAM, "Low limit")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Pid:Ts-I") {
+  field(DESC, "PID timestamp")
+}
+
+record(ai, "$(Sys,undefined)$(Dev,undefined)Pid:TsNum-I") {
+  field(DESC, "PID timeslice number")
+}
+

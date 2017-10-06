@@ -1,0 +1,13 @@
+file "db/motor.db"
+{
+pattern
+{P,              M,                    MOTOR,  PORT,  ADDR,  DESC,                  DTYP,      MRES,          EGU,  PREC,  ALIAS         }
+{"XF:06BMA-BI",  "{XAFS-Ax:LinY}Mtr",  "M0",   "P0",  1,     "xafs_liny",           asynMotor, "0.000635",    "mm", 4,     "xafs_liny"   }
+{"XF:06BMA-BI",  "{XAFS-Ax:LinX}Mtr",  "M0",   "P0",  2,     "xafs_linx",           asynMotor, "0.000635",    "mm", 4,     "xafs_linx"   }
+{"XF:06BMA-BI",  "{XAFS-Ax:LinS}Mtr",  "M0",   "P0",  3,     "xafs_lins",           asynMotor, "0.000635",    "mm", 4,     "xafs_lins"   }
+{"XF:06BMA-BI",  "{XAFS-Ax:LinXS}Mtr", "M0",   "P0",  4,     "xafs_linxs",          asynMotor, "0.00025",     "mm", 4,     "xafs_linxs"  }
+{"XF:06BMA-BI",  "{XAFS-Ax:Pitch}Mtr", "M0",   "P0",  5,     "xafs_pitch",          asynMotor, "0.00015625",  "deg", 4,    "xafs_pitch"  }
+{"XF:06BMA-BI",  "{XAFS-Ax:Roll}Mtr",  "M0",   "P0",  6,     "xafs_roll",           asynMotor, "0.00015625",  "deg", 4,    "xafs_roll"   }
+{"XF:06BMA-BI",  "{XAFS-Ax:Mtr7}Mtr",  "M0",   "P0",  7,     "xafs_mtr7",           asynMotor, "0.00025",     "mm", 4,     "xafs_mtr7"   }
+{"XF:06BMA-BI",  "{XAFS-Ax:Mtr8}Mtr",  "M0",   "P0",  8,     "xafs_mtr8",           asynMotor, "0.00025",     "mm", 4,     "xafs_mtr8"   }
+}

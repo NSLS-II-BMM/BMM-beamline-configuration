@@ -1,0 +1,27 @@
+record(motor,"$(P)$(M)")
+{
+        field(DESC,"$(DESC)")
+        field(DTYP,"$(DTYP)")
+        field(DIR,"$(DIR)")
+        field(VELO,"$(VELO)")
+        field(VBAS,"$(VBAS)")
+        field(ACCL,"$(ACCL)")
+        field(BDST,"$(BDST)")
+        field(BVEL,"$(BVEL)")
+        field(BACC,"$(BACC)")
+        field(OUT,"@asyn($(PORT),$(ADDR))")
+        field(MRES,"$(MRES)")
+        field(PREC,"$(PREC)")
+        field(UEIP,"$(UEIP)")
+        field(EGU,"$(EGU)")
+        field(DHLM,"$(DHLM)")
+        field(DLLM,"$(DLLM)")
+        field(INIT,"$(INIT)")
+        field(TWV,"1")
+
+        info(autosaveFields_pass0, "DVAL DIR DHLM DLLM TWV SREV MRES ERES RRES VBAS VELO VMAX ACCL BDST BVEL BACC RDBD DESC EGU RTRY UEIP URIP DLY RDBL PREC DISA DISP FOFF OFF FRAC OMSL JVEL JAR PCOF ICOF DCOF HVEL NTM NTMF") 
+ 
+        info(autosaveFields, "DIR DHLM DLLM TWV SREV MRES ERES RRES VBAS VELO VMAX ACCL BDST BVEL BACC RDBD DESC EGU RTRY UEIP URIP DLY RDBL PREC DISA DISP FOFF OFF FRAC OMSL JVEL JAR PCOF ICOF DCOF HVEL NTM NTMF") 
+
+}
+

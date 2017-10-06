@@ -1,0 +1,20 @@
+file plc1-va-gv.template
+{
+    pattern { Sys		, Dev			, Tag   }
+# LN2 valves use same template as vacuum valve
+            { XF:02ID-UT        , "LN2-Vlv"             , LN2_Vlv      }
+	    { XF:02ID-UT        , "LN2-Vlv"             , LN2_Vlv2  }
+}
+
+file "plc1-bi.template"
+{
+pattern
+{ Sys,          Dev,            Sig,            DESC,                                   Tag,              ZNAM,         ONAM,          	ZSV,   	OSV}
+{ XF:02IDA-UT, "ODH",          Alrm-Sts,       "ODH Alarm status read by EPS",       "Misc_Sts_0[8]", "Alarm",       "OK",           "MAJOR", "NO_ALARM"}
+{ XF:02IDA-UT, "ODH",          Flt-Sts,        "ODH Fault status read by EPS",       "Misc_Sts_0[9]", "No Fault",    "Fault",        "",      "MINOR"}
+{ XF:02ID-OP,  "Cryo:1",       Rdy-Sts,        "Ready signal from the cryocooler",     "Misc_Sts_0[10]",  "Not Ready", 	"Ready",       	"MINOR", ""}
+{ XF:02ID-OP,  "Cryo:1",       Enbl-Cmd,       "Cryocooler enabled (from EPS)",        "Misc_Sts_0[11]",  "Not Enabled", "Enabled",      "MINOR", "NO_ALARM"}
+{ XF:02ID-OP,  "Cryo:1",       Alrm-Sts,       "Alarm signal from the cryocooleR",     "Misc_Sts_0[12]",  "Alarm",	"Ok",    	"MINOR", ""}
+
+}
+

@@ -1,0 +1,13 @@
+file "${TOP}/db/pmacaux.db"
+{
+pattern
+{SYSP,           DEVP,                   SYSV,           DEVV,                   AXIS  }
+{"XF:06BMA-BI",   "{MC:07-Ax:1}", "XF:06BMA-BI",  "{XAFS-Ax:Tbl_YU}",     1    }
+{"XF:06BMA-BI",   "{MC:07-Ax:2}", "XF:06BMA-BI",  "{XAFS-Ax:Tbl_YDO}",    2    }
+{"XF:06BMA-BI",   "{MC:07-Ax:3}", "XF:06BMA-BI",  "{XAFS-Ax:Tbl_YDI}",    3    }
+{"XF:06BMA-BI",   "{MC:07-Ax:4}", "XF:06BMA-BI",  "{XAFS-Ax:Tbl_XU}",     4    }
+{"XF:06BMA-BI",   "{MC:07-Ax:5}", "XF:06BMA-BI",  "{XAFS-Ax:Tbl_XD}",     5    }
+{"XF:06BMA-BI",   "{MC:07-Ax:6}", "XF:06BMA-BI",  "{XAFS-Ax:RotH}",       6    }
+{"XF:06BMA-BI",   "{MC:07-Ax:7}", "XF:06BMA-BI",  "{XAFS-Ax:RotB}",       7    }
+{"XF:06BMA-BI",   "{MC:07-Ax:8}", "XF:06BMA-BI",  "{XAFS-Ax:RotS}",       8    }
+}

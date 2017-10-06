@@ -1,0 +1,6 @@
+file /opt/epics/modules/SAI/db/SAI_DigitalChannels.template {
+pattern {	P,		R,		SCAN, 		ASYNPORT}
+        { 	"XF:06BM-OP",		"{MC:03}",	"1 second",	"pmac"}
+}
+
+#EOF

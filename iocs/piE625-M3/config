@@ -1,0 +1,7 @@
+NAME=piE625-M3
+USER=softioc
+PORT=7212
+HOST=xf06bm-ioc1
+
+CHDIR="$CHDIR/iocBoot/iocPIE625"
+EXEC="$CHDIR/st.cmd"

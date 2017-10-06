@@ -1,0 +1,19 @@
+file "db/motor.db"
+{
+pattern
+{P,              M,                      MOTOR,  PORT,  ADDR,  DESC,                        DTYP,      MRES,           EGU,  PREC,  ALIAS           }
+}
+
+file "db/motor_in_cs.template"
+{
+pattern
+{P,              M,                      SPORT  }
+{"XF:06BMA-BI",  "{XAFS-Ax:Tbl_YU}Mtr",  "P0"   }
+{"XF:06BMA-BI",  "{XAFS-Ax:Tbl_YDO}Mtr", "P0"   }
+{"XF:06BMA-BI",  "{XAFS-Ax:Tbl_YDI}Mtr", "P0"   }
+{"XF:06BMA-BI",  "{XAFS-Ax:Tbl_XU}Mtr",  "P0"   }
+{"XF:06BMA-BI",  "{XAFS-Ax:Tbl_XD}Mtr",  "P0"   }
+{"XF:06BMA-BI",  "{XAFS-Ax:RotH}Mtr",    "P0"   }
+{"XF:06BMA-BI",  "{XAFS-Ax:RotB}Mtr",    "P0"   }
+{"XF:06BMA-BI",  "{XAFS-Ax:RotS}Mtr",    "P0"   }
+}

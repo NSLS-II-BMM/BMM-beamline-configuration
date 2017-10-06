@@ -1,0 +1,8 @@
+epicsEnvSet("ARCH","linux-x86_64")
+epicsEnvSet("IOC","iocI400")
+epicsEnvSet("TOP","/epics/iocs/I400")
+epicsEnvSet("CALC","/usr/lib/epics")
+epicsEnvSet("ASYN","/usr/lib/epics")
+epicsEnvSet("MODBUS","/usr/lib/epics")
+epicsEnvSet("UIOCSYSTEM","/opt/epics/modules/uIOCSystem")
+epicsEnvSet("EPICS_BASE","/usr/lib/epics")

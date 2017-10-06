@@ -1,0 +1,13 @@
+file "db/pmac_asyn_motor.db"
+{
+pattern
+{SYS,            DEV,                    MOTOR,  SPORT,  ADDR,             DESC,                        DTYP        PREC,  EGU}
+{"XF:06BMA-BI",  "{XAFS-Ax:Tbl_YU}",     "M0",   "P0",   1,                "xafs_tbl_yu",               asynMotor,  4,     "mm"}
+{"XF:06BMA-BI",  "{XAFS-Ax:Tbl_YDO}",    "M0",   "P0",   2,                "xafs_tbl_ydo",              asynMotor,  4,     "mm"}
+{"XF:06BMA-BI",  "{XAFS-Ax:Tbl_YDI}",    "M0",   "P0",   3,                "xafs_tbl_ydi",              asynMotor,  4,     "mm"}
+{"XF:06BMA-BI",  "{XAFS-Ax:Tbl_XU}",     "M0",   "P0",   4,                "xafs_tbl_xu",               asynMotor,  4,     "mm"}
+{"XF:06BMA-BI",  "{XAFS-Ax:Tbl_XD}",     "M0",   "P0",   5,                "xafs_tbl_xd",               asynMotor,  4,     "mm"}
+{"XF:06BMA-BI",  "{XAFS-Ax:RotH}",       "M0",   "P0",   6,                "xafs_roth",                 asynMotor,  4,     "deg"}
+{"XF:06BMA-BI",  "{XAFS-Ax:RotB}",       "M0",   "P0",   7,                "xafs_rotb",                 asynMotor,  4,     "deg"}
+{"XF:06BMA-BI",  "{XAFS-Ax:RotS}",       "M0",   "P0",   8,                "xafs_rots",                 asynMotor,  4,     "deg"}
+}

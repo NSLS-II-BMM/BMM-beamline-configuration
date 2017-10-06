@@ -1,0 +1,13 @@
+file "${TOP}/db/pmac_physical_limit.db"
+{
+pattern
+{SYS,            DEV,                  }
+{"XF:06BMA-BI",  "{XAFS-Ax:LinY}"      }
+{"XF:06BMA-BI",  "{XAFS-Ax:LinX}"      }
+{"XF:06BMA-BI",  "{XAFS-Ax:LinS}"      }
+{"XF:06BMA-BI",  "{XAFS-Ax:LinXS}"     }
+{"XF:06BMA-BI",  "{XAFS-Ax:Pitch}"     }
+{"XF:06BMA-BI",  "{XAFS-Ax:Roll}"      }
+{"XF:06BMA-BI",  "{XAFS-Ax:Mtr7}"      }
+{"XF:06BMA-BI",  "{XAFS-Ax:Mtr8}"      }
+}

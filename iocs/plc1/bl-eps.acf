@@ -1,0 +1,101 @@
+# !!! Do not modify this file without management approval !!!
+
+# Lead operator console
+HAG(leadop) {
+  cdesk10, cdesk10.cs.nsls2.local
+}
+# Main Control Room consoles
+HAG(mcr) {
+  cdesk01, cdesk01.cs.nsls2.local,
+  cdesk02, cdesk02.cs.nsls2.local,
+  cdesk03, cdesk03.cs.nsls2.local,
+  cdesk04, cdesk04.cs.nsls2.local,
+  cdesk05, cdesk05.cs.nsls2.local,
+  cdesk06, cdesk06.cs.nsls2.local,
+  cdesk07, cdesk07.cs.nsls2.local,
+  cdesk08, cdesk08.cs.nsls2.local,
+  cdesk09, cdesk09.cs.nsls2.local,
+  cdesk10, cdesk10.cs.nsls2.local,
+  physics01, physics01.cs.nsls2.local
+}
+# Consoles outside MCR
+HAG(remote) {
+  injdesk1, injdesk1.cs.nsls2.local,
+  injdesk2, injdesk2.cs.nsls2.local,
+  injdesk3, injdesk3.cs.nsls2.local,
+  injdesk4, injdesk4.cs.nsls2.local,
+  725ws-cr01, 725ws-cr01.cs.nsls2.local,
+  725ws-cr02, 725ws-cr02.cs.nsls2.local,
+  box32, box32.cs.nsls2.local,
+  box32-1, box32-1.cs.nsls2.local,
+  box32-2, box32-2.cs.nsls2.local,
+  box32-3, box32-3.cs.nsls2.local,
+  box64-1, box64-1.cs.nsls2.local,
+  box64-2, box64-2.cs.nsls2.local,
+  box64-3, box64-3.cs.nsls2.local,
+  linacioc01, linacioc01.cs.nsls2.local,
+  masarsnap, masarsnap.cs.nsls2.local,
+  matlab, matlab.cs.nsls2.local
+}
+# Beamline consoles
+HAG(beamline_remote) {
+  xf06bm-ioc1, xf06bm-ioc1.cs.nsls2.local,
+  xf06bm-ioc2, xf06bm-ioc2.cs.nsls2.local,
+  xf06bm-ws1, xf06bm-ws1.cs.nsls2.local,
+  xf06bm-ws2, xf06bm-ws2.cs.nsls2.local,
+  xf06bm-ws3, xf06bm-ws3.cs.nsls2.local
+}
+# Account for IOCs
+UAG(softioc) {softioc, rtems}
+#EPS experts
+UAG(eps) {
+  gbischof, bravel
+}
+
+# Disallow all CA write access
+ASG(READONLY) {
+  RULE(1, READ)
+}
+
+# Default for undefined groups
+# White listed operator controls
+# Allow MCR operators unconditionally
+# Allow other consoles conditionally
+ASG(DEFAULT) {
+  RULE(1, READ)
+
+  RULE(1, WRITE, TRAPWRITE) {
+    HAG(mcr)
+  }
+
+# Allow inter-IOC and physics app writes
+  RULE(1, WRITE, TRAPWRITE) {
+    UAG(softioc)
+  }
+
+# Allow remote consoles
+  RULE(1, WRITE, TRAPWRITE) {
+    HAG(beamline_remote)
+  }
+}
+
+ASG(EPSEXPERT) {
+
+  RULE(1, READ)
+
+  RULE(1, WRITE, TRAPWRITE) {
+    UAG(eps)
+    HAG(mcr)
+  }
+
+# Always allow remote consoles
+  RULE(1, WRITE, TRAPWRITE) {
+    UAG(eps)
+    HAG(remote)
+  }
+  RULE(1, WRITE, TRAPWRITE) {
+    UAG(eps)
+    HAG(beamline_remote)
+  }
+}
+

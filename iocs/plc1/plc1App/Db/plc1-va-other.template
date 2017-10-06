@@ -1,0 +1,28 @@
+## Database for Vacuum gauges and pump tags in EPS PLC 
+
+## Substitutions:
+## Sys		-	System
+## PLC		-	PLC name
+## Dev		-	CCG, TCG, IP
+
+#$(Chan) Set point relay signal
+record(bi, "$(Chan)Sts:Rly1PLC-Sts")
+{
+        field(DESC, "$(Mod) controller relay input")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC) $(Mod)_Sts_$(Seq)[$(ArrNum)] S 0.5")
+        field(ZNAM, "Relay Off")
+        field(ONAM, "Relay On")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "$(Chan)Sts:Rly1PLC-First")
+{
+        field(DESC, "$(Mod) tripped first in IL")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC) $(Mod)_Lock_$(Seq)[$(ArrNum)] S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "First")
+}

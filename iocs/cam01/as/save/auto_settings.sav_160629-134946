@@ -1,0 +1,298 @@
+# autosave R5.3	Automatically generated - DO NOT MODIFY - 160629-134702
+XF:04IDA-BI:1{Scr:1}cam1:DataType 1
+XF:04IDA-BI:1{Scr:1}cam1:ColorMode 0
+XF:04IDA-BI:1{Scr:1}cam1:BinX 1
+XF:04IDA-BI:1{Scr:1}cam1:BinY 1
+XF:04IDA-BI:1{Scr:1}cam1:MinX 0
+XF:04IDA-BI:1{Scr:1}cam1:MinY 0
+XF:04IDA-BI:1{Scr:1}cam1:SizeX 1280
+XF:04IDA-BI:1{Scr:1}cam1:SizeY 960
+XF:04IDA-BI:1{Scr:1}cam1:ReverseX 0
+XF:04IDA-BI:1{Scr:1}cam1:ReverseY 0
+XF:04IDA-BI:1{Scr:1}cam1:AcquireTime 0.05
+XF:04IDA-BI:1{Scr:1}cam1:AcquirePeriod 0.030018998917047
+XF:04IDA-BI:1{Scr:1}cam1:Gain 0
+XF:04IDA-BI:1{Scr:1}cam1:FrameType 0
+XF:04IDA-BI:1{Scr:1}cam1:ImageMode 2
+XF:04IDA-BI:1{Scr:1}cam1:TriggerMode 0
+XF:04IDA-BI:1{Scr:1}cam1:NumExposures 1
+XF:04IDA-BI:1{Scr:1}cam1:NumImages 1
+XF:04IDA-BI:1{Scr:1}cam1:ArrayCallbacks 1
+XF:04IDA-BI:1{Scr:1}cam1:ShutterMode 0
+XF:04IDA-BI:1{Scr:1}cam1:ShutterOpenDelay 0
+XF:04IDA-BI:1{Scr:1}cam1:ShutterCloseDelay 0
+XF:04IDA-BI:1{Scr:1}cam1:ShutterOpenEPICS.OUT 
+XF:04IDA-BI:1{Scr:1}cam1:ShutterCloseEPICS.OUT 
+XF:04IDA-BI:1{Scr:1}cam1:ShutterOpenEPICS.OCAL 1
+XF:04IDA-BI:1{Scr:1}cam1:ShutterCloseEPICS.OCAL 0
+XF:04IDA-BI:1{Scr:1}cam1:ShutterStatusEPICS_RBV.INP test CP MS
+XF:04IDA-BI:1{Scr:1}cam1:ShutterStatusEPICS_RBV.ZRVL 0
+XF:04IDA-BI:1{Scr:1}cam1:ShutterStatusEPICS_RBV.ONVL 1
+XF:04IDA-BI:1{Scr:1}cam1:Temperature 25
+XF:04IDA-BI:1{Scr:1}cam1:ReadStatus.SCAN 0
+XF:04IDA-BI:1{Scr:1}cam1:NDAttributesFile 0
+XF:04IDA-BI:1{Scr:1}cam1:PoolUsedMem.SCAN 6
+XF:04IDA-BI:1{Scr:1}cam1:FilePath 0
+XF:04IDA-BI:1{Scr:1}cam1:FileName 0
+XF:04IDA-BI:1{Scr:1}cam1:FileNumber 1
+XF:04IDA-BI:1{Scr:1}cam1:AutoIncrement 1
+XF:04IDA-BI:1{Scr:1}cam1:FileTemplate 0
+XF:04IDA-BI:1{Scr:1}cam1:AutoSave 0
+XF:04IDA-BI:1{Scr:1}cam1:FileFormat 0
+XF:04IDA-BI:1{Scr:1}cam1:FileWriteMode 0
+XF:04IDA-BI:1{Scr:1}cam1:NumCapture 1
+XF:04IDA-BI:1{Scr:1}cam1:DeleteDriverFile 0
+XF:04IDA-BI:1{Scr:1}cam1:PSReadStatistics.SCAN 4
+XF:04IDA-BI:1{Scr:1}cam1:PSByteRate 115000000
+XF:04IDA-BI:1{Scr:1}cam1:SyncOut1Mode 4
+XF:04IDA-BI:1{Scr:1}cam1:SyncOut1Level 0
+XF:04IDA-BI:1{Scr:1}cam1:SyncOut1Invert 0
+XF:04IDA-BI:1{Scr:1}cam1:SyncOut2Mode 4
+XF:04IDA-BI:1{Scr:1}cam1:SyncOut2Level 0
+XF:04IDA-BI:1{Scr:1}cam1:SyncOut2Invert 0
+XF:04IDA-BI:1{Scr:1}cam1:SyncOut3Mode 4
+XF:04IDA-BI:1{Scr:1}cam1:SyncOut3Level 0
+XF:04IDA-BI:1{Scr:1}cam1:SyncOut3Invert 0
+XF:04IDA-BI:1{Scr:1}cam1:Strobe1Mode 2
+XF:04IDA-BI:1{Scr:1}cam1:Strobe1CtlDuration 0
+XF:04IDA-BI:1{Scr:1}cam1:Strobe1Delay 0
+XF:04IDA-BI:1{Scr:1}cam1:Strobe1Duration 0
+XF:04IDA-BI:1{Scr:1}cam1:TriggerEvent 0
+XF:04IDA-BI:1{Scr:1}cam1:TriggerOverlap 0
+XF:04IDA-BI:1{Scr:1}cam1:TriggerDelay 0
+XF:04IDA-BI:1{Scr:1}image1:NDArrayPort CAM
+XF:04IDA-BI:1{Scr:1}image1:NDArrayAddress 0
+XF:04IDA-BI:1{Scr:1}image1:EnableCallbacks 0
+XF:04IDA-BI:1{Scr:1}image1:MinCallbackTime 0
+XF:04IDA-BI:1{Scr:1}image1:BlockingCallbacks 0
+XF:04IDA-BI:1{Scr:1}image1:NDAttributesFile 
+XF:04IDA-BI:1{Scr:1}netCDF1:NDArrayPort CAM
+XF:04IDA-BI:1{Scr:1}netCDF1:NDArrayAddress 0
+XF:04IDA-BI:1{Scr:1}netCDF1:EnableCallbacks 0
+XF:04IDA-BI:1{Scr:1}netCDF1:MinCallbackTime 0
+XF:04IDA-BI:1{Scr:1}netCDF1:BlockingCallbacks 0
+XF:04IDA-BI:1{Scr:1}netCDF1:NDAttributesFile 
+XF:04IDA-BI:1{Scr:1}netCDF1:FilePath 
+XF:04IDA-BI:1{Scr:1}netCDF1:FileName 
+XF:04IDA-BI:1{Scr:1}netCDF1:FileNumber 1
+XF:04IDA-BI:1{Scr:1}netCDF1:AutoIncrement 1
+XF:04IDA-BI:1{Scr:1}netCDF1:FileTemplate 
+XF:04IDA-BI:1{Scr:1}netCDF1:AutoSave 0
+XF:04IDA-BI:1{Scr:1}netCDF1:FileFormat 0
+XF:04IDA-BI:1{Scr:1}netCDF1:FileWriteMode 0
+XF:04IDA-BI:1{Scr:1}netCDF1:NumCapture 1
+XF:04IDA-BI:1{Scr:1}netCDF1:DeleteDriverFile 0
+XF:04IDA-BI:1{Scr:1}TIFF1:NDArrayPort CAM
+XF:04IDA-BI:1{Scr:1}TIFF1:NDArrayAddress 0
+XF:04IDA-BI:1{Scr:1}TIFF1:EnableCallbacks 0
+XF:04IDA-BI:1{Scr:1}TIFF1:MinCallbackTime 0
+XF:04IDA-BI:1{Scr:1}TIFF1:BlockingCallbacks 0
+XF:04IDA-BI:1{Scr:1}TIFF1:NDAttributesFile 
+XF:04IDA-BI:1{Scr:1}TIFF1:FilePath 
+XF:04IDA-BI:1{Scr:1}TIFF1:FileName 
+XF:04IDA-BI:1{Scr:1}TIFF1:FileNumber 1
+XF:04IDA-BI:1{Scr:1}TIFF1:AutoIncrement 1
+XF:04IDA-BI:1{Scr:1}TIFF1:FileTemplate 
+XF:04IDA-BI:1{Scr:1}TIFF1:AutoSave 0
+XF:04IDA-BI:1{Scr:1}TIFF1:FileFormat 0
+XF:04IDA-BI:1{Scr:1}TIFF1:FileWriteMode 0
+XF:04IDA-BI:1{Scr:1}TIFF1:NumCapture 1
+XF:04IDA-BI:1{Scr:1}TIFF1:DeleteDriverFile 0
+XF:04IDA-BI:1{Scr:1}JPEG1:NDArrayPort CAM
+XF:04IDA-BI:1{Scr:1}JPEG1:NDArrayAddress 0
+XF:04IDA-BI:1{Scr:1}JPEG1:EnableCallbacks 0
+XF:04IDA-BI:1{Scr:1}JPEG1:MinCallbackTime 0
+XF:04IDA-BI:1{Scr:1}JPEG1:BlockingCallbacks 0
+XF:04IDA-BI:1{Scr:1}JPEG1:NDAttributesFile 
+XF:04IDA-BI:1{Scr:1}JPEG1:FilePath 
+XF:04IDA-BI:1{Scr:1}JPEG1:FileName 
+XF:04IDA-BI:1{Scr:1}JPEG1:FileNumber 1
+XF:04IDA-BI:1{Scr:1}JPEG1:AutoIncrement 1
+XF:04IDA-BI:1{Scr:1}JPEG1:FileTemplate 
+XF:04IDA-BI:1{Scr:1}JPEG1:AutoSave 0
+XF:04IDA-BI:1{Scr:1}JPEG1:FileFormat 0
+XF:04IDA-BI:1{Scr:1}JPEG1:FileWriteMode 0
+XF:04IDA-BI:1{Scr:1}JPEG1:NumCapture 1
+XF:04IDA-BI:1{Scr:1}JPEG1:DeleteDriverFile 0
+XF:04IDA-BI:1{Scr:1}Magick1:NDArrayPort CAM
+XF:04IDA-BI:1{Scr:1}Magick1:NDArrayAddress 0
+XF:04IDA-BI:1{Scr:1}Magick1:EnableCallbacks 0
+XF:04IDA-BI:1{Scr:1}Magick1:MinCallbackTime 0
+XF:04IDA-BI:1{Scr:1}Magick1:BlockingCallbacks 0
+XF:04IDA-BI:1{Scr:1}Magick1:NDAttributesFile 
+XF:04IDA-BI:1{Scr:1}Magick1:FilePath 
+XF:04IDA-BI:1{Scr:1}Magick1:FileName 
+XF:04IDA-BI:1{Scr:1}Magick1:FileNumber 1
+XF:04IDA-BI:1{Scr:1}Magick1:AutoIncrement 1
+XF:04IDA-BI:1{Scr:1}Magick1:FileTemplate 
+XF:04IDA-BI:1{Scr:1}Magick1:AutoSave 0
+XF:04IDA-BI:1{Scr:1}Magick1:FileFormat 0
+XF:04IDA-BI:1{Scr:1}Magick1:FileWriteMode 0
+XF:04IDA-BI:1{Scr:1}Magick1:NumCapture 1
+XF:04IDA-BI:1{Scr:1}Magick1:DeleteDriverFile 0
+XF:04IDA-BI:1{Scr:1}HDF1:NDArrayPort CAM
+XF:04IDA-BI:1{Scr:1}HDF1:NDArrayAddress 0
+XF:04IDA-BI:1{Scr:1}HDF1:EnableCallbacks 0
+XF:04IDA-BI:1{Scr:1}HDF1:MinCallbackTime 0
+XF:04IDA-BI:1{Scr:1}HDF1:BlockingCallbacks 0
+XF:04IDA-BI:1{Scr:1}HDF1:NDAttributesFile 
+XF:04IDA-BI:1{Scr:1}HDF1:FilePath 
+XF:04IDA-BI:1{Scr:1}HDF1:FileName 
+XF:04IDA-BI:1{Scr:1}HDF1:FileNumber 1
+XF:04IDA-BI:1{Scr:1}HDF1:AutoIncrement 1
+XF:04IDA-BI:1{Scr:1}HDF1:FileTemplate 
+XF:04IDA-BI:1{Scr:1}HDF1:AutoSave 0
+XF:04IDA-BI:1{Scr:1}HDF1:FileFormat 0
+XF:04IDA-BI:1{Scr:1}HDF1:FileWriteMode 0
+XF:04IDA-BI:1{Scr:1}HDF1:NumCapture 1
+XF:04IDA-BI:1{Scr:1}HDF1:DeleteDriverFile 0
+XF:04IDA-BI:1{Scr:1}ROI1:NDArrayPort CAM
+XF:04IDA-BI:1{Scr:1}ROI1:NDArrayAddress 0
+XF:04IDA-BI:1{Scr:1}ROI1:EnableCallbacks 0
+XF:04IDA-BI:1{Scr:1}ROI1:MinCallbackTime 0
+XF:04IDA-BI:1{Scr:1}ROI1:BlockingCallbacks 0
+XF:04IDA-BI:1{Scr:1}ROI1:NDAttributesFile 
+XF:04IDA-BI:1{Scr:1}ROI2:NDArrayPort CAM
+XF:04IDA-BI:1{Scr:1}ROI2:NDArrayAddress 0
+XF:04IDA-BI:1{Scr:1}ROI2:EnableCallbacks 0
+XF:04IDA-BI:1{Scr:1}ROI2:MinCallbackTime 0
+XF:04IDA-BI:1{Scr:1}ROI2:BlockingCallbacks 0
+XF:04IDA-BI:1{Scr:1}ROI2:NDAttributesFile 
+XF:04IDA-BI:1{Scr:1}ROI3:NDArrayPort CAM
+XF:04IDA-BI:1{Scr:1}ROI3:NDArrayAddress 0
+XF:04IDA-BI:1{Scr:1}ROI3:EnableCallbacks 0
+XF:04IDA-BI:1{Scr:1}ROI3:MinCallbackTime 0
+XF:04IDA-BI:1{Scr:1}ROI3:BlockingCallbacks 0
+XF:04IDA-BI:1{Scr:1}ROI3:NDAttributesFile 
+XF:04IDA-BI:1{Scr:1}ROI4:NDArrayPort CAM
+XF:04IDA-BI:1{Scr:1}ROI4:NDArrayAddress 0
+XF:04IDA-BI:1{Scr:1}ROI4:EnableCallbacks 0
+XF:04IDA-BI:1{Scr:1}ROI4:MinCallbackTime 0
+XF:04IDA-BI:1{Scr:1}ROI4:BlockingCallbacks 0
+XF:04IDA-BI:1{Scr:1}ROI4:NDAttributesFile 
+XF:04IDA-BI:1{Scr:1}Proc1:NDArrayPort CAM
+XF:04IDA-BI:1{Scr:1}Proc1:NDArrayAddress 0
+XF:04IDA-BI:1{Scr:1}Proc1:EnableCallbacks 0
+XF:04IDA-BI:1{Scr:1}Proc1:MinCallbackTime 0
+XF:04IDA-BI:1{Scr:1}Proc1:BlockingCallbacks 0
+XF:04IDA-BI:1{Scr:1}Proc1:NDAttributesFile 
+XF:04IDA-BI:1{Scr:1}Stats1:NDArrayPort ROI1
+XF:04IDA-BI:1{Scr:1}Stats1:NDArrayAddress 0
+XF:04IDA-BI:1{Scr:1}Stats1:EnableCallbacks 0
+XF:04IDA-BI:1{Scr:1}Stats1:MinCallbackTime 0
+XF:04IDA-BI:1{Scr:1}Stats1:BlockingCallbacks 0
+XF:04IDA-BI:1{Scr:1}Stats1:NDAttributesFile 
+XF:04IDA-BI:1{Scr:1}Stats1:BgdWidth 1
+XF:04IDA-BI:1{Scr:1}Stats1:ComputeStatistics 1
+XF:04IDA-BI:1{Scr:1}Stats1:ComputeCentroid 0
+XF:04IDA-BI:1{Scr:1}Stats1:CentroidThreshold 1
+XF:04IDA-BI:1{Scr:1}Stats1:ComputeProfiles 0
+XF:04IDA-BI:1{Scr:1}Stats1:CursorX 256
+XF:04IDA-BI:1{Scr:1}Stats1:CursorY 256
+XF:04IDA-BI:1{Scr:1}Stats1:ComputeHistogram 0
+XF:04IDA-BI:1{Scr:1}Stats1:HistSize 256
+XF:04IDA-BI:1{Scr:1}Stats1:HistMin 0
+XF:04IDA-BI:1{Scr:1}Stats1:HistMax 255
+XF:04IDA-BI:1{Scr:1}Stats1:TSNumPoints 2048
+XF:04IDA-BI:1{Scr:1}Stats1:TSRead.SCAN 6
+XF:04IDA-BI:1{Scr:1}Stats2:NDArrayPort ROI2
+XF:04IDA-BI:1{Scr:1}Stats2:NDArrayAddress 0
+XF:04IDA-BI:1{Scr:1}Stats2:EnableCallbacks 0
+XF:04IDA-BI:1{Scr:1}Stats2:MinCallbackTime 0
+XF:04IDA-BI:1{Scr:1}Stats2:BlockingCallbacks 0
+XF:04IDA-BI:1{Scr:1}Stats2:NDAttributesFile 
+XF:04IDA-BI:1{Scr:1}Stats2:BgdWidth 1
+XF:04IDA-BI:1{Scr:1}Stats2:ComputeStatistics 1
+XF:04IDA-BI:1{Scr:1}Stats2:ComputeCentroid 0
+XF:04IDA-BI:1{Scr:1}Stats2:CentroidThreshold 1
+XF:04IDA-BI:1{Scr:1}Stats2:ComputeProfiles 0
+XF:04IDA-BI:1{Scr:1}Stats2:CursorX 256
+XF:04IDA-BI:1{Scr:1}Stats2:CursorY 256
+XF:04IDA-BI:1{Scr:1}Stats2:ComputeHistogram 0
+XF:04IDA-BI:1{Scr:1}Stats2:HistSize 256
+XF:04IDA-BI:1{Scr:1}Stats2:HistMin 0
+XF:04IDA-BI:1{Scr:1}Stats2:HistMax 255
+XF:04IDA-BI:1{Scr:1}Stats2:TSNumPoints 2048
+XF:04IDA-BI:1{Scr:1}Stats2:TSRead.SCAN 6
+XF:04IDA-BI:1{Scr:1}Stats3:NDArrayPort ROI3
+XF:04IDA-BI:1{Scr:1}Stats3:NDArrayAddress 0
+XF:04IDA-BI:1{Scr:1}Stats3:EnableCallbacks 0
+XF:04IDA-BI:1{Scr:1}Stats3:MinCallbackTime 0
+XF:04IDA-BI:1{Scr:1}Stats3:BlockingCallbacks 0
+XF:04IDA-BI:1{Scr:1}Stats3:NDAttributesFile 
+XF:04IDA-BI:1{Scr:1}Stats3:BgdWidth 1
+XF:04IDA-BI:1{Scr:1}Stats3:ComputeStatistics 1
+XF:04IDA-BI:1{Scr:1}Stats3:ComputeCentroid 0
+XF:04IDA-BI:1{Scr:1}Stats3:CentroidThreshold 1
+XF:04IDA-BI:1{Scr:1}Stats3:ComputeProfiles 0
+XF:04IDA-BI:1{Scr:1}Stats3:CursorX 256
+XF:04IDA-BI:1{Scr:1}Stats3:CursorY 256
+XF:04IDA-BI:1{Scr:1}Stats3:ComputeHistogram 0
+XF:04IDA-BI:1{Scr:1}Stats3:HistSize 256
+XF:04IDA-BI:1{Scr:1}Stats3:HistMin 0
+XF:04IDA-BI:1{Scr:1}Stats3:HistMax 255
+XF:04IDA-BI:1{Scr:1}Stats3:TSNumPoints 2048
+XF:04IDA-BI:1{Scr:1}Stats3:TSRead.SCAN 6
+XF:04IDA-BI:1{Scr:1}Stats4:NDArrayPort ROI4
+XF:04IDA-BI:1{Scr:1}Stats4:NDArrayAddress 0
+XF:04IDA-BI:1{Scr:1}Stats4:EnableCallbacks 0
+XF:04IDA-BI:1{Scr:1}Stats4:MinCallbackTime 0
+XF:04IDA-BI:1{Scr:1}Stats4:BlockingCallbacks 0
+XF:04IDA-BI:1{Scr:1}Stats4:NDAttributesFile 
+XF:04IDA-BI:1{Scr:1}Stats4:BgdWidth 1
+XF:04IDA-BI:1{Scr:1}Stats4:ComputeStatistics 1
+XF:04IDA-BI:1{Scr:1}Stats4:ComputeCentroid 0
+XF:04IDA-BI:1{Scr:1}Stats4:CentroidThreshold 1
+XF:04IDA-BI:1{Scr:1}Stats4:ComputeProfiles 0
+XF:04IDA-BI:1{Scr:1}Stats4:CursorX 256
+XF:04IDA-BI:1{Scr:1}Stats4:CursorY 256
+XF:04IDA-BI:1{Scr:1}Stats4:ComputeHistogram 0
+XF:04IDA-BI:1{Scr:1}Stats4:HistSize 256
+XF:04IDA-BI:1{Scr:1}Stats4:HistMin 0
+XF:04IDA-BI:1{Scr:1}Stats4:HistMax 255
+XF:04IDA-BI:1{Scr:1}Stats4:TSNumPoints 2048
+XF:04IDA-BI:1{Scr:1}Stats4:TSRead.SCAN 6
+XF:04IDA-BI:1{Scr:1}Stats5:NDArrayPort CAM
+XF:04IDA-BI:1{Scr:1}Stats5:NDArrayAddress 0
+XF:04IDA-BI:1{Scr:1}Stats5:EnableCallbacks 0
+XF:04IDA-BI:1{Scr:1}Stats5:MinCallbackTime 0
+XF:04IDA-BI:1{Scr:1}Stats5:BlockingCallbacks 0
+XF:04IDA-BI:1{Scr:1}Stats5:NDAttributesFile 
+XF:04IDA-BI:1{Scr:1}Stats5:BgdWidth 1
+XF:04IDA-BI:1{Scr:1}Stats5:ComputeStatistics 1
+XF:04IDA-BI:1{Scr:1}Stats5:ComputeCentroid 0
+XF:04IDA-BI:1{Scr:1}Stats5:CentroidThreshold 1
+XF:04IDA-BI:1{Scr:1}Stats5:ComputeProfiles 0
+XF:04IDA-BI:1{Scr:1}Stats5:CursorX 256
+XF:04IDA-BI:1{Scr:1}Stats5:CursorY 256
+XF:04IDA-BI:1{Scr:1}Stats5:ComputeHistogram 0
+XF:04IDA-BI:1{Scr:1}Stats5:HistSize 256
+XF:04IDA-BI:1{Scr:1}Stats5:HistMin 0
+XF:04IDA-BI:1{Scr:1}Stats5:HistMax 255
+XF:04IDA-BI:1{Scr:1}Stats5:TSNumPoints 2048
+XF:04IDA-BI:1{Scr:1}Stats5:TSRead.SCAN 6
+XF:04IDA-BI:1{Scr:1}Trans1:NDArrayPort CAM
+XF:04IDA-BI:1{Scr:1}Trans1:NDArrayAddress 0
+XF:04IDA-BI:1{Scr:1}Trans1:EnableCallbacks 0
+XF:04IDA-BI:1{Scr:1}Trans1:MinCallbackTime 0
+XF:04IDA-BI:1{Scr:1}Trans1:BlockingCallbacks 0
+XF:04IDA-BI:1{Scr:1}Trans1:NDAttributesFile 
+XF:04IDA-BI:1{Scr:1}Over1:NDArrayPort CAM
+XF:04IDA-BI:1{Scr:1}Over1:NDArrayAddress 0
+XF:04IDA-BI:1{Scr:1}Over1:EnableCallbacks 0
+XF:04IDA-BI:1{Scr:1}Over1:MinCallbackTime 0
+XF:04IDA-BI:1{Scr:1}Over1:BlockingCallbacks 0
+XF:04IDA-BI:1{Scr:1}Over1:NDAttributesFile 
+XF:04IDA-BI:1{Scr:1}CC1:NDArrayPort CAM
+XF:04IDA-BI:1{Scr:1}CC1:NDArrayAddress 0
+XF:04IDA-BI:1{Scr:1}CC1:EnableCallbacks 0
+XF:04IDA-BI:1{Scr:1}CC1:MinCallbackTime 0
+XF:04IDA-BI:1{Scr:1}CC1:BlockingCallbacks 0
+XF:04IDA-BI:1{Scr:1}CC1:NDAttributesFile 
+XF:04IDA-BI:1{Scr:1}CC2:NDArrayPort CAM
+XF:04IDA-BI:1{Scr:1}CC2:NDArrayAddress 0
+XF:04IDA-BI:1{Scr:1}CC2:EnableCallbacks 0
+XF:04IDA-BI:1{Scr:1}CC2:MinCallbackTime 0
+XF:04IDA-BI:1{Scr:1}CC2:BlockingCallbacks 0
+XF:04IDA-BI:1{Scr:1}CC2:NDAttributesFile 
+<END>

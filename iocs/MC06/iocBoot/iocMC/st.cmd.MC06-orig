@@ -1,0 +1,72 @@
+#!./bin/linux-x86_64/MC
+
+< iocBoot/iocMC/envPaths
+
+cd ${TOP}
+
+## Register all support components
+dbLoadDatabase("dbd/MC.dbd",0,0)
+MC_registerRecordDeviceDriver(pdbbase)
+
+## User defined ENV variables
+epicsEnvSet(HOSTNAME,"iocXF:06BM-OP{MC:06}")
+epicsEnvSet(P,"MC:06")
+# the following is done due to a limitation of 
+# the autosave status PV name (max. length=9)
+epicsEnvSet(AS_PV_PREFIX,"AS_MC:06:")
+epicsEnvSet(AS_PATH,"/opt/epics/iocoutput/autosave")
+epicsEnvSet(AS_DB_PATH,"/usr/lib/epics/")
+
+## Configure DeltaTau PMAC motion controller(s)
+pmacAsynIPConfigure("pmac", "10.6.130.86:1025")
+pmacAsynMotorCreate("pmac", 0, 0, 9)
+drvAsynMotorConfigure("PMAC", "pmacAsynMotor", 0, 9)
+pmacSetIdlePollPeriod(0,300)
+pmacSetMovingPollPeriod(0,100)
+
+## configuration for stream
+epicsEnvSet ("STREAM_PROTOCOL_PATH", "/opt/epics/modules/SAI/SAIApp/src")
+
+## single axis interface
+dbLoadTemplate("/opt/epics/apps/MC06/db/SAI_Global.substitutions")
+dbLoadTemplate("/opt/epics/apps/MC06/db/SAI_8MotorStatus.substitutions")
+dbLoadTemplate("/opt/epics/apps/MC06/db/SAI_SingleMotorStatus.substitutions")
+dbLoadTemplate("/opt/epics/apps/MC06/db/SAI_MotorRecord.substitutions")
+dbLoadTemplate("/opt/epics/apps/MC06/db/SAI_MotorHoming.substitutions")
+dbLoadTemplate("/opt/epics/apps/MC06/db/SAI_EncoderLoss.substitutions")
+dbLoadTemplate("/opt/epics/apps/MC06/db/SAI_DigitalChannels.substitutions")
+
+## generic scan
+#dbLoadTemplate("/opt/epics/apps/MC06/db/SAI_save_restoreStatus.substitutions")
+#dbLoadTemplate("/opt/epics/apps/MC06/db/SAI_generic_scan.substitutions")
+#dbLoadTemplate("/opt/epics/apps/MC06/db/SAI_GSCAN_Saver.substitutions")
+
+# µIOCSystem Overwiew
+dbLoadTemplate("/opt/epics/apps/MC06/db/SAI_IOCsystem.substitutions")
+
+# save_restore setup
+< ${TOP}/iocBoot/${IOC}/save_restore.cmd
+
+## Set this to see messages from mySub
+#var mySubDebug 1
+
+cd ${TOP}/iocBoot/${IOC}
+iocInit()
+
+dbl ("*") > /opt/epics/iocoutput/dbl/PVList.${HOSTNAME}
+
+## scan configuration
+#saveData_Version
+#saveData_Init saveData_GSCAN.req "P=$(P),SCAN=GSCAN:SCANREC_SP"
+#saveData_Info
+
+## Start any sequence programs
+# generic Scan
+#seq dist_pvs,"DEVICE=$(P)GSCAN"
+#seq csvtxtSaver,"DEVICE=$(P)GSCAN"
+
+## Start autosave
+makeAutosaveFileFromDbInfo("${HOSTNAME}.req","autosaveFields")
+create_monitor_set("${HOSTNAME}.req", 5, "P=")
+
+

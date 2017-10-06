@@ -1,0 +1,7 @@
+file "db/basic_motor.db"
+{
+pattern
+{P,                                     M,     DTYP,        PORT, ADDR, DESC,              EGU, DIR,      VELO, VBAS, ACCL, BDST, BVEL, BACC,MRES, ERES, RDBD, UEIP, PREC, DHLM, DLLM, INIT}
+{"XF\:06BM\-OP\{M3\:1\-Ax\:FPit\}",     "Mtr", "asynMotor", PI1,  0,    "M3 Fine Pitch",   um,  Pos,      1,   0.,   1.,   0,    1,    .2,   1e-3, 1e-3, 1e-3, 1, 3,    0,    0,    ""}
+}
+

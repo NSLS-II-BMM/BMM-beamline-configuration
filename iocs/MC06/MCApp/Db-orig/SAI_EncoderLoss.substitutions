@@ -1,0 +1,13 @@
+file /opt/epics/modules/SAI/db/SAI_EncoderLoss.template {
+pattern {	P,		R,	AXIS,	SCAN, 		ASYNPORT, 	VARSTS, VARCLR}
+        { 	"XF:06BM-OP",		"{Mir:M1-Ax:",	"YU}Mtr","1 second",	"pmac",		"M181",	"M901"}
+        { 	"XF:06BM-OP",		"{Mir:M1-Ax:",	"YDO}Mtr","1 second",	"pmac",		"M281",	"M901"}
+        { 	"XF:06BM-OP",		"{Mir:M1-Ax:",	"YDI}Mtr","1 second",	"pmac",		"M381",	"M901"}
+        { 	"XF:06BM-OP",		"{Mir:M1-Ax:",	"XU}Mtr","1 second",	"pmac",		"M481",	"M901"}
+        { 	"XF:06BM-OP",		"{Mir:M1-Ax:",	"XD}Mtr","1 second",	"pmac",		"M581",	"M901"}
+#        { 	"XF:06BM-OP",		"{Mir:M1-Ax:",	"Z}Mtr","1 second",	"pmac",		"M681",	"M901"}
+#        { 	"XF:06BM-OP",		"{Mir:M1-Ax:",	"ZZ}Mtr","1 second",	"pmac",		"M781",	"M901"}
+#        { 	"XF:06BM-OP",		"{Mir:M1-Ax:",	"ZZZ}Mtr","1 second",	"pmac",		"M881",	"M901"}
+}
+
+#EOF

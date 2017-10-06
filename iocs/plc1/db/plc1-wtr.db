@@ -1,0 +1,1983 @@
+## Database for Pressure gauge tags in EPS PLC
+
+record(ai, "XF:06BMA-UT{DI}P:Supply-I")
+{
+    field(DESC, "Pressure indicator")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_I_0[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+    field(LLSV, "MAJOR")
+    field(LSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-UT{DI}P:Supply_Low-SP")
+{
+    field(DESC, "Pressure warning SP")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) P_Low_0[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+#    field(FLNK, "XF:06BMA-UT{DI}P:Supply_Low-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-UT{DI}P:Supply_Low-RB")
+{
+    field(DESC, "Pressure warning RB")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_Low_0[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+    field(FLNK, "XF:06BMA-UT{DI}P:Supply_Low-ao_")
+}
+
+record(ao, "XF:06BMA-UT{DI}P:Supply_Low-ao_")
+{
+    field(DESC, "Aux Low proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-UT{DI}P:Supply_Low-RB PP")
+    field(OUT, "XF:06BMA-UT{DI}P:Supply-I.LOW")
+}
+
+record(ao, "XF:06BMA-UT{DI}P:Supply_LoLo-SP")
+{
+    field(DESC, "pressure alarm level control")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) P_LoLo_0[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+#    field(FLNK, "XF:06BMA-UT{DI}P:Supply_LoLo-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-UT{DI}P:Supply_LoLo-RB")
+{
+    field(DESC, "Pressure alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_LoLo_0[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+    field(FLNK, "XF:06BMA-UT{DI}P:Supply_LoLo-ao_")
+}
+
+record(ao, "XF:06BMA-UT{DI}P:Supply_LoLo-ao_")
+{
+    field(DESC, "Aux LoLo proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-UT{DI}P:Supply_LoLo-RB PP")
+    field(OUT, "XF:06BMA-UT{DI}P:Supply-I.LOLO")
+}
+
+record(bi, "XF:06BMA-UT{DI}P:Supply-Sts")
+{
+    field(DESC, "Pressure reading status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_Sts_0[0] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-UT{DI}P:Supply-First")
+{
+    field(DESC, "Sensor tripped first in last IL event")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_Lock_0[0] S 0.5")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+## Database for Pressure gauge tags in EPS PLC
+
+record(ai, "XF:06BMA-UT{DI}P:Return-I")
+{
+    field(DESC, "Pressure indicator")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_I_0[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+    field(LLSV, "MAJOR")
+    field(LSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-UT{DI}P:Return_Low-SP")
+{
+    field(DESC, "Pressure warning SP")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) P_Low_0[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+#    field(FLNK, "XF:06BMA-UT{DI}P:Return_Low-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-UT{DI}P:Return_Low-RB")
+{
+    field(DESC, "Pressure warning RB")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_Low_0[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+    field(FLNK, "XF:06BMA-UT{DI}P:Return_Low-ao_")
+}
+
+record(ao, "XF:06BMA-UT{DI}P:Return_Low-ao_")
+{
+    field(DESC, "Aux Low proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-UT{DI}P:Return_Low-RB PP")
+    field(OUT, "XF:06BMA-UT{DI}P:Return-I.LOW")
+}
+
+record(ao, "XF:06BMA-UT{DI}P:Return_LoLo-SP")
+{
+    field(DESC, "pressure alarm level control")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) P_LoLo_0[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+#    field(FLNK, "XF:06BMA-UT{DI}P:Return_LoLo-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-UT{DI}P:Return_LoLo-RB")
+{
+    field(DESC, "Pressure alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_LoLo_0[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+    field(FLNK, "XF:06BMA-UT{DI}P:Return_LoLo-ao_")
+}
+
+record(ao, "XF:06BMA-UT{DI}P:Return_LoLo-ao_")
+{
+    field(DESC, "Aux LoLo proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-UT{DI}P:Return_LoLo-RB PP")
+    field(OUT, "XF:06BMA-UT{DI}P:Return-I.LOLO")
+}
+
+record(bi, "XF:06BMA-UT{DI}P:Return-Sts")
+{
+    field(DESC, "Pressure reading status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_Sts_0[1] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-UT{DI}P:Return-First")
+{
+    field(DESC, "Sensor tripped first in last IL event")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_Lock_0[1] S 0.5")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+## Database for Pressure gauge tags in EPS PLC
+
+record(ai, "XF:06BMA-UT{DI:2}P:Supply-I")
+{
+    field(DESC, "Pressure indicator")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_I_0[2] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+    field(LLSV, "MAJOR")
+    field(LSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-UT{DI:2}P:Supply_Low-SP")
+{
+    field(DESC, "Pressure warning SP")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) P_Low_0[2] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+#    field(FLNK, "XF:06BMA-UT{DI:2}P:Supply_Low-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-UT{DI:2}P:Supply_Low-RB")
+{
+    field(DESC, "Pressure warning RB")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_Low_0[2] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+    field(FLNK, "XF:06BMA-UT{DI:2}P:Supply_Low-ao_")
+}
+
+record(ao, "XF:06BMA-UT{DI:2}P:Supply_Low-ao_")
+{
+    field(DESC, "Aux Low proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-UT{DI:2}P:Supply_Low-RB PP")
+    field(OUT, "XF:06BMA-UT{DI:2}P:Supply-I.LOW")
+}
+
+record(ao, "XF:06BMA-UT{DI:2}P:Supply_LoLo-SP")
+{
+    field(DESC, "pressure alarm level control")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) P_LoLo_0[2] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+#    field(FLNK, "XF:06BMA-UT{DI:2}P:Supply_LoLo-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-UT{DI:2}P:Supply_LoLo-RB")
+{
+    field(DESC, "Pressure alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_LoLo_0[2] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+    field(FLNK, "XF:06BMA-UT{DI:2}P:Supply_LoLo-ao_")
+}
+
+record(ao, "XF:06BMA-UT{DI:2}P:Supply_LoLo-ao_")
+{
+    field(DESC, "Aux LoLo proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-UT{DI:2}P:Supply_LoLo-RB PP")
+    field(OUT, "XF:06BMA-UT{DI:2}P:Supply-I.LOLO")
+}
+
+record(bi, "XF:06BMA-UT{DI:2}P:Supply-Sts")
+{
+    field(DESC, "Pressure reading status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_Sts_0[2] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-UT{DI:2}P:Supply-First")
+{
+    field(DESC, "Sensor tripped first in last IL event")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_Lock_0[2] S 0.5")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+## Database for Pressure gauge tags in EPS PLC
+
+record(ai, "XF:06BMA-UT{DI:2}P:Return-I")
+{
+    field(DESC, "Pressure indicator")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_I_0[3] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+    field(LLSV, "MAJOR")
+    field(LSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-UT{DI:2}P:Return_Low-SP")
+{
+    field(DESC, "Pressure warning SP")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) P_Low_0[3] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+#    field(FLNK, "XF:06BMA-UT{DI:2}P:Return_Low-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-UT{DI:2}P:Return_Low-RB")
+{
+    field(DESC, "Pressure warning RB")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_Low_0[3] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+    field(FLNK, "XF:06BMA-UT{DI:2}P:Return_Low-ao_")
+}
+
+record(ao, "XF:06BMA-UT{DI:2}P:Return_Low-ao_")
+{
+    field(DESC, "Aux Low proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-UT{DI:2}P:Return_Low-RB PP")
+    field(OUT, "XF:06BMA-UT{DI:2}P:Return-I.LOW")
+}
+
+record(ao, "XF:06BMA-UT{DI:2}P:Return_LoLo-SP")
+{
+    field(DESC, "pressure alarm level control")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) P_LoLo_0[3] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+#    field(FLNK, "XF:06BMA-UT{DI:2}P:Return_LoLo-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-UT{DI:2}P:Return_LoLo-RB")
+{
+    field(DESC, "Pressure alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_LoLo_0[3] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+    field(FLNK, "XF:06BMA-UT{DI:2}P:Return_LoLo-ao_")
+}
+
+record(ao, "XF:06BMA-UT{DI:2}P:Return_LoLo-ao_")
+{
+    field(DESC, "Aux LoLo proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-UT{DI:2}P:Return_LoLo-RB PP")
+    field(OUT, "XF:06BMA-UT{DI:2}P:Return-I.LOLO")
+}
+
+record(bi, "XF:06BMA-UT{DI:2}P:Return-Sts")
+{
+    field(DESC, "Pressure reading status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_Sts_0[3] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-UT{DI:2}P:Return-First")
+{
+    field(DESC, "Sensor tripped first in last IL event")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_Lock_0[3] S 0.5")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+## Database for Pressure gauge tags in EPS PLC
+
+record(ai, "XF:06BMA-UT{DI:3}P:Supply-I")
+{
+    field(DESC, "Pressure indicator")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_I_0[4] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+    field(LLSV, "MAJOR")
+    field(LSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-UT{DI:3}P:Supply_Low-SP")
+{
+    field(DESC, "Pressure warning SP")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) P_Low_0[4] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+#    field(FLNK, "XF:06BMA-UT{DI:3}P:Supply_Low-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-UT{DI:3}P:Supply_Low-RB")
+{
+    field(DESC, "Pressure warning RB")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_Low_0[4] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+    field(FLNK, "XF:06BMA-UT{DI:3}P:Supply_Low-ao_")
+}
+
+record(ao, "XF:06BMA-UT{DI:3}P:Supply_Low-ao_")
+{
+    field(DESC, "Aux Low proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-UT{DI:3}P:Supply_Low-RB PP")
+    field(OUT, "XF:06BMA-UT{DI:3}P:Supply-I.LOW")
+}
+
+record(ao, "XF:06BMA-UT{DI:3}P:Supply_LoLo-SP")
+{
+    field(DESC, "pressure alarm level control")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) P_LoLo_0[4] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+#    field(FLNK, "XF:06BMA-UT{DI:3}P:Supply_LoLo-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-UT{DI:3}P:Supply_LoLo-RB")
+{
+    field(DESC, "Pressure alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_LoLo_0[4] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+    field(FLNK, "XF:06BMA-UT{DI:3}P:Supply_LoLo-ao_")
+}
+
+record(ao, "XF:06BMA-UT{DI:3}P:Supply_LoLo-ao_")
+{
+    field(DESC, "Aux LoLo proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-UT{DI:3}P:Supply_LoLo-RB PP")
+    field(OUT, "XF:06BMA-UT{DI:3}P:Supply-I.LOLO")
+}
+
+record(bi, "XF:06BMA-UT{DI:3}P:Supply-Sts")
+{
+    field(DESC, "Pressure reading status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_Sts_0[4] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-UT{DI:3}P:Supply-First")
+{
+    field(DESC, "Sensor tripped first in last IL event")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_Lock_0[4] S 0.5")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+## Database for Pressure gauge tags in EPS PLC
+
+record(ai, "XF:06BMA-UT{DI:3}P:Return-I")
+{
+    field(DESC, "Pressure indicator")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_I_0[5] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+    field(LLSV, "MAJOR")
+    field(LSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-UT{DI:3}P:Return_Low-SP")
+{
+    field(DESC, "Pressure warning SP")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) P_Low_0[5] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+#    field(FLNK, "XF:06BMA-UT{DI:3}P:Return_Low-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-UT{DI:3}P:Return_Low-RB")
+{
+    field(DESC, "Pressure warning RB")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_Low_0[5] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+    field(FLNK, "XF:06BMA-UT{DI:3}P:Return_Low-ao_")
+}
+
+record(ao, "XF:06BMA-UT{DI:3}P:Return_Low-ao_")
+{
+    field(DESC, "Aux Low proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-UT{DI:3}P:Return_Low-RB PP")
+    field(OUT, "XF:06BMA-UT{DI:3}P:Return-I.LOW")
+}
+
+record(ao, "XF:06BMA-UT{DI:3}P:Return_LoLo-SP")
+{
+    field(DESC, "pressure alarm level control")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) P_LoLo_0[5] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+#    field(FLNK, "XF:06BMA-UT{DI:3}P:Return_LoLo-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-UT{DI:3}P:Return_LoLo-RB")
+{
+    field(DESC, "Pressure alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_LoLo_0[5] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.15")
+    field(AOFF, "")
+    field(EGU,  "PSIG")
+    field(FLNK, "XF:06BMA-UT{DI:3}P:Return_LoLo-ao_")
+}
+
+record(ao, "XF:06BMA-UT{DI:3}P:Return_LoLo-ao_")
+{
+    field(DESC, "Aux LoLo proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-UT{DI:3}P:Return_LoLo-RB PP")
+    field(OUT, "XF:06BMA-UT{DI:3}P:Return-I.LOLO")
+}
+
+record(bi, "XF:06BMA-UT{DI:3}P:Return-Sts")
+{
+    field(DESC, "Pressure reading status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_Sts_0[5] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-UT{DI:3}P:Return-First")
+{
+    field(DESC, "Sensor tripped first in last IL event")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) P_Lock_0[5] S 0.5")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+# GV signals
+record(bi, "XF:06BMA-UT{DI-Vlv:Supply}Sw:OpnLim-Sts")
+{
+        field(DESC, "DI-Vlv:Supply Opn Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) DI_Supply_Vlv_Sts.OpnSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "XF:06BMA-UT{DI-Vlv:Supply}Sw:ClsLim-Sts")
+{
+        field(DESC, "DI-Vlv:Supply Cls Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) DI_Supply_Vlv_Sts.ClsSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "XF:06BMA-UT{DI-Vlv:Supply}Sts:Coil-Sts")
+{
+        field(DESC, "DI-Vlv:Supply Coil Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) DI_Supply_Vlv_Sts.Coil1 S 0.5")
+        field(ZNAM, "Not Energized")
+        field(ONAM, "Energized")
+}
+
+record(bi, "XF:06BMA-UT{DI-Vlv:Supply}Pos-Sts")
+{
+        field(DESC, "DI-Vlv:Supply Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) DI_Supply_Vlv_Sts.Sts S 0.5")
+        field(ZNAM, "Not Open")
+        field(ONAM, "Open")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-UT{DI-Vlv:Supply}Err-Sts")
+{
+        field(DESC, "DI-Vlv:Supply Err Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) DI_Supply_Vlv_Sts.StsFault S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-UT{DI-Vlv:Supply}Sts:FailOpn-Sts")
+{
+        field(DESC, "DI-Vlv:Supply Fail Open")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) DI_Supply_Vlv_Sts.FailedToOpn S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+	field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-UT{DI-Vlv:Supply}Sts:FailCls-Sts")
+{
+        field(DESC, "DI-Vlv:Supply Fail Close")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) DI_Supply_Vlv_Sts.FailedToCls S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-UT{DI-Vlv:Supply}Sts:DS_Intlk-Sts")
+{
+        field(DESC, "DI-Vlv:Supply DS I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) DI_Supply_Vlv_Sts.LockDS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-UT{DI-Vlv:Supply}Sts:US_Intlk-Sts")
+{
+        field(DESC, "DI-Vlv:Supply US I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) DI_Supply_Vlv_Sts.LockUS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+# GV commands
+record(bo, "XF:06BMA-UT{DI-Vlv:Supply}Cmd:Opn-Cmd")
+{
+        field(DESC, "DI-Vlv:Supply Open Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) DI_Supply_Vlv_Cmd.OpnCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Open")
+}
+
+record(bo, "XF:06BMA-UT{DI-Vlv:Supply}Cmd:Cls-Cmd")
+{
+        field(DESC, "DI-Vlv:Supply Close Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) DI_Supply_Vlv_Cmd.ClsCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Close")
+}
+
+# GV signals
+record(bi, "XF:06BMA-UT{DI-Vlv:Return}Sw:OpnLim-Sts")
+{
+        field(DESC, "DI-Vlv:Return Opn Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) DI_Return_Vlv_Sts.OpnSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "XF:06BMA-UT{DI-Vlv:Return}Sw:ClsLim-Sts")
+{
+        field(DESC, "DI-Vlv:Return Cls Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) DI_Return_Vlv_Sts.ClsSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "XF:06BMA-UT{DI-Vlv:Return}Sts:Coil-Sts")
+{
+        field(DESC, "DI-Vlv:Return Coil Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) DI_Return_Vlv_Sts.Coil1 S 0.5")
+        field(ZNAM, "Not Energized")
+        field(ONAM, "Energized")
+}
+
+record(bi, "XF:06BMA-UT{DI-Vlv:Return}Pos-Sts")
+{
+        field(DESC, "DI-Vlv:Return Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) DI_Return_Vlv_Sts.Sts S 0.5")
+        field(ZNAM, "Not Open")
+        field(ONAM, "Open")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-UT{DI-Vlv:Return}Err-Sts")
+{
+        field(DESC, "DI-Vlv:Return Err Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) DI_Return_Vlv_Sts.StsFault S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-UT{DI-Vlv:Return}Sts:FailOpn-Sts")
+{
+        field(DESC, "DI-Vlv:Return Fail Open")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) DI_Return_Vlv_Sts.FailedToOpn S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+	field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-UT{DI-Vlv:Return}Sts:FailCls-Sts")
+{
+        field(DESC, "DI-Vlv:Return Fail Close")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) DI_Return_Vlv_Sts.FailedToCls S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-UT{DI-Vlv:Return}Sts:DS_Intlk-Sts")
+{
+        field(DESC, "DI-Vlv:Return DS I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) DI_Return_Vlv_Sts.LockDS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-UT{DI-Vlv:Return}Sts:US_Intlk-Sts")
+{
+        field(DESC, "DI-Vlv:Return US I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) DI_Return_Vlv_Sts.LockUS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+# GV commands
+record(bo, "XF:06BMA-UT{DI-Vlv:Return}Cmd:Opn-Cmd")
+{
+        field(DESC, "DI-Vlv:Return Open Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) DI_Return_Vlv_Cmd.OpnCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Open")
+}
+
+record(bo, "XF:06BMA-UT{DI-Vlv:Return}Cmd:Cls-Cmd")
+{
+        field(DESC, "DI-Vlv:Return Close Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) DI_Return_Vlv_Cmd.ClsCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Close")
+}
+
+# GV signals
+record(bi, "XF:06BMA-UT{PCW-Vlv:Supply}Sw:OpnLim-Sts")
+{
+        field(DESC, "PCW-Vlv:Supply Opn Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) PCW_Sup_Vlv_Sts.OpnSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "XF:06BMA-UT{PCW-Vlv:Supply}Sw:ClsLim-Sts")
+{
+        field(DESC, "PCW-Vlv:Supply Cls Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) PCW_Sup_Vlv_Sts.ClsSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "XF:06BMA-UT{PCW-Vlv:Supply}Sts:Coil-Sts")
+{
+        field(DESC, "PCW-Vlv:Supply Coil Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) PCW_Sup_Vlv_Sts.Coil1 S 0.5")
+        field(ZNAM, "Not Energized")
+        field(ONAM, "Energized")
+}
+
+record(bi, "XF:06BMA-UT{PCW-Vlv:Supply}Pos-Sts")
+{
+        field(DESC, "PCW-Vlv:Supply Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) PCW_Sup_Vlv_Sts.Sts S 0.5")
+        field(ZNAM, "Not Open")
+        field(ONAM, "Open")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-UT{PCW-Vlv:Supply}Err-Sts")
+{
+        field(DESC, "PCW-Vlv:Supply Err Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) PCW_Sup_Vlv_Sts.StsFault S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-UT{PCW-Vlv:Supply}Sts:FailOpn-Sts")
+{
+        field(DESC, "PCW-Vlv:Supply Fail Open")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) PCW_Sup_Vlv_Sts.FailedToOpn S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+	field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-UT{PCW-Vlv:Supply}Sts:FailCls-Sts")
+{
+        field(DESC, "PCW-Vlv:Supply Fail Close")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) PCW_Sup_Vlv_Sts.FailedToCls S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-UT{PCW-Vlv:Supply}Sts:DS_Intlk-Sts")
+{
+        field(DESC, "PCW-Vlv:Supply DS I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) PCW_Sup_Vlv_Sts.LockDS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-UT{PCW-Vlv:Supply}Sts:US_Intlk-Sts")
+{
+        field(DESC, "PCW-Vlv:Supply US I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) PCW_Sup_Vlv_Sts.LockUS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+# GV commands
+record(bo, "XF:06BMA-UT{PCW-Vlv:Supply}Cmd:Opn-Cmd")
+{
+        field(DESC, "PCW-Vlv:Supply Open Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) PCW_Sup_Vlv_Cmd.OpnCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Open")
+}
+
+record(bo, "XF:06BMA-UT{PCW-Vlv:Supply}Cmd:Cls-Cmd")
+{
+        field(DESC, "PCW-Vlv:Supply Close Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) PCW_Sup_Vlv_Cmd.ClsCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Close")
+}
+
+# GV signals
+record(bi, "XF:06BMA-UT{PCW-Vlv:Return}Sw:OpnLim-Sts")
+{
+        field(DESC, "PCW-Vlv:Return Opn Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) PCW_Rtn_Vlv_Sts.OpnSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "XF:06BMA-UT{PCW-Vlv:Return}Sw:ClsLim-Sts")
+{
+        field(DESC, "PCW-Vlv:Return Cls Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) PCW_Rtn_Vlv_Sts.ClsSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "XF:06BMA-UT{PCW-Vlv:Return}Sts:Coil-Sts")
+{
+        field(DESC, "PCW-Vlv:Return Coil Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) PCW_Rtn_Vlv_Sts.Coil1 S 0.5")
+        field(ZNAM, "Not Energized")
+        field(ONAM, "Energized")
+}
+
+record(bi, "XF:06BMA-UT{PCW-Vlv:Return}Pos-Sts")
+{
+        field(DESC, "PCW-Vlv:Return Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) PCW_Rtn_Vlv_Sts.Sts S 0.5")
+        field(ZNAM, "Not Open")
+        field(ONAM, "Open")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-UT{PCW-Vlv:Return}Err-Sts")
+{
+        field(DESC, "PCW-Vlv:Return Err Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) PCW_Rtn_Vlv_Sts.StsFault S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-UT{PCW-Vlv:Return}Sts:FailOpn-Sts")
+{
+        field(DESC, "PCW-Vlv:Return Fail Open")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) PCW_Rtn_Vlv_Sts.FailedToOpn S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+	field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-UT{PCW-Vlv:Return}Sts:FailCls-Sts")
+{
+        field(DESC, "PCW-Vlv:Return Fail Close")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) PCW_Rtn_Vlv_Sts.FailedToCls S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-UT{PCW-Vlv:Return}Sts:DS_Intlk-Sts")
+{
+        field(DESC, "PCW-Vlv:Return DS I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) PCW_Rtn_Vlv_Sts.LockDS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-UT{PCW-Vlv:Return}Sts:US_Intlk-Sts")
+{
+        field(DESC, "PCW-Vlv:Return US I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) PCW_Rtn_Vlv_Sts.LockUS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+# GV commands
+record(bo, "XF:06BMA-UT{PCW-Vlv:Return}Cmd:Opn-Cmd")
+{
+        field(DESC, "PCW-Vlv:Return Open Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) PCW_Rtn_Vlv_Cmd.OpnCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Open")
+}
+
+record(bo, "XF:06BMA-UT{PCW-Vlv:Return}Cmd:Cls-Cmd")
+{
+        field(DESC, "PCW-Vlv:Return Close Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) PCW_Rtn_Vlv_Cmd.ClsCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Close")
+}
+
+record(ai, "XF:06BMA-UT{DI}T:Supply-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_0[0] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-UT{DI}T:Supply_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_0[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-UT{DI}T:Supply_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-UT{DI}T:Supply_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_0[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-UT{DI}T:Supply_High-ao_")
+}
+
+record(ao, "XF:06BMA-UT{DI}T:Supply_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-UT{DI}T:Supply_High-RB PP")
+    field(OUT, "XF:06BMA-UT{DI}T:Supply-I.HIGH")
+}
+
+record(ao, "XF:06BMA-UT{DI}T:Supply_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_0[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-UT{DI}T:Supply_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-UT{DI}T:Supply_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_0[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-UT{DI}T:Supply_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-UT{DI}T:Supply_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-UT{DI}T:Supply_HiHi-RB PP")
+    field(OUT, "XF:06BMA-UT{DI}T:Supply-I.HIHI")
+}
+
+record(bi, "XF:06BMA-UT{DI}T:Supply-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_0[0] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-UT{DI}T:Supply-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_0[0] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "XF:06BMA-UT{DI}T:Return-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_0[1] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-UT{DI}T:Return_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_0[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-UT{DI}T:Return_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-UT{DI}T:Return_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_0[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-UT{DI}T:Return_High-ao_")
+}
+
+record(ao, "XF:06BMA-UT{DI}T:Return_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-UT{DI}T:Return_High-RB PP")
+    field(OUT, "XF:06BMA-UT{DI}T:Return-I.HIGH")
+}
+
+record(ao, "XF:06BMA-UT{DI}T:Return_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_0[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-UT{DI}T:Return_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-UT{DI}T:Return_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_0[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-UT{DI}T:Return_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-UT{DI}T:Return_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-UT{DI}T:Return_HiHi-RB PP")
+    field(OUT, "XF:06BMA-UT{DI}T:Return-I.HIHI")
+}
+
+record(bi, "XF:06BMA-UT{DI}T:Return-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_0[1] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-UT{DI}T:Return-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_0[1] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "XF:06BMA-PU{PCW}T:Supply-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_0[2] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-PU{PCW}T:Supply_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_0[2] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-PU{PCW}T:Supply_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-PU{PCW}T:Supply_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_0[2] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-PU{PCW}T:Supply_High-ao_")
+}
+
+record(ao, "XF:06BMA-PU{PCW}T:Supply_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-PU{PCW}T:Supply_High-RB PP")
+    field(OUT, "XF:06BMA-PU{PCW}T:Supply-I.HIGH")
+}
+
+record(ao, "XF:06BMA-PU{PCW}T:Supply_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_0[2] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-PU{PCW}T:Supply_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-PU{PCW}T:Supply_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_0[2] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-PU{PCW}T:Supply_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-PU{PCW}T:Supply_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-PU{PCW}T:Supply_HiHi-RB PP")
+    field(OUT, "XF:06BMA-PU{PCW}T:Supply-I.HIHI")
+}
+
+record(bi, "XF:06BMA-PU{PCW}T:Supply-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_0[2] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-PU{PCW}T:Supply-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_0[2] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "XF:06BMA-PU{PCW}T:Return-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_0[3] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-PU{PCW}T:Return_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_0[3] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-PU{PCW}T:Return_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-PU{PCW}T:Return_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_0[3] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-PU{PCW}T:Return_High-ao_")
+}
+
+record(ao, "XF:06BMA-PU{PCW}T:Return_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-PU{PCW}T:Return_High-RB PP")
+    field(OUT, "XF:06BMA-PU{PCW}T:Return-I.HIGH")
+}
+
+record(ao, "XF:06BMA-PU{PCW}T:Return_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_0[3] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-PU{PCW}T:Return_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-PU{PCW}T:Return_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_0[3] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-PU{PCW}T:Return_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-PU{PCW}T:Return_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-PU{PCW}T:Return_HiHi-RB PP")
+    field(OUT, "XF:06BMA-PU{PCW}T:Return-I.HIHI")
+}
+
+record(bi, "XF:06BMA-PU{PCW}T:Return-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_0[3] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-PU{PCW}T:Return-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_0[3] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(bi,"XF:06BMA-UT{LD:1}Alrm-Sts") {
+    field(DESC, "Hutch A water leak detector")
+    field(SCAN, "1 second")
+    field(DTYP, "EtherIP")
+    field(INP, "@$(PLC,undefined) Misc_Sts_0[4] S 1")
+    field(ZNAM,"Leak")
+    field(ONAM,"No  Leak")
+    field(ZSV,"MAJOR")
+    field(OSV,"")
+}
+
+## Database for Flow Meter tags in EPS PLC
+
+record(ai, "XF:06BM-PPS{DI}F:A1-I")
+{
+    field(DESC, "Water flow indicator, GPM")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) F_I_1[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.00102")
+    field(EGU,  "GPM")
+    field(LLSV, "MAJOR")
+    field(LSV, "MINOR")
+}
+
+record(ao, "XF:06BM-PPS{DI}F:A1_Low-SP")
+{
+    field(DESC, "WFM warning set point indicator, GPM")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) F_Low_1[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.00102")
+    field(EGU,  "GPM")
+    field(HOPR,  "10.0")
+    field(LOPR,  "-0.1")
+#    field(FLNK, "XF:06BM-PPS{DI}F:A1_Low-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BM-PPS{DI}F:A1_Low-RB")
+{
+    field(DESC, "WFM warning level readback, GPM")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) F_Low_1[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.00102")
+    field(EGU,  "GPM")
+    field(FLNK, "XF:06BM-PPS{DI}F:A1_Low-ao_")
+}
+
+record(ao, "XF:06BM-PPS{DI}F:A1_Low-ao_")
+{
+    field(DESC, "Aux Low proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BM-PPS{DI}F:A1_Low-RB PP")
+    field(OUT, "XF:06BM-PPS{DI}F:A1-I.LOW")
+}
+
+record(ao, "XF:06BM-PPS{DI}F:A1_LoLo-SP")
+{
+    field(DESC, "WFM Alarm level control, GPM")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) F_LoLo_1[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.00102")
+    field(EGU,  "GPM")
+    field(HOPR,  "10.0")
+    field(LOPR,  "-0.1")
+#    field(FLNK, "XF:06BM-PPS{DI}F:A1_LoLo-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BM-PPS{DI}F:A1_LoLo-RB")
+{
+    field(DESC, "WFM Alarm level readback, GPM")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) F_LoLo_1[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.00102")
+    field(EGU,  "GPM")
+    field(FLNK, "XF:06BM-PPS{DI}F:A1_LoLo-ao_")
+}
+
+record(ao, "XF:06BM-PPS{DI}F:A1_LoLo-ao_")
+{
+    field(DESC, "Aux LoLo proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BM-PPS{DI}F:A1_LoLo-RB PP")
+    field(OUT, "XF:06BM-PPS{DI}F:A1-I.LOLO")
+}
+
+record(bi, "XF:06BM-PPS{DI}F:A1-Sts")
+{
+    field(DESC, "Water flow status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) F_Sts_1[0] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BM-PPS{DI}F:A1-First")
+{
+    field(DESC, "Sensor trippes first in last IL event")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) F_Lock_1[0] S 0.5")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+## Database for Flow Meter tags in EPS PLC
+
+record(ai, "XF:06BM-PPS{DI}F:B1-I")
+{
+    field(DESC, "Water flow indicator, GPM")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) F_I_1[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.00108")
+    field(EGU,  "GPM")
+    field(LLSV, "MAJOR")
+    field(LSV, "MINOR")
+}
+
+record(ao, "XF:06BM-PPS{DI}F:B1_Low-SP")
+{
+    field(DESC, "WFM warning set point indicator, GPM")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) F_Low_1[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.00108")
+    field(EGU,  "GPM")
+    field(HOPR,  "10.0")
+    field(LOPR,  "-0.1")
+#    field(FLNK, "XF:06BM-PPS{DI}F:B1_Low-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BM-PPS{DI}F:B1_Low-RB")
+{
+    field(DESC, "WFM warning level readback, GPM")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) F_Low_1[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.00108")
+    field(EGU,  "GPM")
+    field(FLNK, "XF:06BM-PPS{DI}F:B1_Low-ao_")
+}
+
+record(ao, "XF:06BM-PPS{DI}F:B1_Low-ao_")
+{
+    field(DESC, "Aux Low proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BM-PPS{DI}F:B1_Low-RB PP")
+    field(OUT, "XF:06BM-PPS{DI}F:B1-I.LOW")
+}
+
+record(ao, "XF:06BM-PPS{DI}F:B1_LoLo-SP")
+{
+    field(DESC, "WFM Alarm level control, GPM")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) F_LoLo_1[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.00108")
+    field(EGU,  "GPM")
+    field(HOPR,  "10.0")
+    field(LOPR,  "-0.1")
+#    field(FLNK, "XF:06BM-PPS{DI}F:B1_LoLo-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BM-PPS{DI}F:B1_LoLo-RB")
+{
+    field(DESC, "WFM Alarm level readback, GPM")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) F_LoLo_1[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.00108")
+    field(EGU,  "GPM")
+    field(FLNK, "XF:06BM-PPS{DI}F:B1_LoLo-ao_")
+}
+
+record(ao, "XF:06BM-PPS{DI}F:B1_LoLo-ao_")
+{
+    field(DESC, "Aux LoLo proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BM-PPS{DI}F:B1_LoLo-RB PP")
+    field(OUT, "XF:06BM-PPS{DI}F:B1-I.LOLO")
+}
+
+record(bi, "XF:06BM-PPS{DI}F:B1-Sts")
+{
+    field(DESC, "Water flow status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) F_Sts_1[1] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BM-PPS{DI}F:B1-First")
+{
+    field(DESC, "Sensor trippes first in last IL event")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) F_Lock_1[1] S 0.5")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+## Database for Flow Meter tags in EPS PLC
+
+record(ai, "XF:06BMA-UT{DI}F:1-I")
+{
+    field(DESC, "Water flow indicator, GPM")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) F_I_0[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.00140")
+    field(EGU,  "GPM")
+    field(LLSV, "MAJOR")
+    field(LSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-UT{DI}F:1_Low-SP")
+{
+    field(DESC, "WFM warning set point indicator, GPM")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) F_Low_0[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.00140")
+    field(EGU,  "GPM")
+    field(HOPR,  "10.0")
+    field(LOPR,  "-0.1")
+#    field(FLNK, "XF:06BMA-UT{DI}F:1_Low-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-UT{DI}F:1_Low-RB")
+{
+    field(DESC, "WFM warning level readback, GPM")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) F_Low_0[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.00140")
+    field(EGU,  "GPM")
+    field(FLNK, "XF:06BMA-UT{DI}F:1_Low-ao_")
+}
+
+record(ao, "XF:06BMA-UT{DI}F:1_Low-ao_")
+{
+    field(DESC, "Aux Low proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-UT{DI}F:1_Low-RB PP")
+    field(OUT, "XF:06BMA-UT{DI}F:1-I.LOW")
+}
+
+record(ao, "XF:06BMA-UT{DI}F:1_LoLo-SP")
+{
+    field(DESC, "WFM Alarm level control, GPM")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) F_LoLo_0[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.00140")
+    field(EGU,  "GPM")
+    field(HOPR,  "10.0")
+    field(LOPR,  "-0.1")
+#    field(FLNK, "XF:06BMA-UT{DI}F:1_LoLo-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-UT{DI}F:1_LoLo-RB")
+{
+    field(DESC, "WFM Alarm level readback, GPM")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) F_LoLo_0[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.00140")
+    field(EGU,  "GPM")
+    field(FLNK, "XF:06BMA-UT{DI}F:1_LoLo-ao_")
+}
+
+record(ao, "XF:06BMA-UT{DI}F:1_LoLo-ao_")
+{
+    field(DESC, "Aux LoLo proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-UT{DI}F:1_LoLo-RB PP")
+    field(OUT, "XF:06BMA-UT{DI}F:1-I.LOLO")
+}
+
+record(bi, "XF:06BMA-UT{DI}F:1-Sts")
+{
+    field(DESC, "Water flow status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) F_Sts_0[0] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-UT{DI}F:1-First")
+{
+    field(DESC, "Sensor trippes first in last IL event")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) F_Lock_0[0] S 0.5")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+## Database for Flow Meter tags in EPS PLC
+
+record(ai, "XF:06BMA-UT{DI}F:2-I")
+{
+    field(DESC, "Water flow indicator, GPM")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) F_I_0[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.00140")
+    field(EGU,  "GPM")
+    field(LLSV, "MAJOR")
+    field(LSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-UT{DI}F:2_Low-SP")
+{
+    field(DESC, "WFM warning set point indicator, GPM")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) F_Low_0[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.00140")
+    field(EGU,  "GPM")
+    field(HOPR,  "10.0")
+    field(LOPR,  "-0.1")
+#    field(FLNK, "XF:06BMA-UT{DI}F:2_Low-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-UT{DI}F:2_Low-RB")
+{
+    field(DESC, "WFM warning level readback, GPM")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) F_Low_0[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.00140")
+    field(EGU,  "GPM")
+    field(FLNK, "XF:06BMA-UT{DI}F:2_Low-ao_")
+}
+
+record(ao, "XF:06BMA-UT{DI}F:2_Low-ao_")
+{
+    field(DESC, "Aux Low proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-UT{DI}F:2_Low-RB PP")
+    field(OUT, "XF:06BMA-UT{DI}F:2-I.LOW")
+}
+
+record(ao, "XF:06BMA-UT{DI}F:2_LoLo-SP")
+{
+    field(DESC, "WFM Alarm level control, GPM")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) F_LoLo_0[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.00140")
+    field(EGU,  "GPM")
+    field(HOPR,  "10.0")
+    field(LOPR,  "-0.1")
+#    field(FLNK, "XF:06BMA-UT{DI}F:2_LoLo-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-UT{DI}F:2_LoLo-RB")
+{
+    field(DESC, "WFM Alarm level readback, GPM")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) F_LoLo_0[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.00140")
+    field(EGU,  "GPM")
+    field(FLNK, "XF:06BMA-UT{DI}F:2_LoLo-ao_")
+}
+
+record(ao, "XF:06BMA-UT{DI}F:2_LoLo-ao_")
+{
+    field(DESC, "Aux LoLo proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-UT{DI}F:2_LoLo-RB PP")
+    field(OUT, "XF:06BMA-UT{DI}F:2-I.LOLO")
+}
+
+record(bi, "XF:06BMA-UT{DI}F:2-Sts")
+{
+    field(DESC, "Water flow status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) F_Sts_0[1] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-UT{DI}F:2-First")
+{
+    field(DESC, "Sensor trippes first in last IL event")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) F_Lock_0[1] S 0.5")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}

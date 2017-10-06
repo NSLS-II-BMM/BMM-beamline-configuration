@@ -1,0 +1,7 @@
+NAME=I400
+PORT=7210
+USER=softioc
+HOST=xf06bm-ioc1
+
+CHDIR="$CHDIR/iocBoot/iocI400"
+EXEC="$CHDIR/st.cmd"

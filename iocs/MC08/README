@@ -1,0 +1,10 @@
+Motion axes
+-----------
+1 - XF:06BMA-BI{XAFS-Ax:LinY}Mtr
+2 - XF:06BMA-BI{XAFS-Ax:LinX}Mtr
+3 - XF:06BMA-BI{XAFS-Ax:LinS}Mtr
+4 - XF:06BMA-BI{XAFS-Ax:LinXS}Mtr
+5 - XF:06BMA-BI{XAFS-Ax:Pitch}Mtr
+6 - XF:06BMA-BI{XAFS-Ax:Roll}Mtr
+7 - XF:06BMA-BI{XAFS-Ax:Mtr7}Mtr
+8 - XF:06BMA-BI{XAFS-Ax:Mtr8}Mtr

@@ -1,0 +1,4 @@
+NAME=cam02
+PORT=5602
+USER=softioc
+HOST=xf06bm-ioc1

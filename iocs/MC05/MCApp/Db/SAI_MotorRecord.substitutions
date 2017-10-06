@@ -1,0 +1,12 @@
+file /opt/epics/modules/SAI/db/SAI_MotorRecord.template {
+pattern { ASYNPORT,	PMACPORT,	TMOT,	PMAC_MTR,P,		R,		AXIS,	DESC,			MRES,	PREC,	EGU,	VEL,	TACC, 	OFFS, 	HSLM, 	LSLM}
+	{ "pmac",	"PMAC",		1.0,	1,	"XF:06BMA-OP",	"{Mir:M3-Ax:",	"YU}Mtr","Mir:M3 - JACK 1, YU",	0.0001,	4,	"mm",	0.2,	0.2,	-1.82,	12.23334,	-12.094925}
+	{ "pmac",	"PMAC",		1.0,	2,	"XF:06BMA-OP",	"{Mir:M3-Ax:",	"YDO}Mtr","Mir:M3 - JACK 2, YDO",	0.0001,	4,	"mm",	0.2,	0.2,	-0.37,	11.7933,	-11.73288}
+	{ "pmac",	"PMAC",		1.0,	3,	"XF:06BMA-OP",	"{Mir:M3-Ax:",	"YDI}Mtr","Mir:M3 - JACK 3, YDI",	0.0001,	4,	"mm",	0.2,	0.2,	-0.24,	12.057875,	-11.80432}
+	{ "pmac",	"PMAC",		1.0,	4,	"XF:06BMA-OP",	"{Mir:M3-Ax:",	"XU}Mtr","Mir:M3 - LATERAL 1, XU",	0.0001,	4,	"mm",	0.3,	0.2,	1.78,	33.78333,	-33.42062}
+	{ "pmac",	"PMAC",		1.0,	5,	"XF:06BMA-OP",	"{Mir:M3-Ax:",	"XD}Mtr","Mir:M3 - LATERAL 2, XD",	0.0001,	4,	"mm",	0.3,	0.2,	3.558,	33.505455,	-33.52455}
+	{ "pmac",	"PMAC",		1.0,	6,	"XF:06BMA-BI",	"{Fltr:01-Ax:",	"Y1}Mtr","Fltr:01 - RACK1, Y1",	0.0001,	4,	"mm",	0.4,	0.2,	0,	0,	0}
+	{ "pmac",	"PMAC",		1.0,	7,	"XF:06BMA-BI",	"{Fltr:01-Ax:",	"Y2}Mtr","Fltr:01 - RACK2, Y2",	0.0001,	4,	"mm",	0.4,	0.2,	0,	0,	0}
+#	{ "pmac",	"PMAC",		1.0,	8,	"XF:06BMA-OP",	"{Mir:M1-Ax:",	"ZZZ}Mtr","Mir:M3 - UNDEF AXIS 8, ZZZ",	0.0001,	4,	"mm",	0.2,	0.5,	0,	0,	0}
+}
+

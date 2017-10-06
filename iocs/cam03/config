@@ -1,0 +1,4 @@
+NAME=cam03
+PORT=5603
+USER=softioc
+HOST=xf06bm-ioc1

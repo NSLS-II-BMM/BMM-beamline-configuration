@@ -1,0 +1,2544 @@
+record(ai, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Perp}T-I-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_1[17] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Perp}T-I_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_1[17] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Perp}T-I_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Perp}T-I_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_1[17] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Perp}T-I_High-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Perp}T-I_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Perp}T-I_High-RB PP")
+    field(OUT, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Perp}T-I-I.HIGH")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Perp}T-I_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_1[17] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Perp}T-I_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Perp}T-I_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_1[17] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Perp}T-I_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Perp}T-I_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Perp}T-I_HiHi-RB PP")
+    field(OUT, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Perp}T-I-I.HIHI")
+}
+
+record(bi, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Perp}T-I-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_1[17] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Perp}T-I-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_1[17] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Para}T-I-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_1[18] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Para}T-I_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_1[18] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Para}T-I_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Para}T-I_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_1[18] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Para}T-I_High-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Para}T-I_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Para}T-I_High-RB PP")
+    field(OUT, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Para}T-I-I.HIGH")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Para}T-I_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_1[18] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Para}T-I_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Para}T-I_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_1[18] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Para}T-I_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Para}T-I_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Para}T-I_HiHi-RB PP")
+    field(OUT, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Para}T-I-I.HIHI")
+}
+
+record(bi, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Para}T-I-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_1[18] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Para}T-I-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_1[18] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "XF:06BMA-OP{Mir:2}T:1-I-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_1[19] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-OP{Mir:2}T:1-I_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_1[19] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Mir:2}T:1-I_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Mir:2}T:1-I_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_1[19] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Mir:2}T:1-I_High-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Mir:2}T:1-I_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Mir:2}T:1-I_High-RB PP")
+    field(OUT, "XF:06BMA-OP{Mir:2}T:1-I-I.HIGH")
+}
+
+record(ao, "XF:06BMA-OP{Mir:2}T:1-I_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_1[19] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Mir:2}T:1-I_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Mir:2}T:1-I_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_1[19] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Mir:2}T:1-I_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Mir:2}T:1-I_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Mir:2}T:1-I_HiHi-RB PP")
+    field(OUT, "XF:06BMA-OP{Mir:2}T:1-I-I.HIHI")
+}
+
+record(bi, "XF:06BMA-OP{Mir:2}T:1-I-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_1[19] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-OP{Mir:2}T:1-I-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_1[19] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "XF:06BMA-OP{Mir:2}T:2-I-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_1[20] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-OP{Mir:2}T:2-I_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_1[20] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Mir:2}T:2-I_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Mir:2}T:2-I_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_1[20] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Mir:2}T:2-I_High-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Mir:2}T:2-I_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Mir:2}T:2-I_High-RB PP")
+    field(OUT, "XF:06BMA-OP{Mir:2}T:2-I-I.HIGH")
+}
+
+record(ao, "XF:06BMA-OP{Mir:2}T:2-I_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_1[20] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Mir:2}T:2-I_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Mir:2}T:2-I_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_1[20] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Mir:2}T:2-I_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Mir:2}T:2-I_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Mir:2}T:2-I_HiHi-RB PP")
+    field(OUT, "XF:06BMA-OP{Mir:2}T:2-I-I.HIHI")
+}
+
+record(bi, "XF:06BMA-OP{Mir:2}T:2-I-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_1[20] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-OP{Mir:2}T:2-I-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_1[20] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "XF:06BMA-OP{Mir:3}T:1-I-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_1[21] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-OP{Mir:3}T:1-I_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_1[21] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Mir:3}T:1-I_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Mir:3}T:1-I_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_1[21] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Mir:3}T:1-I_High-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Mir:3}T:1-I_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Mir:3}T:1-I_High-RB PP")
+    field(OUT, "XF:06BMA-OP{Mir:3}T:1-I-I.HIGH")
+}
+
+record(ao, "XF:06BMA-OP{Mir:3}T:1-I_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_1[21] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Mir:3}T:1-I_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Mir:3}T:1-I_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_1[21] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Mir:3}T:1-I_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Mir:3}T:1-I_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Mir:3}T:1-I_HiHi-RB PP")
+    field(OUT, "XF:06BMA-OP{Mir:3}T:1-I-I.HIHI")
+}
+
+record(bi, "XF:06BMA-OP{Mir:3}T:1-I-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_1[21] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-OP{Mir:3}T:1-I-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_1[21] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "XF:06BMA-OP{Mir:3}T:2-I-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_1[22] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-OP{Mir:3}T:2-I_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_1[22] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Mir:3}T:2-I_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Mir:3}T:2-I_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_1[22] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Mir:3}T:2-I_High-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Mir:3}T:2-I_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Mir:3}T:2-I_High-RB PP")
+    field(OUT, "XF:06BMA-OP{Mir:3}T:2-I-I.HIGH")
+}
+
+record(ao, "XF:06BMA-OP{Mir:3}T:2-I_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_1[22] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Mir:3}T:2-I_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Mir:3}T:2-I_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_1[22] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Mir:3}T:2-I_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Mir:3}T:2-I_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Mir:3}T:2-I_HiHi-RB PP")
+    field(OUT, "XF:06BMA-OP{Mir:3}T:2-I-I.HIHI")
+}
+
+record(bi, "XF:06BMA-OP{Mir:3}T:2-I-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_1[22] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-OP{Mir:3}T:2-I-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_1[22] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "XF:06BMA-OP{FS:1}T:1-I-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_1[3] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-OP{FS:1}T:1-I_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_1[3] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{FS:1}T:1-I_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{FS:1}T:1-I_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_1[3] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{FS:1}T:1-I_High-ao_")
+}
+
+record(ao, "XF:06BMA-OP{FS:1}T:1-I_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{FS:1}T:1-I_High-RB PP")
+    field(OUT, "XF:06BMA-OP{FS:1}T:1-I-I.HIGH")
+}
+
+record(ao, "XF:06BMA-OP{FS:1}T:1-I_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_1[3] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{FS:1}T:1-I_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{FS:1}T:1-I_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_1[3] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{FS:1}T:1-I_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-OP{FS:1}T:1-I_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{FS:1}T:1-I_HiHi-RB PP")
+    field(OUT, "XF:06BMA-OP{FS:1}T:1-I-I.HIHI")
+}
+
+record(bi, "XF:06BMA-OP{FS:1}T:1-I-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_1[3] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-OP{FS:1}T:1-I-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_1[3] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "XF:06BMA-OP{Fltr:1}T:1-I-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_1[4] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:1-I_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_1[4] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Fltr:1}T:1-I_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Fltr:1}T:1-I_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_1[4] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Fltr:1}T:1-I_High-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:1-I_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Fltr:1}T:1-I_High-RB PP")
+    field(OUT, "XF:06BMA-OP{Fltr:1}T:1-I-I.HIGH")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:1-I_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_1[4] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Fltr:1}T:1-I_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Fltr:1}T:1-I_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_1[4] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Fltr:1}T:1-I_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:1-I_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Fltr:1}T:1-I_HiHi-RB PP")
+    field(OUT, "XF:06BMA-OP{Fltr:1}T:1-I-I.HIHI")
+}
+
+record(bi, "XF:06BMA-OP{Fltr:1}T:1-I-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_1[4] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-OP{Fltr:1}T:1-I-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_1[4] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "XF:06BMA-OP{Fltr:1}T:2-I-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_1[5] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:2-I_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_1[5] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Fltr:1}T:2-I_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Fltr:1}T:2-I_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_1[5] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Fltr:1}T:2-I_High-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:2-I_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Fltr:1}T:2-I_High-RB PP")
+    field(OUT, "XF:06BMA-OP{Fltr:1}T:2-I-I.HIGH")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:2-I_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_1[5] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Fltr:1}T:2-I_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Fltr:1}T:2-I_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_1[5] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Fltr:1}T:2-I_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:2-I_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Fltr:1}T:2-I_HiHi-RB PP")
+    field(OUT, "XF:06BMA-OP{Fltr:1}T:2-I-I.HIHI")
+}
+
+record(bi, "XF:06BMA-OP{Fltr:1}T:2-I-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_1[5] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-OP{Fltr:1}T:2-I-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_1[5] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "XF:06BMA-OP{Fltr:1}T:3-I-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_1[6] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:3-I_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_1[6] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Fltr:1}T:3-I_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Fltr:1}T:3-I_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_1[6] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Fltr:1}T:3-I_High-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:3-I_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Fltr:1}T:3-I_High-RB PP")
+    field(OUT, "XF:06BMA-OP{Fltr:1}T:3-I-I.HIGH")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:3-I_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_1[6] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Fltr:1}T:3-I_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Fltr:1}T:3-I_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_1[6] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Fltr:1}T:3-I_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:3-I_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Fltr:1}T:3-I_HiHi-RB PP")
+    field(OUT, "XF:06BMA-OP{Fltr:1}T:3-I-I.HIHI")
+}
+
+record(bi, "XF:06BMA-OP{Fltr:1}T:3-I-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_1[6] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-OP{Fltr:1}T:3-I-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_1[6] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "XF:06BMA-OP{Fltr:1}T:4-I-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_1[7] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:4-I_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_1[7] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Fltr:1}T:4-I_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Fltr:1}T:4-I_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_1[7] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Fltr:1}T:4-I_High-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:4-I_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Fltr:1}T:4-I_High-RB PP")
+    field(OUT, "XF:06BMA-OP{Fltr:1}T:4-I-I.HIGH")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:4-I_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_1[7] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Fltr:1}T:4-I_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Fltr:1}T:4-I_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_1[7] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Fltr:1}T:4-I_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:4-I_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Fltr:1}T:4-I_HiHi-RB PP")
+    field(OUT, "XF:06BMA-OP{Fltr:1}T:4-I-I.HIHI")
+}
+
+record(bi, "XF:06BMA-OP{Fltr:1}T:4-I-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_1[7] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-OP{Fltr:1}T:4-I-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_1[7] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "XF:06BMA-OP{Fltr:1}T:5-I-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_1[8] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:5-I_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_1[8] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Fltr:1}T:5-I_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Fltr:1}T:5-I_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_1[8] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Fltr:1}T:5-I_High-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:5-I_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Fltr:1}T:5-I_High-RB PP")
+    field(OUT, "XF:06BMA-OP{Fltr:1}T:5-I-I.HIGH")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:5-I_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_1[8] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Fltr:1}T:5-I_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Fltr:1}T:5-I_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_1[8] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Fltr:1}T:5-I_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:5-I_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Fltr:1}T:5-I_HiHi-RB PP")
+    field(OUT, "XF:06BMA-OP{Fltr:1}T:5-I-I.HIHI")
+}
+
+record(bi, "XF:06BMA-OP{Fltr:1}T:5-I-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_1[8] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-OP{Fltr:1}T:5-I-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_1[8] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "XF:06BMA-OP{Fltr:1}T:6-I-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_1[9] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:6-I_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_1[9] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Fltr:1}T:6-I_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Fltr:1}T:6-I_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_1[9] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Fltr:1}T:6-I_High-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:6-I_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Fltr:1}T:6-I_High-RB PP")
+    field(OUT, "XF:06BMA-OP{Fltr:1}T:6-I-I.HIGH")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:6-I_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_1[9] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Fltr:1}T:6-I_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Fltr:1}T:6-I_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_1[9] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Fltr:1}T:6-I_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:6-I_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Fltr:1}T:6-I_HiHi-RB PP")
+    field(OUT, "XF:06BMA-OP{Fltr:1}T:6-I-I.HIHI")
+}
+
+record(bi, "XF:06BMA-OP{Fltr:1}T:6-I-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_1[9] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-OP{Fltr:1}T:6-I-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_1[9] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "XF:06BMA-OP{Fltr:1}T:7-I-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_1[10] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:7-I_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_1[10] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Fltr:1}T:7-I_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Fltr:1}T:7-I_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_1[10] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Fltr:1}T:7-I_High-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:7-I_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Fltr:1}T:7-I_High-RB PP")
+    field(OUT, "XF:06BMA-OP{Fltr:1}T:7-I-I.HIGH")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:7-I_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_1[10] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Fltr:1}T:7-I_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Fltr:1}T:7-I_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_1[10] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Fltr:1}T:7-I_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:7-I_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Fltr:1}T:7-I_HiHi-RB PP")
+    field(OUT, "XF:06BMA-OP{Fltr:1}T:7-I-I.HIHI")
+}
+
+record(bi, "XF:06BMA-OP{Fltr:1}T:7-I-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_1[10] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-OP{Fltr:1}T:7-I-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_1[10] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "XF:06BMA-OP{Fltr:1}T:8-I-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_1[11] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:8-I_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_1[11] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Fltr:1}T:8-I_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Fltr:1}T:8-I_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_1[11] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Fltr:1}T:8-I_High-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:8-I_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Fltr:1}T:8-I_High-RB PP")
+    field(OUT, "XF:06BMA-OP{Fltr:1}T:8-I-I.HIGH")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:8-I_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_1[11] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Fltr:1}T:8-I_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Fltr:1}T:8-I_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_1[11] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Fltr:1}T:8-I_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Fltr:1}T:8-I_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Fltr:1}T:8-I_HiHi-RB PP")
+    field(OUT, "XF:06BMA-OP{Fltr:1}T:8-I-I.HIHI")
+}
+
+record(bi, "XF:06BMA-OP{Fltr:1}T:8-I-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_1[11] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-OP{Fltr:1}T:8-I-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_1[11] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "XF:06BMA-OP{Mono:DCM-Crys:1}T-I-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_1[12] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:1}T-I_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_1[12] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:1}T-I_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Mono:DCM-Crys:1}T-I_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_1[12] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:1}T-I_High-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:1}T-I_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Mono:DCM-Crys:1}T-I_High-RB PP")
+    field(OUT, "XF:06BMA-OP{Mono:DCM-Crys:1}T-I-I.HIGH")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:1}T-I_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_1[12] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:1}T-I_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Mono:DCM-Crys:1}T-I_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_1[12] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:1}T-I_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:1}T-I_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Mono:DCM-Crys:1}T-I_HiHi-RB PP")
+    field(OUT, "XF:06BMA-OP{Mono:DCM-Crys:1}T-I-I.HIHI")
+}
+
+record(bi, "XF:06BMA-OP{Mono:DCM-Crys:1}T-I-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_1[12] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-OP{Mono:DCM-Crys:1}T-I-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_1[12] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "XF:06BMA-OP{Mono:DCM-Crys:2}T-I-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_1[13] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:2}T-I_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_1[13] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:2}T-I_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Mono:DCM-Crys:2}T-I_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_1[13] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:2}T-I_High-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:2}T-I_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Mono:DCM-Crys:2}T-I_High-RB PP")
+    field(OUT, "XF:06BMA-OP{Mono:DCM-Crys:2}T-I-I.HIGH")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:2}T-I_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_1[13] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:2}T-I_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Mono:DCM-Crys:2}T-I_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_1[13] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:2}T-I_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:2}T-I_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Mono:DCM-Crys:2}T-I_HiHi-RB PP")
+    field(OUT, "XF:06BMA-OP{Mono:DCM-Crys:2}T-I-I.HIHI")
+}
+
+record(bi, "XF:06BMA-OP{Mono:DCM-Crys:2}T-I-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_1[13] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-OP{Mono:DCM-Crys:2}T-I-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_1[13] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "XF:06BMA-OP{Mono:DCM-Crys:1-Ax:R}T-I-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_1[14] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:1-Ax:R}T-I_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_1[14] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:1-Ax:R}T-I_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Mono:DCM-Crys:1-Ax:R}T-I_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_1[14] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:1-Ax:R}T-I_High-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:1-Ax:R}T-I_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Mono:DCM-Crys:1-Ax:R}T-I_High-RB PP")
+    field(OUT, "XF:06BMA-OP{Mono:DCM-Crys:1-Ax:R}T-I-I.HIGH")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:1-Ax:R}T-I_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_1[14] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:1-Ax:R}T-I_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Mono:DCM-Crys:1-Ax:R}T-I_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_1[14] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:1-Ax:R}T-I_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:1-Ax:R}T-I_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Mono:DCM-Crys:1-Ax:R}T-I_HiHi-RB PP")
+    field(OUT, "XF:06BMA-OP{Mono:DCM-Crys:1-Ax:R}T-I-I.HIHI")
+}
+
+record(bi, "XF:06BMA-OP{Mono:DCM-Crys:1-Ax:R}T-I-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_1[14] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-OP{Mono:DCM-Crys:1-Ax:R}T-I-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_1[14] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:P}T-I-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_1[15] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:P}T-I_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_1[15] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:P}T-I_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:P}T-I_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_1[15] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:P}T-I_High-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:P}T-I_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:P}T-I_High-RB PP")
+    field(OUT, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:P}T-I-I.HIGH")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:P}T-I_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_1[15] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:P}T-I_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:P}T-I_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_1[15] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:P}T-I_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:P}T-I_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:P}T-I_HiHi-RB PP")
+    field(OUT, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:P}T-I-I.HIHI")
+}
+
+record(bi, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:P}T-I-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_1[15] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:P}T-I-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_1[15] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:R}T-I-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_1[16] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:R}T-I_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_1[16] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:R}T-I_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:R}T-I_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_1[16] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:R}T-I_High-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:R}T-I_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:R}T-I_High-RB PP")
+    field(OUT, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:R}T-I-I.HIGH")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:R}T-I_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_1[16] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:R}T-I_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:R}T-I_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_1[16] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:R}T-I_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:R}T-I_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:R}T-I_HiHi-RB PP")
+    field(OUT, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:R}T-I-I.HIHI")
+}
+
+record(bi, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:R}T-I-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_1[16] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-OP{Mono:DCM-Crys:2-Ax:R}T-I-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_1[16] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "FE:C06B-OP{Mir:1}T:3-I-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_1[2] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "FE:C06B-OP{Mir:1}T:3-I_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_1[2] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "FE:C06B-OP{Mir:1}T:3-I_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "FE:C06B-OP{Mir:1}T:3-I_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_1[2] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "FE:C06B-OP{Mir:1}T:3-I_High-ao_")
+}
+
+record(ao, "FE:C06B-OP{Mir:1}T:3-I_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "FE:C06B-OP{Mir:1}T:3-I_High-RB PP")
+    field(OUT, "FE:C06B-OP{Mir:1}T:3-I-I.HIGH")
+}
+
+record(ao, "FE:C06B-OP{Mir:1}T:3-I_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_1[2] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "FE:C06B-OP{Mir:1}T:3-I_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "FE:C06B-OP{Mir:1}T:3-I_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_1[2] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "FE:C06B-OP{Mir:1}T:3-I_HiHi-ao_")
+}
+
+record(ao, "FE:C06B-OP{Mir:1}T:3-I_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "FE:C06B-OP{Mir:1}T:3-I_HiHi-RB PP")
+    field(OUT, "FE:C06B-OP{Mir:1}T:3-I-I.HIHI")
+}
+
+record(bi, "FE:C06B-OP{Mir:1}T:3-I-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_1[2] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "FE:C06B-OP{Mir:1}T:3-I-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_1[2] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "FE:C06B-OP{Mir:1}T:1-I-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_1[0] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "FE:C06B-OP{Mir:1}T:1-I_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_1[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "FE:C06B-OP{Mir:1}T:1-I_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "FE:C06B-OP{Mir:1}T:1-I_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_1[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "FE:C06B-OP{Mir:1}T:1-I_High-ao_")
+}
+
+record(ao, "FE:C06B-OP{Mir:1}T:1-I_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "FE:C06B-OP{Mir:1}T:1-I_High-RB PP")
+    field(OUT, "FE:C06B-OP{Mir:1}T:1-I-I.HIGH")
+}
+
+record(ao, "FE:C06B-OP{Mir:1}T:1-I_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_1[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "FE:C06B-OP{Mir:1}T:1-I_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "FE:C06B-OP{Mir:1}T:1-I_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_1[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "FE:C06B-OP{Mir:1}T:1-I_HiHi-ao_")
+}
+
+record(ao, "FE:C06B-OP{Mir:1}T:1-I_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "FE:C06B-OP{Mir:1}T:1-I_HiHi-RB PP")
+    field(OUT, "FE:C06B-OP{Mir:1}T:1-I-I.HIHI")
+}
+
+record(bi, "FE:C06B-OP{Mir:1}T:1-I-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_1[0] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "FE:C06B-OP{Mir:1}T:1-I-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_1[0] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "FE:C06B-OP{Mir:1}T:2-I-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_1[1] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "FE:C06B-OP{Mir:1}T:2-I_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_1[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "FE:C06B-OP{Mir:1}T:2-I_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "FE:C06B-OP{Mir:1}T:2-I_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_1[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "FE:C06B-OP{Mir:1}T:2-I_High-ao_")
+}
+
+record(ao, "FE:C06B-OP{Mir:1}T:2-I_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "FE:C06B-OP{Mir:1}T:2-I_High-RB PP")
+    field(OUT, "FE:C06B-OP{Mir:1}T:2-I-I.HIGH")
+}
+
+record(ao, "FE:C06B-OP{Mir:1}T:2-I_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_1[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "FE:C06B-OP{Mir:1}T:2-I_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "FE:C06B-OP{Mir:1}T:2-I_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_1[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "FE:C06B-OP{Mir:1}T:2-I_HiHi-ao_")
+}
+
+record(ao, "FE:C06B-OP{Mir:1}T:2-I_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "FE:C06B-OP{Mir:1}T:2-I_HiHi-RB PP")
+    field(OUT, "FE:C06B-OP{Mir:1}T:2-I-I.HIHI")
+}
+
+record(bi, "FE:C06B-OP{Mir:1}T:2-I-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_1[1] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "FE:C06B-OP{Mir:1}T:2-I-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_1[1] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+
+record(ai, "XF:06BMA-OP{PBS:1}T:1-I-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_I_1[23] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "XF:06BMA-OP{PBS:1}T:1-I_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_High_1[23] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{PBS:1}T:1-I_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{PBS:1}T:1-I_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_High_1[23] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{PBS:1}T:1-I_High-ao_")
+}
+
+record(ao, "XF:06BMA-OP{PBS:1}T:1-I_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{PBS:1}T:1-I_High-RB PP")
+    field(OUT, "XF:06BMA-OP{PBS:1}T:1-I-I.HIGH")
+}
+
+record(ao, "XF:06BMA-OP{PBS:1}T:1-I_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) T_HiHi_1[23] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "XF:06BMA-OP{PBS:1}T:1-I_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BMA-OP{PBS:1}T:1-I_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_HiHi_1[23] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "XF:06BMA-OP{PBS:1}T:1-I_HiHi-ao_")
+}
+
+record(ao, "XF:06BMA-OP{PBS:1}T:1-I_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BMA-OP{PBS:1}T:1-I_HiHi-RB PP")
+    field(OUT, "XF:06BMA-OP{PBS:1}T:1-I-I.HIHI")
+}
+
+record(bi, "XF:06BMA-OP{PBS:1}T:1-I-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Sts_1[23] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-OP{PBS:1}T:1-I-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) T_Lock_1[23] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+

@@ -1,0 +1,258 @@
+record(bi,"XF:06BM-EPS{PLC}Fuse-Sts") {
+    field(DESC, "PLC main unit 24V fuse blown")
+    field(SCAN, "1 second")
+    field(DTYP, "EtherIP")
+    field(INP, "@$(PLC,undefined) Misc_Sts_0[7] S 1")
+    field(ZNAM,"OK")
+    field(ONAM,"Blown")
+    field(ZSV,"")
+    field(OSV,"MAJOR")
+}
+
+record(bi,"XF:06BM-EPS{PLC}Net-Sts") {
+    field(DESC, "PLC Remote IO network status")
+    field(SCAN, "1 second")
+    field(DTYP, "EtherIP")
+    field(INP, "@$(PLC,undefined) Misc_Sts_0[6] S 1")
+    field(ZNAM,"Down")
+    field(ONAM,"OK")
+    field(ZSV,"MAJOR")
+    field(OSV,"")
+}
+
+# GV signals
+record(bi, "FE:C06B-OP{Flag:1}Sw:OpnLim-Sts")
+{
+        field(DESC, "Flag:1 Opn Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) FE_C06B_OP_Flag_1_Sts.OpnSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "FE:C06B-OP{Flag:1}Sw:ClsLim-Sts")
+{
+        field(DESC, "Flag:1 Cls Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) FE_C06B_OP_Flag_1_Sts.ClsSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "FE:C06B-OP{Flag:1}Sts:Coil-Sts")
+{
+        field(DESC, "Flag:1 Coil Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) FE_C06B_OP_Flag_1_Sts.Coil1 S 0.5")
+        field(ZNAM, "Not Energized")
+        field(ONAM, "Energized")
+}
+
+record(bi, "FE:C06B-OP{Flag:1}Pos-Sts")
+{
+        field(DESC, "Flag:1 Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) FE_C06B_OP_Flag_1_Sts.Sts S 0.5")
+        field(ZNAM, "Not Open")
+        field(ONAM, "Open")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "FE:C06B-OP{Flag:1}Err-Sts")
+{
+        field(DESC, "Flag:1 Err Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) FE_C06B_OP_Flag_1_Sts.StsFault S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "FE:C06B-OP{Flag:1}Sts:FailOpn-Sts")
+{
+        field(DESC, "Flag:1 Fail Open")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) FE_C06B_OP_Flag_1_Sts.FailedToOpn S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+	field(ZSV,  "MINOR")
+}
+
+record(bi, "FE:C06B-OP{Flag:1}Sts:FailCls-Sts")
+{
+        field(DESC, "Flag:1 Fail Close")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) FE_C06B_OP_Flag_1_Sts.FailedToCls S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "FE:C06B-OP{Flag:1}Sts:DS_Intlk-Sts")
+{
+        field(DESC, "Flag:1 DS I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) FE_C06B_OP_Flag_1_Sts.LockDS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "FE:C06B-OP{Flag:1}Sts:US_Intlk-Sts")
+{
+        field(DESC, "Flag:1 US I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) FE_C06B_OP_Flag_1_Sts.LockUS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+# GV commands
+record(bo, "FE:C06B-OP{Flag:1}Cmd:Opn-Cmd")
+{
+        field(DESC, "Flag:1 Open Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) FE_C06B_OP_Flag_1_Cmd.OpnCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Open")
+}
+
+record(bo, "FE:C06B-OP{Flag:1}Cmd:Cls-Cmd")
+{
+        field(DESC, "Flag:1 Close Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) FE_C06B_OP_Flag_1_Cmd.ClsCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Close")
+}
+
+# GV signals
+record(bi, "XF:06BMA-OP{FS:1}Sw:OpnLim-Sts")
+{
+        field(DESC, "FS:1 Opn Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_OP_FS1_Sts.OpnSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "XF:06BMA-OP{FS:1}Sw:ClsLim-Sts")
+{
+        field(DESC, "FS:1 Cls Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_OP_FS1_Sts.ClsSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "XF:06BMA-OP{FS:1}Sts:Coil-Sts")
+{
+        field(DESC, "FS:1 Coil Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_OP_FS1_Sts.Coil1 S 0.5")
+        field(ZNAM, "Not Energized")
+        field(ONAM, "Energized")
+}
+
+record(bi, "XF:06BMA-OP{FS:1}Pos-Sts")
+{
+        field(DESC, "FS:1 Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_OP_FS1_Sts.Sts S 0.5")
+        field(ZNAM, "Not Open")
+        field(ONAM, "Open")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-OP{FS:1}Err-Sts")
+{
+        field(DESC, "FS:1 Err Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_OP_FS1_Sts.StsFault S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-OP{FS:1}Sts:FailOpn-Sts")
+{
+        field(DESC, "FS:1 Fail Open")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_OP_FS1_Sts.FailedToOpn S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+	field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-OP{FS:1}Sts:FailCls-Sts")
+{
+        field(DESC, "FS:1 Fail Close")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_OP_FS1_Sts.FailedToCls S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-OP{FS:1}Sts:DS_Intlk-Sts")
+{
+        field(DESC, "FS:1 DS I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_OP_FS1_Sts.LockDS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-OP{FS:1}Sts:US_Intlk-Sts")
+{
+        field(DESC, "FS:1 US I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_OP_FS1_Sts.LockUS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+# GV commands
+record(bo, "XF:06BMA-OP{FS:1}Cmd:Opn-Cmd")
+{
+        field(DESC, "FS:1 Open Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) BMA_OP_FS1_Cmd.OpnCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Open")
+}
+
+record(bo, "XF:06BMA-OP{FS:1}Cmd:Cls-Cmd")
+{
+        field(DESC, "FS:1 Close Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) BMA_OP_FS1_Cmd.ClsCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Close")
+}
+

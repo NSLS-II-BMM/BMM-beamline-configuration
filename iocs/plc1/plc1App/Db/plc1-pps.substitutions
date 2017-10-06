@@ -1,0 +1,22 @@
+file     plc1-pps-sh.template
+{
+pattern
+{        PLC,                              Sys              ,                  Dev      ,            ShTag          }
+{        XF06BM_BMM_EPS,                   XF:06BM-PPS      ,                  "Sh:FE"  ,            FE_SH          }
+{        XF06BM_BMM_EPS,                   XF:06BM-PPS      ,                  "Sh:A"  ,            A_SH          }
+}
+
+file     plc1-pi.template
+{
+pattern
+{        Chan,                             Mod,             Seq,               ArrNum,  Factor,      Offset}
+{        "XF:06BM-PPS{Dev:BurnThru}P:1",  "B",             "0",               0,       6,           1}
+{        "XF:06BM-PPS{Dev:BurnThru}P:2",  "B",             "0",               1,       6,           1}
+}
+
+file     "plc1-bi.template"
+{
+pattern
+{        Sys,                              Dev,             Sig,               DESC,    Tag,         ZNAM,          ONAM,         ZSV,   OSV}
+{        XF:06BM-EPS,                      "PLC",              Out:ExpIntlk-Sts,  "USER INTERLOCK",  "PPS_Sts[0]",  "Interlock",  "OK",  "MINOR",  ""}
+}

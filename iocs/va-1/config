@@ -1,0 +1,4 @@
+NAME=va-1
+PORT=4101
+USER=softioc
+HOST=xf06bm-ioc1

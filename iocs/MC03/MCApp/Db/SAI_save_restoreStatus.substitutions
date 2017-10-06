@@ -1,0 +1,6 @@
+file /opt/epics/modules/genericScan/db/save_restoreStatus.template {
+pattern 
+{ DEVICE}
+	{ "FMBGSCAN" }
+}
+# DEVICE: device name

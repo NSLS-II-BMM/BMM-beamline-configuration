@@ -1,0 +1,13 @@
+file "db/autohome.db"
+{
+pattern
+{SYS,            DEV,                    PLC,  PORT  }
+{"XF:06BMA-BI",  "{XAFS-Ax:Tbl_YU}",     0,    P0    }
+{"XF:06BMA-BI",  "{XAFS-Ax:Tbl_YDO}",    0,    P0    }
+{"XF:06BMA-BI",  "{XAFS-Ax:Tbl_YDI}",    0,    P0    }
+{"XF:06BMA-BI",  "{XAFS-Ax:Tbl_XU}",     0,    P0    }
+{"XF:06BMA-BI",  "{XAFS-Ax:Tbl_XD}",     0,    P0    }
+{"XF:06BMA-BI",  "{XAFS-Ax:RotH}",       0,    P0    }
+{"XF:06BMA-BI",  "{XAFS-Ax:RotB}",       0,    P0    }
+{"XF:06BMA-BI",  "{XAFS-Ax:RotS}",       0,    P0    }
+}

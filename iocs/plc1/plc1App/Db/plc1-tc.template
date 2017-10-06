@@ -1,0 +1,106 @@
+record(ai, "$(Chan)-I")
+{
+    field(DESC, "Temperature indicator, degC")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC) $(Mod=T)_I$(Seq=_1)[$(ArrNum)] S 1")
+    field(PREC, "1")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HHSV, "MAJOR")
+    field(HSV, "MINOR")
+}
+
+record(ao, "$(Chan)_High-SP")
+{
+    field(DESC, "Thermosensor warning set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC) $(Mod=T)_High$(Seq=_1)[$(ArrNum)] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "$(Chan)_High-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "$(Chan)_High-RB")
+{
+    field(DESC, "Thermosensor warning level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC) $(Mod=T)_High$(Seq=_1)[$(ArrNum)] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "$(Chan)_High-ao_")
+}
+
+record(ao, "$(Chan)_High-ao_")
+{
+    field(DESC, "Aux High pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "$(Chan)_High-RB PP")
+    field(OUT, "$(Chan)-I.HIGH")
+}
+
+record(ao, "$(Chan)_HiHi-SP")
+{
+    field(DESC, "Thermosensor Alarm level set point")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC) $(Mod=T)_HiHi$(Seq=_1)[$(ArrNum)] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(HOPR,  "1320.0")
+    field(LOPR,  "-200.0")
+#    field(FLNK, "$(Chan)_HiHi-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "$(Chan)_HiHi-RB")
+{
+    field(DESC, "Thermosensor Alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC) $(Mod=T)_HiHi$(Seq=_1)[$(ArrNum)] S 1")
+    field(PREC, "2")
+    field(ASLO, "0.1")
+    field(EGU,  "C")
+    field(FLNK, "$(Chan)_HiHi-ao_")
+}
+
+record(ao, "$(Chan)_HiHi-ao_")
+{
+    field(DESC, "Aux HiHi pass")
+    field(OMSL, "closed_loop")
+    field(DOL, "$(Chan)_HiHi-RB PP")
+    field(OUT, "$(Chan)-I.HIHI")
+}
+
+record(bi, "$(Chan)-Sts")
+{
+    field(DESC, "Temperature status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC) $(Mod=T)_Sts$(Seq=_1)[$(ArrNum)] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "$(Chan)-First")
+{
+    field(DESC, "Sensor tripped first in last IL")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC) $(Mod=T)_Lock$(Seq=_1)[$(ArrNum)] S 1")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+

@@ -1,0 +1,18 @@
+file "plc1-bi.template"
+{
+pattern
+{ Sys,          Dev,            Sig,            DESC,                                   Tag,              ZNAM          ONAM,           ZSV,       OSV}
+{ XF:06BM-EPS, "PLC", 		Fuse-Sts, 	"PLC main unit 24V fuse blown", 	"Misc_Sts_0[7]",  "OK", 	"Blown", 	"",        "MAJOR"}
+{ XF:06BM-EPS, "PLC", 		Net-Sts,	"PLC Remote IO network status", 	"Misc_Sts_0[6]",  "Down", 	"OK", 		"MAJOR",   ""}
+}
+
+
+file           plc1-va-gv.template
+{
+pattern
+{Sys,          Dev,                            Tag}
+{ FE:C06B-OP, "Flag:1", FE_C06B_OP_Flag_1}
+{ XF:06BMA-OP, "FS:1", BMA_OP_FS1}
+
+}
+

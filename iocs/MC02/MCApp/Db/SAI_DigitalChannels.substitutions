@@ -1,0 +1,7 @@
+file /opt/epics/modules/SAI/db/SAI_DigitalChannels.template {
+pattern {	P,		R,		SCAN, 		ASYNPORT}
+        { 	"XF:06BMA-OP",		"{MC:02}",	"1 second",	"pmac"}
+}
+
+#Sample naming - XF:06BMA-OP{Mono:DCM1-Ax:Bragg}Mtr
+#EOF

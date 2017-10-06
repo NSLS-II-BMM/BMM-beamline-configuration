@@ -1,0 +1,12 @@
+file /opt/epics/modules/SAI/db/SAI_MotorHoming.template {
+pattern {	ASYNPORT,	TMOT,	SCAN,		PMAC_MTR,	P,		R,		AXIS,	EGU,	AXISSCALE,	HVEL}
+        { 	"pmac",		1.0,	".2 second",	"1",		"XF:06BM-OP",	"{Mir:M1-Ax:",	"YU}Mtr","cts",	1,		10}
+        { 	"pmac",		1.0,	".2 second",	"2",		"XF:06BM-OP",	"{Mir:M1-Ax:",	"YDO}Mtr","cts",	1,		10}
+        { 	"pmac",		1.0,	".2 second",	"3",		"XF:06BM-OP",	"{Mir:M1-Ax:",	"YDI}Mtr","cts",	1,		10}
+        { 	"pmac",		1.0,	".2 second",	"4",		"XF:06BM-OP",	"{Mir:M1-Ax:",	"XU}Mtr","cts",	1,		10}
+        { 	"pmac",		1.0,	".2 second",	"5",		"XF:06BM-OP",	"{Mir:M1-Ax:",	"XD}Mtr","cts",	1,		10}
+#        { 	"pmac",		1.0,	".2 second",	"6",		"XF:06BM-OP",	"{Mir:M1-Ax:",	"Z}Mtr","cts",	1,		10}
+#        { 	"pmac",		1.0,	".2 second",	"7",		"XF:06BM-OP",	"{Mir:M1-Ax:",	"ZZ}Mtr","cts",	1,		10}
+#        { 	"pmac",		1.0,	".2 second",	"8",		"XF:06BM-OP",	"{Mir:M1-Ax:",	"ZZZ}Mtr","cts",	1,		10}
+}
+

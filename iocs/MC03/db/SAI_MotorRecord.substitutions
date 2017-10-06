@@ -1,0 +1,8 @@
+file /opt/epics/modules/SAI/db/SAI_MotorRecord.template {
+pattern { ASYNPORT,	PMACPORT,	TMOT,	PMAC_MTR,P,		R,		AXIS,	DESC,			MRES,	PREC,	EGU,	VEL,	TACC, 	OFFS, 	HSLM, 	LSLM}
+	{ "pmac",	"PMAC",		1.0,	1,	"XF:06BMA-OP",	"{Slt:01-Ax:",	"O}Mtr","Slt:01 - OutBoard, O",	0.0001,	4,	"mm",	0.2,	0.5,	4.1568,	5.5,	-6.5}
+	{ "pmac",	"PMAC",		1.0,	2,	"XF:06BMA-OP",	"{Slt:01-Ax:",	"I}Mtr","Slt:01 - InBoard, I",	0.0001,	4,	"mm",	0.2,	0.5,	-3.365,	5.5,	-5.0}
+	{ "pmac",	"PMAC",		1.0,	3,	"XF:06BMA-OP",	"{Slt:01-Ax:",	"T}Mtr","Slt:01 - Top, T",	0.0001,	4,	"mm",	0.2,	0.5,	3.5827,	5.5,	-7.5}
+	{ "pmac",	"PMAC",		1.0,	4,	"XF:06BMA-OP",	"{Slt:01-Ax:",	"B}Mtr","Slt:01 - Bottom, B",	0.0001,	4,	"mm",	0.2,	0.5,	-2.75,	4.3,	-6.3}
+}
+

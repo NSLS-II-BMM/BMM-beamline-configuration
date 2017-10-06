@@ -1,0 +1,41 @@
+file /usr/lib/epics/db/gammampc_controller.db
+{
+pattern { Sys   	, Cntl          , PORT  }
+	{ XF:06BMA-VA   , "{IPC:1}"     , tsrvB1-P9 }
+	{ XF:06BMA-VA   , "{IPC:2}"     , tsrvB1-P10 }
+	{ XF:06BMA-VA   , "{IPC:3}"     , tsrvB1-P11 }
+	{ XF:06BMB-VA   , "{IPC:1}"     , tsrvB1-P12 }
+}
+
+
+file /usr/lib/epics/db/gammampc_ip.db
+{
+pattern { Sys, 		Cntl 		, Dev 			, CHAN  , PORT  }
+
+	{ XF:06BMA-VA	, "{IPC:1}"	, "{FS:1-IP:1}"		, 1	, tsrvB1-P9	}
+	{ XF:06BMA-VA	, "{IPC:1}"	, "{Mono:DCM-IP:1}"	, 2	, tsrvB1-P9	}
+
+	{ XF:06BMA-VA	, "{IPC:2}"	, "{FS:2-IP:1}"		, 1	, tsrvB1-P10	}
+	{ XF:06BMA-VA	, "{IPC:2}"	, "{Mir:2-IP:1}"	, 2	, tsrvB1-P10	}
+
+	{ XF:06BMA-VA	, "{IPC:3}"	, "{Mir:3-IP:1}"	, 1	, tsrvB1-P11	}
+
+	{ XF:06BMB-VA	, "{IPC:1}"	, "{BT:1-IP:1}"		, 1	, tsrvB1-P12	}
+	{ XF:06BMB-VA	, "{IPC:1}"	, "{FS:3-IP:1}"		, 2	, tsrvB1-P12	}
+}
+
+file /usr/lib/epics/db/gammampc_setpoint.db
+{
+pattern { Sys   , Cntl          , Dev           , CHAN  , SPNUM , PORT  }
+        { XF:06BMA-VA	, "{IPC:1}"	, "{FS:1-IP:1}"		, 1	, 1	, tsrvB1-P9	}
+        { XF:06BMA-VA	, "{IPC:1}"	, "{Mono:DCM-IP:1}"	, 2	, 2	, tsrvB1-P9	}
+
+        { XF:06BMA-VA	, "{IPC:2}"	, "{FS:2-IP:1}"		, 1	, 1	, tsrvB1-P10	}
+        { XF:06BMA-VA	, "{IPC:2}"	, "{Mir:2-IP:1}"	, 2	, 2	, tsrvB1-P10	}
+
+        { XF:06BMA-VA	, "{IPC:3}"	, "{Mir:3-IP:1}"	, 1	, 1	, tsrvB1-P11	}
+
+        { XF:06BMB-VA	, "{IPC:1}"	, "{BT:1-IP:1}"		, 1	, 1	, tsrvB1-P12	}
+        { XF:06BMB-VA	, "{IPC:1}"	, "{FS:3-IP:1}"		, 2	, 2	, tsrvB1-P12	}
+}
+

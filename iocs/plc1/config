@@ -1,0 +1,8 @@
+NAME=plc1
+PORT=4051
+USER=softioc
+HOST=xf06bm-ioc1
+
+CHDIR="$CHDIR/iocBoot/iocplc1"
+EXEC="$CHDIR/st.cmd"
+

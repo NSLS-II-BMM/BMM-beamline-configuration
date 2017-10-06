@@ -1,0 +1,12 @@
+file /opt/epics/modules/SAI/db/SAI_MotorRecord.template {
+pattern { ASYNPORT,	PMACPORT,	TMOT,	PMAC_MTR,P,		R,		AXIS,	DESC,			MRES,	PREC,	EGU,	VEL,	TACC, 	OFFS, 	HSLM, 	LSLM}
+	{ "pmac",	"PMAC",		1.0,	1,	"XF:06BM-BI",	"{FS:03-Ax:",	"Y}Mtr","FS:03 Y",	0.0001,	4,	"mm",	0.2,	0.5,	4.1568,	5.5,	-6.5}
+	{ "pmac",	"PMAC",		1.0,	2,	"XF:06BM-BI",	"{Mir:M1-Ax:",	"YDO}Mtr","Mir:M1 - JACK 2, YDI",	0.0001,	4,	"mm",	0.2,	0.5,	-3.365,	5.5,	-5.0}
+	{ "pmac",	"PMAC",		1.0,	3,	"XF:06BM-BI",	"{Mir:M1-Ax:",	"YDI}Mtr","Mir:M1 - JACK 3, YDO",	0.0001,	4,	"mm",	0.2,	0.5,	3.5827,	5.5,	-7.5}
+	{ "pmac",	"PMAC",		1.0,	4,	"XF:06BM-BI",	"{Mir:M1-Ax:",	"XU}Mtr","Mir:M1 - LATERAL 1, XU",	0.0001,	4,	"mm",	0.2,	0.5,	-2.75,	4.3,	-6.3}
+	{ "pmac",	"PMAC",		1.0,	5,	"XF:06BM-BI",	"{Mir:M1-Ax:",	"XD}Mtr","Mir:M1 - LATERAL 2, XD",	0.0001,	4,	"mm",	0.2,	0.5,	0.8669,	8.7,	-3.6}
+#	{ "pmac",	"PMAC",		1.0,	6,	"XF:06BM-BI",	"{Mir:M1-Ax:",	"Z}Mtr","Mir:M1 - UNDEF AXIS 6, Z",	0.0001,	4,	"mm",	0.2,	0.5,	-3.9752,6.4,	-6.1}
+#	{ "pmac",	"PMAC",		1.0,	7,	"XF:06BM-BI",	"{Mir:M1-Ax:",	"ZZ}Mtr","Mir:M1 - UNDEF AXIS 7, ZZ",	0.0001,	4,	"mm",	0.2,	0.5,	0.954,	7.5,	-3.2}
+#	{ "pmac",	"PMAC",		1.0,	8,	"XF:06BM-BI",	"{Mir:M1-Ax:",	"ZZZ}Mtr","Mir:M1 - UNDEF AXIS 8, ZZZ",	0.0001,	4,	"mm",	0.2,	0.5,	-2.6167,5.7,	-5.1}
+}
+

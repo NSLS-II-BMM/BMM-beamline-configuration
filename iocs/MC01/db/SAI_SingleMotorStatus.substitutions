@@ -1,0 +1,12 @@
+file /opt/epics/modules/SAI/db/SAI_SingleMotorStatus.template {
+pattern {	P,		T,		R,	AXIS,	PMAC_MTR}
+        { 	"XF:06BM-OP",		"{Mir:M1}",	"{Mir:M1-Ax:",	"YU}Mtr",	1}
+        { 	"XF:06BM-OP",		"{Mir:M1}",	"{Mir:M1-Ax:",	"YDO}Mtr",	2}
+        { 	"XF:06BM-OP",		"{Mir:M1}",	"{Mir:M1-Ax:",	"YDI}Mtr",	3}
+        { 	"XF:06BM-OP",		"{Mir:M1}",	"{Mir:M1-Ax:",	"XU}Mtr",	4}
+        { 	"XF:06BM-OP",		"{Mir:M1}",	"{Mir:M1-Ax:",	"XD}Mtr",	5}
+#        { 	"XF:06BM-OP",		"{Mir:M1}",	"{Mir:M1-Ax:",	"Z}Mtr",	6}
+#        { 	"XF:06BM-OP",		"{Mir:M1}",	"{Mir:M1-Ax:",	"ZZ}Mtr",	7}
+#        { 	"XF:06BM-OP",		"{Mir:M1}",	"{Mir:M1-Ax:",	"ZZZ}Mtr",	8}
+}
+

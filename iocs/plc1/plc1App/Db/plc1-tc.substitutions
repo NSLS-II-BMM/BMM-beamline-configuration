@@ -1,0 +1,30 @@
+file plc1-tc.template
+{
+pattern
+{Chan, Mod, Seq, ArrNum }
+{"XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Perp}T-I", "T", "_1", "17" }
+{"XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Para}T-I", "T", "_1", "18" }
+{"XF:06BMA-OP{Mir:2}T:1-I", "T", "_1", "19" }
+{"XF:06BMA-OP{Mir:2}T:2-I", "T", "_1", "20" }
+{"XF:06BMA-OP{Mir:3}T:1-I", "T", "_1", "21" }
+{"XF:06BMA-OP{Mir:3}T:2-I", "T", "_1", "22" }
+{"XF:06BMA-OP{FS:1}T:1-I", "T", "_1", "3" }
+{"XF:06BMA-OP{Fltr:1}T:1-I", "T", "_1", "4" }
+{"XF:06BMA-OP{Fltr:1}T:2-I", "T", "_1", "5" }
+{"XF:06BMA-OP{Fltr:1}T:3-I", "T", "_1", "6" }
+{"XF:06BMA-OP{Fltr:1}T:4-I", "T", "_1", "7" }
+{"XF:06BMA-OP{Fltr:1}T:5-I", "T", "_1", "8" }
+{"XF:06BMA-OP{Fltr:1}T:6-I", "T", "_1", "9" }
+{"XF:06BMA-OP{Fltr:1}T:7-I", "T", "_1", "10" }
+{"XF:06BMA-OP{Fltr:1}T:8-I", "T", "_1", "11" }
+{"XF:06BMA-OP{Mono:DCM-Crys:1}T-I", "T", "_1", "12" }
+{"XF:06BMA-OP{Mono:DCM-Crys:2}T-I", "T", "_1", "13" }
+{"XF:06BMA-OP{Mono:DCM-Crys:1-Ax:R}T-I", "T", "_1", "14" }
+{"XF:06BMA-OP{Mono:DCM-Crys:2-Ax:P}T-I", "T", "_1", "15" }
+{"XF:06BMA-OP{Mono:DCM-Crys:2-Ax:R}T-I", "T", "_1", "16" }
+{"FE:C06B-OP{Mir:1}T:3-I", "T", "_1", "2" }
+{"FE:C06B-OP{Mir:1}T:1-I", "T", "_1", "0" }
+{"FE:C06B-OP{Mir:1}T:2-I", "T", "_1", "1" }
+{"XF:06BMA-OP{PBS:1}T:1-I", "T", "_1", "23" }
+
+}

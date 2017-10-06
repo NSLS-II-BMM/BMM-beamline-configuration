@@ -1,0 +1,6 @@
+file /opt/epics/modules/genericScan/db/GSCAN_Saver.db {
+pattern 
+{ 	P,		SCAN,		SCANREC,	FILESYSTEM,		SUBDIR}
+	{ "FMB",	"GSCAN",	":SCANREC_SP",	"/opt/epics/iocoutput",	"gscandata" }
+}
+

@@ -1,0 +1,6 @@
+epicsEnvSet("ARCH","linux-x86_64")
+epicsEnvSet("IOC","iocmtrctl")
+epicsEnvSet("TOP","/epics/iocs/MC07")
+epicsEnvSet("EPICS_BASE","/usr/lib/epics")
+epicsEnvSet("PMACUTIL","/usr/share/epics-pmacutil-dev")
+epicsEnvSet("PMACCOORD","/usr/share/epics-pmaccoord-dev")

@@ -1,0 +1,13 @@
+file     "plc1-bi.template"
+{
+
+pattern
+{        Sys,                Dev,             Sig,           DESC, 		     Tag, 	        ZNAM,      ONAM,              ZSV,       OSV}
+{        "XF:06BMA",          "RG:A-Det:Smk",  Alrm-Sts,      "RG_A Smoke Alarm",   "Smoke_Sts_0[0]",  "OK",      "Alarm",           "",       "MAJOR"}
+{        "XF:06BMA",          "RG:A-Det:Smk",  Sts:Head-Sts,  "RG_A Smoke Detector Head Missing",  "Smoke_Sts_0[1]",  "Alarm",  "OK",     "MAJOR",  ""}
+{        "XF:06BMA",          "RG:B-Det:Smk",  Alrm-Sts,      "RG_B Smoke Alarm",   "Smoke_Sts_0[2]",  "OK",      "Alarm",           "",       "MAJOR"}
+{        "XF:06BMA",          "RG:B-Det:Smk",  Sts:Head-Sts,  "RG_B Smoke Detector Head Missing",  "Smoke_Sts_0[3]",  "Alarm",  "OK",     "MAJOR",  ""}
+{        "XF:06BMA",          "RG:C-Det:Smk",  Alrm-Sts,      "RG_C Smoke Alarm",   "Smoke_Sts_0[4]",  "OK",      "Alarm",           "",       "MAJOR"}
+{        "XF:06BMA",          "RG:C-Det:Smk",  Sts:Head-Sts,  "RG_C Smoke Detector Head Missing",  "Smoke_Sts_0[5]",  "Alarm",  "OK",     "MAJOR",  ""}
+
+}

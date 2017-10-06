@@ -1,0 +1,63 @@
+## global settings  ###########
+    OutTerminator = LF;
+##  EO-global settings ########
+
+read2FloatNumbers {
+    OutTerminator = LF;
+    InTerminator = CR;
+    ExtraInput = Ignore;
+    
+    @mismatch {in "",CR,ACK};
+      
+    out "\$1";
+    in "%(A)f";
+    in "%(B)f";
+}
+
+readVar {
+	#\$1 = Var
+	#\$2 = answer format
+	
+    OutTerminator = LF;
+    InTerminator = CR;
+    ExtraInput = Ignore;
+    
+    @mismatch {in "",CR,ACK};
+      
+    out "\$1";
+    in "%\$2";
+}
+
+read8Vars {
+	#\$1 = StartVar
+	#\$2 = stepsize
+	#\$3 = answer format
+
+    OutTerminator = LF;
+    InTerminator = CR;
+    ExtraInput = Ignore;
+    
+    @mismatch {
+    		in "",CR,ACK
+    	      };
+      
+    out "\$1,8,\$2";  ###startvar,count,step
+    in "%(A)\$3";
+    in "%(B)\$3";
+    in "%(C)\$3";
+    in "%(D)\$3";
+    in "%(E)\$3";
+    in "%(F)\$3";
+    in "%(G)\$3";
+    in "%(H)\$3";
+}
+
+sendSetpoint {
+    out "\$1=%f",LF;
+    in "";
+}
+
+sendCommand {
+    out "\$1",LF;
+    in "";
+}

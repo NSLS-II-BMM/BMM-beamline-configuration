@@ -1,0 +1,565 @@
+# Sh:FE PPS shutter handling
+
+record(bi, "XF:06BM-PPS{Sh:FE}Pos-Sts")
+{
+        field(DESC, "Sh:FE Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@XF06BM_BMM_EPS FE_SH_Sts.Sts S 0.5")
+        field(ZNAM, "Open")
+        field(ONAM, "Not Open")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BM-PPS{Sh:FE}Err-Sts")
+{
+        field(DESC, "Sh:FE Err Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@XF06BM_BMM_EPS FE_SH_Sts.StsFault S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BM-PPS{Sh:FE}Sts:FailOpn-Sts")
+{
+        field(DESC, "Sh:FE Fail Open")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@XF06BM_BMM_EPS FE_SH_Sts.FailedToOpn S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+	field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BM-PPS{Sh:FE}Sts:FailCls-Sts")
+{
+        field(DESC, "Sh:FE Fail Close")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@XF06BM_BMM_EPS FE_SH_Sts.FailedToCls S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BM-PPS{Sh:FE}Sts:ForceCls-Sts")
+{
+        field(DESC, "Sh:FE closed not due to EPS command")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@XF06BM_BMM_EPS FE_SH_Sts.ForceClose S 0.5")
+        field(ZNAM, "CLOSED")
+        field(ONAM, "OK")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BM-PPS{Sh:FE}Enbl-Sts")
+{
+        field(DESC, "Sh:FE able to open signal from PPS")
+        field(SCAN, "1 second")
+        field(DTYP, "EtherIP")
+        field(INP, "@XF06BM_BMM_EPS FE_SH_Sts.EnableRaw S 0.5")
+        field(ZNAM, "Fault")
+        field(ONAM, "Able to open")
+        field(ZSV, "MAJOR")
+}
+
+record(bi, "XF:06BM-PPS{Sh:FE}Sts:Cls-Sts")
+{
+        field(DESC, "Sh:FE Raw Position Status")
+        field(SCAN, "1 second")
+        field(DTYP, "EtherIP")
+        field(INP, "@XF06BM_BMM_EPS FE_SH_Sts.StatusRaw")
+        field(ZNAM, "Open")
+        field(ONAM, "Closed")
+}
+
+record(bi, "XF:06BM-PPS{Sh:FE}Sts:OpnCmd-Sts")
+{
+        field(DESC, "Sh:FE Open command latched")
+        field(SCAN, "1 second")
+        field(DTYP, "EtherIP")
+        field(INP, "@XF06BM_BMM_EPS FE_SH_Sts.CMDRaw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Latched")
+}
+
+record(bi, "XF:06BM-PPS{Sh:FE}Cmd:Opn-Sts")
+{
+        field(DESC, "Sh:FE Open Cmd status")
+        field(SCAN, "1 second")
+        field(DTYP, "EtherIP")
+        field(INP, "@XF06BM_BMM_EPS FE_SH_Sts.OpenRaw")
+        field(ZNAM, "None")
+        field(ONAM, "Open")
+}
+
+
+record(bi, "XF:06BM-PPS{Sh:FE}Cmd:Cls-Sts")
+{
+        field(DESC, "Sh:FE Close Cmd status")
+        field(SCAN, "1 second")
+        field(DTYP, "EtherIP")
+        field(INP, "@XF06BM_BMM_EPS FE_SH_Sts.CloseRaw")
+        field(ZNAM, "Close")
+        field(ONAM, "None")
+}
+
+record(bo, "XF:06BM-PPS{Sh:FE}Cmd:Opn-Cmd")
+{
+        field(DESC, "Sh:FE Open Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@XF06BM_BMM_EPS FE_SH_Cmd.OpnCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Open")
+}
+
+record(bo, "XF:06BM-PPS{Sh:FE}Cmd:Cls-Cmd")
+{
+        field(DESC, "Sh:FE Close Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@XF06BM_BMM_EPS FE_SH_Cmd.ClsCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Close")
+}
+
+record(bo, "XF:06BM-PPS{Sh:FE}Permit:Enbl-Cmd")
+{
+        field(DESC, "Sh:FE User permit for operation")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@XF06BM_BMM_EPS FE_SH_Cmd.PermitEna S 0.5")
+	field(ASG,  "EPSEXPERT")        
+	field(ZNAM, "No permit")
+        field(ONAM, "Permit")
+}
+
+record(bi, "XF:06BM-PPS{Sh:FE}Permit:Enbl-Sts")
+{
+        field(DESC, "Sh:FE User permit for operation status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@XF06BM_BMM_EPS FE_SH_Cmd.PermitEna S 0.5")
+        field(ZNAM, "No permit")
+        field(ONAM, "Permit")
+}
+
+record(bo, "XF:06BM-PPS{Sh:FE}Mode:Auto-Sel")
+{
+        field(DESC, "Sh:FE auto re-open mode ena/dis")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@XF06BM_BMM_EPS FE_SH_Cmd.AutoMd S 0.5")
+        field(ZNAM, "Disable")
+        field(ONAM, "Enable")
+}
+
+record(bi, "XF:06BM-PPS{Sh:FE}Mode:Auto-Sts")
+{
+        field(DESC, "Sh:FE auto re-open mode status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@XF06BM_BMM_EPS FE_SH_Cmd.AutoMd S 0.5")
+        field(ZNAM, "Disable")
+        field(ONAM, "Enable")
+}
+# Sh:A PPS shutter handling
+
+record(bi, "XF:06BM-PPS{Sh:A}Pos-Sts")
+{
+        field(DESC, "Sh:A Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@XF06BM_BMM_EPS A_SH_Sts.Sts S 0.5")
+        field(ZNAM, "Open")
+        field(ONAM, "Not Open")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BM-PPS{Sh:A}Err-Sts")
+{
+        field(DESC, "Sh:A Err Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@XF06BM_BMM_EPS A_SH_Sts.StsFault S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BM-PPS{Sh:A}Sts:FailOpn-Sts")
+{
+        field(DESC, "Sh:A Fail Open")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@XF06BM_BMM_EPS A_SH_Sts.FailedToOpn S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+	field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BM-PPS{Sh:A}Sts:FailCls-Sts")
+{
+        field(DESC, "Sh:A Fail Close")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@XF06BM_BMM_EPS A_SH_Sts.FailedToCls S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BM-PPS{Sh:A}Sts:ForceCls-Sts")
+{
+        field(DESC, "Sh:A closed not due to EPS command")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@XF06BM_BMM_EPS A_SH_Sts.ForceClose S 0.5")
+        field(ZNAM, "CLOSED")
+        field(ONAM, "OK")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BM-PPS{Sh:A}Enbl-Sts")
+{
+        field(DESC, "Sh:A able to open signal from PPS")
+        field(SCAN, "1 second")
+        field(DTYP, "EtherIP")
+        field(INP, "@XF06BM_BMM_EPS A_SH_Sts.EnableRaw S 0.5")
+        field(ZNAM, "Fault")
+        field(ONAM, "Able to open")
+        field(ZSV, "MAJOR")
+}
+
+record(bi, "XF:06BM-PPS{Sh:A}Sts:Cls-Sts")
+{
+        field(DESC, "Sh:A Raw Position Status")
+        field(SCAN, "1 second")
+        field(DTYP, "EtherIP")
+        field(INP, "@XF06BM_BMM_EPS A_SH_Sts.StatusRaw")
+        field(ZNAM, "Open")
+        field(ONAM, "Closed")
+}
+
+record(bi, "XF:06BM-PPS{Sh:A}Sts:OpnCmd-Sts")
+{
+        field(DESC, "Sh:A Open command latched")
+        field(SCAN, "1 second")
+        field(DTYP, "EtherIP")
+        field(INP, "@XF06BM_BMM_EPS A_SH_Sts.CMDRaw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Latched")
+}
+
+record(bi, "XF:06BM-PPS{Sh:A}Cmd:Opn-Sts")
+{
+        field(DESC, "Sh:A Open Cmd status")
+        field(SCAN, "1 second")
+        field(DTYP, "EtherIP")
+        field(INP, "@XF06BM_BMM_EPS A_SH_Sts.OpenRaw")
+        field(ZNAM, "None")
+        field(ONAM, "Open")
+}
+
+
+record(bi, "XF:06BM-PPS{Sh:A}Cmd:Cls-Sts")
+{
+        field(DESC, "Sh:A Close Cmd status")
+        field(SCAN, "1 second")
+        field(DTYP, "EtherIP")
+        field(INP, "@XF06BM_BMM_EPS A_SH_Sts.CloseRaw")
+        field(ZNAM, "Close")
+        field(ONAM, "None")
+}
+
+record(bo, "XF:06BM-PPS{Sh:A}Cmd:Opn-Cmd")
+{
+        field(DESC, "Sh:A Open Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@XF06BM_BMM_EPS A_SH_Cmd.OpnCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Open")
+}
+
+record(bo, "XF:06BM-PPS{Sh:A}Cmd:Cls-Cmd")
+{
+        field(DESC, "Sh:A Close Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@XF06BM_BMM_EPS A_SH_Cmd.ClsCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Close")
+}
+
+record(bo, "XF:06BM-PPS{Sh:A}Permit:Enbl-Cmd")
+{
+        field(DESC, "Sh:A User permit for operation")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@XF06BM_BMM_EPS A_SH_Cmd.PermitEna S 0.5")
+	field(ASG,  "EPSEXPERT")        
+	field(ZNAM, "No permit")
+        field(ONAM, "Permit")
+}
+
+record(bi, "XF:06BM-PPS{Sh:A}Permit:Enbl-Sts")
+{
+        field(DESC, "Sh:A User permit for operation status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@XF06BM_BMM_EPS A_SH_Cmd.PermitEna S 0.5")
+        field(ZNAM, "No permit")
+        field(ONAM, "Permit")
+}
+
+record(bo, "XF:06BM-PPS{Sh:A}Mode:Auto-Sel")
+{
+        field(DESC, "Sh:A auto re-open mode ena/dis")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@XF06BM_BMM_EPS A_SH_Cmd.AutoMd S 0.5")
+        field(ZNAM, "Disable")
+        field(ONAM, "Enable")
+}
+
+record(bi, "XF:06BM-PPS{Sh:A}Mode:Auto-Sts")
+{
+        field(DESC, "Sh:A auto re-open mode status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@XF06BM_BMM_EPS A_SH_Cmd.AutoMd S 0.5")
+        field(ZNAM, "Disable")
+        field(ONAM, "Enable")
+}
+## Database for Pressure gauge tags in EPS PLC
+
+record(ai, "XF:06BM-PPS{Dev:BurnThru}P:1-I")
+{
+    field(DESC, "Pressure indicator")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) B_I_0[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "6")
+    field(AOFF, "1")
+    field(EGU,  "PSIG")
+    field(LLSV, "MAJOR")
+    field(LSV, "MINOR")
+}
+
+record(ao, "XF:06BM-PPS{Dev:BurnThru}P:1_Low-SP")
+{
+    field(DESC, "Pressure warning SP")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) B_Low_0[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "6")
+    field(AOFF, "1")
+    field(EGU,  "PSIG")
+#    field(FLNK, "XF:06BM-PPS{Dev:BurnThru}P:1_Low-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BM-PPS{Dev:BurnThru}P:1_Low-RB")
+{
+    field(DESC, "Pressure warning RB")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) B_Low_0[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "6")
+    field(AOFF, "1")
+    field(EGU,  "PSIG")
+    field(FLNK, "XF:06BM-PPS{Dev:BurnThru}P:1_Low-ao_")
+}
+
+record(ao, "XF:06BM-PPS{Dev:BurnThru}P:1_Low-ao_")
+{
+    field(DESC, "Aux Low proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BM-PPS{Dev:BurnThru}P:1_Low-RB PP")
+    field(OUT, "XF:06BM-PPS{Dev:BurnThru}P:1-I.LOW")
+}
+
+record(ao, "XF:06BM-PPS{Dev:BurnThru}P:1_LoLo-SP")
+{
+    field(DESC, "pressure alarm level control")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) B_LoLo_0[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "6")
+    field(AOFF, "1")
+    field(EGU,  "PSIG")
+#    field(FLNK, "XF:06BM-PPS{Dev:BurnThru}P:1_LoLo-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BM-PPS{Dev:BurnThru}P:1_LoLo-RB")
+{
+    field(DESC, "Pressure alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) B_LoLo_0[0] S 1")
+    field(PREC, "2")
+    field(ASLO, "6")
+    field(AOFF, "1")
+    field(EGU,  "PSIG")
+    field(FLNK, "XF:06BM-PPS{Dev:BurnThru}P:1_LoLo-ao_")
+}
+
+record(ao, "XF:06BM-PPS{Dev:BurnThru}P:1_LoLo-ao_")
+{
+    field(DESC, "Aux LoLo proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BM-PPS{Dev:BurnThru}P:1_LoLo-RB PP")
+    field(OUT, "XF:06BM-PPS{Dev:BurnThru}P:1-I.LOLO")
+}
+
+record(bi, "XF:06BM-PPS{Dev:BurnThru}P:1-Sts")
+{
+    field(DESC, "Pressure reading status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) B_Sts_0[0] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BM-PPS{Dev:BurnThru}P:1-First")
+{
+    field(DESC, "Sensor tripped first in last IL event")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) B_Lock_0[0] S 0.5")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+## Database for Pressure gauge tags in EPS PLC
+
+record(ai, "XF:06BM-PPS{Dev:BurnThru}P:2-I")
+{
+    field(DESC, "Pressure indicator")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) B_I_0[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "6")
+    field(AOFF, "1")
+    field(EGU,  "PSIG")
+    field(LLSV, "MAJOR")
+    field(LSV, "MINOR")
+}
+
+record(ao, "XF:06BM-PPS{Dev:BurnThru}P:2_Low-SP")
+{
+    field(DESC, "Pressure warning SP")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) B_Low_0[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "6")
+    field(AOFF, "1")
+    field(EGU,  "PSIG")
+#    field(FLNK, "XF:06BM-PPS{Dev:BurnThru}P:2_Low-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BM-PPS{Dev:BurnThru}P:2_Low-RB")
+{
+    field(DESC, "Pressure warning RB")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) B_Low_0[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "6")
+    field(AOFF, "1")
+    field(EGU,  "PSIG")
+    field(FLNK, "XF:06BM-PPS{Dev:BurnThru}P:2_Low-ao_")
+}
+
+record(ao, "XF:06BM-PPS{Dev:BurnThru}P:2_Low-ao_")
+{
+    field(DESC, "Aux Low proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BM-PPS{Dev:BurnThru}P:2_Low-RB PP")
+    field(OUT, "XF:06BM-PPS{Dev:BurnThru}P:2-I.LOW")
+}
+
+record(ao, "XF:06BM-PPS{Dev:BurnThru}P:2_LoLo-SP")
+{
+    field(DESC, "pressure alarm level control")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC,undefined) B_LoLo_0[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "6")
+    field(AOFF, "1")
+    field(EGU,  "PSIG")
+#    field(FLNK, "XF:06BM-PPS{Dev:BurnThru}P:2_LoLo-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "XF:06BM-PPS{Dev:BurnThru}P:2_LoLo-RB")
+{
+    field(DESC, "Pressure alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) B_LoLo_0[1] S 1")
+    field(PREC, "2")
+    field(ASLO, "6")
+    field(AOFF, "1")
+    field(EGU,  "PSIG")
+    field(FLNK, "XF:06BM-PPS{Dev:BurnThru}P:2_LoLo-ao_")
+}
+
+record(ao, "XF:06BM-PPS{Dev:BurnThru}P:2_LoLo-ao_")
+{
+    field(DESC, "Aux LoLo proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "XF:06BM-PPS{Dev:BurnThru}P:2_LoLo-RB PP")
+    field(OUT, "XF:06BM-PPS{Dev:BurnThru}P:2-I.LOLO")
+}
+
+record(bi, "XF:06BM-PPS{Dev:BurnThru}P:2-Sts")
+{
+    field(DESC, "Pressure reading status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) B_Sts_0[1] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BM-PPS{Dev:BurnThru}P:2-First")
+{
+    field(DESC, "Sensor tripped first in last IL event")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC,undefined) B_Lock_0[1] S 0.5")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
+record(bi,"XF:06BM-EPS{PLC}Out:ExpIntlk-Sts") {
+    field(DESC, "USER INTERLOCK")
+    field(SCAN, "1 second")
+    field(DTYP, "EtherIP")
+    field(INP, "@$(PLC,undefined) PPS_Sts[0] S 1")
+    field(ZNAM,"Interlock")
+    field(ONAM,"OK")
+    field(ZSV,"MINOR")
+    field(OSV,"")
+}
+

@@ -1,0 +1,7 @@
+epicsEnvSet("ARCH","linux-x86_64")
+epicsEnvSet("IOC","iocMC")
+epicsEnvSet("TOP","/opt/epics/apps/MC02")
+epicsEnvSet("SNCSEQ","/usr/lib/epics")
+epicsEnvSet("UIOCSYSTEM","/opt/epics/modules/uIOCSystem")
+epicsEnvSet("GENERICSCAN","/opt/epics/modules/genericScan")
+epicsEnvSet("EPICS_BASE","/usr/lib/epics")

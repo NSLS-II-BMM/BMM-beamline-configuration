@@ -1,0 +1,6 @@
+# global config file for softioc start script
+NAME=MC04
+PORT=7204
+USER=ayoung
+EXEC=./iocBoot/iocMC/st.cmd.MC04
+

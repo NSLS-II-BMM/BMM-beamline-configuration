@@ -1,0 +1,13 @@
+file "db/pmac_asyn_motor.db"
+{
+pattern
+{SYS,            DEV,                  MOTOR,  SPORT,  ADDR,             DESC,                  DTYP        PREC,  EGU}
+{"XF:06BMA-BI",  "{XAFS-Ax:LinY}",     "M0",   "P0",   1,                "xafs_liny",           asynMotor,  4,     "mm"}
+{"XF:06BMA-BI",  "{XAFS-Ax:LinX}",     "M0",   "P0",   2,                "xafs_linx",           asynMotor,  4,     "mm"}
+{"XF:06BMA-BI",  "{XAFS-Ax:LinS}",     "M0",   "P0",   3,                "xafs_lins",           asynMotor,  4,     "mm"}
+{"XF:06BMA-BI",  "{XAFS-Ax:LinXS}",    "M0",   "P0",   4,                "xafs_linxs",          asynMotor,  4,     "mm"}
+{"XF:06BMA-BI",  "{XAFS-Ax:Pitch}",    "M0",   "P0",   5,                "xafs_pitch",          asynMotor,  4,     "deg"}
+{"XF:06BMA-BI",  "{XAFS-Ax:Roll}",     "M0",   "P0",   6,                "xafs_roll",           asynMotor,  4,     "deg"}
+{"XF:06BMA-BI",  "{XAFS-Ax:Mtr7}",     "M0",   "P0",   7,                "xafs_mtr7",           asynMotor,  4,     "mm"}
+{"XF:06BMA-BI",  "{XAFS-Ax:Mtr8}",     "M0",   "P0",   8,                "xafs_mtr8",           asynMotor,  4,     "mm"}
+}

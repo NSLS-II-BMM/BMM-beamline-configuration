@@ -1,0 +1,11 @@
+# DEVICE: device name
+# CARD: 
+# CS_VERSION_VAL
+
+file /opt/epics/modules/uIOCSystem/db/uIOCsystem.template {
+pattern { DEVICE, CARD, CS_VERSION_VAL}
+	{ "XF:006BM-BI{MC:01}", "0", "v0.01" }
+}
+
+#EOF
+

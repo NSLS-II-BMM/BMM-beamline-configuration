@@ -1,0 +1,6 @@
+epicsEnvSet("ARCH","linux-x86_64")
+epicsEnvSet("IOC","iocPIE625")
+epicsEnvSet("TOP","/epics/iocs/piE625-M3")
+epicsEnvSet("MOTOR_PIE625","/epics/support/piE625")
+epicsEnvSet("ASYN","/usr/lib/epics")
+epicsEnvSet("EPICS_BASE","/usr/lib/epics")

@@ -1,0 +1,1486 @@
+record(bi,"XF:06BM-EPS{PLC}Out:VA_FE-Sts") {
+    field(DESC, "Vacuum good signal to FE")
+    field(SCAN, "1 second")
+    field(DTYP, "EtherIP")
+    field(INP, "@$(PLC,undefined) Misc_Sts_0[0] S 1")
+    field(ZNAM,"Interlock")
+    field(ONAM,"OK")
+    field(ZSV,"MINOR")
+    field(OSV,"")
+}
+
+record(bi,"XF:06BM-EPS{PLC}In:VA_FE-Sts") {
+    field(DESC, "From FE vacuum good signal")
+    field(SCAN, "1 second")
+    field(DTYP, "EtherIP")
+    field(INP, "@$(PLC,undefined) Misc_Sts_0[1] S 1")
+    field(ZNAM,"Interlock")
+    field(ONAM,"OK")
+    field(ZSV,"MINOR")
+    field(OSV,"")
+}
+
+record(bi,"XF:06BM-EPS{PLC}VA_FE_SH-Sts") {
+    field(DESC, "Vacuum interlock on FE shutter")
+    field(SCAN, "1 second")
+    field(DTYP, "EtherIP")
+    field(INP, "@$(PLC,undefined) Misc_Sts_0[2] S 1")
+    field(ZNAM,"Interlock")
+    field(ONAM,"OK")
+    field(ZSV,"MINOR")
+    field(OSV,"")
+}
+
+record(bi,"XF:06BM-EPS{PLC}VA_FE_SH-Sts") {
+    field(DESC, "BL vacuum ok to open shutter")
+    field(SCAN, "1 second")
+    field(DTYP, "EtherIP")
+    field(INP, "@$(PLC,undefined) Misc_Sts_0[3] S 1")
+    field(ZNAM,"Interlock")
+    field(ONAM,"OK")
+    field(ZSV,"MINOR")
+    field(OSV,"")
+}
+
+## Database for Vacuum gauges and pump tags in EPS PLC 
+
+## Substitutions:
+## Sys		-	System
+## PLC		-	PLC name
+## Dev		-	CCG, TCG, IP
+
+#XF:06BMA-VA{FS:1-CCG:1} Set point relay signal
+record(bi, "XF:06BMA-VA{FS:1-CCG:1}Sts:Rly1PLC-Sts")
+{
+        field(DESC, "CCG controller relay input")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) CCG_Sts_1[0] S 0.5")
+        field(ZNAM, "Relay Off")
+        field(ONAM, "Relay On")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{FS:1-CCG:1}Sts:Rly1PLC-First")
+{
+        field(DESC, "CCG tripped first in IL")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) CCG_Lock_1[0] S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "First")
+}
+## Database for Vacuum gauges and pump tags in EPS PLC 
+
+## Substitutions:
+## Sys		-	System
+## PLC		-	PLC name
+## Dev		-	CCG, TCG, IP
+
+#XF:06BMA-VA{FS:2-TCG:1} Set point relay signal
+record(bi, "XF:06BMA-VA{FS:2-TCG:1}Sts:Rly1PLC-Sts")
+{
+        field(DESC, "TCG controller relay input")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) TCG_Sts_1[0] S 0.5")
+        field(ZNAM, "Relay Off")
+        field(ONAM, "Relay On")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{FS:2-TCG:1}Sts:Rly1PLC-First")
+{
+        field(DESC, "TCG tripped first in IL")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) TCG_Lock_1[0] S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "First")
+}
+## Database for Vacuum gauges and pump tags in EPS PLC 
+
+## Substitutions:
+## Sys		-	System
+## PLC		-	PLC name
+## Dev		-	CCG, TCG, IP
+
+#XF:06BMA-VA{Mir:2-TCG:1} Set point relay signal
+record(bi, "XF:06BMA-VA{Mir:2-TCG:1}Sts:Rly1PLC-Sts")
+{
+        field(DESC, "TCG controller relay input")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) TCG_Sts_1[1] S 0.5")
+        field(ZNAM, "Relay Off")
+        field(ONAM, "Relay On")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{Mir:2-TCG:1}Sts:Rly1PLC-First")
+{
+        field(DESC, "TCG tripped first in IL")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) TCG_Lock_1[1] S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "First")
+}
+## Database for Vacuum gauges and pump tags in EPS PLC 
+
+## Substitutions:
+## Sys		-	System
+## PLC		-	PLC name
+## Dev		-	CCG, TCG, IP
+
+#XF:06BMA-VA{Mir:3-CCG:1} Set point relay signal
+record(bi, "XF:06BMA-VA{Mir:3-CCG:1}Sts:Rly1PLC-Sts")
+{
+        field(DESC, "CCG controller relay input")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) CCG_Sts_1[1] S 0.5")
+        field(ZNAM, "Relay Off")
+        field(ONAM, "Relay On")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{Mir:3-CCG:1}Sts:Rly1PLC-First")
+{
+        field(DESC, "CCG tripped first in IL")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) CCG_Lock_1[1] S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "First")
+}
+## Database for Vacuum gauges and pump tags in EPS PLC 
+
+## Substitutions:
+## Sys		-	System
+## PLC		-	PLC name
+## Dev		-	CCG, TCG, IP
+
+#XF:06BMA-VA{PSh:1-CCG:1} Set point relay signal
+record(bi, "XF:06BMA-VA{PSh:1-CCG:1}Sts:Rly1PLC-Sts")
+{
+        field(DESC, "CCG controller relay input")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) CCG_Sts_1[2] S 0.5")
+        field(ZNAM, "Relay Off")
+        field(ONAM, "Relay On")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{PSh:1-CCG:1}Sts:Rly1PLC-First")
+{
+        field(DESC, "CCG tripped first in IL")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) CCG_Lock_1[2] S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "First")
+}
+## Database for Vacuum gauges and pump tags in EPS PLC 
+
+## Substitutions:
+## Sys		-	System
+## PLC		-	PLC name
+## Dev		-	CCG, TCG, IP
+
+#XF:06BMA-VA{Mir:3-TCG:1} Set point relay signal
+record(bi, "XF:06BMA-VA{Mir:3-TCG:1}Sts:Rly1PLC-Sts")
+{
+        field(DESC, "TCG controller relay input")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) TCG_Sts_1[2] S 0.5")
+        field(ZNAM, "Relay Off")
+        field(ONAM, "Relay On")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{Mir:3-TCG:1}Sts:Rly1PLC-First")
+{
+        field(DESC, "TCG tripped first in IL")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) TCG_Lock_1[2] S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "First")
+}
+## Database for Vacuum gauges and pump tags in EPS PLC 
+
+## Substitutions:
+## Sys		-	System
+## PLC		-	PLC name
+## Dev		-	CCG, TCG, IP
+
+#XF:06BMA-VA{Mono:DCM-CCG:1} Set point relay signal
+record(bi, "XF:06BMA-VA{Mono:DCM-CCG:1}Sts:Rly1PLC-Sts")
+{
+        field(DESC, "CCG controller relay input")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) CCG_Sts_1[3] S 0.5")
+        field(ZNAM, "Relay Off")
+        field(ONAM, "Relay On")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{Mono:DCM-CCG:1}Sts:Rly1PLC-First")
+{
+        field(DESC, "CCG tripped first in IL")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) CCG_Lock_1[3] S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "First")
+}
+## Database for Vacuum gauges and pump tags in EPS PLC 
+
+## Substitutions:
+## Sys		-	System
+## PLC		-	PLC name
+## Dev		-	CCG, TCG, IP
+
+#XF:06BMB-VA{BT:1-CCG:1} Set point relay signal
+record(bi, "XF:06BMB-VA{BT:1-CCG:1}Sts:Rly1PLC-Sts")
+{
+        field(DESC, "CCG controller relay input")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) CCG_Sts_1[4] S 0.5")
+        field(ZNAM, "Relay Off")
+        field(ONAM, "Relay On")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMB-VA{BT:1-CCG:1}Sts:Rly1PLC-First")
+{
+        field(DESC, "CCG tripped first in IL")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) CCG_Lock_1[4] S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "First")
+}
+## Database for Vacuum gauges and pump tags in EPS PLC 
+
+## Substitutions:
+## Sys		-	System
+## PLC		-	PLC name
+## Dev		-	CCG, TCG, IP
+
+#XF:06BMB-VA{FS:3-CCG:1} Set point relay signal
+record(bi, "XF:06BMB-VA{FS:3-CCG:1}Sts:Rly1PLC-Sts")
+{
+        field(DESC, "CCG controller relay input")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) CCG_Sts_1[5] S 0.5")
+        field(ZNAM, "Relay Off")
+        field(ONAM, "Relay On")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMB-VA{FS:3-CCG:1}Sts:Rly1PLC-First")
+{
+        field(DESC, "CCG tripped first in IL")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) CCG_Lock_1[5] S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "First")
+}
+## Database for Vacuum gauges and pump tags in EPS PLC 
+
+## Substitutions:
+## Sys		-	System
+## PLC		-	PLC name
+## Dev		-	CCG, TCG, IP
+
+#XF:06BMB-VA{BT:1-TCG:1} Set point relay signal
+record(bi, "XF:06BMB-VA{BT:1-TCG:1}Sts:Rly1PLC-Sts")
+{
+        field(DESC, "TCG controller relay input")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) TCG_Sts_1[4] S 0.5")
+        field(ZNAM, "Relay Off")
+        field(ONAM, "Relay On")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMB-VA{BT:1-TCG:1}Sts:Rly1PLC-First")
+{
+        field(DESC, "TCG tripped first in IL")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) TCG_Lock_1[4] S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "First")
+}
+## Database for Vacuum gauges and pump tags in EPS PLC 
+
+## Substitutions:
+## Sys		-	System
+## PLC		-	PLC name
+## Dev		-	CCG, TCG, IP
+
+#XF:06BMB-VA{FS:3-TCG:1} Set point relay signal
+record(bi, "XF:06BMB-VA{FS:3-TCG:1}Sts:Rly1PLC-Sts")
+{
+        field(DESC, "TCG controller relay input")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) TCG_Sts_1[5] S 0.5")
+        field(ZNAM, "Relay Off")
+        field(ONAM, "Relay On")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMB-VA{FS:3-TCG:1}Sts:Rly1PLC-First")
+{
+        field(DESC, "TCG tripped first in IL")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) TCG_Lock_1[5] S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "First")
+}
+## Database for Vacuum gauges and pump tags in EPS PLC 
+
+## Substitutions:
+## Sys		-	System
+## PLC		-	PLC name
+## Dev		-	CCG, TCG, IP
+
+#XF:06BMA-VA{FS:1-TCG:1} Set point relay signal
+record(bi, "XF:06BMA-VA{FS:1-TCG:1}Sts:Rly1PLC-Sts")
+{
+        field(DESC, "TCG controller relay input")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) TCG_Sts_1[6] S 0.5")
+        field(ZNAM, "Relay Off")
+        field(ONAM, "Relay On")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{FS:1-TCG:1}Sts:Rly1PLC-First")
+{
+        field(DESC, "TCG tripped first in IL")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) TCG_Lock_1[6] S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "First")
+}
+## Database for Vacuum gauges and pump tags in EPS PLC 
+
+## Substitutions:
+## Sys		-	System
+## PLC		-	PLC name
+## Dev		-	CCG, TCG, IP
+
+#XF:06BMA-VA{Mono:DCM-TCG:1} Set point relay signal
+record(bi, "XF:06BMA-VA{Mono:DCM-TCG:1}Sts:Rly1PLC-Sts")
+{
+        field(DESC, "TCG controller relay input")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) TCG_Sts_1[7] S 0.5")
+        field(ZNAM, "Relay Off")
+        field(ONAM, "Relay On")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{Mono:DCM-TCG:1}Sts:Rly1PLC-First")
+{
+        field(DESC, "TCG tripped first in IL")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) TCG_Lock_1[7] S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "First")
+}
+## Database for Vacuum gauges and pump tags in EPS PLC 
+
+## Substitutions:
+## Sys		-	System
+## PLC		-	PLC name
+## Dev		-	CCG, TCG, IP
+
+#XF:06BMA-VA{FS:2-CCG:1} Set point relay signal
+record(bi, "XF:06BMA-VA{FS:2-CCG:1}Sts:Rly1PLC-Sts")
+{
+        field(DESC, "CCG controller relay input")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) CCG_Sts_1[6] S 0.5")
+        field(ZNAM, "Relay Off")
+        field(ONAM, "Relay On")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{FS:2-CCG:1}Sts:Rly1PLC-First")
+{
+        field(DESC, "CCG tripped first in IL")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) CCG_Lock_1[6] S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "First")
+}
+## Database for Vacuum gauges and pump tags in EPS PLC 
+
+## Substitutions:
+## Sys		-	System
+## PLC		-	PLC name
+## Dev		-	CCG, TCG, IP
+
+#XF:06BMA-VA{Mir:2-CCG:1} Set point relay signal
+record(bi, "XF:06BMA-VA{Mir:2-CCG:1}Sts:Rly1PLC-Sts")
+{
+        field(DESC, "CCG controller relay input")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) CCG_Sts_1[7] S 0.5")
+        field(ZNAM, "Relay Off")
+        field(ONAM, "Relay On")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{Mir:2-CCG:1}Sts:Rly1PLC-First")
+{
+        field(DESC, "CCG tripped first in IL")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) CCG_Lock_1[7] S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "First")
+}
+## Database for Vacuum gauges and pump tags in EPS PLC 
+
+## Substitutions:
+## Sys		-	System
+## PLC		-	PLC name
+## Dev		-	CCG, TCG, IP
+
+#XF:06BMA-VA{Mir:3-IP:1} Set point relay signal
+record(bi, "XF:06BMA-VA{Mir:3-IP:1}Sts:Rly1PLC-Sts")
+{
+        field(DESC, "IP controller relay input")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) IP_Sts_1[0] S 0.5")
+        field(ZNAM, "Relay Off")
+        field(ONAM, "Relay On")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{Mir:3-IP:1}Sts:Rly1PLC-First")
+{
+        field(DESC, "IP tripped first in IL")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) IP_Lock_1[0] S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "First")
+}
+## Database for Vacuum gauges and pump tags in EPS PLC 
+
+## Substitutions:
+## Sys		-	System
+## PLC		-	PLC name
+## Dev		-	CCG, TCG, IP
+
+#XF:06BMB-VA{BT:1-IP:1} Set point relay signal
+record(bi, "XF:06BMB-VA{BT:1-IP:1}Sts:Rly1PLC-Sts")
+{
+        field(DESC, "IP controller relay input")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) IP_Sts_1[1] S 0.5")
+        field(ZNAM, "Relay Off")
+        field(ONAM, "Relay On")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMB-VA{BT:1-IP:1}Sts:Rly1PLC-First")
+{
+        field(DESC, "IP tripped first in IL")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) IP_Lock_1[1] S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "First")
+}
+## Database for Vacuum gauges and pump tags in EPS PLC 
+
+## Substitutions:
+## Sys		-	System
+## PLC		-	PLC name
+## Dev		-	CCG, TCG, IP
+
+#XF:06BMB-VA{FS:3-IP:1} Set point relay signal
+record(bi, "XF:06BMB-VA{FS:3-IP:1}Sts:Rly1PLC-Sts")
+{
+        field(DESC, "IP controller relay input")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) IP_Sts_1[2] S 0.5")
+        field(ZNAM, "Relay Off")
+        field(ONAM, "Relay On")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMB-VA{FS:3-IP:1}Sts:Rly1PLC-First")
+{
+        field(DESC, "IP tripped first in IL")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) IP_Lock_1[2] S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "First")
+}
+## Database for Vacuum gauges and pump tags in EPS PLC 
+
+## Substitutions:
+## Sys		-	System
+## PLC		-	PLC name
+## Dev		-	CCG, TCG, IP
+
+#XF:06BMA-VA{FS:1-IP:1} Set point relay signal
+record(bi, "XF:06BMA-VA{FS:1-IP:1}Sts:Rly1PLC-Sts")
+{
+        field(DESC, "IP controller relay input")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) IP_Sts_1[3] S 0.5")
+        field(ZNAM, "Relay Off")
+        field(ONAM, "Relay On")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{FS:1-IP:1}Sts:Rly1PLC-First")
+{
+        field(DESC, "IP tripped first in IL")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) IP_Lock_1[3] S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "First")
+}
+## Database for Vacuum gauges and pump tags in EPS PLC 
+
+## Substitutions:
+## Sys		-	System
+## PLC		-	PLC name
+## Dev		-	CCG, TCG, IP
+
+#XF:06BMA-VA{Mono:DCM-IP:1} Set point relay signal
+record(bi, "XF:06BMA-VA{Mono:DCM-IP:1}Sts:Rly1PLC-Sts")
+{
+        field(DESC, "IP controller relay input")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) IP_Sts_1[4] S 0.5")
+        field(ZNAM, "Relay Off")
+        field(ONAM, "Relay On")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{Mono:DCM-IP:1}Sts:Rly1PLC-First")
+{
+        field(DESC, "IP tripped first in IL")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) IP_Lock_1[4] S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "First")
+}
+## Database for Vacuum gauges and pump tags in EPS PLC 
+
+## Substitutions:
+## Sys		-	System
+## PLC		-	PLC name
+## Dev		-	CCG, TCG, IP
+
+#XF:06BMA-VA{FS:2-IP:1} Set point relay signal
+record(bi, "XF:06BMA-VA{FS:2-IP:1}Sts:Rly1PLC-Sts")
+{
+        field(DESC, "IP controller relay input")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) IP_Sts_1[5] S 0.5")
+        field(ZNAM, "Relay Off")
+        field(ONAM, "Relay On")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{FS:2-IP:1}Sts:Rly1PLC-First")
+{
+        field(DESC, "IP tripped first in IL")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) IP_Lock_1[5] S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "First")
+}
+## Database for Vacuum gauges and pump tags in EPS PLC 
+
+## Substitutions:
+## Sys		-	System
+## PLC		-	PLC name
+## Dev		-	CCG, TCG, IP
+
+#XF:06BMA-VA{Mir:2-IP:1} Set point relay signal
+record(bi, "XF:06BMA-VA{Mir:2-IP:1}Sts:Rly1PLC-Sts")
+{
+        field(DESC, "IP controller relay input")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) IP_Sts_1[6] S 0.5")
+        field(ZNAM, "Relay Off")
+        field(ONAM, "Relay On")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{Mir:2-IP:1}Sts:Rly1PLC-First")
+{
+        field(DESC, "IP tripped first in IL")
+        field(DTYP, "EtherIP")
+        field(SCAN, "I/O Intr")
+        field(INP, "@$(PLC,undefined) IP_Lock_1[6] S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "First")
+}
+# GV signals
+record(bi, "XF:06BMB-VA{BT:1-GV:1}Sw:OpnLim-Sts")
+{
+        field(DESC, "BT:1-GV:1 Opn Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMB_VA_BT1_GV6_01_CmdCoil_Sts.OpnSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "XF:06BMB-VA{BT:1-GV:1}Sw:ClsLim-Sts")
+{
+        field(DESC, "BT:1-GV:1 Cls Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMB_VA_BT1_GV6_01_CmdCoil_Sts.ClsSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "XF:06BMB-VA{BT:1-GV:1}Sts:Coil-Sts")
+{
+        field(DESC, "BT:1-GV:1 Coil Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMB_VA_BT1_GV6_01_CmdCoil_Sts.Coil1 S 0.5")
+        field(ZNAM, "Not Energized")
+        field(ONAM, "Energized")
+}
+
+record(bi, "XF:06BMB-VA{BT:1-GV:1}Pos-Sts")
+{
+        field(DESC, "BT:1-GV:1 Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMB_VA_BT1_GV6_01_CmdCoil_Sts.Sts S 0.5")
+        field(ZNAM, "Not Open")
+        field(ONAM, "Open")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMB-VA{BT:1-GV:1}Err-Sts")
+{
+        field(DESC, "BT:1-GV:1 Err Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMB_VA_BT1_GV6_01_CmdCoil_Sts.StsFault S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMB-VA{BT:1-GV:1}Sts:FailOpn-Sts")
+{
+        field(DESC, "BT:1-GV:1 Fail Open")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMB_VA_BT1_GV6_01_CmdCoil_Sts.FailedToOpn S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+	field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMB-VA{BT:1-GV:1}Sts:FailCls-Sts")
+{
+        field(DESC, "BT:1-GV:1 Fail Close")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMB_VA_BT1_GV6_01_CmdCoil_Sts.FailedToCls S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMB-VA{BT:1-GV:1}Sts:DS_Intlk-Sts")
+{
+        field(DESC, "BT:1-GV:1 DS I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMB_VA_BT1_GV6_01_CmdCoil_Sts.LockDS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMB-VA{BT:1-GV:1}Sts:US_Intlk-Sts")
+{
+        field(DESC, "BT:1-GV:1 US I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMB_VA_BT1_GV6_01_CmdCoil_Sts.LockUS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+# GV commands
+record(bo, "XF:06BMB-VA{BT:1-GV:1}Cmd:Opn-Cmd")
+{
+        field(DESC, "BT:1-GV:1 Open Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) BMB_VA_BT1_GV6_01_CmdCoil_Cmd.OpnCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Open")
+}
+
+record(bo, "XF:06BMB-VA{BT:1-GV:1}Cmd:Cls-Cmd")
+{
+        field(DESC, "BT:1-GV:1 Close Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) BMB_VA_BT1_GV6_01_CmdCoil_Cmd.ClsCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Close")
+}
+
+# GV signals
+record(bi, "XF:06BMA-VA{FS:1-GV:1}Sw:OpnLim-Sts")
+{
+        field(DESC, "FS:1-GV:1 Opn Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Fltr1_GV1_01_CmdCoil_Sts.OpnSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "XF:06BMA-VA{FS:1-GV:1}Sw:ClsLim-Sts")
+{
+        field(DESC, "FS:1-GV:1 Cls Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Fltr1_GV1_01_CmdCoil_Sts.ClsSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "XF:06BMA-VA{FS:1-GV:1}Sts:Coil-Sts")
+{
+        field(DESC, "FS:1-GV:1 Coil Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Fltr1_GV1_01_CmdCoil_Sts.Coil1 S 0.5")
+        field(ZNAM, "Not Energized")
+        field(ONAM, "Energized")
+}
+
+record(bi, "XF:06BMA-VA{FS:1-GV:1}Pos-Sts")
+{
+        field(DESC, "FS:1-GV:1 Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Fltr1_GV1_01_CmdCoil_Sts.Sts S 0.5")
+        field(ZNAM, "Not Open")
+        field(ONAM, "Open")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{FS:1-GV:1}Err-Sts")
+{
+        field(DESC, "FS:1-GV:1 Err Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Fltr1_GV1_01_CmdCoil_Sts.StsFault S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-VA{FS:1-GV:1}Sts:FailOpn-Sts")
+{
+        field(DESC, "FS:1-GV:1 Fail Open")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Fltr1_GV1_01_CmdCoil_Sts.FailedToOpn S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+	field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{FS:1-GV:1}Sts:FailCls-Sts")
+{
+        field(DESC, "FS:1-GV:1 Fail Close")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Fltr1_GV1_01_CmdCoil_Sts.FailedToCls S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{FS:1-GV:1}Sts:DS_Intlk-Sts")
+{
+        field(DESC, "FS:1-GV:1 DS I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Fltr1_GV1_01_CmdCoil_Sts.LockDS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-VA{FS:1-GV:1}Sts:US_Intlk-Sts")
+{
+        field(DESC, "FS:1-GV:1 US I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Fltr1_GV1_01_CmdCoil_Sts.LockUS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+# GV commands
+record(bo, "XF:06BMA-VA{FS:1-GV:1}Cmd:Opn-Cmd")
+{
+        field(DESC, "FS:1-GV:1 Open Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) BMA_VA_Fltr1_GV1_01_CmdCoil_Cmd.OpnCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Open")
+}
+
+record(bo, "XF:06BMA-VA{FS:1-GV:1}Cmd:Cls-Cmd")
+{
+        field(DESC, "FS:1-GV:1 Close Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) BMA_VA_Fltr1_GV1_01_CmdCoil_Cmd.ClsCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Close")
+}
+
+# GV signals
+record(bi, "XF:06BMA-VA{BS:PB-GV:1}Sw:OpnLim-Sts")
+{
+        field(DESC, "BS:PB-GV:1 Opn Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_BSPB_GV2_01_CmdCoil_Sts.OpnSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "XF:06BMA-VA{BS:PB-GV:1}Sw:ClsLim-Sts")
+{
+        field(DESC, "BS:PB-GV:1 Cls Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_BSPB_GV2_01_CmdCoil_Sts.ClsSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "XF:06BMA-VA{BS:PB-GV:1}Sts:Coil-Sts")
+{
+        field(DESC, "BS:PB-GV:1 Coil Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_BSPB_GV2_01_CmdCoil_Sts.Coil1 S 0.5")
+        field(ZNAM, "Not Energized")
+        field(ONAM, "Energized")
+}
+
+record(bi, "XF:06BMA-VA{BS:PB-GV:1}Pos-Sts")
+{
+        field(DESC, "BS:PB-GV:1 Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_BSPB_GV2_01_CmdCoil_Sts.Sts S 0.5")
+        field(ZNAM, "Not Open")
+        field(ONAM, "Open")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{BS:PB-GV:1}Err-Sts")
+{
+        field(DESC, "BS:PB-GV:1 Err Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_BSPB_GV2_01_CmdCoil_Sts.StsFault S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-VA{BS:PB-GV:1}Sts:FailOpn-Sts")
+{
+        field(DESC, "BS:PB-GV:1 Fail Open")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_BSPB_GV2_01_CmdCoil_Sts.FailedToOpn S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+	field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{BS:PB-GV:1}Sts:FailCls-Sts")
+{
+        field(DESC, "BS:PB-GV:1 Fail Close")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_BSPB_GV2_01_CmdCoil_Sts.FailedToCls S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{BS:PB-GV:1}Sts:DS_Intlk-Sts")
+{
+        field(DESC, "BS:PB-GV:1 DS I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_BSPB_GV2_01_CmdCoil_Sts.LockDS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-VA{BS:PB-GV:1}Sts:US_Intlk-Sts")
+{
+        field(DESC, "BS:PB-GV:1 US I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_BSPB_GV2_01_CmdCoil_Sts.LockUS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+# GV commands
+record(bo, "XF:06BMA-VA{BS:PB-GV:1}Cmd:Opn-Cmd")
+{
+        field(DESC, "BS:PB-GV:1 Open Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) BMA_VA_BSPB_GV2_01_CmdCoil_Cmd.OpnCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Open")
+}
+
+record(bo, "XF:06BMA-VA{BS:PB-GV:1}Cmd:Cls-Cmd")
+{
+        field(DESC, "BS:PB-GV:1 Close Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) BMA_VA_BSPB_GV2_01_CmdCoil_Cmd.ClsCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Close")
+}
+
+# GV signals
+record(bi, "XF:06BMA-VA{FS:2-GV:1}Sw:OpnLim-Sts")
+{
+        field(DESC, "FS:2-GV:1 Opn Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_FS2_GV3_01_CmdCoil_Sts.OpnSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "XF:06BMA-VA{FS:2-GV:1}Sw:ClsLim-Sts")
+{
+        field(DESC, "FS:2-GV:1 Cls Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_FS2_GV3_01_CmdCoil_Sts.ClsSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "XF:06BMA-VA{FS:2-GV:1}Sts:Coil-Sts")
+{
+        field(DESC, "FS:2-GV:1 Coil Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_FS2_GV3_01_CmdCoil_Sts.Coil1 S 0.5")
+        field(ZNAM, "Not Energized")
+        field(ONAM, "Energized")
+}
+
+record(bi, "XF:06BMA-VA{FS:2-GV:1}Pos-Sts")
+{
+        field(DESC, "FS:2-GV:1 Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_FS2_GV3_01_CmdCoil_Sts.Sts S 0.5")
+        field(ZNAM, "Not Open")
+        field(ONAM, "Open")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{FS:2-GV:1}Err-Sts")
+{
+        field(DESC, "FS:2-GV:1 Err Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_FS2_GV3_01_CmdCoil_Sts.StsFault S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-VA{FS:2-GV:1}Sts:FailOpn-Sts")
+{
+        field(DESC, "FS:2-GV:1 Fail Open")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_FS2_GV3_01_CmdCoil_Sts.FailedToOpn S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+	field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{FS:2-GV:1}Sts:FailCls-Sts")
+{
+        field(DESC, "FS:2-GV:1 Fail Close")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_FS2_GV3_01_CmdCoil_Sts.FailedToCls S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{FS:2-GV:1}Sts:DS_Intlk-Sts")
+{
+        field(DESC, "FS:2-GV:1 DS I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_FS2_GV3_01_CmdCoil_Sts.LockDS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-VA{FS:2-GV:1}Sts:US_Intlk-Sts")
+{
+        field(DESC, "FS:2-GV:1 US I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_FS2_GV3_01_CmdCoil_Sts.LockUS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+# GV commands
+record(bo, "XF:06BMA-VA{FS:2-GV:1}Cmd:Opn-Cmd")
+{
+        field(DESC, "FS:2-GV:1 Open Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) BMA_VA_FS2_GV3_01_CmdCoil_Cmd.OpnCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Open")
+}
+
+record(bo, "XF:06BMA-VA{FS:2-GV:1}Cmd:Cls-Cmd")
+{
+        field(DESC, "FS:2-GV:1 Close Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) BMA_VA_FS2_GV3_01_CmdCoil_Cmd.ClsCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Close")
+}
+
+# GV signals
+record(bi, "XF:06BMA-VA{Mir:2-GV:1}Sw:OpnLim-Sts")
+{
+        field(DESC, "Mir:2-GV:1 Opn Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Mir2_GV4_01_CmdCoil_Sts.OpnSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "XF:06BMA-VA{Mir:2-GV:1}Sw:ClsLim-Sts")
+{
+        field(DESC, "Mir:2-GV:1 Cls Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Mir2_GV4_01_CmdCoil_Sts.ClsSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "XF:06BMA-VA{Mir:2-GV:1}Sts:Coil-Sts")
+{
+        field(DESC, "Mir:2-GV:1 Coil Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Mir2_GV4_01_CmdCoil_Sts.Coil1 S 0.5")
+        field(ZNAM, "Not Energized")
+        field(ONAM, "Energized")
+}
+
+record(bi, "XF:06BMA-VA{Mir:2-GV:1}Pos-Sts")
+{
+        field(DESC, "Mir:2-GV:1 Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Mir2_GV4_01_CmdCoil_Sts.Sts S 0.5")
+        field(ZNAM, "Not Open")
+        field(ONAM, "Open")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{Mir:2-GV:1}Err-Sts")
+{
+        field(DESC, "Mir:2-GV:1 Err Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Mir2_GV4_01_CmdCoil_Sts.StsFault S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-VA{Mir:2-GV:1}Sts:FailOpn-Sts")
+{
+        field(DESC, "Mir:2-GV:1 Fail Open")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Mir2_GV4_01_CmdCoil_Sts.FailedToOpn S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+	field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{Mir:2-GV:1}Sts:FailCls-Sts")
+{
+        field(DESC, "Mir:2-GV:1 Fail Close")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Mir2_GV4_01_CmdCoil_Sts.FailedToCls S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{Mir:2-GV:1}Sts:DS_Intlk-Sts")
+{
+        field(DESC, "Mir:2-GV:1 DS I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Mir2_GV4_01_CmdCoil_Sts.LockDS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-VA{Mir:2-GV:1}Sts:US_Intlk-Sts")
+{
+        field(DESC, "Mir:2-GV:1 US I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Mir2_GV4_01_CmdCoil_Sts.LockUS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+# GV commands
+record(bo, "XF:06BMA-VA{Mir:2-GV:1}Cmd:Opn-Cmd")
+{
+        field(DESC, "Mir:2-GV:1 Open Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) BMA_VA_Mir2_GV4_01_CmdCoil_Cmd.OpnCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Open")
+}
+
+record(bo, "XF:06BMA-VA{Mir:2-GV:1}Cmd:Cls-Cmd")
+{
+        field(DESC, "Mir:2-GV:1 Close Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) BMA_VA_Mir2_GV4_01_CmdCoil_Cmd.ClsCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Close")
+}
+
+# GV signals
+record(bi, "XF:06BMA-VA{Mir:3-GV:1}Sw:OpnLim-Sts")
+{
+        field(DESC, "Mir:3-GV:1 Opn Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Mir3_GV5_01_CmdCoil_Sts.OpnSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "XF:06BMA-VA{Mir:3-GV:1}Sw:ClsLim-Sts")
+{
+        field(DESC, "Mir:3-GV:1 Cls Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Mir3_GV5_01_CmdCoil_Sts.ClsSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "XF:06BMA-VA{Mir:3-GV:1}Sts:Coil-Sts")
+{
+        field(DESC, "Mir:3-GV:1 Coil Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Mir3_GV5_01_CmdCoil_Sts.Coil1 S 0.5")
+        field(ZNAM, "Not Energized")
+        field(ONAM, "Energized")
+}
+
+record(bi, "XF:06BMA-VA{Mir:3-GV:1}Pos-Sts")
+{
+        field(DESC, "Mir:3-GV:1 Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Mir3_GV5_01_CmdCoil_Sts.Sts S 0.5")
+        field(ZNAM, "Not Open")
+        field(ONAM, "Open")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{Mir:3-GV:1}Err-Sts")
+{
+        field(DESC, "Mir:3-GV:1 Err Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Mir3_GV5_01_CmdCoil_Sts.StsFault S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-VA{Mir:3-GV:1}Sts:FailOpn-Sts")
+{
+        field(DESC, "Mir:3-GV:1 Fail Open")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Mir3_GV5_01_CmdCoil_Sts.FailedToOpn S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+	field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{Mir:3-GV:1}Sts:FailCls-Sts")
+{
+        field(DESC, "Mir:3-GV:1 Fail Close")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Mir3_GV5_01_CmdCoil_Sts.FailedToCls S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{Mir:3-GV:1}Sts:DS_Intlk-Sts")
+{
+        field(DESC, "Mir:3-GV:1 DS I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Mir3_GV5_01_CmdCoil_Sts.LockDS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-VA{Mir:3-GV:1}Sts:US_Intlk-Sts")
+{
+        field(DESC, "Mir:3-GV:1 US I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_Mir3_GV5_01_CmdCoil_Sts.LockUS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+# GV commands
+record(bo, "XF:06BMA-VA{Mir:3-GV:1}Cmd:Opn-Cmd")
+{
+        field(DESC, "Mir:3-GV:1 Open Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) BMA_VA_Mir3_GV5_01_CmdCoil_Cmd.OpnCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Open")
+}
+
+record(bo, "XF:06BMA-VA{Mir:3-GV:1}Cmd:Cls-Cmd")
+{
+        field(DESC, "Mir:3-GV:1 Close Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) BMA_VA_Mir3_GV5_01_CmdCoil_Cmd.ClsCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Close")
+}
+
+# GV signals
+record(bi, "XF:06BMA-VA{Mono:Turbo-GV:1}Sw:OpnLim-Sts")
+{
+        field(DESC, "Mono:Turbo-GV:1 Opn Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_MonoTurbo_GV1_Sts.OpnSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "XF:06BMA-VA{Mono:Turbo-GV:1}Sw:ClsLim-Sts")
+{
+        field(DESC, "Mono:Turbo-GV:1 Cls Limit Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_MonoTurbo_GV1_Sts.ClsSw S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "In Position")
+}
+
+record(bi, "XF:06BMA-VA{Mono:Turbo-GV:1}Sts:Coil-Sts")
+{
+        field(DESC, "Mono:Turbo-GV:1 Coil Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_MonoTurbo_GV1_Sts.Coil1 S 0.5")
+        field(ZNAM, "Not Energized")
+        field(ONAM, "Energized")
+}
+
+record(bi, "XF:06BMA-VA{Mono:Turbo-GV:1}Pos-Sts")
+{
+        field(DESC, "Mono:Turbo-GV:1 Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_MonoTurbo_GV1_Sts.Sts S 0.5")
+        field(ZNAM, "Not Open")
+        field(ONAM, "Open")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{Mono:Turbo-GV:1}Err-Sts")
+{
+        field(DESC, "Mono:Turbo-GV:1 Err Status")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_MonoTurbo_GV1_Sts.StsFault S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-VA{Mono:Turbo-GV:1}Sts:FailOpn-Sts")
+{
+        field(DESC, "Mono:Turbo-GV:1 Fail Open")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_MonoTurbo_GV1_Sts.FailedToOpn S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+	field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{Mono:Turbo-GV:1}Sts:FailCls-Sts")
+{
+        field(DESC, "Mono:Turbo-GV:1 Fail Close")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_MonoTurbo_GV1_Sts.FailedToCls S 0.5")
+        field(ZNAM, "Error")
+        field(ONAM, "OK")
+        field(ZSV,  "MINOR")
+}
+
+record(bi, "XF:06BMA-VA{Mono:Turbo-GV:1}Sts:DS_Intlk-Sts")
+{
+        field(DESC, "Mono:Turbo-GV:1 DS I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_MonoTurbo_GV1_Sts.LockDS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+record(bi, "XF:06BMA-VA{Mono:Turbo-GV:1}Sts:US_Intlk-Sts")
+{
+        field(DESC, "Mono:Turbo-GV:1 US I/L Sts")
+        field(SCAN, "I/O Intr")
+        field(DTYP, "EtherIP")
+        field(INP, "@$(PLC,undefined) BMA_VA_MonoTurbo_GV1_Sts.LockUS S 0.5")
+        field(ZNAM, "Interlocked")
+        field(ONAM, "OK")
+        field(ZSV,  "MAJOR")
+}
+
+# GV commands
+record(bo, "XF:06BMA-VA{Mono:Turbo-GV:1}Cmd:Opn-Cmd")
+{
+        field(DESC, "Mono:Turbo-GV:1 Open Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) BMA_VA_MonoTurbo_GV1_Cmd.OpnCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Open")
+}
+
+record(bo, "XF:06BMA-VA{Mono:Turbo-GV:1}Cmd:Cls-Cmd")
+{
+        field(DESC, "Mono:Turbo-GV:1 Close Cmd")
+        field(SCAN, "Passive")
+        field(DTYP, "EtherIP")
+        field(OUT, "@$(PLC,undefined) BMA_VA_MonoTurbo_GV1_Cmd.ClsCmd S 0.5")
+        field(ZNAM, "None")
+        field(ONAM, "Close")
+}
+

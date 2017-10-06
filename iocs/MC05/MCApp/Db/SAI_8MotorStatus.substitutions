@@ -1,0 +1,7 @@
+file /opt/epics/modules/SAI/db/SAI_8MotorStatus.db {
+pattern {	ASYNPORT,	TMOT,		SCAN,		P,		R}
+        { 	"pmac",		"1",		".2 second",	"XF:06BMA-OP","{Mir:M3}"}
+	{ 	"pmac",		"1",		".2 second",	"XF:06BMA-BI","{Fltr:01}"}
+}
+
+

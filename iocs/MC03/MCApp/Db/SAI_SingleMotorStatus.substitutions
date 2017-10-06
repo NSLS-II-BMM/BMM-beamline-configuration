@@ -1,0 +1,8 @@
+file /opt/epics/modules/SAI/db/SAI_SingleMotorStatus.template {
+pattern {	P,		T,		R,	AXIS,	PMAC_MTR}
+        { 	"XF:06BMA-OP",		"{Slt:01}",	"{Slt:01-Ax:",	"O}Mtr",	1}
+        { 	"XF:06BMA-OP",		"{Slt:01}",	"{Slt:01-Ax:",	"I}Mtr",	2}
+        { 	"XF:06BMA-OP",		"{Slt:01}",	"{Slt:01-Ax:",	"T}Mtr",	3}
+        { 	"XF:06BMA-OP",		"{Slt:01}",	"{Slt:01-Ax:",	"B}Mtr",	4}
+}
+

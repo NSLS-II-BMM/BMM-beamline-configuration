@@ -1,0 +1,66 @@
+record(bi,"XF:06BMA{RG:A-Det:Smk}Alrm-Sts") {
+    field(DESC, "RG_A Smoke Alarm")
+    field(SCAN, "1 second")
+    field(DTYP, "EtherIP")
+    field(INP, "@$(PLC,undefined) Smoke_Sts_0[0] S 1")
+    field(ZNAM,"OK")
+    field(ONAM,"Alarm")
+    field(ZSV,"")
+    field(OSV,"MAJOR")
+}
+
+record(bi,"XF:06BMA{RG:A-Det:Smk}Sts:Head-Sts") {
+    field(DESC, "RG_A Smoke Detector Head Missing")
+    field(SCAN, "1 second")
+    field(DTYP, "EtherIP")
+    field(INP, "@$(PLC,undefined) Smoke_Sts_0[1] S 1")
+    field(ZNAM,"Alarm")
+    field(ONAM,"OK")
+    field(ZSV,"MAJOR")
+    field(OSV,"")
+}
+
+record(bi,"XF:06BMA{RG:B-Det:Smk}Alrm-Sts") {
+    field(DESC, "RG_B Smoke Alarm")
+    field(SCAN, "1 second")
+    field(DTYP, "EtherIP")
+    field(INP, "@$(PLC,undefined) Smoke_Sts_0[2] S 1")
+    field(ZNAM,"OK")
+    field(ONAM,"Alarm")
+    field(ZSV,"")
+    field(OSV,"MAJOR")
+}
+
+record(bi,"XF:06BMA{RG:B-Det:Smk}Sts:Head-Sts") {
+    field(DESC, "RG_B Smoke Detector Head Missing")
+    field(SCAN, "1 second")
+    field(DTYP, "EtherIP")
+    field(INP, "@$(PLC,undefined) Smoke_Sts_0[3] S 1")
+    field(ZNAM,"Alarm")
+    field(ONAM,"OK")
+    field(ZSV,"MAJOR")
+    field(OSV,"")
+}
+
+record(bi,"XF:06BMA{RG:C-Det:Smk}Alrm-Sts") {
+    field(DESC, "RG_C Smoke Alarm")
+    field(SCAN, "1 second")
+    field(DTYP, "EtherIP")
+    field(INP, "@$(PLC,undefined) Smoke_Sts_0[4] S 1")
+    field(ZNAM,"OK")
+    field(ONAM,"Alarm")
+    field(ZSV,"")
+    field(OSV,"MAJOR")
+}
+
+record(bi,"XF:06BMA{RG:C-Det:Smk}Sts:Head-Sts") {
+    field(DESC, "RG_C Smoke Detector Head Missing")
+    field(SCAN, "1 second")
+    field(DTYP, "EtherIP")
+    field(INP, "@$(PLC,undefined) Smoke_Sts_0[5] S 1")
+    field(ZNAM,"Alarm")
+    field(ONAM,"OK")
+    field(ZSV,"MAJOR")
+    field(OSV,"")
+}
+

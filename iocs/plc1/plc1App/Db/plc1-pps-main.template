@@ -1,0 +1,13 @@
+## Database for misc PPS tags
+
+record(bi, "$(Sys)-EPS{}Out:ExpIntlk-Sts")
+{
+	field(DESC, "Experimenter (User) Interlock")
+	field(SCAN, "1 second")
+	field(DTYP, "EtherIP")
+	field(INP, "@$(PLC) PPS_Sts[0]")
+	field(ZNAM, "User Interlock")
+	field(ONAM, "Ready")
+	field(ZSV, "MAJOR")
+}
+

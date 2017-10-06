@@ -1,0 +1,66 @@
+file     plc1-pi.template
+{
+pattern
+{        Chan,                                 Mod,     Seq,              ArrNum,   Factor,        Offset}
+{        "XF:02IDA-OP{DI}P:Supply",            "P",     "0",              "0",      "0.15",        ""}
+{        "XF:02IDA-OP{DI}P:Return",            "P",     "0",              "1",      "0.15",        ""}
+{        "XF:02IDA-OP{DI:2}P:Supply",          "P",     "0",              "2",      "0.15",        ""}
+{        "XF:02IDA-OP{DI:2}P:Return",          "P",     "0",              "3",      "0.15",        ""}
+{        "XF:02IDA-OP{DI:3}P:Supply",          "P",     "0",              "4",      "0.15",        ""}
+{        "XF:02IDA-OP{DI:3}P:Return",          "P",     "0",              "5",      "0.15",        ""}
+{        "XF:02IDA-OP{DI:4}P:Supply",          "P",     "0",              "6",      "0.15",        ""}
+{        "XF:02IDA-OP{DI:4}P:Return",          "P",     "0",              "7",      "0.15",        ""}
+}
+
+file     plc1-va-gv.template
+{
+pattern
+{        Sys                                   ,        Dev               ,         Tag            }
+{        XF:02IDA-OP                           ,        "DI-Vlv:Supply"   ,         DI_Supply_Vlv  }
+{        XF:02IDA-OP                           ,        "DI-Vlv:Return"   ,         DI_Return_Vlv  }
+{        XF:02IDA-OP                           ,        "PCW-Vlv:Supply"  ,         PCW_Sup_Vlv    }
+{        XF:02IDA-OP                           ,        "PCW-Vlv:Return"  ,         PCW_Rtn_Vlv    }
+}
+
+file     plc1-tc.template
+{
+pattern
+{        Chan,                                 Mod,     Seq,              ArrNum    }
+{        "XF:02IDA-OP{DI}T:Supply",            "T",     "_0",             "0"       }
+{        "XF:02IDA-OP{DI}T:Return",            "T",     "_0",             "1"       }
+}
+
+file     "plc1-bi.template"
+{
+pattern
+{        Sys,                                  Dev,     Sig,              DESC,     			    Tag,              ZNAM,    ONAM,        ZSV,      OSV}
+{        XF:02IDA-OP,                          "LD:1",  Alrm-Sts,         "Hutch A water leak detector",    "Misc_Sts_0[4]",  "Leak",  "No  Leak",  "MAJOR",  ""}
+{        XF:02IDC-OP,                          "LD:2",  Alrm-Sts,         "Section C water leak detector",  "Misc_Sts_0[5]",  "Leak",  "No  Leak",  "MAJOR",  ""}
+}
+
+file     plc1-fm.template
+{
+pattern
+{        Chan,                                 Mod,     Seq,              ArrNum,   Factor}
+{        "XF:02IDA-OP{Msk:WB}F:1_2A",          F,       1,                0,        0.00269}
+{        "XF:02IDA-OP{Msk:WB}F:1_2B",          F,       1,                1,        0.00269}
+{        "XF:02IDA-OP{Diag:1}F:3_3",           F,       1,                2,        0.0028}
+{        "XF:02IDA-OP{DIMain:1}F",             F,       1,                3,        0.044}
+{        "XF:02IDA-OP{Mir:1-Msk:4_1}F:4A",     F,       1,                4,        0.00245}
+{        "XF:02IDA-OP{Mir:1-Msk:4_1}F:4B",     F,       1,                5,        0.00269}
+{        "XF:02IDA-OP{Mir:1}F:4_5",            F,       1,                6,        0.0028}
+{        "XF:02IDA-OP{Mir:1-Slt:4_D_1}F:6",    F,       1,                7,        0.0028}
+{        "XF:02IDA-OP{Psh:2}F:5_7A",           F,       1,                8,        0.00251}
+{        "XF:02IDA-OP{Psh:2}F:5_7B",           F,       1,                9,        0.00269}
+{        "XF:02IDB-OP{Msk:PB}F:6_8A",          F,       1,                10,       0.00269}
+{        "XF:02IDB-OP{Msk:PB}F:7_8B",          F,       1,                11,       0.00269}
+{        "XF:02IDB-OP{Mono:1-Mir:S_1}F:9",     F,       1,                12,       0.0028}
+{        "XF:02IDB-OP{Mono:1-Grt:9_1}F:10",    F,       1,                13,       0.0028}
+{        "XF:02IDB-OP{Mono:1-Slt:8_U_1}F:11",  F,       1,                14,       0.0028}
+{        "XF:02IDB-OP{Mono:1-Slt:9_D_1}F:11",  F,       1,                15,       0.0028}
+{        "XF:02IDB-OP{Mono:1-Msk:8_1}F:12A",   F,       1,                16,       0.00269}
+{        "XF:02IDB-OP{Mono:1-Msk:9_1}F:12B",   F,       1,                17,       0.00188}
+{        "XF:02IDB-OP{Psh:Mono}F:11_13A",      F,       1,                18,       0.00269}
+{        "XF:02IDB-OP{Psh:Mono}F:11_13B",      F,       1,                19,       0.00253}
+{        "XF:02IDC-OP{Mir:3}F:13_14",          F,       1,                20,       0.0015}
+}

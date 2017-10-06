@@ -1,0 +1,7 @@
+# global config file for softioc start script
+NAME=MC02
+PORT=7202
+USER=softioc
+#USER=xf06bm
+EXEC=./iocBoot/iocMC/st.cmd.MC02
+

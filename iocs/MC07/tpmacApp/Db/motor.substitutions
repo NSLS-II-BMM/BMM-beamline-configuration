@@ -1,0 +1,13 @@
+file "db/motor.db"
+{
+pattern
+{P,              M,                      MOTOR,  PORT,  ADDR,  DESC,                        DTYP,      MRES,           EGU,   PREC,  ALIAS           }
+{"XF:06BMA-BI",  "{XAFS-Ax:Tbl_YU}Mtr",  "M0",   "P0",  1,     "xafs_tbl_yu",               asynMotor, "0.00046875",   "mm",  4,     "xafs_tbl_yu"   }
+{"XF:06BMA-BI",  "{XAFS-Ax:Tbl_YDO}Mtr", "M0",   "P0",  2,     "xafs_tbl_ydo",              asynMotor, "0.00046875",   "mm",  4,     "xafs_tbl_ydo"  }
+{"XF:06BMA-BI",  "{XAFS-Ax:Tbl_YDI}Mtr", "M0",   "P0",  3,     "xafs_tbl_ydi",              asynMotor, "0.00046875",   "mm",  4,     "xafs_tbl_ydi"  }
+{"XF:06BMA-BI",  "{XAFS-Ax:Tbl_XU}Mtr",  "M0",   "P0",  4,     "xafs_tbl_xu",               asynMotor, "0.0005",       "mm",  4,     "xafs_tbl_xu"   }
+{"XF:06BMA-BI",  "{XAFS-Ax:Tbl_XD}Mtr",  "M0",   "P0",  5,     "xafs_tbl_xd",               asynMotor, "0.0005",       "mm",  4,     "xafs_tbl_xd"   }
+{"XF:06BMA-BI",  "{XAFS-Ax:RotH}Mtr",    "M0",   "P0",  6,     "xafs_roth",                 asynMotor, "7.8125e-05",   "deg", 4,     "xafs_roth"     }
+{"XF:06BMA-BI",  "{XAFS-Ax:RotB}Mtr",    "M0",   "P0",  7,     "xafs_rotb",                 asynMotor, "0.00078125",   "deg", 4,     "xafs_rotb"     }
+{"XF:06BMA-BI",  "{XAFS-Ax:RotS}Mtr",    "M0",   "P0",  8,     "xafs_rots",                 asynMotor, "0.000703125",  "deg", 4,     "xafs_rots"     }
+}

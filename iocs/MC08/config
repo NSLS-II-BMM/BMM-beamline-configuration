@@ -1,0 +1,4 @@
+NAME=MC08
+USER=softioc
+PORT=5028
+HOST=xf06bm-ioc1

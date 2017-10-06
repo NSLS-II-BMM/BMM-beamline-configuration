@@ -1,0 +1,5 @@
+NAME=MC07
+USER=softioc
+PORT=7307
+HOST=xf06bm-ioc1
+#EXEC=./iocBoot/iocmtrctl/st.cmd

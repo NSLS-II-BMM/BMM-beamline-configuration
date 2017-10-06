@@ -1,0 +1,108 @@
+## Database for Pressure gauge tags in EPS PLC
+
+record(ai, "$(Chan)-I")
+{
+    field(DESC, "Pressure indicator")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC) $(Mod=P)_I_$(Seq=1)[$(ArrNum)] S 1")
+    field(PREC, "2")
+    field(ASLO, "$(Factor)")
+    field(AOFF, "$(Offset)")
+    field(EGU,  "PSIG")
+    field(LLSV, "MAJOR")
+    field(LSV, "MINOR")
+}
+
+record(ao, "$(Chan)_Low-SP")
+{
+    field(DESC, "Pressure warning SP")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC) $(Mod=P)_Low_$(Seq=1)[$(ArrNum)] S 1")
+    field(PREC, "2")
+    field(ASLO, "$(Factor)")
+    field(AOFF, "$(Offset)")
+    field(EGU,  "PSIG")
+#    field(FLNK, "$(Chan)_Low-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "$(Chan)_Low-RB")
+{
+    field(DESC, "Pressure warning RB")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC) $(Mod=P)_Low_$(Seq=1)[$(ArrNum)] S 1")
+    field(PREC, "2")
+    field(ASLO, "$(Factor)")
+    field(AOFF, "$(Offset)")
+    field(EGU,  "PSIG")
+    field(FLNK, "$(Chan)_Low-ao_")
+}
+
+record(ao, "$(Chan)_Low-ao_")
+{
+    field(DESC, "Aux Low proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "$(Chan)_Low-RB PP")
+    field(OUT, "$(Chan)-I.LOW")
+}
+
+record(ao, "$(Chan)_LoLo-SP")
+{
+    field(DESC, "pressure alarm level control")
+    field(SCAN, "Passive")
+    field(DTYP, "EtherIP")
+    field(OUT,  "@$(PLC) $(Mod=P)_LoLo_$(Seq=1)[$(ArrNum)] S 1")
+    field(PREC, "2")
+    field(ASLO, "$(Factor)")
+    field(AOFF, "$(Offset)")
+    field(EGU,  "PSIG")
+#    field(FLNK, "$(Chan)_LoLo-RB")
+    field(ASG,  "EPSEXPERT")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ai, "$(Chan)_LoLo-RB")
+{
+    field(DESC, "Pressure alarm level readback")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC) $(Mod=P)_LoLo_$(Seq=1)[$(ArrNum)] S 1")
+    field(PREC, "2")
+    field(ASLO, "$(Factor)")
+    field(AOFF, "$(Offset)")
+    field(EGU,  "PSIG")
+    field(FLNK, "$(Chan)_LoLo-ao_")
+}
+
+record(ao, "$(Chan)_LoLo-ao_")
+{
+    field(DESC, "Aux LoLo proc")
+    field(OMSL, "closed_loop")
+    field(DOL, "$(Chan)_LoLo-RB PP")
+    field(OUT, "$(Chan)-I.LOLO")
+}
+
+record(bi, "$(Chan)-Sts")
+{
+    field(DESC, "Pressure reading status")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC) $(Mod=P)_Sts_$(Seq=1)[$(ArrNum)] S 1")
+    field(ZNAM, "Interlock")
+    field(ONAM, "OK")
+    field(ZSV,  "MAJOR")
+}
+
+record(bi, "$(Chan)-First")
+{
+    field(DESC, "Sensor tripped first in last IL event")
+    field(SCAN, "I/O Intr")
+    field(DTYP, "EtherIP")
+    field(INP,  "@$(PLC) $(Mod=P)_Lock_$(Seq=1)[$(ArrNum)] S 0.5")
+    field(ZNAM, "No")
+    field(ONAM, "Yes")
+}
