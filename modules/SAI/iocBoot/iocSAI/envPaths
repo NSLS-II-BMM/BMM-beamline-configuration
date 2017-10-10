@@ -1,0 +1,5 @@
+epicsEnvSet("ARCH","linux-x86_64")
+epicsEnvSet("IOC","iocSAI")
+epicsEnvSet("TOP","/opt/epics/modules/SAI")
+epicsEnvSet("UIOCSYSTEM","/opt/epics/modules/uIOCSystem")
+epicsEnvSet("EPICS_BASE","/usr/lib/epics")

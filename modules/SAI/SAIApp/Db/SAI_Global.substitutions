@@ -1,0 +1,6 @@
+file /opt/epics/modules/SAI/db/SAI_Global.db {
+pattern {	ASYNPORT,	TMOT,		SCAN,		P,	R,	A1,	A2,	A3,	A4,	A5,	A6,	A7,	A8}
+        { 	"pmac",		"1",		".2 second",	"FMB",	"MCS8",	":CH1",	":CH2",	":CH3",	":CH4",	":CH5",	":CH6",	":CH7",	":CH8"}
+}
+
+#EOF

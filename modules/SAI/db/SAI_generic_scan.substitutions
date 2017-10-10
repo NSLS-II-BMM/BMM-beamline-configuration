@@ -1,0 +1,20 @@
+file /opt/epics/modules/genericScan/db/generic_scan.template {
+pattern 
+{ DEVICE, MAXPTS, SCAN, DEFRELVAL, ADELAY_VAL, PDELTA_VAL, BSCAN_VAL, ASCAN_VAL, MOVE_VAL, MOVE_DLY, STOP_VAL, PREC, PEAK_NAME, VALLEY_NAME}
+	{ "FMBGSCAN", "100", "Passive", "10", "1", "0.001", "0", "1", "1", "1", "1", "3", "PEAK", "VALLEY" }
+}
+
+# DEVICE: Device name
+# MAXPTS: Max no. of scan points
+# SCAN: Scanning spec.
+# DEFRELVAL: Threshold
+# ADELAY_VAL: Auto-abort delay
+# PDELTA_VAL: Positioner delta
+# BSCAN_VAL: Before scan write val
+# ASCAN_VAL: After scan write val
+# MOVE_VAL: Move mode write value
+# MOVE_DLY: Delay before move command
+# STOP_VAL: Stop write value
+# PREC: Precision
+# PEAK_NAME: Bump shape name
+# VALLEY_NAME: Valley shape name

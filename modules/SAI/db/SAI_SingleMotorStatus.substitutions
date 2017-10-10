@@ -1,0 +1,12 @@
+file /opt/epics/modules/SAI/db/SAI_SingleMotorStatus.template {
+pattern {	P,		T,		R,	AXIS,	PMAC_MTR}
+        { 	"FMB",		"MCTR01",	"MCS8",	":CH1",	1}
+        { 	"FMB",		"MCTR01",	"MCS8",	":CH2",	2}
+        { 	"FMB",		"MCTR01",	"MCS8",	":CH3",	3}
+        { 	"FMB",		"MCTR01",	"MCS8",	":CH4",	4}
+        { 	"FMB",		"MCTR01",	"MCS8",	":CH5",	5}
+        { 	"FMB",		"MCTR01",	"MCS8",	":CH6",	6}
+        { 	"FMB",		"MCTR01",	"MCS8",	":CH7",	7}
+        { 	"FMB",		"MCTR01",	"MCS8",	":CH8",	8}
+}
+

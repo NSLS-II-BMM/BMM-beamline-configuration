@@ -1,0 +1,13 @@
+file /opt/epics/modules/SAI/db/SAI_EncoderLoss.template {
+pattern {	P,		R,	AXIS,	SCAN, 		ASYNPORT, 	VARSTS, VARCLR}
+        { 	"FMB",		"MCS8",	":CH1","1 second",	"pmac",		"M181",	"M901"}
+        { 	"FMB",		"MCS8",	":CH2","1 second",	"pmac",		"M281",	"M901"}
+        { 	"FMB",		"MCS8",	":CH3","1 second",	"pmac",		"M381",	"M901"}
+        { 	"FMB",		"MCS8",	":CH4","1 second",	"pmac",		"M481",	"M901"}
+        { 	"FMB",		"MCS8",	":CH5","1 second",	"pmac",		"M581",	"M901"}
+        { 	"FMB",		"MCS8",	":CH6","1 second",	"pmac",		"M681",	"M901"}
+        { 	"FMB",		"MCS8",	":CH7","1 second",	"pmac",		"M781",	"M901"}
+        { 	"FMB",		"MCS8",	":CH8","1 second",	"pmac",		"M881",	"M901"}
+}
+
+#EOF

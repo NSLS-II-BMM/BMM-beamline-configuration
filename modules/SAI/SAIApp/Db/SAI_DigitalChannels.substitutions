@@ -1,0 +1,6 @@
+file /opt/epics/modules/SAI/db/SAI_DigitalChannels.template {
+pattern {	P,		R,		SCAN, 		ASYNPORT}
+        { 	"FMB",		"MCS8:",	"1 second",	"pmac"}
+}
+
+#EOF
