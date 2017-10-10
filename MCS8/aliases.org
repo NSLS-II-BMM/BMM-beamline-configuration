@@ -1,0 +1,58 @@
+
+* Aliases for the various BMM motors
+
+This table correlates actual PV names to aliases assigned in the
+substitution files of the IOCs.
+
+
+| Instrument | PV                                  | alias             |
+|------------+-------------------------------------+-------------------|
+| Mirror 1   | XF:06BM-OP{Mir:M1-Ax:YU}Mtr         | m1-jack1          |
+|            | XF:06BM-OP{Mir:M1-Ax:YDO}Mtr        | m1-jack3          |
+|            | XF:06BM-OP{Mir:M1-Ax:YDI}Mtr        | m1-jack2          |
+|            | XF:06BM-OP{Mir:M1-Ax:XU}Mtr         | m1-lateral-u      |
+|            | XF:06BM-OP{Mir:M1-Ax:XD}Mtr         | m1-lateral-d      |
+|------------+-------------------------------------+-------------------|
+| Filters    | XF:06BMA-BI{Fltr:01-Ax:Y1}Mtr       | filter-assembly-1 |
+|            | XF:06BMA-BI{Fltr:01-Ax:Y2}Mtr       | filter-assembly-2 |
+|------------+-------------------------------------+-------------------|
+| DCM        | XF:06BMA-OP{Mono:DCM1-Ax:Bragg}Mtr  | dcm-bragg         |
+|            | XF:06BMA-OP{Mono:DCM1-Ax:Bragg2}Mtr | dcm-bragg2        |
+|            | XF:06BMA-OP{Mono:DCM1-Ax:P2}Mtr     | dcm-pitch         |
+|            | XF:06BMA-OP{Mono:DCM1-Ax:R2}Mtr     | dcm-roll          |
+|            | XF:06BMA-OP{Mono:DCM1-Ax:Per2}Mtr   | dcm-perp          |
+|            | XF:06BMA-OP{Mono:DCM1-Ax:Par2}Mtr   | dcm-para          |
+|            | XF:06BMA-OP{Mono:DCM1-Ax:X}Mtr      | dcm-x             |
+|            | XF:06BMA-OP{Mono:DCM1-Ax:Y}Mtr      | dcm-y             |
+|------------+-------------------------------------+-------------------|
+| DM2 slits  | XF:06BMA-OP{Slt:01-Ax:O}Mtr         | dm2-slits-o       |
+|            | XF:06BMA-OP{Slt:01-Ax:I}Mtr         | dm2-slits-i       |
+|            | XF:06BMA-OP{Slt:01-Ax:T}Mtr         | dm2-slits-t       |
+|            | XF:06BMA-OP{Slt:01-Ax:B}Mtr         | dm2-slits-b       |
+|------------+-------------------------------------+-------------------|
+| DM2 screen | XF:06BMA-BI{Diag:02-Ax:Y}Mtr        | dm2-screen-foils  |
+|------------+-------------------------------------+-------------------|
+| Mirror 2   | XF:06BMA-OP{Mir:M2-Ax:YU}Mtr        | m2-jack1          |
+|            | XF:06BMA-OP{Mir:M2-Ax:YDO}Mtr       | m2-jack3          |
+|            | XF:06BMA-OP{Mir:M2-Ax:YDI}Mtr       | m2-jack2          |
+|            | XF:06BMA-OP{Mir:M2-Ax:XU}Mtr        | m2-lateral-u      |
+|            | XF:06BMA-OP{Mir:M2-Ax:XD}Mtr        | m2-lateral-d      |
+|            | XF:06BMA-OP{Mir:M2-Ax:Bend}Mtr      | m2-bender         |
+|------------+-------------------------------------+-------------------|
+| Mirror 3   | XF:06BMA-OP{Mir:M3-Ax:YU}Mtr        | m3-jack1          |
+|            | XF:06BMA-OP{Mir:M3-Ax:YDO}Mtr       | m3-jack3          |
+|            | XF:06BMA-OP{Mir:M3-Ax:YDI}Mtr       | m3-jack2          |
+|            | XF:06BMA-OP{Mir:M3-Ax:XU}Mtr        | m3-lateral-u      |
+|            | XF:06BMA-OP{Mir:M3-Ax:XD}Mtr        | m3-lateral-d      |
+|------------+-------------------------------------+-------------------|
+| E.S. FS    | XF:06BM-BI{FS:03-Ax:Y}Mtr           | dm3-screen        |
+|------------+-------------------------------------+-------------------|
+| DM3 slits  | XF:06BM-BI{Slt:02-Ax:O}Mtr          | dm2-slits-o       |
+|            | XF:06BM-BI{Slt:02-Ax:I}Mtr          | dm2-slits-i       |
+|            | XF:06BM-BI{Slt:02-Ax:T}Mtr          | dm2-slits-t       |
+|            | XF:06BM-BI{Slt:02-Ax:B}Mtr          | dm2-slits-b       |
+|------------+-------------------------------------+-------------------|
+| DM3        | XF:06BM-BI{Fltr:01-Ax:Y}Mtr         | dm3-foils         |
+|            | XF:06BM-BI{BCT-Ax:Y}Mtr             | dm3-y             |
+|            | XF:06BM-BI{BPM:1-Ax:Y}Mtr           | dm3-bpm-y         |
+|------------+-------------------------------------+-------------------|

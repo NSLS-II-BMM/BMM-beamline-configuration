@@ -1,0 +1,22 @@
+* BMM-beamline-configuration
+
+Configuration files for the BMM control system
+
+** Locations of things
+
+- IOC log files :: ~/var/log/softioc~
+- PV lists for FMBO IOCs :: ~/opt/epics/iocoutput/dbl/~
+- epics save files for FMBO IOCs :: ~/opt/epics/iocoutput/autosave/~
+- epics request files for FMBO IOCs :: ~/epics/iocs/MC0?/iocBoot/iocMC/~
+- epics save files for NSLS-II IOCs :: ~/opt/epics/<ioc>/as/sav/~
+- epics request files for NSLS-II IOCs :: ~/epics/iocs/<ioc>/as/req/~
+
+
+
+** Some useful commands
+
+Command for tar-ing up all the iocs and excluding revision control dot folders:
+
+#+BEGIN_SRC bash
+sudo tar --exclude='*/.bzr/*' --exclude='*/.hg/*'  -cvf all_iocs.tar cam* F460 I400 MC0* pi* plc1 softIocCommon va-1
+#+END_SRC
