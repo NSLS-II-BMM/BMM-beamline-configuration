@@ -9,7 +9,7 @@ dbLoadDatabase("dbd/MC.dbd",0,0)
 MC_registerRecordDeviceDriver(pdbbase)
 
 ## User defined ENV variables
-epicsEnvSet(HOSTNAME,"iocXF:07ID-OP{MC:03}")
+epicsEnvSet(HOSTNAME,"iocXF:06BM-OP{MC:03}")
 epicsEnvSet(P,"MC:03")
 # the following is done due to a limitation of 
 # the autosave status PV name (max. length=9)

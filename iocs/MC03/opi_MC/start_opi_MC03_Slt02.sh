@@ -24,4 +24,4 @@ export EDMDATAFILES=/opt/epics/apps/MC03/opi_MC
 #export EDMDATAFILES=/opt/epics/opi
 export EPICS_CA_MAX_ARRAY_BYTES=240000
 
-edm -eolc -x -m "P=XF:07IDA-OP,R={Slt:02-Ax:,A5=O}Mtr,A6=I}Mtr,A7=T}Mtr,A8=B}Mtr,S=FMB,T={Slt:02},MC=XF:07ID-OP{MC:03}" Slt02_MainPanel.edl
+edm -eolc -x -m "P=XF:06BMA-OP,R={Slt:02-Ax:,A5=O}Mtr,A6=I}Mtr,A7=T}Mtr,A8=B}Mtr,S=FMB,T={Slt:02},MC=XF:06BM-OP{MC:03}" Slt02_MainPanel.edl

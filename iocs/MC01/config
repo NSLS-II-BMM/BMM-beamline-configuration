@@ -1,6 +1,6 @@
 # global config file for softioc start script
 NAME=MC01
 PORT=7201
-USER=siew
+USER=softioc
 EXEC=./iocBoot/iocMC/st.cmd.MC01
 

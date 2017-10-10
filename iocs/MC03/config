@@ -1,7 +1,6 @@
 # global config file for softioc start script
 NAME=MC03
 PORT=7203
-#USER=xf06bm
 USER=softioc
 EXEC=./iocBoot/iocMC/st.cmd.MC03
 
