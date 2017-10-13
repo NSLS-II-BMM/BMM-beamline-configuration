@@ -1,0 +1,33 @@
+
+* BNC Cable Map
+
+** C3 rack (roof) to D rack (control station)
+
+| C3 rack | Jack number  |   1 |   2 |   3 |   4 |   5 |   6 |   7 |   8 |   9 |  10 |  11 |  12 |  13 |  14 |  15 |  16 |
+|         | Cable number | 137 | 138 | 139 | 140 | 141 | 142 | 143 | 144 | 145 | 146 | 147 | 148 | 149 | 150 | 151 | 152 |
+| D rack  | Jack number  |   1 |   2 |   3 |   4 |   5 |   6 |   7 |   8 |   9 |  10 |  11 |  12 |  13 |  14 |  15 |  16 |
+
+
+** C3 rack (roof) to XAS table
+
+| C3 rack | Jack number  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |   9 |  10 |  11 |  12 |  13 |  14 |  15 |  16 |
+|         | Cable number |   |   |   |   |   |   |   |   | 153 | 154 | 155 | 156 | 157 | 158 | 159 | 160 |
+| XAS     | Jack number  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |   9 |  10 |  11 |  12 |  13 |  14 |  15 |  16 |
+
+** C3 rack (roof) to XRD station
+
+| C3 rack | Jack number  |   1 |   2 |   3 |   4 |   5 |   6 |   7 |   8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
+|         | Cable number | 161 | 162 | 163 | 164 | 165 | 166 | 167 | 168 |   |    |    |    |    |    |    |    |
+| XRD     | Jack number  |   1 |   2 |   3 |   4 |   5 |   6 |   7 |   8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
+
+** D rack (control station) to XAS table
+																	
+| D rack | Jack number  |   1 |   2 |   3 |   4 |   5 |   6 |   7 |   8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
+|        | Cable number | 169 | 170 | 171 | 172 | 173 | 174 | 175 | 176 |   |    |    |    |    |    |    |    |
+| XAS    | Jack number  |   1 |   2 |   3 |   4 |   5 |   6 |   7 |   8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
+
+** D rack (control station) to XRD station
+
+| D rack | Jack number  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |   9 |  10 |  11 |  12 |  13 |  14 |  15 |  16 |
+|        | Cable number |   |   |   |   |   |   |   |   | 177 | 178 | 179 | 180 | 181 | 182 | 183 | 184 |
+| XRD    | Jack number  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |   9 |  10 |  11 |  12 |  13 |  14 |  15 |  16 |
