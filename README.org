@@ -11,7 +11,28 @@ Configuration files for the BMM control system
 - epics save files for NSLS-II IOCs :: ~/opt/epics/<ioc>/as/sav/~
 - epics request files for NSLS-II IOCs :: ~/epics/iocs/<ioc>/as/req/~
 
+xf06bm-em1.cs.nsls2.local (10.6.130.183)
 
+** gas handling plumbing
+
+[[file:gas_handling.png]]
+
+** Setting soft limits on FMBO motors
+
+There is a bit of misdirection in how limits are set.  Doing something
+like ~caput XF:06BMA-OP{Mono:DCM1-Ax:Bragg}Mtr.LLM -1~ will be a
+temporary fix, only until the next time save-restore triggers.
+
+Instead, do ~caput XF:06BMA-OP{Mono:DCM1-Ax:Bragg}Mtr_LLM_SP -1~.
+This will save the ~_LLM_SP~ value in save-restore.  Setting ~_LLM_SP~
+sets the ~.LLM~ value, as seen in
+~/opt/epics/modules/SAI/db/SAI_MotorRecord.template~.
+
+The same goes for the ~.HLM~ fields of the FMBO motors.
+
+Similarly, it is unhelpful to save ~.LLM~ or ~.HLM~ fields in
+save-restore.  Doing so seems to put the motor in a confused state
+with respect to it relation to soft limits.
 
 ** Some useful commands
 
