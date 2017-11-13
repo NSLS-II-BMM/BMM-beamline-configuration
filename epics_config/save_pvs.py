@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+
+## cat pvsave.json | jq '.[\"XF:06BM-BI{BCT-Ax:Y}Mtr\"]
+
 import epics
 import json
 
@@ -67,3 +71,5 @@ file = open("pvsave.json", "w")
 file.write(json.dumps(collate, sort_keys=True, indent=4, separators=(',', ': ')))
 file.close()
 
+print "you can query the json file like so:"
+print "  cat pvsave.json | jq '.[\"XF:06BM-BI{BCT-Ax:Y}Mtr\"]"
