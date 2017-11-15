@@ -1,0 +1,150 @@
+#!/usr/bin/python
+
+import sys
+import signal
+from time import sleep
+import epics
+from termcolor import colored
+from openpyxl import load_workbook
+wb = load_workbook(filename = 'Modes.xlsx')
+#print wb.get_sheet_names()
+
+## ----------------------------------------------------------------------
+## gather command line arguments
+from argparse import ArgumentParser
+parser = ArgumentParser(description="Move between operating modes")
+parser.add_argument("-m", "--mode", dest="mode", default='D',
+                    help="operating mode, MODE = (A B C D E F), default is D")
+parser.add_argument("-w", "--where", action="store_true", dest="where", default=False,
+                    help="flag for reporting current axis positions")
+args = parser.parse_args()
+
+if args.mode not in ('A', 'B', 'C', 'D', 'E', 'F'):
+    print colored("Mode must be (A B C D E F)", 'red', attrs=['bold'])
+    exit()
+
+    
+mode = 'D'
+mode_col = {'A': 'E',
+            'B': 'G',
+            'C': 'I',
+            'D': 'K',
+            'E': 'M',
+            'F': 'O'}
+mode_desc = {'A': 'Focused beam @ XAFS table, > 8 keV',
+             'B': 'Focused beam @ XAFS table, < 8 keV',
+             'C': 'Focused beam @ XAFS table, < 6 keV',
+             'D': 'Big beam @ XAFS table, > 8 keV',
+             'E': 'Big beam @ XAFS table, < 8 keV',
+             'F': 'Big beam @ XAFS table, < 6 keV'}
+ws = wb['Modes A-F']
+
+
+## to move between modes, the following axes must be changed
+##
+##  1. DM3 vertical
+##  2. XAFS table jacks
+##  3. mirror 2 jacks
+##  4. mirror 3 jacks
+##  5. (DM3 slits)
+##  6. (DM2 foils) (?)
+
+axes = ('XF:06BM-BI{BCT-Ax:Y}Mtr',
+        'XF:06BMA-BI{XAFS-Ax:Tbl_YU}Mtr',
+        'XF:06BMA-BI{XAFS-Ax:Tbl_YDO}Mtr',
+        'XF:06BMA-BI{XAFS-Ax:Tbl_YDI}Mtr',
+        'XF:06BMA-OP{Mir:M2-Ax:YU}Mtr',
+        'XF:06BMA-OP{Mir:M2-Ax:YDO}Mtr',
+        'XF:06BMA-OP{Mir:M2-Ax:YDI}Mtr',
+        'XF:06BMA-OP{Mir:M3-Ax:YU}Mtr',
+        'XF:06BMA-OP{Mir:M3-Ax:YDO}Mtr',
+        'XF:06BMA-OP{Mir:M3-Ax:YDI}Mtr',
+        'XF:06BMA-OP{Mir:M3-Ax:XU}Mtr',
+        'XF:06BMA-OP{Mir:M3-Ax:XD}Mtr',
+        'XF:06BM-BI{Slt:02-Ax:T}Mtr',
+        'XF:06BM-BI{Slt:02-Ax:B}Mtr'
+        )
+
+
+
+pv_objects = dict();
+pv_values  = dict();
+pv_aliases = dict();
+
+
+    
+
+mode = raw_input("Which mode? ")
+mode = mode.upper()
+
+
+for row in range(1, 100):
+    this = ws['B%d' % row].value
+    if this in axes:
+        pv_values[this]  = ws['%s%d' % (mode_col[mode], row)].value
+        pv_aliases[this] = ws['C%d' % row].value
+        pv_objects[this] = epics.Motor(this)
+
+def where():
+    print "   Axis                    current         target"
+    print "  ------------------------------------------------"
+    for ax in axes:
+        print("   %-20s %11.5f --> %11.5f" % (pv_aliases[ax], pv_objects[ax].RBV, pv_values[ax]))
+    print "\n"
+        
+if args.where:
+    where()
+    exit(0)
+
+def handler(signum, frame):
+    print '\n\nGot CTRL+C, stopping all motors'
+    for ax in axes:
+        pv_objects[ax].put('STOP', 1)
+    print ""
+    where()
+    exit(0)
+
+signal.signal(signal.SIGINT, handler)
+
+
+
+print "Moving to mode %s (%s)" % (mode, mode_desc[mode])
+where()
+action = raw_input("s to start moving or q to quit ")
+template = ' %5.1f | %5.1f %5.1f %5.1f | %5.1f %5.1f %5.1f | %5.1f %5.1f %5.1f %5.1f %5.1f | %5.1f %5.1f'
+
+if action is not 's':
+    exit(0)
+else:
+    rbvs = list()
+    print '       |  XAFS table       |   Mirror 2        |   Mirror 3                    |   Slits'
+    print '   BCT |  YU    YDO   YDI  |   YU    YDO   YDI |   YU    YDO   YDI   XU    XD  |   top  bottom'
+    for ax in axes:
+        pv = pv_objects[ax]
+        rbvs.append(pv.RBV)
+    sys.stdout.write(template % tuple(rbvs))
+    for ax in axes:
+        if 'XAFS' not in ax:                  # this is an FMBO motor
+            ena = epics.PV("%s_ENA_CMD" % ax) # explicitly enable the axis, which is needed for axes which go into open loop
+            ena.put('1')
+        pv_objects[ax].move(pv_values[ax], wait=False)
+
+    allbutbct = pv_objects.copy() # special case for BCT -- if it is not the last one moving, still need an end condition
+    allbutbct.pop('XF:06BM-BI{BCT-Ax:Y}Mtr', None);
+    still_going = True
+    while still_going:
+        sleep(0.002)
+        updt = list()
+        for ax in axes:
+            pv = pv_objects[ax]
+            updt.append(pv.RBV)
+        sys.stdout.write('\r')
+        sys.stdout.flush()
+        sys.stdout.write(template % tuple(updt))
+        sleep(0.250)
+
+        waiting     = not all([pv.done_moving for pv in allbutbct.values()])
+        bct_going   = abs(pv_objects['XF:06BM-BI{BCT-Ax:Y}Mtr'].RBV - pv_values['XF:06BM-BI{BCT-Ax:Y}Mtr']) > 0.01
+        still_going = waiting or bct_going
+
+print '\n\nYou are now in mode %s' % mode
