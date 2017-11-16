@@ -1,12 +1,12 @@
 file /opt/epics/modules/SAI/db/SAI_MotorRecord.template {
 pattern { ASYNPORT,     PMACPORT,       TMOT,   PMAC_MTR,P,             R,              AXIS,    DESC,          MRES,   PREC,   EGU,    VEL,    TACC,   OFFS,    HSLM,   LSLM,  ALIAS}
-        { "pmac",       "PMAC",         1.0,    1,      "XF:06BM-BI",   "{FS:03-Ax:",   "Y}Mtr", "FS:03 Y",     0.0001, 4,      "mm",   0.2,    0.5,    4.1568,  74,     -6.5,  dm3-screen}
-        { "pmac",       "PMAC",         1.0,    2,      "XF:06BM-BI",   "{BPM:1-Ax:",   "Y}Mtr", "BPM:1 - Y",   0.0001, 4,      "mm",   0.2,    0.5,    -3.365,  5.5,    -5.0,  dm3-bpm-y}
-        { "pmac",       "PMAC",         1.0,    3,      "XF:06BM-BI",   "{BCT-Ax:",     "Y}Mtr", "BCT - Y",     0.0001, 4,      "mm",   0.2,    0.5,    3.5827,  78,     -7.5,  dm3-y}
-        { "pmac",       "PMAC",         1.0,    4,      "XF:06BM-BI",   "{Fltr:01-Ax:", "Y}Mtr", "Fltr:01 - Y", 0.0001, 4,      "mm",   0.2,    0.5,    -2.75,   42.5,   -6.3,  dm3-foils}
-        { "pmac",       "PMAC",         1.0,    5,      "XF:06BM-BI",   "{Slt:02-Ax:",  "O}Mtr", "Slt:02 - O",  0.0001, 4,      "mm",   0.2,    0.5,    0.8669,  8.65,   -8.0,  dm3-slit-o}
-        { "pmac",       "PMAC",         1.0,    6,      "XF:06BM-BI",   "{Slt:02-Ax:",  "I}Mtr", "Slt:02 - I",  0.0001, 4,      "mm",   0.2,    0.5,    -3.9752, 3.5,    -13.1, dm3-slit-i}
-        { "pmac",       "PMAC",         1.0,    7,      "XF:06BM-BI",   "{Slt:02-Ax:",  "T}Mtr", "Slt:02 - T",  0.0001, 4,      "mm",   0.2,    0.5,    0.954,   6.9,    -3.2,  dm3-slit-t}
-        { "pmac",       "PMAC",         1.0,    8,      "XF:06BM-BI",   "{Slt:02-Ax:",  "B}Mtr", "Slt:02 - B",  0.0001, 4,      "mm",   0.2,    0.5,    -2.6167, 3.7,    -7.0,  dm3-slit-b}
+        { "pmac",       "PMAC",         1.0,    1,      "XF:06BM-BI",   "{FS:03-Ax:",   "Y}Mtr", "FS:03 Y",     0.0001, 4,      "mm",   0.3,    0.5,    4.1568,  74,     -6.5,  dm3-screen}
+        { "pmac",       "PMAC",         1.0,    2,      "XF:06BM-BI",   "{BPM:1-Ax:",   "Y}Mtr", "BPM:1 - Y",   0.0001, 4,      "mm",   0.3,    0.5,   -3.365,   10,     -4.8,  dm3-bpm-y}
+        { "pmac",       "PMAC",         1.0,    3,      "XF:06BM-BI",   "{BCT-Ax:",     "Y}Mtr", "BCT - Y",     0.0001, 4,      "mm",   0.3,    0.5,    3.5827,  78,     -7.5,  dm3-y}
+        { "pmac",       "PMAC",         1.0,    4,      "XF:06BM-BI",   "{Fltr:01-Ax:", "Y}Mtr", "Fltr:01 - Y", 0.0001, 4,      "mm",   0.3,    0.5,   -2.75,    42.5,   -6.3,  dm3-foils}
+        { "pmac",       "PMAC",         1.0,    5,      "XF:06BM-BI",   "{Slt:02-Ax:",  "O}Mtr", "Slt:02 - O",  0.0001, 4,      "mm",   0.3,    0.5,    0.8669,  8.65,   -8.0,  dm3-slit-o}
+        { "pmac",       "PMAC",         1.0,    6,      "XF:06BM-BI",   "{Slt:02-Ax:",  "I}Mtr", "Slt:02 - I",  0.0001, 4,      "mm",   0.3,    0.5,   -3.9752,  3.5,    -13.1, dm3-slit-i}
+        { "pmac",       "PMAC",         1.0,    7,      "XF:06BM-BI",   "{Slt:02-Ax:",  "T}Mtr", "Slt:02 - T",  0.0001, 4,      "mm",   0.3,    0.5,    0.954,   6.9,    -3.2,  dm3-slit-t}
+        { "pmac",       "PMAC",         1.0,    8,      "XF:06BM-BI",   "{Slt:02-Ax:",  "B}Mtr", "Slt:02 - B",  0.0001, 4,      "mm",   0.3,    0.5,   -2.6167,  3.7,    -7.0,  dm3-slit-b}
 }
 
