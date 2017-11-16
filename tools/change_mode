@@ -1,43 +1,48 @@
 #!/usr/bin/python
 
 import sys
+import os
 import signal
 from time import sleep
 import epics
 from termcolor import colored
 from openpyxl import load_workbook
-wb = load_workbook(filename = 'Modes.xlsx')
-#print wb.get_sheet_names()
+import json
 
 ## ----------------------------------------------------------------------
-## gather command line arguments
+## read xlsx spreadsheet
+#wb = load_workbook(filename = 'Modes.xlsx')
+#ws = wb['Modes A-F']
+
+## ----------------------------------------------------------------------
+## gather command line arguments, figure out destination mode
 from argparse import ArgumentParser
 parser = ArgumentParser(description="Move between operating modes")
-parser.add_argument("-m", "--mode", dest="mode", default='D',
-                    help="operating mode, MODE = (A B C D E F), default is D")
+parser.add_argument("-m", "--mode", dest="mode", default=None,
+                    help="operating mode, MODE = (A B C D E F)")
 parser.add_argument("-w", "--where", action="store_true", dest="where", default=False,
-                    help="flag for reporting current axis positions")
+                    help="report current axis positions and exit")
+parser.add_argument("-j", "--json", dest="json", default='Modes.json',
+                    help="path and name of json file with motor positions")
 args = parser.parse_args()
 
-if args.mode not in ('A', 'B', 'C', 'D', 'E', 'F'):
+if args.mode is not None:
+   args.mode = args.mode.upper()
+if args.mode not in ('A', 'B', 'C', 'D', 'E', 'F', None):
     print colored("Mode must be (A B C D E F)", 'red', attrs=['bold'])
     exit()
 
-    
-mode = 'D'
-mode_col = {'A': 'E',
-            'B': 'G',
-            'C': 'I',
-            'D': 'K',
-            'E': 'M',
-            'F': 'O'}
-mode_desc = {'A': 'Focused beam @ XAFS table, > 8 keV',
-             'B': 'Focused beam @ XAFS table, < 8 keV',
-             'C': 'Focused beam @ XAFS table, < 6 keV',
-             'D': 'Big beam @ XAFS table, > 8 keV',
-             'E': 'Big beam @ XAFS table, < 8 keV',
-             'F': 'Big beam @ XAFS table, < 6 keV'}
-ws = wb['Modes A-F']
+mode = None
+if args.mode is not None:
+    mode = args.mode
+
+##         col in xlsx, description
+mode_data = {'A': ('E', 'Focused beam @ XAFS table, > 8 keV'),
+             'B': ('G', 'Focused beam @ XAFS table, < 8 keV'),
+             'C': ('I', 'Focused beam @ XAFS table, < 6 keV'),
+             'D': ('K', 'Big beam @ XAFS table, > 8 keV'),
+             'E': ('M', 'Big beam @ XAFS table, < 8 keV'),
+             'F': ('O', 'Big beam @ XAFS table, < 6 keV')}
 
 
 ## to move between modes, the following axes must be changed
@@ -45,27 +50,23 @@ ws = wb['Modes A-F']
 ##  1. DM3 vertical
 ##  2. XAFS table jacks
 ##  3. mirror 2 jacks
-##  4. mirror 3 jacks
+##  4. mirror 3 jacks and lateral
 ##  5. (DM3 slits)
 ##  6. (DM2 foils) (?)
 
-axes = ('XF:06BM-BI{BCT-Ax:Y}Mtr',
-        'XF:06BMA-BI{XAFS-Ax:Tbl_YU}Mtr',
-        'XF:06BMA-BI{XAFS-Ax:Tbl_YDO}Mtr',
-        'XF:06BMA-BI{XAFS-Ax:Tbl_YDI}Mtr',
-        'XF:06BMA-OP{Mir:M2-Ax:YU}Mtr',
-        'XF:06BMA-OP{Mir:M2-Ax:YDO}Mtr',
-        'XF:06BMA-OP{Mir:M2-Ax:YDI}Mtr',
-        'XF:06BMA-OP{Mir:M3-Ax:YU}Mtr',
-        'XF:06BMA-OP{Mir:M3-Ax:YDO}Mtr',
-        'XF:06BMA-OP{Mir:M3-Ax:YDI}Mtr',
-        'XF:06BMA-OP{Mir:M3-Ax:XU}Mtr',
-        'XF:06BMA-OP{Mir:M3-Ax:XD}Mtr',
-        'XF:06BM-BI{Slt:02-Ax:T}Mtr',
-        'XF:06BM-BI{Slt:02-Ax:B}Mtr'
-        )
+aliases = ('dm3-y', 'xafs_tbl_yu', 'xafs_tbl_ydo', 'xafs_tbl_ydi',
+           'm2-jack1', 'm2-jack2', 'm2-jack3', 
+           'm3-jack1', 'm3-jack2', 'm3-jack3', 'm3-lateral-u', 'm3-lateral-d',
+           'dm3-slits-t', 'dm3-slits-b')
 
+## ----------------------------------------------------------------------
+## read json file, fetch actual PV names
+with open(args.json) as json_data:
+    data = json.load(json_data)
 
+axes = list()
+for al in aliases:
+    axes.append(data[al]['PV'])
 
 pv_objects = dict();
 pv_values  = dict();
@@ -73,18 +74,28 @@ pv_aliases = dict();
 
 
     
-
-mode = raw_input("Which mode? ")
+if mode is None:
+    mode = raw_input("Which mode? ")
 mode = mode.upper()
 
+## ----------------------------------------------------------------------
+## fetch data from xlsx file and create Motor objects
+# for row in range(1, 100):
+#     this = ws['B%d' % row].value
+#     if this in axes:
+#         pv_values[this]  = ws['%s%d' % (mode_data[mode][0], row)].value
+#         pv_aliases[this] = ws['C%d' % row].value
+#         pv_objects[this] = epics.Motor(this)
 
-for row in range(1, 100):
-    this = ws['B%d' % row].value
-    if this in axes:
-        pv_values[this]  = ws['%s%d' % (mode_col[mode], row)].value
-        pv_aliases[this] = ws['C%d' % row].value
-        pv_objects[this] = epics.Motor(this)
+## ----------------------------------------------------------------------
+## fetch data from json file and create Motor objects
+for counter, ax in enumerate(axes):
+    pv_aliases[ax] = aliases[counter]
+    pv_values[ax]  = data[pv_aliases[ax]][mode]
+    pv_objects[ax] = epics.Motor(ax)
 
+## ----------------------------------------------------------------------
+## some utility function
 def where():
     print "   Axis                    current         target"
     print "  ------------------------------------------------"
@@ -106,9 +117,16 @@ def handler(signum, frame):
 
 signal.signal(signal.SIGINT, handler)
 
+def message(string):
+    sys.stdout.write('\r')
+    sys.stdout.flush()
+    sys.stdout.write(string)
 
 
-print "Moving to mode %s (%s)" % (mode, mode_desc[mode])
+## ----------------------------------------------------------------------
+## initial screen output
+print "Reading data from %s" % os.path.abspath(args.json)
+print "Moving to mode %s -- %s\n" % (mode, mode_data[mode][1])
 where()
 action = raw_input("s to start moving or q to quit ")
 template = ' %5.1f | %5.1f %5.1f %5.1f | %5.1f %5.1f %5.1f | %5.1f %5.1f %5.1f %5.1f %5.1f | %5.1f %5.1f'
@@ -117,8 +135,8 @@ if action is not 's':
     exit(0)
 else:
     rbvs = list()
-    print '       |  XAFS table       |   Mirror 2        |   Mirror 3                    |   Slits'
-    print '   BCT |  YU    YDO   YDI  |   YU    YDO   YDI |   YU    YDO   YDI   XU    XD  |   top  bottom'
+    print colored('       |  XAFS table       |   Mirror 2        |   Mirror 3                    |   Slits',       'blue', attrs=['bold'])
+    print colored('   BCT |  YU    YDO   YDI  |   YU    YDO   YDI |   YU    YDO   YDI   XU    XD  |   top  bottom', 'blue', attrs=['bold'])
     for ax in axes:
         pv = pv_objects[ax]
         rbvs.append(pv.RBV)
@@ -138,13 +156,12 @@ else:
         for ax in axes:
             pv = pv_objects[ax]
             updt.append(pv.RBV)
-        sys.stdout.write('\r')
-        sys.stdout.flush()
-        sys.stdout.write(template % tuple(updt))
+        message(template % tuple(updt))
         sleep(0.250)
 
         waiting     = not all([pv.done_moving for pv in allbutbct.values()])
         bct_going   = abs(pv_objects['XF:06BM-BI{BCT-Ax:Y}Mtr'].RBV - pv_values['XF:06BM-BI{BCT-Ax:Y}Mtr']) > 0.01
         still_going = waiting or bct_going
 
+message(template % tuple(updt))
 print '\n\nYou are now in mode %s' % mode
