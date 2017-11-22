@@ -1,0 +1,55 @@
+#!/usr/bin/python
+
+import sys
+import signal
+import epics
+from time import sleep
+from termcolor import colored
+from argparse import ArgumentParser
+parser = ArgumentParser(description="Move an EPICS motor, with feedback")
+parser.add_argument('motorname', type=str,   help='name/alias of the motor to move')
+parser.add_argument('value',     type=float, help='target movement')
+parser.add_argument("-r", "--relative", action="store_true", dest="relative",
+                    help="Interpret the value as a relative motion")
+args = parser.parse_args()
+
+motorname = args.motorname
+pv        = epics.Motor(motorname)
+value     = args.value
+if args.relative:
+    current = pv.RBV
+    value = value + current
+
+def handler(signum, frame):
+    pv.put('STOP', 1)
+    print '\n\nGot CTRL+C, stopping %s at %.4f' % (motorname, pv.RBV)
+    print ""
+    exit(0)
+
+signal.signal(signal.SIGINT, handler)
+
+if not pv.within_limits(float(value)):
+    print colored("Request to move to %s is outside limits on %s" % (value, pv.DESC), 'red', attrs=['bold'])
+    exit()
+
+if 'xafs' not in motorname:
+    ena = epics.PV("%s_ENA_CMD" % motorname) # explicitly enable an FMBO axis, which is needed for axes which go into open loop
+    ena.put('1')
+
+pv.move(value, wait=False)
+sys.stdout.write("%s: %11.4f" % (motorname, pv.RBV))
+
+def writeline(string):
+    sys.stdout.write('\r')
+    sys.stdout.flush()
+    sys.stdout.write(string)
+
+waiting = True
+while waiting:
+    sleep(0.002)
+    waiting = not pv.done_moving
+    writeline("%s: %11.4f" % (motorname, pv.RBV))
+    sleep(0.248)
+
+writeline("%s: %11.4f" % (motorname, pv.RBV))
+print ""
