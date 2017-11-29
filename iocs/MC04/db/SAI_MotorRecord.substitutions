@@ -6,7 +6,7 @@ pattern { ASYNPORT,	PMACPORT,	TMOT,	PMAC_MTR,P,		R,		AXIS,      DESC,	          
 	{ "pmac",	"PMAC",		1.0,	4,	"XF:06BMA-OP",	"{Mir:M2-Ax:",	"XU}Mtr",  "Mir:M2 - LATERAL 1, XU",	 0.0001,	4,	"mm",	0.3,	0.2,	1.219,	 9.532015,	-9.81635,     m2-lateral-u}
 	{ "pmac",	"PMAC",		1.0,	5,	"XF:06BMA-OP",	"{Mir:M2-Ax:",	"XD}Mtr",  "Mir:M2 - LATERAL 2, XD",	 0.0001,	4,	"mm",	0.3,	0.2,	2.75,	 10.771195,	-8.66343,     m2-lateral-d}
 	{ "pmac",	"PMAC",		1.0,	6,	"XF:06BMA-OP",	"{Mir:M2-Ax:",	"Bend}Mtr","Mir:M2 - Bender, Bend",	 1,		1,	"step",	1000,	0.2,	0,	 201237.55,	-6322,	      m2-bender}
-	{ "pmac",	"PMAC",		1.0,	7,	"XF:06BMA-BI",	"{Diag:02-Ax:",	"Y}Mtr",   "Diag:02 - FS:02, Y", 	 0.0001, 	4,	"mm",	0.4,	0.2,	34.057,	 76,		-10.1,        dm2-screen-foils}
+	{ "pmac",	"PMAC",		1.0,	7,	"XF:06BMA-BI",	"{Diag:02-Ax:",	"Y}Mtr",   "Diag:02 - FS:02, Y", 	 0.0001, 	4,	"mm",	0.8,	0.2,	34.057,	 76,		-10.1,        dm2-screen-foils}
 #	{ "pmac",	"PMAC",		1.0,	8,	"XF:06BMA-OP",	"{Mir:M2-Ax:",	"ZZZ}Mtr", "Mir:M2 - UNDEF AXIS 8, ZZZ", 0.0001,	4,	"mm",	0.2,	0.5,	-2.6167, 5.7,	        -5.1}
 }
 
