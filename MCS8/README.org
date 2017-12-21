@@ -74,6 +74,22 @@ Eventually include gonio axes and RGC2
 |                    | XF:06BM-BI{BCT-Ax:Y}Mtr             | vertical stage            | MC06 (RGC1)          |            3 |
 |                    | XF:06BM-BI{BPM:1-Ax:Y}Mtr           | NanoBPM                   | MC06 (RGC1)          |            2 |
 |--------------------+-------------------------------------+---------------------------+----------------------+--------------|
+| XAFS Table         | XF:06BMA-BI{XAFS-Ax:Tbl_YU}Mtr      | xafs_tbl_yu               | mc07 (rgc1)          |            1 |
+|                    | XF:06BMA-BI{XAFS-Ax:Tbl_YDO}Mtr     | xafs_tbl_ydo              | mc07 (rgc1)          |            2 |
+|                    | XF:06BMA-BI{XAFS-Ax:Tbl_YDI}Mtr     | xafs_tbl_ydi              | mc07 (rgc1)          |            3 |
+|                    | XF:06BMA-BI{XAFS-Ax:Tbl_XU}Mtr      | xafs_tbl_xu               | mc07 (rgc1)          |            4 |
+|                    | XF:06BMA-BI{XAFS-Ax:Tbl_XD}Mtr      | xafs_tbl_xd               | mc07 (rgc1)          |            5 |
+|                    | XF:06BMA-BI{XAFS-Ax:RotH}Mtr        | xafs_roth                 | mc07 (rgc1)          |            6 |
+|                    | XF:06BMA-BI{XAFS-Ax:RotB}Mtr        | xafs_rotb                 | mc07 (rgc1)          |            7 |
+|                    | XF:06BMA-BI{XAFS-Ax:RotS}Mtr        | xafs_rots                 | mc07 (rgc1)          |            8 |
+|--------------------+-------------------------------------+---------------------------+----------------------+--------------|
+| XAFS Stages        | XF:06BMA-BI{XAFS-Ax:LinY}Mtr        | xafs_liny                 | mc08 (rgc1)          |            1 |
+|                    | XF:06BMA-BI{XAFS-Ax:LinX}Mtr        | xafs_linx                 | mc08 (rgc1)          |            2 |
+|                    | XF:06BMA-BI{XAFS-Ax:LinS}Mtr        | xafs_lins                 | mc08 (rgc1)          |            3 |
+|                    | XF:06BMA-BI{XAFS-Ax:LinXS}Mtr       | xafs_linxs                | mc08 (rgc1)          |            4 |
+|                    | XF:06BMA-BI{XAFS-Ax:Pitch}Mtr       | xafs_pitch                | mc08 (rgc1)          |            5 |
+|                    | XF:06BMA-BI{XAFS-Ax:Roll}Mtr        | xafs_roll                 | mc08 (rgc1)          |            6 |
+|--------------------+-------------------------------------+---------------------------+----------------------+--------------|
 | shutters & screens | XF:06BM-PPS{Sh:FE}Pos-Sts           | front end shutter         | PPS                  |              |
 |                    | XF:06BM-PPS{Sh:A}Pos-Sts            | A hutch shutter           | PPS                  |              |
 |                    | XF:06BMA-OP{FS:1}Pos-Sts            | fluorescent screen        | EPS                  |              |
