@@ -8,9 +8,10 @@ import epics
 ## ----------------------------------------------------------------------
 ## gather command line arguments
 from argparse import ArgumentParser
-parser = ArgumentParser(description="Move a specified mirror vertically, laterally, in pitch, in roll, or in yaw")
+parser = ArgumentParser(description="Move a specified mirror vertically, laterally, in pitch, in roll, or in yaw",
+                        epilog = "Note: All motions are relative to the current position unless the -a flag is specified")
 parser.add_argument("-m", "--mirror",   type=int,   dest="mirror", default=3,
-                    help="mirror number, 1, 2, or 3 -- default 3")
+                    help="mirror number, 1, 2, 3, 4 -- default 3 (mirror 4 = XAFS table")
 parser.add_argument("-v", "--vertical", type=float, dest="vertical", default=None,
                     help="vertical motion in mm -- default 0 mm")
 parser.add_argument("-l", "--lateral",  type=float, dest="lateral",  default=None,
@@ -31,13 +32,14 @@ args = parser.parse_args()
 
 ## ----------------------------------------------------------------------
 ## interpret + sanity-check mirror argument    
-dimensions = { 'm1' : [ 556, 240],
-               'm2' : [1288, 240],
-               'm3' : [ 667, 240] }
-if args.mirror in (1,2,3):
+dimensions = { 'm1' : [ 556, 240], # front-end collimating mirror
+               'm2' : [1288, 240], # focusing mirror
+               'm3' : [ 667, 240], # flat mirror
+               'm4' : [1160, 558]} # m4 is the XAFS table
+if args.mirror in (1,2,3,4):
     mirror = 'm' + str(args.mirror)
 else:
-    print "Mirror argument (-m) must be 1, 2, or 3!"
+    print "Mirror argument (-m) must be 1, 2, 3, or 4!"
     exit()
 
 z = dimensions[mirror][0]
@@ -47,11 +49,28 @@ if args.mirror == 1: hutch = ''
 
 ## ----------------------------------------------------------------------
 ## fetch the Motors for this mirror
-yu  = epics.Motor("XF:06BM%s-OP{Mir:M%d-Ax:YU}Mtr"  % (hutch, args.mirror))
-ydo = epics.Motor("XF:06BM%s-OP{Mir:M%d-Ax:YDO}Mtr" % (hutch, args.mirror))
-ydi = epics.Motor("XF:06BM%s-OP{Mir:M%d-Ax:YDI}Mtr" % (hutch, args.mirror))
-xu  = epics.Motor("XF:06BM%s-OP{Mir:M%d-Ax:XU}Mtr"  % (hutch, args.mirror))
-xd  = epics.Motor("XF:06BM%s-OP{Mir:M%d-Ax:XD}Mtr"  % (hutch, args.mirror))
+if args.mirror < 4:
+    yu  = epics.Motor("XF:06BM%s-OP{Mir:M%d-Ax:YU}Mtr"  % (hutch, args.mirror))
+    ydo = epics.Motor("XF:06BM%s-OP{Mir:M%d-Ax:YDO}Mtr" % (hutch, args.mirror))
+    ydi = epics.Motor("XF:06BM%s-OP{Mir:M%d-Ax:YDI}Mtr" % (hutch, args.mirror))
+    xu  = epics.Motor("XF:06BM%s-OP{Mir:M%d-Ax:XU}Mtr"  % (hutch, args.mirror))
+    xd  = epics.Motor("XF:06BM%s-OP{Mir:M%d-Ax:XD}Mtr"  % (hutch, args.mirror))
+
+    kill = {'xu'  : epics.PV("XF:06BM%s-OP{Mir:M%d-Ax:XU}Mtr_KILL_CMD.PROC" % (hutch, args.mirror)),
+            'xd'  : epics.PV("XF:06BM%s-OP{Mir:M%d-Ax:XD}Mtr_KILL_CMD.PROC" % (hutch, args.mirror))}
+
+elif args.mirror == 4:
+    #XF:06BMA-BI{XAFS-Ax:Tbl_YU}Mtr
+    yu  = epics.Motor("XF:06BMA-BI{XAFS-Ax:Tbl_YU}Mtr")
+    ydo = epics.Motor("XF:06BMA-BI{XAFS-Ax:Tbl_YDO}Mtr")
+    ydi = epics.Motor("XF:06BMA-BI{XAFS-Ax:Tbl_YDI}Mtr")
+    xu  = epics.Motor("XF:06BMA-BI{XAFS-Ax:Tbl_XU}Mtr")
+    xd  = epics.Motor("XF:06BMA-BI{XAFS-Ax:Tbl_XD}Mtr")
+
+    kill = {'xu'  : epics.PV("XF:06BMA-BI{XAFS-Ax:Tbl_XU}Cmd:Kill-Cmd"),
+            'xd'  : epics.PV("XF:06BMA-BI{XAFS-Ax:Tbl_XD}Cmd:Kill-Cmd")}
+
+    
 
 ## ----------------------------------------------------------------------
 ## compute current vert, lat, pitch, roll, yaw positions
@@ -66,14 +85,20 @@ def current_positions():
 
 ## ----------------------------------------------------------------------
 ## -w flag, then exit
-if args.where:
+def show_where():
     (v, l, p, r, y) = current_positions()
-    print colored('Mirror '+str(args.mirror), 'cyan', attrs=['bold'])
-    print "\tvertical = %.3f" % v
-    print "\tlateral  = %.3f" % l
-    print "\tpitch    = %.3f" % p
-    print "\troll     = %.3f" % r
-    print "\tyaw      = %.3f" % y
+    if args.mirror == 4:
+        print colored('XAFS Table', 'cyan', attrs=['bold'])
+    else:
+        print colored('Mirror '+str(args.mirror), 'cyan', attrs=['bold'])
+    print "\tvertical = %7.3f mm\t\tYU  = %7.3f"   % (v, yu.RBV)
+    print "\tlateral  = %7.3f mm\t\tYDO = %7.3f"   % (l, ydo.RBV)
+    print "\tpitch    = %7.3f mrad\t\tYDI = %7.3f" % (p, ydi.RBV)
+    print "\troll     = %7.3f mrad\t\tXU  = %7.3f" % (r, xu.RBV)
+    print "\tyaw      = %7.3f mrad\t\tXD  = %7.3f" % (y, xd.RBV)
+    
+if args.where:
+    show_where()
     exit()
 
 ## ----------------------------------------------------------------------
@@ -84,10 +109,12 @@ def is_not_none(val):
 directions = (args.vertical, args.lateral, args.pitch, args.roll, args.yaw)
 naxes = sum(map(is_not_none, directions))
 if naxes > 1:
-    print "You are trying to move in two directions at once!"
+    print colored("You are trying to move in %d directions at once!\n" % naxes, 'red', attrs=['bold'])
+    parser.print_help()
     exit()
 elif naxes == 0:
-    print "You did not specify a direction!"
+    print colored("You did not specify a direction!\n", 'red', attrs=['bold'])
+    parser.print_help()
     exit()
 
 ## ----------------------------------------------------------------------
@@ -114,7 +141,7 @@ if args.absolute:
 def perform_move(pvs, vals, rel=False):
     for pv, val in zip(pvs, vals):
         if not pv.within_limits(val):
-            print "Invalid motion on %s" % pv.DESC
+            print colored("Request to move outside limits on %s" % pv.DESC, 'red', attrs=['bold'])
             exit()
         pv.move(val, relative=rel, wait=False)
     waiting = True
@@ -124,9 +151,14 @@ def perform_move(pvs, vals, rel=False):
     return 0
 
 def common_text(name):
-    print "%s: moving in %s by %.3f" % \
-        (colored('Mirror '+str(args.mirror), 'cyan', attrs=['bold']),
-         name, getattr(args, name))
+    if args.mirror == 4 :
+        print "%s: moving in %s by %.3f" % \
+            (colored('XAFS table', 'cyan', attrs=['bold']),
+             name, getattr(args, name))
+    else:
+        print "%s: moving in %s by %.3f" % \
+            (colored('Mirror '+str(args.mirror), 'cyan', attrs=['bold']),
+             name, getattr(args, name))
      
 
 ## ----------------------------------------------------------------------
@@ -139,10 +171,14 @@ if args.vertical is not None:
     print '\t%s = %.3f' % \
         (colored('vertical position', 'green', attrs=['bold']),
          (yu.RBV + (ydo.RBV+ydi.RBV)/2) / 2)
-    print "\tRBVs: %s = %.4f   %s = %.4f   %s = %.4f\n" % \
+    print "\tRBVs: %s = %.4f\t%s = %.4f\t%s = %.4f" % \
         (colored('YU',  'green', attrs=['bold']), yu.RBV,
          colored('YDO', 'green', attrs=['bold']), ydo.RBV,
          colored('YDI', 'green', attrs=['bold']), ydi.RBV)
+    print "\tREPs: %s = %d\t%s = %d\t%s = %d\n" % \
+        (colored('YU',  'yellow'), yu.REP,
+         colored('YDO', 'yellow'), ydo.REP,
+         colored('YDI', 'yellow'), ydi.REP)
 
 elif args.pitch is not None:
     common_text('pitch') 
@@ -157,10 +193,14 @@ elif args.pitch is not None:
     angle = 1000*arctan2( (dbar-yu.RBV), z )
     print '\t%s = %.3f' % \
         (colored('pitch', 'green', attrs=['bold']), angle)
-    print "\tRBVs: %s = %.4f   %s = %.4f   %s = %.4f\n" % \
+    print "\tRBVs: %s = %.4f\t%s = %.4f\t%s = %.4f\n" % \
         (colored('YU',  'green', attrs=['bold']), yu.RBV,
          colored('YDO', 'green', attrs=['bold']), ydo.RBV,
          colored('YDI', 'green', attrs=['bold']), ydi.RBV)
+    print "\tREPs: %s = %d\t%s = %d\t%s = %d" % \
+        (colored('YU',  'yellow'), yu.REP,
+         colored('YDO', 'yellow'), ydo.REP,
+         colored('YDI', 'yellow'), ydi.REP)
 
 elif args.lateral is not None:
     common_text('lateral') 
@@ -169,9 +209,12 @@ elif args.lateral is not None:
     print '\t%s = %.3f' % \
         (colored('lateral position', 'green', attrs=['bold']),
          (xu.RBV+xd.RBV)/2)
-    print "\tRBVs: %s = %.4f   %s = %.4f\n" % \
+    print "\tRBVs: %s = %.4f\t%s = %.4f" % \
         (colored('XU', 'green', attrs=['bold']), xu.RBV,
          colored('XD', 'green', attrs=['bold']), xd.RBV)
+    print "\tREPs: %s = %d\t%s = %d\n" % \
+        (colored('XU', 'yellow'), xu.REP,
+         colored('XD', 'yellow'), xd.REP)
 
 elif args.roll is not None:
     common_text('roll') 
@@ -183,10 +226,14 @@ elif args.roll is not None:
     angle = 1000*arctan2(ydo.RBV-ydi.RBV, x)
     print '\t%s = %.3f' % \
         (colored('roll', 'green', attrs=['bold']), angle)
-    print "\tRBVs: %s = %.4f   %s = %.4f   %s = %.4f\n" % \
+    print "\tRBVs: %s = %.4f\t%s = %.4f\t%s = %.4f" % \
         (colored('YU',  'green', attrs=['bold']), yu.RBV,
          colored('YDO', 'green', attrs=['bold']), ydo.RBV,
          colored('YDI', 'green', attrs=['bold']), ydi.RBV)
+    print "\tREPs: %s = %d\t%s = %d\t%s = %d\n" % \
+        (colored('YU',  'yellow'), yu.REP,
+         colored('YDO', 'yellow'), ydo.REP,
+         colored('YDI', 'yellow'), ydi.REP)
 
 elif args.yaw is not None:
     common_text('yaw') 
@@ -199,7 +246,13 @@ elif args.yaw is not None:
     angle = 1000*arctan2(xd.RBV-xu.RBV, z)
     print '\t%s = %.3f' % \
         (colored('yaw', 'green', attrs=['bold']), angle)
-    print "\tRBVs: %s = %.4f   %s = %.4f\n" % \
+    print "\tRBVs: %s = %.4f\t%s = %.4f" % \
         (colored('XU', 'green', attrs=['bold']), xu.RBV,
          colored('XD', 'green', attrs=['bold']), xd.RBV)
+    print "\tREPs: %s = %d\t%s = %d\n" % \
+        (colored('XU', 'yellow'), xu.REP,
+         colored('XD', 'yellow'), xd.REP)
     
+
+kill['xu'].put(1)
+kill['xd'].put(1)

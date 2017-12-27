@@ -15,14 +15,17 @@ def e2l(val):
 bragg      = epics.Motor("XF:06BMA-OP{Mono:DCM1-Ax:Bragg}Mtr")
 angle      = bragg.RBV
 #twod       = 2*3.1356
-twod       = 2*3.13572865
+twod       = 2*3.13543952
+xtals      = 'Si(111)'
 if args.threeoneone:
-    twod       = 2*1.6375
+    # twod = 2*1.6375
+    twod  = 2*1.63761489
+    xtals = 'Si(311)'
 wavelength = twod * sin(angle * pi / 180)
 energy     = e2l(wavelength)
 
 print colored('='*65, 'yellow')
-print "%s = %.2f" % (colored('energy', 'cyan', attrs=['bold']), energy)
+print "%s = %.2f -- %s" % (colored('energy', 'cyan', attrs=['bold']), energy, xtals)
 
 perp = epics.Motor("XF:06BMA-OP{Mono:DCM1-Ax:Per2}Mtr")
 para = epics.Motor("XF:06BMA-OP{Mono:DCM1-Ax:Par2}Mtr")

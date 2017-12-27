@@ -57,7 +57,7 @@ mode_data = {'A': ('E', 'Focused beam @ XAFS table, > 8 keV'),
 aliases = ('dm3-y', 'xafs_tbl_yu', 'xafs_tbl_ydo', 'xafs_tbl_ydi',
            'm2-jack1', 'm2-jack2', 'm2-jack3', 
            'm3-jack1', 'm3-jack2', 'm3-jack3', 'm3-lateral-u', 'm3-lateral-d',
-           'dm3-slits-t', 'dm3-slits-b')
+           'dm3-slits-t', 'dm3-slits-b', 'dm3-slits-i', 'dm3-slits-o')
 
 ## ----------------------------------------------------------------------
 ## read json file, fetch actual PV names
@@ -129,14 +129,14 @@ print "Reading data from %s" % os.path.abspath(args.json)
 print "Moving to mode %s -- %s\n" % (mode, mode_data[mode][1])
 where()
 action = raw_input("s to start moving or q to quit ")
-template = ' %5.1f | %5.1f %5.1f %5.1f | %5.1f %5.1f %5.1f | %5.1f %5.1f %5.1f %5.1f %5.1f | %5.1f %5.1f'
+template = ' %5.1f | %5.1f %5.1f %5.1f | %5.1f %5.1f %5.1f | %5.1f %5.1f %5.1f %5.1f %5.1f | %5.1f %5.1f %5.1f %5.1f'
 
 if action is not 's':
     exit(0)
 else:
     rbvs = list()
     print colored('       |  XAFS table       |   Mirror 2        |   Mirror 3                    |   Slits',       'blue', attrs=['bold'])
-    print colored('   BCT |  YU    YDO   YDI  |   YU    YDO   YDI |   YU    YDO   YDI   XU    XD  |   top  bottom', 'blue', attrs=['bold'])
+    print colored('   BCT |  YU    YDO   YDI  |   YU    YDO   YDI |   YU    YDO   YDI   XU    XD  |   top  bottom  in  out', 'blue', attrs=['bold'])
     for ax in axes:
         pv = pv_objects[ax]
         rbvs.append(pv.RBV)

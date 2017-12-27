@@ -33,5 +33,4 @@ for row in ws.rows:
     axis['F_REP'] = row[15].value
     bl[alias] = axis
     
-print json.dumps(bl, sort_keys=True,
-                 indent=4, separators=(',', ': '))
+print json.dumps(bl, sort_keys=True, indent=4, separators=(',', ': '))
