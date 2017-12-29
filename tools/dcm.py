@@ -1,7 +1,5 @@
 #!/usr/bin/python
 
-from time import sleep
-import os
 
 ## ----------------------------------------------------------------------
 ## gather command line arguments
@@ -49,38 +47,18 @@ dcm.prettyprint_energy(args.energy, status='moving to energy', color='cyan',  at
 dcm.prettyprint_motors(angle, perp, para, status="targets", color="green", attrs=['bold'])
 
 ## ----------------------------------------------------------------------
-## establish PVs
+## report current positions
 if args.current:
-    dcm.prettyprint_motors(dcm.bragg.RBV, dcm.perp.RBV, dcm.para.RBV, color="yellow", status="current")
+    dcm.prettyprint_motors(dcm.bragg, dcm.perp, dcm.para, color="yellow", status="current")
     print ''
     
 exit()
 
 
 if args.move:
-    # ##------------------------------------------------------------------------
-    # ## gather up PVs and move them to targets
-    # pvgroup = (dcm.bragg, dcm.perp, dcm.para)
-    # newvals = (angle, perp, para)
-    # for pv, val in zip(pvgroup, newvals):
-    #     pv.move(val, wait=False)
-
-    # ##------------------------------------------------------------------------
-    # ## wait for all three motors to get where they are going
-    # waiting = True
-    # while waiting:
-    #     time.sleep(0.001)
-    #     waiting = not all([pv.done_moving for pv in pvgroup])
-
     current = dcm.moveto(args.energy)
     dcm.prettyprint_energy(current, status='Mono at', color='cyan',  attrs=['bold'])
     dcm.prettyprint_motors(dcm.bragg.RBV, dcm.perp.RBV, dcm.para.RBV, color="green", attrs=['bold'], status="RBVs   ")
-
-    dcm.kill_invacuum()
-
-    ##------------------------------------------------------------------------
-    ## give CA some time to do its thing before exiting
-    sleep(0.2)
 
 
 

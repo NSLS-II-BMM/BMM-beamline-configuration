@@ -1,23 +1,15 @@
 
-from numpy import pi, sin, arcsin
-import sys
+from argparse import ArgumentParser
+parser = ArgumentParser(description="Compute energy from current mono position")
+parser.add_argument("-3", "--311", action="store_true", dest="threeoneone", default=False,
+                    help="Flag for Si(311) -- default Si(111)")
+parser.add_argument('energy')
+args = parser.parse_args()
 
-energy = float(sys.argv[1])
+from BMMcontrols import DCM
+dcm = DCM()
+if args.threeoneone:
+    dcm.xtals(crystals='311')
 
-hbarc=1973.27053324
-def e2l(val):
-    return 2*pi*hbarc/val
-
-#twod       = 2*3.1356
-twod       = 2*3.13543952
-reflection = 'Si(111)'
-
-#twod = 2*1.6375
-#twod = 2*1.63761489
-#reflection = 'Si(311)'
-
-wavelength = e2l(energy)
-angle      = arcsin(wavelength / twod)
-angle      = angle*180/pi
-print "%.2f eV is %.6f degrees" % (energy, angle)
+print "%s eV is %.6f degrees with %s" % (args.energy, dcm.angle(float(args.energy)), dcm.description)
     

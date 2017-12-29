@@ -10,15 +10,15 @@ parser = ArgumentParser(description="Move a specified mirror vertically, lateral
 parser.add_argument("-m", "--mirror",   type=int,   dest="mirror", default=3,
                     help="mirror number, 1, 2, 3, 4 -- default 3 (mirror 4 = XAFS table")
 parser.add_argument("-v", "--vertical", type=float, dest="vertical", default=None,
-                    help="vertical motion in mm -- default 0 mm")
+                    help="vertical motion in mm")
 parser.add_argument("-l", "--lateral",  type=float, dest="lateral",  default=None,
-                    help="lateral motion in mm -- default 0 mm")
+                    help="lateral motion in mm")
 parser.add_argument("-p", "--pitch",    type=float, dest="pitch",    default=None,
-                    help="pitch in urad -- default 0 urad")
+                    help="pitch in urad")
 parser.add_argument("-r", "--roll",     type=float, dest="roll",     default=None,
-                    help="roll in urad -- default 0 urad")
+                    help="roll in urad")
 parser.add_argument("-y", "--yaw",      type=float, dest="yaw",      default=None,
-                    help="yaw in urad -- default 0 urad")
+                    help="yaw in urad")
 parser.add_argument("-a", "--absolute", action="store_true", dest="absolute", default=False,
                     help="flag specifying absolute motion -- default relative")
 parser.add_argument("-w", "--where", action="store_true", dest="where", default=False,
@@ -83,20 +83,20 @@ if args.absolute:
 if args.vertical is not None:
     mirror.direction = 'vertical'
     mirror.common_text(args.vertical, color='cyan', attrs=['bold']) 
-    mirror.move((mirror.yu,                     mirror.ydo,                     mirror.ydi),
-                (mirror.yu.RBV + args.vertical, mirror.ydo.RBV + args.vertical, mirror.ydi.RBV + args.vertical))
+    mirror.move((mirror.yu,                      mirror.ydo,                      mirror.ydi),
+                (mirror.yu.pv.RBV+args.vertical, mirror.ydo.pv.RBV+args.vertical, mirror.ydi.pv.RBV+args.vertical))
 
 elif args.lateral is not None:
     mirror.direction = 'lateral'
     mirror.common_text(args.lateral, color='cyan', attrs=['bold']) 
-    mirror.move((mirror.xu,                    mirror.xd),
-                (mirror.xu.RBV + args.lateral, mirror.xd.RBV + args.lateral))
+    mirror.move((mirror.xu,                       mirror.xd),
+                (mirror.xu.pv.RBV + args.lateral, mirror.xd.pv.RBV + args.lateral))
 
 elif args.pitch is not None:
     mirror.direction = 'pitch'
     mirror.common_text(args.pitch, color='cyan', attrs=['bold']) 
-    dbar  = (mirror.ydo.RBV + mirror.ydi.RBV) / 2
-    angle = arctan2( (dbar-mirror.yu.RBV), mirror.length )
+    dbar  = (mirror.ydo.pv.RBV + mirror.ydi.pv.RBV) / 2
+    angle = arctan2( (dbar-mirror.yu.pv.RBV), mirror.length )
     y0    = mirror.length * tan(angle)
     angle = angle + args.pitch/1000
     y     = mirror.length * tan(angle)
@@ -106,16 +106,16 @@ elif args.pitch is not None:
 elif args.roll is not None:
     mirror.direction = 'roll'
     mirror.common_text(args.roll, color='cyan', attrs=['bold']) 
-    angle = arctan2(mirror.ydo.RBV-mirror.ydi.RBV, mirror.width)
+    angle = arctan2(mirror.ydo.pv.RBV-mirror.ydi.pv.RBV, mirror.width)
     angle = angle + args.roll/1000
     y     = mirror.width * tan(angle)
-    ybar  = ((mirror.ydo.RBV+mirror.ydi.RBV) / 2)
+    ybar  = ((mirror.ydo.pv.RBV+mirror.ydi.pv.RBV) / 2)
     mirror.move((mirror.ydo, mirror.ydi), (ybar+y/2, ybar-y/2), False)
 
 elif args.yaw is not None:
     mirror.direction = 'yaw'
     mirror.common_text(args.yaw, color='cyan', attrs=['bold']) 
-    angle = arctan2(mirror.xd.RBV-mirror.xu.RBV, mirror.width)
+    angle = arctan2(mirror.xd.pv.RBV-mirror.xu.pv.RBV, mirror.width)
     xx0   = mirror.length * tan(angle)
     angle = angle + args.yaw/1000
     xx    = mirror.length * tan(angle)
@@ -123,3 +123,4 @@ elif args.yaw is not None:
     mirror.move((mirror.xd, mirror.xu), (xxrel, -xxrel), True)
 
 mirror.prettyprint_motors(color1='green', color2='yellow')
+mirror.direction = None

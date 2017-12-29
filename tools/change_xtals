@@ -1,0 +1,145 @@
+#!/usr/bin/python
+
+import sys
+import os
+import signal
+from time import sleep
+import epics
+from termcolor import colored
+from openpyxl import load_workbook
+import json
+
+from argparse import ArgumentParser
+parser = ArgumentParser(description="Move between operating modes")
+parser.add_argument("-w", "--where", action="store_true", dest="where", default=False,
+                    help="report current axis positions and exit")
+parser.add_argument("-3", "--311", action="store_true", dest="to311", default=False,
+                    help="move from Si(111) to Si(311)")
+args = parser.parse_args()
+
+target = 1
+xtalset = 'Si(111)'
+if args.to311:
+    target = 2
+    xtalset = 'Si(311)'
+
+from BMMcontrols import DCM
+dcm = DCM()
+axes = (dcm.pitch, dcm.roll, dcm.x)
+values = (5.5511, 8.77968, -35.4)
+if args.to311:
+    dcm.xtals(crystals='311')
+    values = (4.00454, 7.16336, 33)
+
+def handler(signum, frame):
+    print '\n\nGot CTRL+C, stopping all motors, killing in-vacuum motors'
+    for ax in axes:
+        ax.stop()
+        ax.kill()
+    print ""
+    self.prettyprint_motors(self.pitch, self.roll, self.x, color="red", status="current")
+    exit()
+
+signal.signal(signal.SIGINT, handler)
+
+    
+dcm.change_xtals(values)
+
+for ax in axes:
+    ax.kill()
+print '\n\nYou are now on the %s crystals' % xtalset
+
+    
+# axes = {'dcm-pitch': ['XF:06BMA-OP{Mono:DCM1-Ax:P2}Mtr', 5.5511,  4.00454],
+#         'dcm-roll':  ['XF:06BMA-OP{Mono:DCM1-Ax:R2}Mtr', 8.77968, 7.16336],
+#         'dcm-x':     ['XF:06BMA-OP{Mono:DCM1-Ax:X}Mtr', -35.4,    33     ]}
+
+# for ax in axes.keys():
+#     axes[ax].append(epics.Motor(axes[ax][0]))
+#     axes[ax].append(axes[ax][3].RBV)
+#     axes[ax].append(epics.PV("%s_ENA_CMD" % axes[ax][0])) # explicitly enable the axis, which is needed for axes which go into open loop
+#     axes[ax].append(epics.PV('%s_KILL_CMD' % axes[ax][0]))
+    
+# def where():
+#     print "   Axis           current         target"
+#     print "  ----------------------------------------"
+#     for ax in axes.keys():
+#         print("   %-10s %11.5f --> %11.5f" % (ax, axes[ax][3].RBV, axes[ax][target]))
+#     print "\n"
+
+
+# if args.where:
+#     where()
+#     exit(0)
+
+# def handler(signum, frame):
+#     print '\n\nGot CTRL+C, stopping all motors, killing in-vacuum motors'
+#     for ax in axes:
+#         axes[ax][3].put('STOP', 1)
+#         if ax is 'dcm-x': continue
+#         axes[ax][6].put('1')
+#     print ""
+#     where()
+#     exit(0)
+
+# signal.signal(signal.SIGINT, handler)
+
+# def message(string):
+#     sys.stdout.write('\r')
+#     sys.stdout.flush()
+#     sys.stdout.write(string)
+
+
+    
+
+# ## ----------------------------------------------------------------------
+# ## initial screen output
+# print "Moving to %s crystals\n" % xtalset
+# where()
+# action = raw_input("s to start moving or q to quit ")
+# template = ' %8.4f  %8.4f  %8.4f'
+
+# if action is not 's':
+#     exit(0)
+# else:
+#     rbvs = list()
+#     print colored('   pitch     roll     lateral', 'blue', attrs=['bold'])
+#     for ax in sorted(axes.keys()):
+#         rbvs.append(axes[ax][3].RBV)
+#     sys.stdout.write(template % tuple(rbvs))
+#     pvs = list()
+#     for ax in sorted(axes.keys()):
+#         #ena = epics.PV("%s_ENA_CMD" % axes[ax][0]) # explicitly enable the axis, which is needed for axes which go into open loop
+#         #ena.put('1')
+#         #axes[ax][5].put('1')
+#         axes[ax][3].move(axes[ax][target], wait=False)
+#         pvs.append(axes[ax][3])
+#     waiting = True
+#     while waiting:
+#         sleep(0.002)
+#         updt = list()
+#         for ax in sorted(axes.keys()):
+#             updt.append(axes[ax][3].RBV)
+#         message(template % tuple(updt))
+#         sleep(0.100)
+#         #waiting = not all([pv.done_moving for pv in pvs])
+#         arrived = True
+#         for ax in sorted(axes.keys()):
+#             this = abs(axes[ax][target] - axes[ax][3].RBV) < 0.01
+#             arrived = arrived and this
+#         waiting = not arrived
+            
+# sleep(0.2)
+
+# message(template % tuple(updt))
+# print '\n\nYou are now on the %s crystals' % xtalset
+
+# #kill = {'p2'  : epics.PV("XF:06BMA-OP{Mono:DCM1-Ax:P2}Mtr_KILL_CMD.PROC"),
+# #        'r2'  : epics.PV("XF:06BMA-OP{Mono:DCM1-Ax:R2}Mtr_KILL_CMD.PROC")}
+# ##------------------------------------------------------------------------
+# ## disable the in vacuum motors
+# #kill['p2'].put(1)
+# #kill['r2'].put(1)
+# for ax in sorted(axes.keys()):
+#     if ax is 'dcm-x': continue
+#     axes[ax][6].put('1')
