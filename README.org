@@ -41,3 +41,9 @@ Command for tar-ing up all the iocs and excluding revision control dot folders:
 #+BEGIN_SRC bash
 sudo tar --exclude='*/.bzr/*' --exclude='*/.hg/*'  -cvf all_iocs.tar cam* F460 I400 MC0* pi* plc1 softIocCommon va-1
 #+END_SRC
+
+** 2nd Xtal Roll encodeer loss
+
+ - mc02-11Jan2018.cfg :: MC02 configuration prior to encoder loss event
+ - mc02-12Jan2018.cfg :: MC02 configuration as modified by Graeme
+      Elliner to use steps rather than encoder counts
