@@ -269,7 +269,7 @@
         "F": -1.7001,
         "F_REP": 9165,
         "PV": "XF:06BM-BI{Slt:02-Ax:B}Mtr",
-        "desc": "bottom"
+        "desc": "dm3 bottom"
     },
     "dm3-slits-i": {
         "A": 0.2395,
@@ -285,7 +285,7 @@
         "F": -2.4001,
         "F_REP": 15751,
         "PV": "XF:06BM-BI{Slt:02-Ax:I}Mtr",
-        "desc": "inboard"
+        "desc": "dm3 inboard"
     },
     "dm3-slits-o": {
         "A": -8.2496,
@@ -301,7 +301,7 @@
         "F": -2.6001,
         "F_REP": -34670,
         "PV": "XF:06BM-BI{Slt:02-Ax:O}Mtr",
-        "desc": "outboard"
+        "desc": "dm3 outboard"
     },
     "dm3-slits-t": {
         "A": 4.1061,
@@ -317,7 +317,7 @@
         "F": 3.3045,
         "F_REP": 23505,
         "PV": "XF:06BM-BI{Slt:02-Ax:T}Mtr",
-        "desc": "top"
+        "desc": "dm3 top"
     },
     "dm3-y": {
         "A": 25.5,
@@ -381,7 +381,7 @@
         "F": -1.7332,
         "F_REP": -9774,
         "PV": "XF:06BM-OP{Mir:M1-Ax:YU}Mtr",
-        "desc": "us jack"
+        "desc": "m1 us jack"
     },
     "m1-jack2": {
         "A": -0.1033,
@@ -397,7 +397,7 @@
         "F": -0.1033,
         "F_REP": 27327,
         "PV": "XF:06BM-OP{Mir:M1-Ax:YDO}Mtr",
-        "desc": "ds/ob jack"
+        "desc": "m1 ds/ob jack"
     },
     "m1-jack3": {
         "A": 0.5299,
@@ -413,7 +413,7 @@
         "F": 0.5299,
         "F_REP": 24328,
         "PV": "XF:06BM-OP{Mir:M1-Ax:YDI}Mtr",
-        "desc": "ds/ib jack"
+        "desc": "m1 ds/ib jack"
     },
     "m1-lateral-d": {
         "A": 2.1801,
@@ -429,7 +429,7 @@
         "F": 2.1802,
         "F_REP": 24801,
         "PV": "XF:06BM-OP{Mir:M1-Ax:XD}Mtr",
-        "desc": "ds lateral"
+        "desc": "m1 ds lateral"
     },
     "m1-lateral-u": {
         "A": 0.4831,
@@ -445,7 +445,7 @@
         "F": 0.4832,
         "F_REP": 4832,
         "PV": "XF:06BM-OP{Mir:M1-Ax:XU}Mtr",
-        "desc": "us lateral"
+        "desc": "m1 us lateral"
     },
     "m2-bender": {
         "A": 3,
@@ -461,7 +461,7 @@
         "F": 0,
         "F_REP": 0,
         "PV": "XF:06BMA-OP{Mir:M2-Ax:Bend}Mtr",
-        "desc": "bender"
+        "desc": "m2 bender"
     },
     "m2-jack1": {
         "A": -4.6304,
@@ -477,7 +477,7 @@
         "F": 6,
         "F_REP": 66500,
         "PV": "XF:06BMA-OP{Mir:M2-Ax:YU}Mtr",
-        "desc": "us jack"
+        "desc": "m2 us jack"
     },
     "m2-jack2": {
         "A": -1.6664,
@@ -493,7 +493,7 @@
         "F": 6,
         "F_REP": 51098,
         "PV": "XF:06BMA-OP{Mir:M2-Ax:YDO}Mtr",
-        "desc": "ds/ob jack"
+        "desc": "m2 ds/ob jack"
     },
     "m2-jack3": {
         "A": -1.6676,
@@ -509,7 +509,7 @@
         "F": 6,
         "F_REP": 56998,
         "PV": "XF:06BMA-OP{Mir:M2-Ax:YDI}Mtr",
-        "desc": "ds/ib jack"
+        "desc": "m2 ds/ib jack"
     },
     "m2-lateral-d": {
         "A": 0.5659,
@@ -525,7 +525,7 @@
         "F": -0.0026,
         "F_REP": -27526,
         "PV": "XF:06BMA-OP{Mir:M2-Ax:XD}Mtr",
-        "desc": "ds lateral"
+        "desc": "m2 ds lateral"
     },
     "m2-lateral-u": {
         "A": 0.4373,
@@ -541,7 +541,7 @@
         "F": -0.001,
         "F_REP": -12200,
         "PV": "XF:06BMA-OP{Mir:M2-Ax:XU}Mtr",
-        "desc": "us lateral"
+        "desc": "m2 us lateral"
     },
     "m3-jack1": {
         "A": -1.4992,
@@ -557,7 +557,7 @@
         "F": -0.6669,
         "F_REP": 11531,
         "PV": "XF:06BMA-OP{Mir:M3-Ax:YU}Mtr",
-        "desc": "us jack"
+        "desc": "m3 us jack"
     },
     "m3-jack2": {
         "A": -1.5013,
@@ -573,7 +573,7 @@
         "F": 0.6671,
         "F_REP": 10371,
         "PV": "XF:06BMA-OP{Mir:M3-Ax:YDO}Mtr",
-        "desc": "ds/ob jack"
+        "desc": "m3 ds/ob jack"
     },
     "m3-jack3": {
         "A": -1.5017,
@@ -589,7 +589,7 @@
         "F": 0.6669,
         "F_REP": 9069,
         "PV": "XF:06BMA-OP{Mir:M3-Ax:YDI}Mtr",
-        "desc": "ds/ib jack"
+        "desc": "m3 ds/ib jack"
     },
     "m3-lateral-d": {
         "A": 15,
@@ -605,7 +605,7 @@
         "F": -15.0006,
         "F_REP": -185586,
         "PV": "XF:06BMA-OP{Mir:M3-Ax:XD}Mtr",
-        "desc": "ds lateral"
+        "desc": "m3 ds lateral"
     },
     "m3-lateral-u": {
         "A": 15.0024,
@@ -621,7 +621,39 @@
         "F": -15,
         "F_REP": -167778,
         "PV": "XF:06BMA-OP{Mir:M3-Ax:XU}Mtr",
-        "desc": "us lateral"
+        "desc": "m3 us lateral"
+    },
+    "xafs_tbl_xd": {
+        "A": 16.9,
+        "A_REP": 130000,
+        "B": 16.9,
+        "B_REP": 130000,
+        "C": 16.9,
+        "C_REP": 130000,
+        "D": 16.9,
+        "D_REP": 130000,
+        "E": 16.9,
+        "E_REP": 130000,
+        "F": 16.9,
+        "F_REP": 130000,
+        "PV": "XF:06BMA-BI{XAFS-Ax:Tbl_XD}Mtr",
+        "desc": "xafs table ds lat"
+    },
+    "xafs_tbl_xu": {
+        "A": -4.6,
+        "A_REP": -332000,
+        "B": -4.6,
+        "B_REP": -332000,
+        "C": -4.6,
+        "C_REP": -332000,
+        "D": -4.6,
+        "D_REP": -332000,
+        "E": -4.6,
+        "E_REP": -332000,
+        "F": -4.6,
+        "F_REP": -332000,
+        "PV": "XF:06BMA-BI{XAFS-Ax:Tbl_XU}Mtr",
+        "desc": "xafs table us lat"
     },
     "xafs_tbl_ydi": {
         "A": 104.75,
