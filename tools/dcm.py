@@ -44,21 +44,19 @@ perp  = dcm.perpendicular(args.energy) + args.perpoffset
 ## ----------------------------------------------------------------------
 ## report on motor positions for given energy
 dcm.prettyprint_energy(args.energy, status='moving to energy', color='cyan',  attrs=['bold'])
-dcm.prettyprint_motors(angle, perp, para, status="targets", color="green", attrs=['bold'])
+dcm.prettyprint_target_energy(angle, perp, para, color="green", attrs=['bold'])
 
 ## ----------------------------------------------------------------------
 ## report current positions
 if args.current:
-    dcm.prettyprint_motors(dcm.bragg, dcm.perp, dcm.para, color="yellow", status="current")
+    dcm.prettyprint_three_motors(dcm.bragg, dcm.perp, dcm.para, color="yellow", status="current")
     print ''
     
-exit()
-
 
 if args.move:
     current = dcm.moveto(args.energy)
     dcm.prettyprint_energy(current, status='Mono at', color='cyan',  attrs=['bold'])
-    dcm.prettyprint_motors(dcm.bragg.RBV, dcm.perp.RBV, dcm.para.RBV, color="green", attrs=['bold'], status="RBVs   ")
+    dcm.prettyprint_target_energy(dcm.bragg.pv.RBV, dcm.perp.pv.RBV, dcm.para.pv.RBV, color="green", attrs=['bold'], status="RBVs   ")
 
 
 

@@ -13,5 +13,5 @@ if args.threeoneone:
 
 dcm.prettyline(color='yellow')
 dcm.prettyprint_energy(dcm.current_energy(), status='energy', color='cyan',  attrs=['bold'])
-dcm.prettyprint_motors(dcm.bragg, dcm.perp, dcm.para, color="yellow", status="current")
+dcm.prettyprint_three_motors(dcm.bragg, dcm.perp, dcm.para, color="yellow", status="current")
 dcm.prettyline(color='yellow')

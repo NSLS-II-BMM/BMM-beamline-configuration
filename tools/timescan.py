@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-from subprocess import call
 import os
 import time
 import signal

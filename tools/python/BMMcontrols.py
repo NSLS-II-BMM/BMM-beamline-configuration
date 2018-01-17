@@ -28,12 +28,15 @@ class BMM_Motor():
         self.disconnected = False
         self.units        = None
         self.description  = None
+        self.target       = 0
         if alias is not None:
             self.motor(alias)
 
     def motor(self, alias):
+        self.pvname = MOTORDATA[alias]['PV']
         self.pv = epics.Motor(MOTORDATA[alias]['PV'])
         self.description = MOTORDATA[alias]['desc']
+        self.alias = alias
         if alias not in MOTORDATA.keys():
             return False
         if 'xafs' in alias:
@@ -82,29 +85,46 @@ class BMM_Motor():
         message(template % (self.description, self.pv.RBV))
         print ''
         return 0
-            
+
+
+################################################################################
+################################################################################
+################################################################################
+
+class IonChambers():
+    def __init__(self):
+        self.i0 = epics.PV("XF:06BM-BI{EM:1}EM180:Current1:MeanValue_RBV")
+        self.it = epics.PV("XF:06BM-BI{EM:1}EM180:Current2:MeanValue_RBV")
+        self.ir = epics.PV("XF:06BM-BI{EM:1}EM180:Current3:MeanValue_RBV")
+
+    def each(self):
+        return (self.i0, self.it, self.ir)
+
+    def measure(self):
+        return [self.i0.get(), self.it.get(), self.ir.get()]
+        
 ################################################################################
 ################################################################################
 ################################################################################
 
 class DCM():
-    def __init__(self):
-        self.twod = None
-        self.description = None
-        self.xtals()
-        self.mono_offset = 30   # mm
-        self.emin = 4000        # eV
-        self.emax = 22300       # eV
-        self.bragg = BMM_Motor('dcm-bragg')
-        self.perp  = BMM_Motor('dcm-perp')
-        self.para  = BMM_Motor('dcm-para')
-        self.pitch = BMM_Motor('dcm-pitch')
-        self.roll  = BMM_Motor('dcm-roll')
-        self.x     = BMM_Motor('dcm-x')
-        self.y     = BMM_Motor('dcm-y')
+    def __init__(self, crystals='111'):
+        self.twod          = None
+        self.description   = None
+        self.xtals(crystals)
+        self.mono_offset   = 30   # mm
+        self.emin          = 4000        # eV
+        self.emax          = 22300       # eV
+        self.bragg         = BMM_Motor('dcm-bragg')
+        self.perp          = BMM_Motor('dcm-perp')
+        self.para          = BMM_Motor('dcm-para')
+        self.pitch         = BMM_Motor('dcm-pitch')
+        self.roll          = BMM_Motor('dcm-roll')
+        self.x             = BMM_Motor('dcm-x')
+        self.y             = BMM_Motor('dcm-y')
         self.perp.invacuum = self.para.invacuum = self.pitch.invacuum = self.roll.invacuum = True
-        self.paraoffset = 0
-        self.perpoffset = 0
+        self.paraoffset    = 0
+        self.perpoffset    = 0
         
     def xtals(self, crystals='111'):
         if crystals is '311':
@@ -113,6 +133,12 @@ class DCM():
         else:
             self.twod = 2*3.13543952
             self.description = 'Si(111)'
+
+    def is311(self):
+        if self.x.pv.RBV > 0:
+            return True
+        else:
+            return False
             
     def e2l(self, val):
         return 2*pi*HBARC/val
@@ -140,14 +166,14 @@ class DCM():
         return self.mono_offset / (2*cos(angle))
     
     def kill(self, axis):
-        axis.kill_pv.put(1)
+        axis.kill_pv.put('1')
         return 1
 
     def kill_invacuum(self):
-        self.perp.kill_pv.put(1)
-        self.para.kill_pv.put(1)
-        self.pitch.kill_pv.put(1)
-        self.roll.kill_pv.put(1)
+        self.perp.kill_pv.put('1')
+        self.para.kill_pv.put('1')
+        self.pitch.kill_pv.put('1')
+        self.roll.kill_pv.put('1')
 
     def seven(self):
         return(self.bragg, self.perp, self.para, self.pitch, self.roll, self.x, self.y)
@@ -156,9 +182,9 @@ class DCM():
         print colored('\n\nGot CTRL+C, stopping all motors, disabling in-vacuum motors', 'red', attrs=['bold'])
         for ax in self.seven():
             ax.stop()
-            ax.kill()
         print ""
-        self.prettyprint_motors(self.bragg, self.perp, self.para, color="red", status="current")
+        self.kill_invacuum()
+        self.prettyprint_three_motors(self.bragg, self.perp, self.para, color="red", status="current")
         exit()
         
     def moveto(self, energy, para=None, perp=None, quiet=False):
@@ -173,11 +199,12 @@ class DCM():
         if perp is None:
             perp = self.perpendicular(energy) + self.perpoffset
 
-        angle    = dcm.angle(energy)
-        axes     = (dcm.bragg, dcm.perp, dcm.para)
+        angle    = self.angle(energy)
+        axes     = (self.bragg, self.perp, self.para)
         template = ' bragg, perp, para --> %8.4f  %8.4f  %8.4f'
         newvals  = (angle, perp, para)
-        self.generic_move(axes, values, template, quiet)
+        self.generic_move(axes, newvals, template, quiet)
+        self.kill_invacuum()
         return self.current_energy()
 
     def change_xtals(self, values=None):
@@ -243,23 +270,23 @@ class DCM():
              colored('reflection', color, attrs=attrs), self.description)  #  args.perpoffset, args.paraoffset)
 
     
-    def prettyprint_motors(self, bragg, perp, para, color="white", status="current", attrs=None):
-        if status is 'current':
-            # print "current: %s = %8.5f   %s = %7.4f (%7.4f)   %s = %8.4f (%8.4f)\n" %
-            print "%s: %s = %8.5f   %s = %7.4f   %s = %8.4f" %\
-                (status,
-                 colored(bragg.pv.DESC,color, attrs=attrs), bragg.pv.RBV,
-                 colored(perp.pv.DESC, color, attrs=attrs), perp.pv.RBV,  #  - args.perpoffset,
-                 colored(para.pv.DESC, color, attrs=attrs), para.pv.RBV)  #  - args.paraoffset)
-        else:
-            print "%s: %s = %8.5f   %s = %7.4f   %s = %8.4f" %\
-                (status,
-                 colored('angle',color, attrs=attrs), bragg,
-                 colored('perp', color, attrs=attrs), perp,  #  - args.perpoffset,
-                 colored('para', color, attrs=attrs), para)  #  - args.paraoffset)
+    def prettyprint_three_motors(self, mot1, mot2, mot3, color="white", status="current", attrs=None):
+        # print "current: %s = %8.5f   %s = %7.4f (%7.4f)   %s = %8.4f (%8.4f)\n" %
+        print "%s: %s = %8.5f   %s = %7.4f   %s = %8.4f" %\
+            (status,
+             colored(mot1.pv.DESC, color, attrs=attrs), mot1.pv.RBV,
+             colored(mot2.pv.DESC, color, attrs=attrs), mot2.pv.RBV,  #  - args.perpoffset,
+             colored(mot3.pv.DESC, color, attrs=attrs), mot3.pv.RBV)  #  - args.paraoffset)
+
+    def prettyprint_target_energy(self, bragg, perp, para, color="white", status='target ', attrs=None):
+        print "%s: %s = %8.5f   %s = %7.4f   %s = %8.4f" %\
+            (status,
+             colored(self.bragg.pv.DESC,color, attrs=attrs), bragg,
+             colored(self.perp.pv.DESC, color, attrs=attrs), perp,  #  - args.perpoffset,
+             colored(self.para.pv.DESC, color, attrs=attrs), para)  #  - args.paraoffset)
         
     def prettyline(self, color="white"):
-        print colored('='*65, color)
+        print colored('='*80, color)
 
 
 ################################################################################
@@ -450,42 +477,60 @@ class Mirror():
 
 KTOE = 3.8099819442818976
 class StepScan():
-    def __init__(self, fname=None):
-        self.columns = ('I0', 'It', 'Ir')
-        self.filename = fname
-        self.handle = open(fname, 'w')
+    def __init__(self, fname=None, xtals='111', element=None, e0=None, edge='K',
+                 material=None, monodir='increasing'):
+        self.columns   = ('I0', 'It', 'Ir')
+        self.filename  = fname
+        self.handle    = open(fname, 'w')
+        self.xtals     = xtals
+        self.element   = element
+        self.e0        = e0
+        self.edge      = edge
+        self.material  = material
+        self.direction = monodir
+        self.prep      = ''
+        self.comment   = ''
+        self.grid      = None
+        self.focus     = True
+        self.hr        = True
 
     def etok(self, ee):
         return numpy.sqrt(ee/KTOE)
     def ktoe(self, k):
         return k*k*KTOE
 
-    def file_header(self, element='H', edge='K', e0=0, monodir = 'up', material='increasing',
-                    comment='quick measurement', focus=True, hr=True):
-        self.headers = list(['# XDI/1.0 BMMControls/0',
-                             '# Column.1: energy eV',
-                             '# Element.edge: K',
-                             '# Element.symbol: %s' % element,
-                             '# Scan.edge_energy: %.1f' % e0,
-                             '# Mono.name: Si 111',
-                             '# Mono.d_spacing: 3.13572865',
-                             '# Mono.direction: %s energy' % monodir,
-                             '# Beamline.name: 06BM',
-                             '# Beamline.collimation: paraboloid mirror, 5 nm Rh on 30 nm Pt'])
-        if focus:
+    def file_header(self, dcm=None, material='', comment='quick measurement'):
+        if dcm is None:
+            dcm = DCM(crystals=self.xtals)
+        self.xdi = list(['# XDI/1.0 BMMControls/0',
+                         '# Column.1: energy eV',
+                         '# Element.edge: %s' % self.edge,
+                         '# Element.symbol: %s' % self.element,
+                         '# Scan.edge_energy: %.1f' % self.e0,
+                         '# Mono.name: %s' % dcm.description,
+                         '# Mono.d_spacing: %.7f' % (dcm.twod/2),
+                         '# Mono.direction: %s in energy' % self.direction,
+                         '# Mono.scan_type: step',
+                         '# Beamline.name: 06BM',
+                         '# Beamline.collimation: paraboloid mirror, 5 nm Rh on 30 nm Pt'])
+        if self.focus:
+            self.xdi.append('# Beamline.focusing: torroidal mirror with bender, 5 nm Rh on 30 nm Pt')
+        else:
             self.xdi.append('# Beamline.focusing: none')
-        if hr:
-            self.xdi.append('# Beamline.harmonic_rejection: Rh/Pt mirror')
+        if self.hr:
+            self.xdi.append('# Beamline.harmonic_rejection: Pt stripe; Si stripe below 8 keV')
+        else:
+            self.xdi.append('# Beamline.harmonic_rejection: none')
         self.xdi.extend(['# Facility.name: NSLS-II',
                          '# Facility.energy: 3 GeV',
                          '# Facility.xray_source: NSLS-II three-pole wiggler',
                          '# Scan.start_time: %s' % strftime("%Y-%m-%dT%H:%M:%S"),
                          '# Detector.I0: 10cm  N2',
                          '# Detector.I1: 25cm  N2',
-                         '# Sample.name: %s' % material,
-                         '# Sample.prep: powder on kapton tape',
+                         '# Sample.name: %s' % self.material,
+                         '# Sample.prep: %s' % self.prep,
                          '# ///',
-                         '# %s' % comment,
+                         '# %s' % self.comment,
                          '# -------------------------------------------'])
 
     def column_labels(self, labels=('I0', 'It', 'Ir')):
@@ -504,15 +549,21 @@ class StepScan():
             text = text + h + '\n'
         return text
 
-    ## would be nice to use "k" notation
+    ## this needs to be more generic in terms of lengths of bounds and steps
     def conventional_grid(self, bounds, steps):
+        if (len(bounds) - len(steps)) != 1:
+            return None
+        for i,s in enumerate(bounds):
+            if type(s) is str:
+                this = float(s[:-1])
+                bounds[i] = self.ktoe(this)
         pre   = numpy.arange(self.e0+bounds[0], self.e0+bounds[1], steps[0])
         edge  = numpy.arange(self.e0+bounds[1], self.e0+bounds[2], steps[1])
         begin = self.etok(bounds[2])
-        if bounds[2] > bounds[3]: # 4th bound was a k value
-            end = bounds[3]
-        else:                     # 4th bound was an energy value
-            end = self.etok(bounds[3])
+        # if bounds[2] > bounds[3]: # 4th bound was a k value
+        #     end = bounds[3]
+        # else:                     # 4th bound was an energy value
+        end   = self.etok(bounds[3])
         post  = self.e0+self.ktoe(numpy.arange(begin, end, steps[2]))
         return list(pre) + list(edge) + list(post)
 
