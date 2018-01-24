@@ -82,7 +82,7 @@ if args.absolute:
     
 if args.vertical is not None:
     mirror.direction = 'vertical'
-    mirror.common_text(args.vertical, color='cyan', attrs=['bold']) 
+    mirror.common_text(args.vertical, color='cyan', attrs=['bold'])
     mirror.move((mirror.yu,                      mirror.ydo,                      mirror.ydi),
                 (mirror.yu.pv.RBV+args.vertical, mirror.ydo.pv.RBV+args.vertical, mirror.ydi.pv.RBV+args.vertical))
 
@@ -101,7 +101,8 @@ elif args.pitch is not None:
     angle = angle + args.pitch/1000
     y     = mirror.length * tan(angle)
     yrel  = (y-y0)/2
-    mirror.move((mirror.yu, mirror.ydo, mirror.ydi), (-yrel, yrel, yrel), True)
+    #mirror.move((mirror.yu, mirror.ydo, mirror.ydi), (-yrel, yrel, yrel), True)
+    mirror.move((mirror.yu, mirror.ydo, mirror.ydi), (mirror.yu.pv.RBV-yrel, mirror.ydo.pv.RBV+yrel, mirror.ydi.pv.RBV+yrel), False)
 
 elif args.roll is not None:
     mirror.direction = 'roll'
@@ -120,7 +121,7 @@ elif args.yaw is not None:
     angle = angle + args.yaw/1000
     xx    = mirror.length * tan(angle)
     xxrel = (xx-xx0)/2
-    mirror.move((mirror.xd, mirror.xu), (xxrel, -xxrel), True)
+    mirror.move((mirror.xd, mirror.xu), (mirror.xd.pv.RBV+xxrel, mirror.xu.pv.RBV-xxrel), False)
 
 mirror.prettyprint_motors(color1='green', color2='yellow')
 mirror.direction = None

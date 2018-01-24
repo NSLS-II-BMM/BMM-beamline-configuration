@@ -3,18 +3,20 @@
 from termcolor import colored
 from argparse import ArgumentParser
 parser = ArgumentParser(description="Perform and XAFS step scan")
-parser.add_argument("-e", "--e0",   type=float,   dest="e0", default=None,
+parser.add_argument("-e", "--e0",       type=float,          dest="e0",       default=None,
                     help="edge energy")
-parser.add_argument("-f", "--folder", dest="folder", default=None,
+parser.add_argument("-f", "--folder",                        dest="folder",   default=None,
                     help="folder in data directory")
-parser.add_argument("-d", "--edge",   dest="edge", default='K',
+parser.add_argument("-d", "--edge",                          dest="edge",     default=None,
                     help="edge energy")
-parser.add_argument("-l", "--element",   dest="element", default=None,
+parser.add_argument("-l", "--element",                       dest="element",  default=None,
                     help="absorber element")
-parser.add_argument("-m", "--material",   dest="material", default=None,
+parser.add_argument("-m", "--material",                      dest="material", default=None,
                     help="material description")
-parser.add_argument("-n", "--nscans", type=int,  dest="nscans", default=None,
+parser.add_argument("-n", "--nscans",   type=int,            dest="nscans",   default=None,
                     help="number of scans")
+parser.add_argument("-s", "--start",    type=int,            dest="start",    default=None,
+                    help="starting scan number")
 parser.add_argument("-b", "--bothways", action="store_true", dest="bothways", default=None,
                     help="flag specifying scans in both directions -- default is always up")
 args = parser.parse_args()
@@ -27,7 +29,8 @@ defaults = {'e0'       : 7112,
             'material' : 'Fe foil',
             'comment'  : 'quick measurement',
             'prep'     : '',
-            'nscans'   : 1}
+            'nscans'   : 1,
+            'start'    : 0}
 
 
 import signal
@@ -83,6 +86,14 @@ else:
         p['nscans'] = int(config.get('scan', 'nscans'))
     except ConfigParser.NoOptionError:
         p['nscans'] = defaults['nscans']
+
+if args.start is not None:
+    p['start'] = args.start
+else:
+    try:
+        p['start'] = int(config.get('scan', 'start'))
+    except ConfigParser.NoOptionError:
+        p['start'] = defaults['start']
 
 if args.element is not None:
     p['element'] = args.element
@@ -140,7 +151,7 @@ action = raw_input("q to quit -- any other key to start scans > ")
 if action is 'q':
     exit()
 
-for i in range(0, p['nscans'], 1):
+for i in range(p['start'], p['start']+p['nscans'], 1):
     fname = 'data/%s/%s.%3.3d' % (p['folder'], p['material'], i)
     if os.path.isfile(fname):
         print colored("%s already exists!" % fname, 'red', attrs=['bold'])
@@ -156,7 +167,7 @@ for i in range(0, p['nscans'], 1):
     scan.e0 = float(scan.e0)
     
     #basegrid = scan.xanes_grid(-40,60,0.5)
-    basegrid = scan.conventional_grid([-200,-30,30,'12k'],[10,0.5,0.05])
+    basegrid = scan.conventional_grid([-200,-30,30,'18k'],[10,0.5,0.05])
     if basegrid is None:
         print colored("Invalid step scan parameters", 'red', attrs=['bold'])
     

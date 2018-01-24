@@ -54,53 +54,35 @@ mode_data = {'A': ('E', 'Focused beam @ XAFS table, > 8 keV'),
 ##  5. (DM3 slits)
 ##  6. (DM2 foils) (?)
 
+from BMMcontrols import BMM_Motor, MOTORDATA, GITREPO
 aliases = ('dm3-y', 'xafs_tbl_yu', 'xafs_tbl_ydo', 'xafs_tbl_ydi',
            'm2-jack1', 'm2-jack2', 'm2-jack3', 
            'm3-jack1', 'm3-jack2', 'm3-jack3', 'm3-lateral-u', 'm3-lateral-d',
            'dm3-slits-t', 'dm3-slits-b', 'dm3-slits-i', 'dm3-slits-o')
-
-## ----------------------------------------------------------------------
-## read json file, fetch actual PV names
-with open(args.json) as json_data:
-    data = json.load(json_data)
-
-axes = list()
-for al in aliases:
-    axes.append(data[al]['PV'])
-
-pv_objects = dict();
-pv_values  = dict();
-pv_aliases = dict();
-
-
-    
+motors = []
+allbutbct = []
+for a in aliases:
+   this = BMM_Motor(a)
+   motors.append(this)
+   if a is 'dm3-y':
+      bct = this
+   else:
+      allbutbct.append(this)
 if mode is None:
     mode = raw_input("Which mode? ")
 mode = mode.upper()
 
-## ----------------------------------------------------------------------
-## fetch data from xlsx file and create Motor objects
-# for row in range(1, 100):
-#     this = ws['B%d' % row].value
-#     if this in axes:
-#         pv_values[this]  = ws['%s%d' % (mode_data[mode][0], row)].value
-#         pv_aliases[this] = ws['C%d' % row].value
-#         pv_objects[this] = epics.Motor(this)
+for m in motors:
+   m.target = MOTORDATA[m.alias][mode]
 
-## ----------------------------------------------------------------------
-## fetch data from json file and create Motor objects
-for counter, ax in enumerate(axes):
-    pv_aliases[ax] = aliases[counter]
-    pv_values[ax]  = data[pv_aliases[ax]][mode]
-    pv_objects[ax] = epics.Motor(ax)
-
+   
 ## ----------------------------------------------------------------------
 ## some utility function
 def where():
-    print "   Axis                    current         target"
-    print "  ------------------------------------------------"
-    for ax in axes:
-        print("   %-20s %11.5f --> %11.5f" % (pv_aliases[ax], pv_objects[ax].RBV, pv_values[ax]))
+    print "   Axis                         current          target"
+    print "  -------------------------------------------------------"
+    for mo in motors:
+        print("   %-25s %11.5f --> %11.5f" % (mo.pv.DESC, mo.pv.RBV, mo.target))
     print "\n"
         
 if args.where:
@@ -109,8 +91,9 @@ if args.where:
 
 def handler(signum, frame):
     print '\n\nGot CTRL+C, stopping all motors'
-    for ax in axes:
-        pv_objects[ax].put('STOP', 1)
+    for mo in motors:
+       mo.stop()
+       mo.kill()
     print ""
     where()
     exit(0)
@@ -125,7 +108,7 @@ def message(string):
 
 ## ----------------------------------------------------------------------
 ## initial screen output
-print "Reading data from %s" % os.path.abspath(args.json)
+print "Reading data from %s/%s" % (GITREPO, 'Modes.json')
 print "Moving to mode %s -- %s\n" % (mode, mode_data[mode][1])
 where()
 action = raw_input("s to start moving or q to quit ")
@@ -135,33 +118,32 @@ if action is not 's':
     exit(0)
 else:
     rbvs = list()
-    print colored('       |  XAFS table       |   Mirror 2        |   Mirror 3                    |   Slits',       'blue', attrs=['bold'])
-    print colored('   BCT |  YU    YDO   YDI  |   YU    YDO   YDI |   YU    YDO   YDI   XU    XD  |   top  bottom  in  out', 'blue', attrs=['bold'])
-    for ax in axes:
-        pv = pv_objects[ax]
-        rbvs.append(pv.RBV)
+    print colored('       |  XAFS table       |   Mirror 2        |   Mirror 3                    |   Slits',
+                  'blue', attrs=['bold'])
+    print colored('   BCT |  YU    YDO   YDI  |   YU    YDO   YDI |   YU    YDO   YDI   XU    XD  |   top  bottom  in  out',
+                  'blue', attrs=['bold'])
+    for mo in motors:
+        rbvs.append(mo.pv.RBV)
     sys.stdout.write(template % tuple(rbvs))
-    for ax in axes:
-        if 'XAFS' not in ax:                  # this is an FMBO motor
-            ena = epics.PV("%s_ENA_CMD" % ax) # explicitly enable the axis, which is needed for axes which go into open loop
-            ena.put('1')
-        pv_objects[ax].move(pv_values[ax], wait=False)
+    for mo in motors:
+        if 'XAFS' not in mo.pvname:                  # this is an FMBO motor
+            mo.enable()
+        mo.pv.move(mo.target, wait=False)
 
-    allbutbct = pv_objects.copy() # special case for BCT -- if it is not the last one moving, still need an end condition
-    allbutbct.pop('XF:06BM-BI{BCT-Ax:Y}Mtr', None);
     still_going = True
     while still_going:
         sleep(0.002)
         updt = list()
-        for ax in axes:
-            pv = pv_objects[ax]
-            updt.append(pv.RBV)
+        for mo in motors:
+            updt.append(mo.pv.RBV)
         message(template % tuple(updt))
         sleep(0.250)
 
-        waiting     = not all([pv.done_moving for pv in allbutbct.values()])
-        bct_going   = abs(pv_objects['XF:06BM-BI{BCT-Ax:Y}Mtr'].RBV - pv_values['XF:06BM-BI{BCT-Ax:Y}Mtr']) > 0.01
+        waiting     = not all([mo.pv.done_moving for mo in allbutbct])
+        bct_going   = abs(bct.pv.RBV - bct.target) > 0.01
         still_going = waiting or bct_going
 
 message(template % tuple(updt))
 print '\n\nYou are now in mode %s' % mode
+for mo in motors:
+   mo.kill()

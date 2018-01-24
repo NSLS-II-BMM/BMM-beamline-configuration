@@ -37,7 +37,7 @@ def handler(signum, frame):
         ax.stop()
         ax.kill()
     print ""
-    self.prettyprint_motors(self.pitch, self.roll, self.x, color="red", status="current")
+    self.prettyprint_three_motors(self.pitch, self.roll, self.x, color="red", status="current")
     exit()
 
 signal.signal(signal.SIGINT, handler)

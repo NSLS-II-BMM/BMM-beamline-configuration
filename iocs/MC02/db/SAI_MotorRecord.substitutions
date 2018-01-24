@@ -1,7 +1,7 @@
 file /opt/epics/modules/SAI/db/SAI_MotorRecord.template {
 pattern {ASYNPORT,      PMACPORT,       TMOT,   PMAC_MTR,       P,              R,                      AXIS,           DESC,             MRES,       PREC,   EGU,    VEL,    TACC,      OFFS,           HSLM,           LSLM,      ALIAS}
-        { "pmac",       "PMAC",         1.0,    1,              "XF:06BMA-OP",  "{Mono:DCM1-Ax:",       "Bragg}Mtr",    "Bragg",          0.000005,   6,      "deg",  0.5,    0.1,       16.7228,        42.957195,      -21.39561, dcm-bragg}
-        { "pmac",       "PMAC",         1.0,    2,              "XF:06BMA-OP",  "{Mono:DCM1-Ax:",       "Bragg2}Mtr",   "Bragg Sec Enc",  0.000005,   6,      "deg",  0.5,    0.1,       16.7228,        0,              0,         dcm-bragg2}
+        { "pmac",       "PMAC",         1.0,    1,              "XF:06BMA-OP",  "{Mono:DCM1-Ax:",       "Bragg}Mtr",    "Bragg",          0.000005,   6,      "deg",  0.5,    0.1,       16.5648,        42.957195,      -21.39561, dcm-bragg}
+        { "pmac",       "PMAC",         1.0,    2,              "XF:06BMA-OP",  "{Mono:DCM1-Ax:",       "Bragg2}Mtr",   "Bragg Sec Enc",  0.000005,   6,      "deg",  0.5,    0.1,       16.5648,        0,              0,         dcm-bragg2}
         { "pmac",       "PMAC",         1.0,    3,              "XF:06BMA-OP",  "{Mono:DCM1-Ax:",       "P2}Mtr",       "2nd Xtal Pitch", 0.00043,    4,      "mrad", 0.42,   0.1,       6.1362,         14.1351,        -26.4075,  dcm-pitch}
         { "pmac",       "PMAC",         1.0,    4,              "XF:06BMA-OP",  "{Mono:DCM1-Ax:",       "R2}Mtr",       "2nd Xtal Roll",  0.00042,    4,      "mrad", 0.42,   0.1,       9.94056,        11.9532,        -31.8339,  dcm-roll}
         { "pmac",       "PMAC",         1.0,    5,              "XF:06BMA-OP",  "{Mono:DCM1-Ax:",       "Per2}Mtr",     "2nd Xtal Perp",  0.0001,     4,      "mm",   0.625,  0.1,       25.2427,        26.5,           1.39,      dcm-perp}

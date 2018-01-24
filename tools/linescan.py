@@ -5,13 +5,16 @@ import signal
 
 
 
-x = epics.Motor('xafs_linx')
+x     = epics.Motor('xafs_liny')
+x0    = 101.7
+width = 1.0
+step  = 0.02
 
 
 ## ----- deal with plotting
 import numpy
 import matplotlib         as mpl
-mpl.use('Qt4Agg')
+#mpl.use('TkAgg')
 import matplotlib.pyplot as plt
 pos = numpy.array([])
 sig = numpy.array([])
@@ -22,8 +25,7 @@ plt.ion()
 plt.show()
 
 current = float(x.get('RBV'))
-x0 = -4.2
-handle = open('line.dat', 'w')
+handle = open('line-y-unfocused.dat', 'w')
 
 def handler(signum, frame):
     print '\n\nGot CTRL+C, stopping motor scan!'
@@ -34,8 +36,7 @@ def handler(signum, frame):
 
 signal.signal(signal.SIGINT, handler)
 
-
-for p in numpy.arange(x0-2.0, x0+2.0, 0.1):
+for p in numpy.arange(x0-width, x0+width, step):
     x.move(p, wait=True)
     waiting = True
     while waiting:
@@ -43,9 +44,9 @@ for p in numpy.arange(x0-2.0, x0+2.0, 0.1):
         waiting = not x.done_moving
     values = [p]
     values.extend(ic.measure())
-    numpy.append(pos, [p])
+    pos = numpy.append(pos, [p])
     signal = values[2]/values[1]
-    numpy.append(sig, numpy.array([signal]))
+    sig = numpy.append(sig, numpy.array([signal]))
 
     line = " %.3f   %.7g   %.7g   %.7g\n" % tuple(values)
     print line[:-1], signal
@@ -57,7 +58,7 @@ for p in numpy.arange(x0-2.0, x0+2.0, 0.1):
     plt.xlabel('position (mm)')
     plt.ylabel('it/i0')
     plt.plot(pos, sig)
-    plt.xlim(x0-2.0, x0+2.0)
+    plt.xlim(x0-width, x0+width)
     plt.ylim(0, 2.0)
     plt.draw()
     plt.pause(0.001)
