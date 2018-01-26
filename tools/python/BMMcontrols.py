@@ -14,6 +14,12 @@ HBARC = 1973.27053324
 GITREPO = '/home/bravel/git/BMM-beamline-configuration/'
 MOTORDATA = json.load(open(os.path.join(GITREPO, 'Modes.json')))
 
+KTOE = 3.8099819442818976
+def etok(ee):
+    return numpy.sqrt(ee/KTOE)
+def ktoe(k):
+    return k*k*KTOE
+
 ################################################################################
 ################################################################################
 ################################################################################
@@ -48,19 +54,24 @@ class BMM_Motor():
             self.kill_pv   = epics.PV(MOTORDATA[alias]['PV']+'_KILL_CMD.PROC')
             self.enable_pv = epics.PV(MOTORDATA[alias]['PV']+"_ENA_CMD.PROC")
             self.home_pv   = None # epics.PV(MOTORDATA[alias]['PV']+"_HOME_CMD_PROC")
+        if 'lateral' in alias:
+            self.invacuum = 1
             
     def stop(self):
-        self.pv.put('STOP', 1)
-        
+        if self.pv.get('MOVN'):
+            self.pv.put('STOP', 1, wait=True)
+        if self.invacuum:
+            self.kill_pv.put(1)
+
     def enable(self):
         self.enable_pv.put(1)
         
     def kill(self, really=False):
         if self.kill_pv is not None:
             if self.invacuum:
-                self.kill_pv.put('1')
+                self.kill_pv.put(1)
             elif really:
-                self.kill_pv.put('1')
+                self.kill_pv.put(1)
 
 
     def one_axis_move(self, val, rel=False):
@@ -125,13 +136,17 @@ class DCM():
         self.perp.invacuum = self.para.invacuum = self.pitch.invacuum = self.roll.invacuum = True
         self.paraoffset    = 0
         self.perpoffset    = 0
+        self.channelcut    = False
         
     def xtals(self, crystals='111'):
         if crystals is '311':
             self.twod = 2*1.63761489
             self.description = 'Si(311)'
         else:
-            self.twod = 2*3.13543952
+            ## smaller beam
+            #self.twod = 2*3.13543952
+            ## larger beam 23 Jan 2018
+            self.twod = 2*3.13597211
             self.description = 'Si(111)'
 
     def is311(self):
@@ -166,14 +181,14 @@ class DCM():
         return self.mono_offset / (2*cos(angle))
     
     def kill(self, axis):
-        axis.kill_pv.put('1')
+        axis.kill_pv.put(1)
         return 1
 
     def kill_invacuum(self):
-        self.perp.kill_pv.put('1')
-        self.para.kill_pv.put('1')
-        self.pitch.kill_pv.put('1')
-        self.roll.kill_pv.put('1')
+        self.perp.kill()
+        self.para.kill()
+        self.pitch.kill()
+        self.roll.kill()
 
     def seven(self):
         return(self.bragg, self.perp, self.para, self.pitch, self.roll, self.x, self.y)
@@ -183,8 +198,11 @@ class DCM():
         for ax in self.seven():
             ax.stop()
         print ""
-        self.kill_invacuum()
         self.prettyprint_three_motors(self.bragg, self.perp, self.para, color="red", status="current")
+        #self.kill_invacuum()
+        #sleep(0.5)
+        self.roll.kill()
+        action = raw_input("any key to quit > ")
         exit()
         
     def moveto(self, energy, para=None, perp=None, quiet=False):
@@ -200,9 +218,14 @@ class DCM():
             perp = self.perpendicular(energy) + self.perpoffset
 
         angle    = self.angle(energy)
-        axes     = (self.bragg, self.perp, self.para)
-        template = ' bragg, perp, para --> %8.4f  %8.4f  %8.4f'
-        newvals  = (angle, perp, para)
+        if self.channelcut:
+            axes     = (self.bragg,)
+            template = ' bragg --> %8.4f'
+            newvals  = (angle,)
+        else:
+            axes     = (self.bragg, self.perp, self.para)
+            template = ' bragg, perp, para --> %8.4f  %8.4f  %8.4f'
+            newvals  = (angle, perp, para)
         self.generic_move(axes, newvals, template, quiet)
         self.kill_invacuum()
         return self.current_energy()
@@ -262,6 +285,17 @@ class DCM():
             message(template % tuple(updt))
             print '\n'
 
+    def channelcut_energy(self, e0, bounds):
+        for i,s in enumerate(bounds):
+            if type(s) is str:
+                this = float(s[:-1])
+                bounds[i] = ktoe(this)
+        amin = self.angle(e0+bounds[0])
+        amax = self.angle(e0+bounds[-1])
+        aave = (amin + amax) / 2
+        wavelength = self.wavelength(aave)
+        eave = self.e2l(wavelength)
+        return eave
     
     def prettyprint_energy(self, energy, status="Mono at", color="white", attrs=None):
         # print "%s = %.1f   %s = %s   (perp/para offset = %.2f/%.2f)" % \
@@ -400,7 +434,8 @@ class Mirror():
         ## start moving...
         for ax, val in zip(axes, vals):
             if not ax.pv.within_limits(val):
-                print colored("Request to move outside limits on %s" % ax.pv.DESC, 'red', attrs=['bold'])
+                print colored("\nRequest to move outside limits on %s" % ax.pv.DESC, 'red', attrs=['bold'])
+                print colored("Requested %.3f   Current %.3f" % (val, ax.pv.RBV), 'red', attrs=['bold'])
                 exit()
             if not ax.disconnected:
                 ax.pv.move(val, relative=rel, wait=False)
@@ -475,29 +510,25 @@ class Mirror():
 ################################################################################
 ################################################################################
 
-KTOE = 3.8099819442818976
 class StepScan():
     def __init__(self, fname=None, xtals='111', element=None, e0=None, edge='K',
                  material=None, monodir='increasing'):
-        self.columns   = ('I0', 'It', 'Ir')
-        self.filename  = fname
-        self.handle    = open(fname, 'w')
-        self.xtals     = xtals
-        self.element   = element
-        self.e0        = e0
-        self.edge      = edge
-        self.material  = material
-        self.direction = monodir
-        self.prep      = ''
-        self.comment   = ''
-        self.grid      = None
-        self.focus     = True
-        self.hr        = True
+        self.columns    = ('I0', 'It', 'Ir')
+        self.filename   = fname
+        self.handle     = open(fname, 'w')
+        self.xtals      = xtals
+        self.element    = element
+        self.e0         = e0
+        self.edge       = edge
+        self.material   = material
+        self.direction  = monodir
+        self.prep       = ''
+        self.comment    = ''
+        self.grid       = None
+        self.focus      = True
+        self.hr         = True
+        self.channelcut = False
 
-    def etok(self, ee):
-        return numpy.sqrt(ee/KTOE)
-    def ktoe(self, k):
-        return k*k*KTOE
 
     def file_header(self, dcm=None, material='', comment='quick measurement'):
         if dcm is None:
@@ -513,14 +544,22 @@ class StepScan():
                          '# Mono.scan_type: step',
                          '# Beamline.name: 06BM',
                          '# Beamline.collimation: paraboloid mirror, 5 nm Rh on 30 nm Pt'])
+        
         if self.focus:
             self.xdi.append('# Beamline.focusing: torroidal mirror with bender, 5 nm Rh on 30 nm Pt')
         else:
             self.xdi.append('# Beamline.focusing: none')
+            
         if self.hr:
             self.xdi.append('# Beamline.harmonic_rejection: Pt stripe; Si stripe below 8 keV')
         else:
             self.xdi.append('# Beamline.harmonic_rejection: none')
+            
+        if self.channelcut:
+            self.xdi.append('# Beamline.dcm_mode: pseudo channel cut')
+        else:
+            self.xdi.append('# Beamline.dcm_mode: fixed exit')
+            
         self.xdi.extend(['# Facility.name: NSLS-II',
                          '# Facility.energy: 3 GeV',
                          '# Facility.xray_source: NSLS-II three-pole wiggler',
@@ -549,24 +588,19 @@ class StepScan():
             text = text + h + '\n'
         return text
 
-    ## this needs to be more generic in terms of lengths of bounds and steps
     def conventional_grid(self, bounds, steps):
         if (len(bounds) - len(steps)) != 1:
             return None
         for i,s in enumerate(bounds):
             if type(s) is str:
                 this = float(s[:-1])
-                bounds[i] = self.ktoe(this)
-        pre   = numpy.arange(self.e0+bounds[0], self.e0+bounds[1], steps[0])
-        edge  = numpy.arange(self.e0+bounds[1], self.e0+bounds[2], steps[1])
-        begin = self.etok(bounds[2])
-        # if bounds[2] > bounds[3]: # 4th bound was a k value
-        #     end = bounds[3]
-        # else:                     # 4th bound was an energy value
-        end   = self.etok(bounds[3])
-        post  = self.e0+self.ktoe(numpy.arange(begin, end, steps[2]))
-        return list(pre) + list(edge) + list(post)
-
-        
-    def xanes_grid(self, emin, emax, step):
-        return numpy.arange(self.e0+emin, self.e0+emax, step)
+                bounds[i] = ktoe(this)
+        grid = list()
+        for i,s in enumerate(steps):
+            if type(s) is str:
+                step = float(s[:-1])
+                ar = self.e0+ktoe(numpy.arange(etok(bounds[i]), etok(bounds[i+1]), step))
+            else:
+                ar = numpy.arange(self.e0+bounds[i], self.e0+bounds[i+1], steps[i])
+            grid = grid + list(ar)
+        return grid

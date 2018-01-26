@@ -58,7 +58,7 @@ from BMMcontrols import BMM_Motor, MOTORDATA, GITREPO
 aliases = ('dm3-y', 'xafs_tbl_yu', 'xafs_tbl_ydo', 'xafs_tbl_ydi',
            'm2-jack1', 'm2-jack2', 'm2-jack3', 
            'm3-jack1', 'm3-jack2', 'm3-jack3', 'm3-lateral-u', 'm3-lateral-d',
-           'dm3-slits-t', 'dm3-slits-b', 'dm3-slits-i', 'dm3-slits-o')
+           'dm3-slit-t', 'dm3-slit-b', 'dm3-slit-i', 'dm3-slit-o')
 motors = []
 allbutbct = []
 for a in aliases:

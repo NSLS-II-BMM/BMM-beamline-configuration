@@ -80,18 +80,18 @@
         "desc": "2ndxtal pitch"
     },
     "dcm-roll": {
-        "A": 8.75364,
-        "A_REP": -2826,
-        "B": 8.75154,
-        "B_REP": -2831,
-        "C": 8.75364,
-        "C_REP": -2825,
-        "D": 8.77716,
-        "D_REP": -2771,
-        "E": 8.77296,
-        "E_REP": -2780,
-        "F": 8.77128,
-        "F_REP": -2784,
+        "A": -6.2601,
+        "A_REP": -38573,
+        "B": -6.2601,
+        "B_REP": -38573,
+        "C": -6.2601,
+        "C_REP": -38573,
+        "D": -6.2601,
+        "D_REP": -38573,
+        "E": -6.2601,
+        "E_REP": -38573,
+        "F": -6.2601,
+        "F_REP": -38573,
         "PV": "XF:06BMA-OP{Mono:DCM1-Ax:R2}Mtr",
         "desc": "2ndxtal roll"
     },
@@ -246,7 +246,7 @@
         "B_REP": -708892,
         "C": -48.1824,
         "C_REP": -523391,
-        "D": 23.1,
+        "D": 27.1,
         "D_REP": 189372,
         "E": 23.1,
         "E_REP": 189372,
@@ -255,7 +255,7 @@
         "PV": "XF:06BM-BI{FS:03-Ax:Y}Mtr",
         "desc": "fluo. screen"
     },
-    "dm3-slits-b": {
+    "dm3-slit-b": {
         "A": -6.1003,
         "A_REP": -34835,
         "B": -4.1998,
@@ -271,7 +271,7 @@
         "PV": "XF:06BM-BI{Slt:02-Ax:B}Mtr",
         "desc": "dm3 bottom"
     },
-    "dm3-slits-i": {
+    "dm3-slit-i": {
         "A": 0.2395,
         "A_REP": 42146,
         "B": 0.0908,
@@ -287,7 +287,7 @@
         "PV": "XF:06BM-BI{Slt:02-Ax:I}Mtr",
         "desc": "dm3 inboard"
     },
-    "dm3-slits-o": {
+    "dm3-slit-o": {
         "A": -8.2496,
         "A_REP": -91165,
         "B": -7.7001,
@@ -303,7 +303,7 @@
         "PV": "XF:06BM-BI{Slt:02-Ax:O}Mtr",
         "desc": "dm3 outboard"
     },
-    "dm3-slits-t": {
+    "dm3-slit-t": {
         "A": 6.8,
         "A_REP": 58500,
         "B": 0.7298,

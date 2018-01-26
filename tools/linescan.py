@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import epics
 from time import sleep
 from BMMcontrols import IonChambers
@@ -5,10 +7,10 @@ import signal
 
 
 
-x     = epics.Motor('xafs_liny')
-x0    = 101.7
-width = 1.0
-step  = 0.02
+x     = epics.Motor('xafs_linx')
+x0    = 44.8
+width = 8
+step  = 0.5
 
 
 ## ----- deal with plotting
@@ -25,7 +27,7 @@ plt.ion()
 plt.show()
 
 current = float(x.get('RBV'))
-handle = open('line-y-unfocused.dat', 'w')
+handle = open('linx.dat', 'w')
 
 def handler(signum, frame):
     print '\n\nGot CTRL+C, stopping motor scan!'

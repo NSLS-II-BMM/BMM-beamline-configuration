@@ -1,36 +1,47 @@
+#!/usr/bin/env python
 
+import warnings
+warnings.filterwarnings("ignore",".*GUI is implemented.*")
 
 from termcolor import colored
 from argparse import ArgumentParser
 parser = ArgumentParser(description="Perform and XAFS step scan")
-parser.add_argument("-e", "--e0",       type=float,          dest="e0",       default=None,
+parser.add_argument("-e", "--e0",       type=float,            dest="e0",         default=None,
                     help="edge energy")
-parser.add_argument("-f", "--folder",                        dest="folder",   default=None,
+parser.add_argument("-f", "--folder",                          dest="folder",     default=None,
                     help="folder in data directory")
-parser.add_argument("-d", "--edge",                          dest="edge",     default=None,
+parser.add_argument("-d", "--edge",                            dest="edge",       default=None,
                     help="edge energy")
-parser.add_argument("-l", "--element",                       dest="element",  default=None,
+parser.add_argument("-l", "--element",                         dest="element",    default=None,
                     help="absorber element")
-parser.add_argument("-m", "--material",                      dest="material", default=None,
+parser.add_argument("-m", "--material",                        dest="material",   default=None,
                     help="material description")
-parser.add_argument("-n", "--nscans",   type=int,            dest="nscans",   default=None,
+parser.add_argument("-n", "--nscans",   type=int,              dest="nscans",     default=None,
                     help="number of scans")
-parser.add_argument("-s", "--start",    type=int,            dest="start",    default=None,
+parser.add_argument("-s", "--start",    type=int,              dest="start",      default=None,
                     help="starting scan number")
-parser.add_argument("-b", "--bothways", action="store_true", dest="bothways", default=None,
+parser.add_argument("-b", "--bothways",   action="store_true", dest="bothways",   default=None,
                     help="flag specifying scans in both directions -- default is always up")
+parser.add_argument("-c", "--channelcut", action="store_true", dest="channelcut", default=None,
+                    help="flag specifying to scan in pseudo-channel-cut mode -- default is not")
+parser.add_argument("-q", "--quiet",      action="store_true", dest="quiet",      default=False,
+                    help="suppress all in-scan screen output")
 args = parser.parse_args()
 
 
-defaults = {'e0'       : 7112,
-            'edge'     : 'K',
-            'folder'   : 'data',
-            'element'  : 'Fe',
-            'material' : 'Fe foil',
-            'comment'  : 'quick measurement',
-            'prep'     : '',
-            'nscans'   : 1,
-            'start'    : 0}
+defaults = {'e0'         : 7112,
+            'edge'       : 'K',
+            'folder'     : 'data',
+            'element'    : 'Fe',
+            'material'   : 'Fe foil',
+            'comment'    : 'quick measurement',
+            'prep'       : '',
+            'nscans'     : 1,
+            'start'      : 0,
+            'bothways'   : False,
+            'channelcut' : False,
+            'focus'      : True,
+            'hr'         : False}
 
 
 import signal
@@ -68,49 +79,59 @@ import ConfigParser
 config = ConfigParser.ConfigParser()
 config.readfp(open('scan.ini'))
 
+## ----- scan regions
+bounds = []
+try:
+    for f in config.get('scan', 'bounds').split():
+        try:
+            bounds.append(float(f))
+        except:
+            bounds.append(f)
+except:
+    bounds = [-200.0, -30.0, 30.0, '15k']
+
+steps = []
+try:
+    for f in config.get('scan', 'steps').split():
+        try:
+            steps.append(float(f))
+        except:
+            steps.append(f)
+except:
+    steps = [10.0, 0.5, '0.5k']
+
+times = []
+try:
+    for f in config.get('scan', 'times').split():
+        times.append(float(f))
+except:
+    times = [0.5, 0.5, 0.5]
+    
+
+## ----- all other scan parameters
 p = dict()
 
-if args.folder is not None:
-    p['folder'] = args.folder
-else:
-    try:
-        p['folder'] = config.get('scan', 'folder')
-    except ConfigParser.NoOptionError:
-        p['folder'] = defaults['folder']
+## strings
+for a in ('folder', 'element', 'edge', 'material'):
+    if getattr(args, a) is not None:
+        p[a] = getattr(args, a)
+    else:
+        try:
+            p[a] = config.get('scan', a)
+        except ConfigParser.NoOptionError:
+            p[a] = defaults[a]
 
-        
-if args.nscans is not None:
-    p['nscans'] = args.nscans
-else:
-    try:
-        p['nscans'] = int(config.get('scan', 'nscans'))
-    except ConfigParser.NoOptionError:
-        p['nscans'] = defaults['nscans']
+## integers
+for a in ('start', 'nscans'):
+    if getattr(args, a) is not None:
+        p[a] = getattr(args, a)
+    else:
+        try:
+            p[a] = int(config.get('scan', a))
+        except ConfigParser.NoOptionError:
+            p[a] = defaults[a]
 
-if args.start is not None:
-    p['start'] = args.start
-else:
-    try:
-        p['start'] = int(config.get('scan', 'start'))
-    except ConfigParser.NoOptionError:
-        p['start'] = defaults['start']
-
-if args.element is not None:
-    p['element'] = args.element
-else:
-    try:
-        p['element'] = config.get('scan', 'element')
-    except ConfigParser.NoOptionError:
-        p['element'] = defaults['element']
-
-if args.edge is not None:
-    p['edge'] = args.edge
-else:
-    try:
-        p['edge'] = config.get('scan', 'edge')
-    except ConfigParser.NoOptionError:
-        p['edge'] = defaults['edge']
-
+## floats
 if args.e0 is not None:
     p['e0'] = args.e0
 else:
@@ -119,55 +140,80 @@ else:
     except ConfigParser.NoOptionError:
         p['e0'] = defaults['e0']
 
-if args.material is not None:
-    p['material'] = args.material
-else:
-    try:
-        p['material'] = config.get('scan', 'material')
-    except ConfigParser.NoOptionError:
-        p['material'] = defaults['material']
 
-if args.bothways is not None:
-    p['bothways'] = args.bothways
-else:
+## booleans
+for a in ('bothways', 'channelcut'):        
+    if getattr(args, a) is not None:
+        p[a] = getattr(args, a)
+    else:
+        try:
+            p[a] = config.getboolean('scan', a)
+        except ConfigParser.NoOptionError:
+            p[a] = defaults[a]
+for a in ('focus', 'hr'):
     try:
-        p['bothways'] = config.getboolean('scan', 'bothways')
+        p[a] = config.getboolean('scan', a)
     except ConfigParser.NoOptionError:
-        p['bothways'] = defaults['bothways']
+        p[a] = defaults[a]
+            
 
 ################################################################################
         
 if not os.path.isdir('data/%s' % p['folder']):
     mkdir('data/%s' % p['folder'])
 
+
+## ----- verify scan parameters before moving on
 fname = 'data/%s/%s.###' % (p['folder'], p['material'])
 print ''
 for item in sorted(p.keys()):
-    print '%s : %s' % (colored('%-9s'%item, 'green'), p[item])
+    print '%s : %s' % (colored('%-10s'%item, 'green'), p[item])
+
+print colored('\ngrid boundaries', 'cyan'), '   :', bounds
+print colored('grid steps', 'cyan'), '        :', steps       
+if p["channelcut"]:
+    channelenergy = dcm.channelcut_energy(p["e0"], bounds)
+    print '%s : %.1f' % (colored('channel cut energy', 'cyan'), channelenergy)
+
 print '\n%s : %s' % (colored('files written to', 'cyan'), fname)
 print ''
+
+
+
 
 action = raw_input("q to quit -- any other key to start scans > ")
 if action is 'q':
     exit()
 
+## ----- check if shutter is open
+shutter_status = epics.PV("XF:06BM-PPS{Sh:A}Pos-Sts")
+while shutter_status.get():
+    print "\n", colored("Shutter is closed!  Open the shutter, then ...", "red", attrs=["bold"])
+    action = raw_input("q to quit -- any other key to start scans > ")
+    if action is 'q':
+        exit()
+
+if p["channelcut"]:
+    print "Moving to %.1f and setting pseudo channelcut mode" % channelenergy
+    dcm.moveto(channelenergy, quiet=True)
+    dcm.channelcut = True
+        
+
+    
 for i in range(p['start'], p['start']+p['nscans'], 1):
     fname = 'data/%s/%s.%3.3d' % (p['folder'], p['material'], i)
     if os.path.isfile(fname):
         print colored("%s already exists!" % fname, 'red', attrs=['bold'])
         exit()
-    print fname
+    if not args.quiet:
+        print fname
     scan = StepScan(fname=fname)
-    for item in defaults.keys():
-        if item in ('nscans', 'bothways'): continue
-        try:
-            setattr(scan, item, config.get('scan', item))
-        except ConfigParser.NoOptionError:
-            setattr(scan, item, defaults[item])
+    for item in p.keys():
+        setattr(scan, item, p[item])
+
     scan.e0 = float(scan.e0)
-    
-    #basegrid = scan.xanes_grid(-40,60,0.5)
-    basegrid = scan.conventional_grid([-200,-30,30,'18k'],[10,0.5,0.05])
+
+    basegrid = scan.conventional_grid(bounds,steps)
     if basegrid is None:
         print colored("Invalid step scan parameters", 'red', attrs=['bold'])
     
@@ -196,7 +242,8 @@ for i in range(p['start'], p['start']+p['nscans'], 1):
         values.extend(ic.measure())
 
         line = " %.3f   %.7g   %.7g   %.7g\n" % tuple(values)
-        print line[:-1]
+        if not args.quiet:
+            print line[:-1]
         scan.handle.write(line)
         energy = numpy.append(energy, [en])
         mu     = numpy.append(mu,     [numpy.log(values[1]/values[2])])
@@ -210,5 +257,13 @@ for i in range(p['start'], p['start']+p['nscans'], 1):
         plt.draw()
         plt.pause(0.001)
 
-    plt.close()
     scan.handle.close()
+
+if p["channelcut"]:
+    print "Moving to %.1f and returning to fixed exit mode" % channelenergy
+    dcm.channelcut = False
+    dcm.moveto(channelenergy, quiet=True)
+
+action = raw_input("RET to quit ")
+plt.close()
+    
