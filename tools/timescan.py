@@ -16,7 +16,7 @@ saveat = avgtm.get()
 avgtm.put(0.1)
 
 #ic1 = epics.PV("XF:06BM-BI{EM:1}EM180:Current1:MeanValue_RBV")
-scalar = epics.PV("XF:06BM-BI{EM:1}EM180:Current1:MeanValue_RBV")
+scalar = epics.PV("XF:06BM-BI{EM:1}EM180:Current2:MeanValue_RBV")
 
 elapsed = numpy.array([])
 reading = numpy.array([])

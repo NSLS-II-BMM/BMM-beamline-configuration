@@ -1,12 +1,12 @@
 file /opt/epics/modules/SAI/db/SAI_MotorRecord.template {
-pattern { ASYNPORT,	PMACPORT,	TMOT,	PMAC_MTR,P,		R,		AXIS,      DESC,	                 MRES,	        PREC,	EGU,	VEL,	TACC, 	OFFS, 	 HSLM, 	        LSLM,         ALIAS}
-	{ "pmac",	"PMAC",		1.0,	1,	"XF:06BMA-OP",	"{Mir:M2-Ax:",	"YU}Mtr",  "Mir:M2 - JACK 1, YU",	 0.0001,	4,	"mm",	0.2,	0.2,	-0.65,	 8.99422,	-10.98466,    m2-jack1}
-	{ "pmac",	"PMAC",		1.0,	2,	"XF:06BMA-OP",	"{Mir:M2-Ax:",	"YDO}Mtr", "Mir:M2 - JACK 2, YDO",	 0.0001,	4,	"mm",	0.2,	0.2,	0.89,	 10.607985,	-9.11639,     m2-jack2}
-	{ "pmac",	"PMAC",		1.0,	3,	"XF:06BMA-OP",	"{Mir:M2-Ax:",	"YDI}Mtr", "Mir:M2 - JACK 3, YDI",	 0.0001,	4,	"mm",	0.2,	0.2,	0.3,	 10.65007,	-9.285585,    m2-jack3}
-	{ "pmac",	"PMAC",		1.0,	4,	"XF:06BMA-OP",	"{Mir:M2-Ax:",	"XU}Mtr",  "Mir:M2 - LATERAL 1, XU",	 0.0001,	4,	"mm",	0.3,	0.2,	1.219,	 9.532015,	-9.81635,     m2-lateral-u}
-	{ "pmac",	"PMAC",		1.0,	5,	"XF:06BMA-OP",	"{Mir:M2-Ax:",	"XD}Mtr",  "Mir:M2 - LATERAL 2, XD",	 0.0001,	4,	"mm",	0.3,	0.2,	2.75,	 10.771195,	-8.66343,     m2-lateral-d}
-	{ "pmac",	"PMAC",		1.0,	6,	"XF:06BMA-OP",	"{Mir:M2-Ax:",	"Bend}Mtr","Mir:M2 - Bender, Bend",	 1,		1,	"step",	1000,	0.2,	0,	 201237.55,	-6322,	      m2-bender}
-	{ "pmac",	"PMAC",		1.0,	7,	"XF:06BMA-BI",	"{Diag:02-Ax:",	"Y}Mtr",   "Diag:02 - FS:02, Y", 	 0.0001, 	4,	"mm",	0.8,	0.2,	34.057,	 76,		-10.1,        dm2-screen-foils}
-#	{ "pmac",	"PMAC",		1.0,	8,	"XF:06BMA-OP",	"{Mir:M2-Ax:",	"ZZZ}Mtr", "Mir:M2 - UNDEF AXIS 8, ZZZ", 0.0001,	4,	"mm",	0.2,	0.5,	-2.6167, 5.7,	        -5.1}
+pattern { ASYNPORT,     PMACPORT,       TMOT,   PMAC_MTR,P,             R,              AXIS,    DESC,          MRES,   PREC,   EGU,    VEL,    TACC,   OFFS,    HSLM,   LSLM,  ALIAS}
+        { "pmac",       "PMAC",         1.0,    1,      "XF:06BM-BI",   "{FS:03-Ax:",   "Y}Mtr", "FS:03 Y",     0.0001, 4,      "mm",   0.8,    0.5,    4.1568,  74,     -6.5,  dm3-screen}
+        { "pmac",       "PMAC",         1.0,    2,      "XF:06BM-BI",   "{BPM:1-Ax:",   "Y}Mtr", "BPM:1 - Y",   0.0001, 4,      "mm",   0.3,    0.5,   -3.365,   10,     -4.8,  dm3-bpm-y}
+        { "pmac",       "PMAC",         1.0,    3,      "XF:06BM-BI",   "{BCT-Ax:",     "Y}Mtr", "BCT - Y",     0.0001, 4,      "mm",   0.3,    0.5,    3.5827,  78,     -7.5,  dm3-y}
+        { "pmac",       "PMAC",         1.0,    4,      "XF:06BM-BI",   "{Fltr:01-Ax:", "Y}Mtr", "Fltr:01 - Y", 0.0001, 4,      "mm",   0.3,    0.5,   -2.75,    42.5,   -6.3,  dm3-foils}
+        { "pmac",       "PMAC",         1.0,    5,      "XF:06BM-BI",   "{Slt:02-Ax:",  "O}Mtr", "Slt:02 - O",  0.0001, 4,      "mm",   0.3,    0.5,    0.8669,  8.65,   -8.55, dm3-slit-o}
+        { "pmac",       "PMAC",         1.0,    6,      "XF:06BM-BI",   "{Slt:02-Ax:",  "I}Mtr", "Slt:02 - I",  0.0001, 4,      "mm",   0.3,    0.5,   -3.9752,  3.5,    -13.1, dm3-slit-i}
+        { "pmac",       "PMAC",         1.0,    7,      "XF:06BM-BI",   "{Slt:02-Ax:",  "T}Mtr", "Slt:02 - T",  0.0001, 4,      "mm",   0.3,    0.5,    0.954,   6.9,    -3.2,  dm3-slit-t}
+        { "pmac",       "PMAC",         1.0,    8,      "XF:06BM-BI",   "{Slt:02-Ax:",  "B}Mtr", "Slt:02 - B",  0.0001, 4,      "mm",   0.3,    0.5,   -2.6167,  3.7,    -7.0,  dm3-slit-b}
 }
 

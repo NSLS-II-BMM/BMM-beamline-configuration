@@ -1,12 +1,13 @@
 file /opt/epics/modules/SAI/db/SAI_MotorHoming.template {
 pattern {	ASYNPORT,	TMOT,	SCAN,		PMAC_MTR,	P,		R,		AXIS,	EGU,	AXISSCALE,	HVEL}
-        { 	"pmac",		1.0,	".2 second",	"1",		"XF:06BMA-OP",	"{Mir:M3-Ax:",	"YU}Mtr","mm",	0.0001,		0.2}
-        { 	"pmac",		1.0,	".2 second",	"2",		"XF:06BMA-OP",	"{Mir:M3-Ax:",	"YDO}Mtr","mm",	0.0001,		0.2}
-        { 	"pmac",		1.0,	".2 second",	"3",		"XF:06BMA-OP",	"{Mir:M3-Ax:",	"YDI}Mtr","mm",	0.0001,		0.2}
-        { 	"pmac",		1.0,	".2 second",	"4",		"XF:06BMA-OP",	"{Mir:M3-Ax:",	"XU}Mtr","mm",	0.0001,		0.3}
-        { 	"pmac",		1.0,	".2 second",	"5",		"XF:06BMA-OP",	"{Mir:M3-Ax:",	"XD}Mtr","mm",	0.0001,		0.3}
+        { 	"pmac",		1.0,	".2 second",	"1",		"XF:06BMA-OP",	"{Mir:M3-Ax:",	"YU}Mtr","mm",	1,		0.2}
+        { 	"pmac",		1.0,	".2 second",	"2",		"XF:06BMA-OP",	"{Mir:M3-Ax:",	"YDO}Mtr","mm",	1,		0.2}
+        { 	"pmac",		1.0,	".2 second",	"3",		"XF:06BMA-OP",	"{Mir:M3-Ax:",	"YDI}Mtr","mm",	1,		0.2}
+        { 	"pmac",		1.0,	".2 second",	"4",		"XF:06BMA-OP",	"{Mir:M3-Ax:",	"XU}Mtr","mm",	1,		0.3}
+        { 	"pmac",		1.0,	".2 second",	"5",		"XF:06BMA-OP",	"{Mir:M3-Ax:",	"XD}Mtr","mm",	1,		0.3}
         { 	"pmac",		1.0,	".2 second",	"6",		"XF:06BMA-BI",	"{Fltr:01-Ax:",	"Y1}Mtr","mm",	1,		0.4}
         { 	"pmac",		1.0,	".2 second",	"7",		"XF:06BMA-BI",	"{Fltr:01-Ax:",	"Y2}Mtr","mm",	1,		0.4}
 #        { 	"pmac",		1.0,	".2 second",	"8",		"XF:06BMA-OP",	"{Mir:M1-Ax:",	"ZZZ}Mtr","cts",	1,		10}
 }
 
+## change AXISSCALE for Mirror axes from 0.0001 to 1
