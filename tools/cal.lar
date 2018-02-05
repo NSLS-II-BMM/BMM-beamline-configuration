@@ -1,0 +1,65 @@
+
+
+# 'ti', 'v', 'cr', 'mn', 'fe',          
+elements = ('co', 'ni', 'cu', 'zn',
+            'pt', 'au', 'pb', 'nb' , 'mo')
+
+    
+edges = {
+    'mo':   (20017.7, 20000,  5.668331),
+    'nb':   (18998.0, 18986,  5.973652),
+    'pb':   (13042.2, 13035,  8.719418),
+    'au':   (11925.1, 11919,  9.543523),
+    'pt':   (11568.1, 11564,  9.840929),
+    'zn':   ( 9665.5,  9659, 11.803551),
+    'cu':   ( 8984.5,  8979, 12.712648),
+    'ni':   ( 8335.0,  8333, 13.721914),
+    'co':   ( 7712.5,  7709, 14.853929)}
+    #'fe':   ( 7112.1,  7112, 16.139171),
+    #'mn':   ( 6538.7,  6539, 17.598664),
+    #'cr':   ( 5989.7,  5989, 19.272420),
+    #'v' :   ( 5464.5,  5465, 21.209708),
+    #'ti':   ( 4964.9,  4966, 23.464913)}
+
+hbarc = 1973.27053324
+def match(p):
+    d_spacing = p.d.value
+    offset = p.offset.value
+    ener = p.energy
+    angle = p.theta 
+    
+    fit = (2*pi*hbarc) / (2*d_spacing*sin((p.theta+offset)*pi/180))
+    func = ener - fit
+    return func
+enddef         
+
+tabulated = list()
+ee = list()
+tt = list()
+for el in elements:
+    ee.append(edges[el][1])
+    tt.append(edges[el][2])
+#endfor
+
+e = array(ee)
+th = array(tt)
+
+p = group(d      = param(3.1356, vary=True),
+          offset = param(0, vary=True),
+          energy = e.copy(),
+          theta  = th.copy())
+
+fit = minimize(match, p) 
+print fit_report(fit)
+
+theta = arange(24.0,5.0,-0.1)
+energy = (2*pi*hbarc) / (2*p.d*sin((theta+p.offset)*pi/180))
+
+newplot(theta, energy, color='blue', ylabel='energy eV', xlabel='angle (deg)')
+plot(th, e, color='red', marker='thin diamond', linewidth=0)
+
+for i in range(0, len(ee)):
+    val = (2*pi*hbarc) / (2*p.d*sin((th[i]+p.offset)*pi/180))
+    print "%-2s  %9.3f  %9.3f  %9.3f" % (elements[i], ee[i], val, val-ee[i])
+#endfor
+
