@@ -5,7 +5,7 @@ import signal
 from time import sleep, strftime
 import epics
 import numpy
-from numpy import pi, sin, cos, arcsin, tan, arctan2
+from numpy import pi, sin, cos, arcsin, tan, arctan2, exp
 from termcolor import colored
 import json
 
@@ -107,13 +107,112 @@ class IonChambers():
         self.i0 = epics.PV("XF:06BM-BI{EM:1}EM180:Current1:MeanValue_RBV")
         self.it = epics.PV("XF:06BM-BI{EM:1}EM180:Current2:MeanValue_RBV")
         self.ir = epics.PV("XF:06BM-BI{EM:1}EM180:Current3:MeanValue_RBV")
-
+        self.avgtime = epics.PV("XF:06BM-BI{EM:1}EM180:AveragingTime")
+        self.default_avgtime = 0.5
+        self.multiplier = 1e9
+        
     def each(self):
         return (self.i0, self.it, self.ir)
 
     def measure(self):
-        return [self.i0.get(), self.it.get(), self.ir.get()]
-        
+        return [self.multiplier*self.i0.get(), self.multiplier*self.it.get(), self.multiplier*self.ir.get()]
+
+    def set_avgtime(self, time):
+        self.avgtime.put(time)
+    
+    def reset_avgtime(self):
+        self.avgtime.put(self.default_avgtime)
+    
+class Vortex():
+    def __init__(self):
+        self.roi1 = epics.PV("XF:06BM-ES:1{Sclr:1}.S2")
+        self.roi2 = epics.PV("XF:06BM-ES:1{Sclr:1}.S4")
+        self.roi3 = epics.PV("XF:06BM-ES:1{Sclr:1}.S6")
+        self.roi4 = epics.PV("XF:06BM-ES:1{Sclr:1}.S8")
+        self.icr1 = epics.PV("XF:06BM-ES:1{Sclr:1}.S10")
+        self.icr2 = epics.PV("XF:06BM-ES:1{Sclr:1}.S12")
+        self.icr3 = epics.PV("XF:06BM-ES:1{Sclr:1}.S14")
+        self.icr4 = epics.PV("XF:06BM-ES:1{Sclr:1}.S16")
+        self.ocr1 = epics.PV("XF:06BM-ES:1{Sclr:1}.S18")
+        self.ocr2 = epics.PV("XF:06BM-ES:1{Sclr:1}.S20")
+        self.ocr3 = epics.PV("XF:06BM-ES:1{Sclr:1}.S22")
+        self.ocr4 = epics.PV("XF:06BM-ES:1{Sclr:1}.S24")
+        self.avgtime = epics.PV("XF:06BM-ES:1{Sclr:1}.TP1")
+        self.default_avgtime = 0.5
+        self.multiplier = 1
+        self.maxcount = 20
+        self.iterations = 0
+
+    def rois(self):
+        return (self.roi1, self.roi2, self.roi3, self.roi4)
+    def icrs(self):
+        return (self.icr1, self.icr2, self.icr3, self.icr4)
+    def ocrs(self):
+        return (self.ocr1, self.ocr2, self.ocr3, self.ocr4)
+
+    def get(self, scalar):
+        return getattr(self, scalar).get()
+    
+    def ch1(self):
+        r = self.roi1.get()
+        i = self.icr1.get()
+        o = self.ocr1.get()
+        c = self.dtcorrect(r, i, o)
+        return [r, i, o, c]
+    def ch2(self):
+        r = self.roi2.get()
+        i = self.icr2.get()
+        o = self.ocr2.get()
+        c = self.dtcorrect(r, i, o)
+        return [r, i, o, c]
+    def ch3(self):
+        r = self.roi3.get()
+        i = self.icr3.get()
+        o = self.ocr3.get()
+        c = self.dtcorrect(r, i, o)
+        return [r, i, o, c]
+    def ch4(self):
+        r = self.roi4.get()
+        i = self.icr4.get()
+        o = self.ocr4.get()
+        c = self.dtcorrect(r, i, o)
+        return [r, i, o, c]
+    
+    def set_avgtime(self, time):
+        self.avgtime.put(time)
+    
+    def reset_avgtime(self):
+        self.avgtime.put(self.default_avgtime)
+
+    ## see https://doi:org/10.1107/S0909049510009064
+    ## or X23A2MED plugin for Athena
+    ##
+    ## roi,icr,ocr: measured counts, time: integartion time at this point, dt: time constant of fast channel
+    def dtcorrect(self, roi, icr, ocr, time=1, dt=280):
+        rr = float(roi)
+        ii = float(icr)
+        oo = float(ocr)
+        tt = float(time)
+        dt = float(dt*1e-9)
+        if dt<1e-9:                # deal with an unreasonable value for fast time constant
+            return rr*ii/oo
+        totn  = 0.0
+        test  = 1.0
+        count = 0.0
+        toto  = ii/tt
+        if icr <= 1:
+            totn = oo
+            test = 0
+        while test > dt:
+            totn  = (ii/tt) * exp(toto*dt)
+            test  = (totn-toto) / toto
+            toto  = totn
+            count = count + 1
+            if (count >= self.maxcount):
+                test = 0
+        self.iterations = count
+        return rr * (totn*tt/oo)
+    
 ################################################################################
 ################################################################################
 ################################################################################
@@ -534,7 +633,7 @@ class StepScan():
         if dcm is None:
             dcm = DCM(crystals=self.xtals)
         self.xdi = list(['# XDI/1.0 BMMControls/0',
-                         '# Column.1: energy eV',
+                         #'# Column.1: energy eV',
                          '# Element.edge: %s' % self.edge,
                          '# Element.symbol: %s' % self.element,
                          '# Scan.edge_energy: %.1f' % self.e0,
@@ -572,12 +671,27 @@ class StepScan():
                          '# %s' % self.comment,
                          '# -------------------------------------------'])
 
+    def units(self, label):
+        if label is 'energy':
+            return 'eV'
+        elif label in ('i0', 'it', 'ir'):
+            return 'nA'
+        elif label[:-1] in ('roi', 'icr', 'ocr'):
+            return 'counts'
+        elif label[:-1] in ('corr'):
+            return 'dead-time corrected count rate'
+        elif label is 'encoder':
+            return 'counts'
+        else:
+            return ''
+
+        
     def column_labels(self, labels=('I0', 'It', 'Ir')):
-        line = '# energy  '
-        i=1
+        line = '# '
+        i=0
         for l in labels:
             i=i+1
-            this = '# Column.%d: %s' % (i, l)
+            this = '# Column.%d: %s %s' % (i, l, self.units(l))
             self.xdi.insert(i, this)
             line = line + l + '  '
         self.xdi.append(line)

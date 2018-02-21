@@ -11,12 +11,13 @@ import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings("ignore",".*GUI is implemented.*")
 
-avgtm = epics.PV("XF:06BM-BI{EM:1}EM180:AveragingTime")
-saveat = avgtm.get()
-avgtm.put(0.1)
+#avgtm = epics.PV("XF:06BM-BI{EM:1}EM180:AveragingTime")
+avgtm = epics.PV("XF:06BM-ES:1{Sclr:1}.TP1")
+saveat = 0.5 # avgtm.get()
 
-#ic1 = epics.PV("XF:06BM-BI{EM:1}EM180:Current1:MeanValue_RBV")
-scalar = epics.PV("XF:06BM-BI{EM:1}EM180:Current2:MeanValue_RBV")
+scalar = epics.PV("XF:06BM-BI{EM:1}EM180:Current1:MeanValue_RBV")
+#scalar = epics.PV("XF:06BM-ES:1{Sclr:1}.S14")
+avgtm.put(0.1)
 
 elapsed = numpy.array([])
 reading = numpy.array([])
@@ -41,12 +42,12 @@ def drawme(elapsed, reading):
     plt.plot(elapsed, reading)
     plt.draw()
     plt.pause(0.001)
-    
 
 
+toss = True
 start = os.times()[4]
 while True:
     time.sleep(0.01)
     elapsed = numpy.append(elapsed, [os.times()[4] - start])
-    reading = numpy.append(reading, [scalar.get()])
-    drawme(elapsed, reading)
+    reading = numpy.append(reading, [scalar.get()*1e9])
+    drawme(elapsed[1:], reading[1:])

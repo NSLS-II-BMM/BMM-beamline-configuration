@@ -2,6 +2,7 @@
 
 import warnings
 warnings.filterwarnings("ignore",".*GUI is implemented.*")
+from time import sleep
 
 from termcolor import colored
 from argparse import ArgumentParser
@@ -61,7 +62,7 @@ mu     = numpy.array([])
 from os import mkdir
 import os.path
 
-from BMMcontrols import DCM, StepScan, IonChambers
+from BMMcontrols import DCM, StepScan, IonChambers, Vortex
 
 dcm = DCM()
 signal.signal(signal.SIGINT, dcm.handler)
@@ -69,8 +70,11 @@ xtals = '111'
 if dcm.is311:
     xtals = '311'
 
-ic = IonChambers()
-
+ic  = IonChambers()
+vor = Vortex()
+inttime = 1
+ic.set_avgtime(inttime)
+vor.set_avgtime(inttime)
 
 ################################################################################
 ## defaults, command line arguments, scan.ini
@@ -106,7 +110,9 @@ try:
         times.append(float(f))
 except:
     times = [0.5, 0.5, 0.5]
-    
+## handle single value times by make a list len(steps) long of that value
+## truncate or fill in values so len(times) == len(steps)
+## also k-weighted times
 
 ## ----- all other scan parameters
 p = dict()
@@ -121,6 +127,12 @@ for a in ('folder', 'element', 'edge', 'material'):
         except ConfigParser.NoOptionError:
             p[a] = defaults[a]
 
+try:
+    p['comment'] = config.get('scan', 'comment')
+except ConfigParser.NoOptionError:
+    p['comment'] = defaults['comment']
+
+            
 ## integers
 for a in ('start', 'nscans'):
     if getattr(args, a) is not None:
@@ -155,7 +167,38 @@ for a in ('focus', 'hr'):
         p[a] = config.getboolean('scan', a)
     except ConfigParser.NoOptionError:
         p[a] = defaults[a]
-            
+
+
+scalars = dict()
+labels  = ['energy', 'encoder']
+measure = list()
+multiplier = list()
+for s in ('i0', 'it', 'ir', 'vortex1', 'vortex2', 'vortex3', 'vortex4'):
+    try:
+        scalars[s] = config.getboolean('scalars', s)
+        if s in ('i0', 'it', 'ir'):
+            labels.append(s)
+            measure.append(getattr(ic, s))
+            multiplier.append(ic.multiplier)
+        elif 'vortex' in s:
+            n = s[-1]
+            if scalars[s]:
+                labels.extend(['roi'+n, 'icr'+n, 'ocr'+n, 'corr'+n])
+                measure.extend([getattr(vor,'roi'+n), getattr(vor,'icr'+n), getattr(vor,'ocr'+n), 'corr'])
+                multiplier.extend([1,1,1,1])
+    except ConfigParser.NoOptionError:
+        scalars[s] = False
+
+template = " %.3f   %11d"
+for f in range(0, len(measure)):
+    template = template + '   %.9g'
+template = template + '\n'
+plotmode = config.get('scalars', 'mode')
+
+#print labels
+#print template
+#print plotmode
+#exit()
 
 ################################################################################
         
@@ -197,7 +240,7 @@ if p["channelcut"]:
     print "Moving to %.1f and setting pseudo channelcut mode" % channelenergy
     dcm.moveto(channelenergy, quiet=True)
     dcm.channelcut = True
-        
+
 
     
 for i in range(p['start'], p['start']+p['nscans'], 1):
@@ -229,24 +272,41 @@ for i in range(p['start'], p['start']+p['nscans'], 1):
         scan.grid = basegrid
         
     scan.file_header(dcm=dcm)
-    scan.column_labels()        # labels=('I0', 'It', 'Ir')
+    scan.column_labels(labels)        # labels=('I0', 'It', 'Ir')
     scan.handle.write(scan.file_header_text())
 
-    
     plt.ion()
     plt.show()
 
-    for en in scan.grid:
-        dcm.moveto(en, quiet=True)
-        values = [en]
-        values.extend(ic.measure())
+    ## pre-measure one point below the energy range, then toss it
+    dcm.moveto(scan.grid[0]-5, quiet=True)
+    ic.measure()
 
-        line = " %.3f   %.7g   %.7g   %.7g\n" % tuple(values)
+    npts = len(scan.grid)
+    for (ne,en) in enumerate(scan.grid):
+        dcm.moveto(en, quiet=True)
+        sleep(1.05*inttime)     # the pause should be a hair longer than the requested integration time
+        values = [en, dcm.bragg.pv.REP] # this gives the best linarity between the Vortex and electrometer signals.
+        for (j,pv) in enumerate(measure):
+            try:
+                this = pv.get()
+                values.append(this*multiplier[j])
+            except:
+                (roi,icr,ocr) = values[-3:]
+                values.append(vor.dtcorrect(roi,icr,ocr, time=inttime))
+        #sleep(inttime)         # also, the pause should be *before* the measurement.
+                                # also, also, deadtime correction is essential for linearity, should compute that here 
+
+        line = template % tuple(values)
         if not args.quiet:
-            print line[:-1]
+            print "%d/%d  "%(ne+1, npts), line[:-1]
         scan.handle.write(line)
+        scan.handle.flush()
         energy = numpy.append(energy, [en])
-        mu     = numpy.append(mu,     [numpy.log(values[1]/values[2])])
+        if plotmode[0] is 'f':
+            mu = numpy.append(mu,     [(values[8]+values[12]+values[16]+values[20])/values[2]])
+        else:
+            mu = numpy.append(mu,     [numpy.log(values[2]/values[3])])
 
         plt.clf()
         plt.title('%s %s scan %d' % (p['element'], p['material'], i))
@@ -264,6 +324,9 @@ if p["channelcut"]:
     dcm.channelcut = False
     dcm.moveto(channelenergy, quiet=True)
 
+
+ic.reset_avgtime()
+vor.reset_avgtime()
 action = raw_input("RET to quit ")
 plt.close()
     

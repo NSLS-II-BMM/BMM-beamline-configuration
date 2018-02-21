@@ -2,14 +2,14 @@
 
 import epics
 from time import sleep
-from BMMcontrols import IonChambers
+from BMMcontrols import IonChambers, Vortex
 import signal
 
 
 
 x     = epics.Motor('xafs_linx')
-x0    = 44.8
-width = 8
+x0    = -82.7
+width = 6
 step  = 0.5
 
 
@@ -22,6 +22,7 @@ pos = numpy.array([])
 sig = numpy.array([])
 
 ic = IonChambers()
+vor = Vortex()
 
 plt.ion()
 plt.show()
@@ -46,8 +47,10 @@ for p in numpy.arange(x0-width, x0+width, step):
         waiting = not x.done_moving
     values = [p]
     values.extend(ic.measure())
+    #values.append(vor.get('roi1'))
     pos = numpy.append(pos, [p])
     signal = values[2]/values[1]
+    #signal = values[4]/values[1]
     sig = numpy.append(sig, numpy.array([signal]))
 
     line = " %.3f   %.7g   %.7g   %.7g\n" % tuple(values)
@@ -61,7 +64,7 @@ for p in numpy.arange(x0-width, x0+width, step):
     plt.ylabel('it/i0')
     plt.plot(pos, sig)
     plt.xlim(x0-width, x0+width)
-    plt.ylim(0, 2.0)
+    #plt.ylim(0, 2.0)
     plt.draw()
     plt.pause(0.001)
 
