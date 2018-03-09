@@ -11,12 +11,16 @@ import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings("ignore",".*GUI is implemented.*")
 
-#avgtm = epics.PV("XF:06BM-BI{EM:1}EM180:AveragingTime")
-avgtm = epics.PV("XF:06BM-ES:1{Sclr:1}.TP1")
+avgtm = epics.PV("XF:06BM-BI{EM:1}EM180:AveragingTime")
+#avgtm = epics.PV("XF:06BM-ES:1{Sclr:1}.TP1")
 saveat = 0.5 # avgtm.get()
 
 scalar = epics.PV("XF:06BM-BI{EM:1}EM180:Current1:MeanValue_RBV")
 #scalar = epics.PV("XF:06BM-ES:1{Sclr:1}.S14")
+
+## DM2
+#scalar = epics.PV("XF:06BM-BI{F460:1}Cur:I0-I") # Al
+#scalar = epics.PV("XF:06BM-BI{F460:1}Cur:I1-I") # Ni
 avgtm.put(0.1)
 
 elapsed = numpy.array([])

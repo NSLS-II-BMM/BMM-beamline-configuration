@@ -26,12 +26,12 @@ array = img_pv.get()
 img = np.reshape(array, (960, 1280)).astype('float')
 #img = img[:340,:]
 #img[img < 1000] = 0
-img[img < 400] = 0
+img[img < 2000] = 0
 
 t = 280
 b = t+520
-i = 500
-o = i+240
+i = 680
+o = i+190
 cropped = img[t:b,i:o]
 
 # Create figure and axes
