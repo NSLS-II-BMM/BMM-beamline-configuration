@@ -225,13 +225,13 @@ class DCM():
         self.mono_offset   = 30   # mm
         self.emin          = 4000        # eV
         self.emax          = 22300       # eV
-        self.bragg         = BMM_Motor('dcm-bragg')
-        self.perp          = BMM_Motor('dcm-perp')
-        self.para          = BMM_Motor('dcm-para')
-        self.pitch         = BMM_Motor('dcm-pitch')
-        self.roll          = BMM_Motor('dcm-roll')
-        self.x             = BMM_Motor('dcm-x')
-        self.y             = BMM_Motor('dcm-y')
+        self.bragg         = BMM_Motor('dcm_bragg')
+        self.perp          = BMM_Motor('dcm_perp')
+        self.para          = BMM_Motor('dcm_para')
+        self.pitch         = BMM_Motor('dcm_pitch')
+        self.roll          = BMM_Motor('dcm_roll')
+        self.x             = BMM_Motor('dcm_x')
+        self.y             = BMM_Motor('dcm_y')
         self.perp.invacuum = self.para.invacuum = self.pitch.invacuum = self.roll.invacuum = True
         self.paraoffset    = 0
         self.perpoffset    = 0
@@ -332,7 +332,7 @@ class DCM():
     def change_xtals(self, values=None):
         if values is None:
             return 0
-        axes     = (dcm.pitch, dcm.roll, dcm.x)
+        axes     = (self.pitch, self.roll, self.x)
         template = ' pitch, roll, x --> %8.4f  %8.4f  %8.4f'
         self.generic_move(axes, values, template)
         
@@ -447,11 +447,11 @@ class Mirror():
             return 0
         ## actual mirrors
         if m<4:
-            self.yu  = BMM_Motor('m%d-jack1' % m)
-            self.ydo = BMM_Motor('m%d-jack2' % m)
-            self.ydi = BMM_Motor('m%d-jack3' % m)
-            self.xu  = BMM_Motor('m%d-lateral-u' % m)
-            self.xd  = BMM_Motor('m%d-lateral-d' % m)
+            self.yu  = BMM_Motor('m%d_yu' % m)
+            self.ydo = BMM_Motor('m%d_ydo' % m)
+            self.ydi = BMM_Motor('m%d_ydi' % m)
+            self.xu  = BMM_Motor('m%d_xu' % m)
+            self.xd  = BMM_Motor('m%d_xd' % m)
             if m is 1:
                 self.length = 556
                 self.width = 240
@@ -470,11 +470,11 @@ class Mirror():
 
         ## XAFS table
         else:
-            self.yu  = BMM_Motor("xafs_tbl_yu")
-            self.ydo = BMM_Motor("xafs_tbl_ydo")
-            self.ydi = BMM_Motor("xafs_tbl_ydi")
-            self.xu  = BMM_Motor("xafs_tbl_xu")
-            self.xd  = BMM_Motor("xafs_tbl_xd")
+            self.yu  = BMM_Motor("xafs_yu")
+            self.ydo = BMM_Motor("xafs_ydo")
+            self.ydi = BMM_Motor("xafs_ydi")
+            self.xu  = BMM_Motor("xafs_xu")
+            self.xd  = BMM_Motor("xafs_xd")
             self.xu.disconnected = self.xd.disconnected = True
             self.length = 1160
             self.width = 558

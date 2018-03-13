@@ -15,8 +15,10 @@ avgtm = epics.PV("XF:06BM-BI{EM:1}EM180:AveragingTime")
 #avgtm = epics.PV("XF:06BM-ES:1{Sclr:1}.TP1")
 saveat = 0.5 # avgtm.get()
 
-scalar = epics.PV("XF:06BM-BI{EM:1}EM180:Current1:MeanValue_RBV")
+#scalar = epics.PV("XF:06BM-BI{EM:1}EM180:Current1:MeanValue_RBV")
 #scalar = epics.PV("XF:06BM-ES:1{Sclr:1}.S14")
+
+scalar = epics.PV("XF:06BMA-VA{FS:1-CCG:1}P-I")
 
 ## DM2
 #scalar = epics.PV("XF:06BM-BI{F460:1}Cur:I0-I") # Al
@@ -42,7 +44,7 @@ def drawme(elapsed, reading):
     plt.title('time scan')
     plt.grid(True)
     plt.xlabel('time (sec)')
-    plt.ylabel('signal')
+    plt.ylabel('DM1 pressure * 1e9')
     plt.plot(elapsed, reading)
     plt.draw()
     plt.pause(0.001)

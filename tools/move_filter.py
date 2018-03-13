@@ -11,7 +11,7 @@ from BMMcontrols import BMM_Motor
 
 filters = BMM_Motor('filter-assembly-1')
 scanrange = 9
-rest = 10
+rest = 30
 
 
 

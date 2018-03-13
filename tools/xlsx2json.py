@@ -16,7 +16,7 @@ for row in ws.rows:
         continue
     if header == 1: continue
     alias         = row[2].value
-    if 'feslits' in alias: continue
+    if 'fe_slits' in alias: continue
     axis['PV']    = row[1].value
     axis['desc']  = row[3].value
     axis['A']     = row[4].value
