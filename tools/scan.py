@@ -15,7 +15,7 @@ parser.add_argument("-d", "--edge",                            dest="edge",     
                     help="edge energy")
 parser.add_argument("-l", "--element",                         dest="element",    default=None,
                     help="absorber element")
-parser.add_argument("-m", "--material",                        dest="material",   default=None,
+parser.add_argument("-m", "--material",                        dest="filename",   default=None,
                     help="material description")
 parser.add_argument("-n", "--nscans",   type=int,              dest="nscans",     default=None,
                     help="number of scans")
@@ -34,7 +34,7 @@ defaults = {'e0'         : 7112,
             'edge'       : 'K',
             'folder'     : 'data',
             'element'    : 'Fe',
-            'material'   : 'Fe foil',
+            'filename'   : 'Fe foil',
             'comment'    : 'quick measurement',
             'prep'       : '',
             'nscans'     : 1,
@@ -118,7 +118,7 @@ except:
 p = dict()
 
 ## strings
-for a in ('folder', 'element', 'edge', 'material'):
+for a in ('folder', 'element', 'edge', 'filename'):
     if getattr(args, a) is not None:
         p[a] = getattr(args, a)
     else:
@@ -169,31 +169,40 @@ for a in ('focus', 'hr'):
         p[a] = defaults[a]
 
 
-scalars = dict()
+scalars = {'i0': True, 'it': True, 'ir': True,
+           'vortex1': False, 'vortex2': False, 'vortex3': False, 'vortex4': False }
 labels  = ['energy', 'encoder']
 measure = list()
 multiplier = list()
+plotmode = config.get('scan', 'mode')
+
+if 'fluo' in plotmode:
+    scalars['vortex1'] = True
+    scalars['vortex2'] = True
+    scalars['vortex3'] = True
+    scalars['vortex4'] = True
+    
 for s in ('i0', 'it', 'ir', 'vortex1', 'vortex2', 'vortex3', 'vortex4'):
-    try:
-        scalars[s] = config.getboolean('scalars', s)
-        if s in ('i0', 'it', 'ir'):
-            labels.append(s)
-            measure.append(getattr(ic, s))
-            multiplier.append(ic.multiplier)
-        elif 'vortex' in s:
-            n = s[-1]
-            if scalars[s]:
-                labels.extend(['roi'+n, 'icr'+n, 'ocr'+n, 'corr'+n])
-                measure.extend([getattr(vor,'roi'+n), getattr(vor,'icr'+n), getattr(vor,'ocr'+n), 'corr'])
-                multiplier.extend([1,1,1,1])
-    except ConfigParser.NoOptionError:
-        scalars[s] = False
+    #try:
+        #scalars[s] = config.getboolean('scalars', s)
+    if s in ('i0', 'it', 'ir'):
+        labels.append(s)
+        measure.append(getattr(ic, s))
+        multiplier.append(ic.multiplier)
+    elif 'vortex' in s:
+        n = s[-1]
+        if scalars[s]:
+            labels.extend(['roi'+n, 'icr'+n, 'ocr'+n, 'corr'+n])
+            measure.extend([getattr(vor,'roi'+n), getattr(vor,'icr'+n), getattr(vor,'ocr'+n), 'corr'])
+            multiplier.extend([1,1,1,1])
+    #except ConfigParser.NoOptionError:
+    #    scalars[s] = False
 
 template = " %.3f   %11d"
 for f in range(0, len(measure)):
     template = template + '   %.9g'
 template = template + '\n'
-plotmode = config.get('scalars', 'mode')
+    
 
 #print labels
 #print template
@@ -207,10 +216,12 @@ if not os.path.isdir('data/%s' % p['folder']):
 
 
 ## ----- verify scan parameters before moving on
-fname = 'data/%s/%s.###' % (p['folder'], p['material'])
+fname = 'data/%s/%s.###' % (p['folder'], p['filename'])
 print ''
 for item in sorted(p.keys()):
     print '%s : %s' % (colored('%-10s'%item, 'green'), p[item])
+
+print colored('\nscan mode', 'cyan'), '         :', plotmode
 
 print colored('\ngrid boundaries', 'cyan'), '   :', bounds
 print colored('grid steps', 'cyan'), '        :', steps       
@@ -244,7 +255,7 @@ if p["channelcut"]:
 
     
 for i in range(p['start'], p['start']+p['nscans'], 1):
-    fname = 'data/%s/%s.%3.3d' % (p['folder'], p['material'], i)
+    fname = 'data/%s/%s.%3.3d' % (p['folder'], p['filename'], i)
     if os.path.isfile(fname):
         print colored("%s already exists!" % fname, 'red', attrs=['bold'])
         exit()
@@ -309,7 +320,7 @@ for i in range(p['start'], p['start']+p['nscans'], 1):
             mu = numpy.append(mu,     [numpy.log(values[2]/values[3])])
 
         plt.clf()
-        plt.title('%s %s scan %d' % (p['element'], p['material'], i))
+        plt.title('%s %s scan %d' % (p['element'], p['filename'], i))
         plt.grid(True)
         plt.xlabel('energy (eV)')
         plt.ylabel('absorption')
