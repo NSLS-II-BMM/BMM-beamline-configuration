@@ -655,9 +655,9 @@ class StepScan():
             self.xdi.append('# Beamline.harmonic_rejection: none')
             
         if self.channelcut:
-            self.xdi.append('# Beamline.dcm_mode: pseudo channel cut')
+            self.xdi.append('# Mono.scan_mode: pseudo channel cut')
         else:
-            self.xdi.append('# Beamline.dcm_mode: fixed exit')
+            self.xdi.append('# Mono.scan_mode: fixed exit')
             
         self.xdi.extend(['# Facility.name: NSLS-II',
                          '# Facility.energy: 3 GeV',
