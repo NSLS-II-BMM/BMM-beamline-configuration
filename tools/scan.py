@@ -296,7 +296,7 @@ for i in range(p['start'], p['start']+p['nscans'], 1):
     npts = len(scan.grid)
     for (ne,en) in enumerate(scan.grid):
         dcm.moveto(en, quiet=True)
-        sleep(1.05*inttime)     # the pause should be a hair longer than the requested integration time
+        sleep(1.1*inttime)     # the pause should be a hair longer than the requested integration time
         values = [en, dcm.bragg.pv.REP] # this gives the best linarity between the Vortex and electrometer signals.
         for (j,pv) in enumerate(measure):
             try:
@@ -315,7 +315,8 @@ for i in range(p['start'], p['start']+p['nscans'], 1):
         scan.handle.flush()
         energy = numpy.append(energy, [en])
         if plotmode[0] is 'f':
-            mu = numpy.append(mu,     [(values[8]+values[12]+values[16]+values[20])/values[2]])
+            #mu = numpy.append(mu,     [(values[8]+values[12]+values[16]+values[20])/values[2]])
+            mu = numpy.append(mu,     [(values[8]+values[12]+values[20])/values[2]])
         else:
             mu = numpy.append(mu,     [numpy.log(values[2]/values[3])])
 

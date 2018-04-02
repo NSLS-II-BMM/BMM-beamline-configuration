@@ -8,9 +8,9 @@ import signal
 
 
 x     = epics.Motor('xafs_liny')
-x0    = 67.268
-width = 0.7
-step  = 0.05
+x0    = 86.5
+width = 40
+step  = 0.5
 # x     = epics.Motor('xafs_roll')
 # x0    = 0.316
 # width = 2
@@ -53,8 +53,8 @@ for p in numpy.arange(x0-width, x0+width, step):
     values.extend(ic.measure())
     values.append(vor.get('roi1'))
     pos = numpy.append(pos, [p])
-    #signal = values[2]/values[1]
-    signal = values[4]/values[1]
+    signal = values[2]/values[1]
+    #signal = values[4]/values[1]
     sig = numpy.append(sig, numpy.array([signal]))
 
     line = " %.3f   %.7g   %.7g   %.7g   %.7g\n" % tuple(values)
