@@ -8,9 +8,9 @@ import signal
 
 
 x     = epics.Motor('xafs_liny')
-x0    = 86.5
-width = 40
-step  = 0.5
+x0    = 97
+width = 5
+step  = 0.25
 # x     = epics.Motor('xafs_roll')
 # x0    = 0.316
 # width = 2

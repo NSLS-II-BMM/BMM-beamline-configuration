@@ -110,6 +110,13 @@ class IonChambers():
         self.avgtime = epics.PV("XF:06BM-BI{EM:1}EM180:AveragingTime")
         self.default_avgtime = 0.5
         self.multiplier = 1e9
+        self.acquire = epics.PV("XF:06BM-BI{EM:1}EM180:Acquire")
+
+    def on(self):
+        self.acquire.put(1)
+        
+    def off(self):
+        self.acquire.put(0)
         
     def each(self):
         return (self.i0, self.it, self.ir)
@@ -138,10 +145,17 @@ class Vortex():
         self.ocr3 = epics.PV("XF:06BM-ES:1{Sclr:1}.S22")
         self.ocr4 = epics.PV("XF:06BM-ES:1{Sclr:1}.S24")
         self.avgtime = epics.PV("XF:06BM-ES:1{Sclr:1}.TP1")
+        self.acquire = epics.PV("XF:06BM-ES:1{Sclr:1}.CONT")
         self.default_avgtime = 0.5
         self.multiplier = 1
         self.maxcount = 20
         self.iterations = 0
+
+    def on(self):
+        self.acquire.put(1)
+        
+    def off(self):
+        self.acquire.put(0)
 
     def rois(self):
         return (self.roi1, self.roi2, self.roi3, self.roi4)
@@ -611,13 +625,14 @@ class Mirror():
 
 class StepScan():
     def __init__(self, fname=None, xtals='111', element=None, e0=None, edge='K',
-                 material=None, monodir='increasing'):
+                 material=None, monodir='increasing', inttime=1):
         self.columns    = ('I0', 'It', 'Ir')
         self.filename   = fname
         self.handle     = open(fname, 'w')
         self.xtals      = xtals
         self.element    = element
         self.e0         = e0
+        self.inttime    = inttime
         self.edge       = edge
         self.material   = material
         self.direction  = monodir
@@ -637,6 +652,7 @@ class StepScan():
                          '# Element.edge: %s' % self.edge,
                          '# Element.symbol: %s' % self.element,
                          '# Scan.edge_energy: %.1f' % self.e0,
+                         '# Scan.integration_time: %.1f seconds per point' % self.inttime,
                          '# Mono.name: %s' % dcm.description,
                          '# Mono.d_spacing: %.7f' % (dcm.twod/2),
                          '# Mono.direction: %s in energy' % self.direction,

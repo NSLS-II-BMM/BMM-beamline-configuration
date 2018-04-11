@@ -9,6 +9,8 @@ from argparse import ArgumentParser
 parser = ArgumentParser(description="Perform and XAFS step scan")
 parser.add_argument("-e", "--e0",       type=float,            dest="e0",         default=None,
                     help="edge energy")
+parser.add_argument("-t", "--time",     type=float,            dest="inttime",    default=None,
+                    help="integration time at each point")
 parser.add_argument("-f", "--folder",                          dest="folder",     default=None,
                     help="folder in data directory")
 parser.add_argument("-d", "--edge",                            dest="edge",       default=None,
@@ -31,6 +33,7 @@ args = parser.parse_args()
 
 
 defaults = {'e0'         : 7112,
+            'inttime'    : 1.0,
             'edge'       : 'K',
             'folder'     : 'data',
             'element'    : 'Fe',
@@ -70,11 +73,6 @@ xtals = '111'
 if dcm.is311:
     xtals = '311'
 
-ic  = IonChambers()
-vor = Vortex()
-inttime = 1
-ic.set_avgtime(inttime)
-vor.set_avgtime(inttime)
 
 ################################################################################
 ## defaults, command line arguments, scan.ini
@@ -144,13 +142,14 @@ for a in ('start', 'nscans'):
             p[a] = defaults[a]
 
 ## floats
-if args.e0 is not None:
-    p['e0'] = args.e0
-else:
-    try:
-        p['e0'] = float(config.get('scan', 'e0'))
-    except ConfigParser.NoOptionError:
-        p['e0'] = defaults['e0']
+for a in ('e0', 'inttime'):
+    if getattr(args, a) is not None:
+        p[a] = args.e0
+    else:
+        try:
+            p[a] = float(config.get('scan', a))
+        except ConfigParser.NoOptionError:
+            p[a] = defaults[a]
 
 
 ## booleans
@@ -167,6 +166,11 @@ for a in ('focus', 'hr'):
         p[a] = config.getboolean('scan', a)
     except ConfigParser.NoOptionError:
         p[a] = defaults[a]
+
+ic  = IonChambers()
+vor = Vortex()
+ic.set_avgtime(p['inttime'])
+vor.set_avgtime(p['inttime'])
 
 
 scalars = {'i0': True, 'it': True, 'ir': True,
@@ -291,12 +295,15 @@ for i in range(p['start'], p['start']+p['nscans'], 1):
 
     ## pre-measure one point below the energy range, then toss it
     dcm.moveto(scan.grid[0]-5, quiet=True)
+    ic.on()
+    if 'fluo' in plotmode:
+        vor.on()
     ic.measure()
 
     npts = len(scan.grid)
     for (ne,en) in enumerate(scan.grid):
         dcm.moveto(en, quiet=True)
-        sleep(1.1*inttime)     # the pause should be a hair longer than the requested integration time
+        sleep(1.1*p['inttime'])     # the pause should be a hair longer than the requested integration time
         values = [en, dcm.bragg.pv.REP] # this gives the best linarity between the Vortex and electrometer signals.
         for (j,pv) in enumerate(measure):
             try:
@@ -304,8 +311,8 @@ for i in range(p['start'], p['start']+p['nscans'], 1):
                 values.append(this*multiplier[j])
             except:
                 (roi,icr,ocr) = values[-3:]
-                values.append(vor.dtcorrect(roi,icr,ocr, time=inttime))
-        #sleep(inttime)         # also, the pause should be *before* the measurement.
+                values.append(vor.dtcorrect(roi,icr,ocr, time=p['inttime']))
+        #sleep(p['inttime'])    # also, the pause should be *before* the measurement.
                                 # also, also, deadtime correction is essential for linearity, should compute that here 
 
         line = template % tuple(values)
