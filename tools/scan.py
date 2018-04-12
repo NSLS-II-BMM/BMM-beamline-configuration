@@ -175,7 +175,7 @@ vor.set_avgtime(p['inttime'])
 
 scalars = {'i0': True, 'it': True, 'ir': True,
            'vortex1': False, 'vortex2': False, 'vortex3': False, 'vortex4': False }
-labels  = ['energy', 'encoder']
+labels  = ['energy', 'requested_energy', 'encoder']
 measure = list()
 multiplier = list()
 plotmode = config.get('scan', 'mode')
@@ -202,7 +202,7 @@ for s in ('i0', 'it', 'ir', 'vortex1', 'vortex2', 'vortex3', 'vortex4'):
     #except ConfigParser.NoOptionError:
     #    scalars[s] = False
 
-template = " %.3f   %11d"
+template = " %.3f  %.3f  %11d"
 for f in range(0, len(measure)):
     template = template + '   %.9g'
 template = template + '\n'
@@ -304,7 +304,9 @@ for i in range(p['start'], p['start']+p['nscans'], 1):
     for (ne,en) in enumerate(scan.grid):
         dcm.moveto(en, quiet=True)
         sleep(1.1*p['inttime'])     # the pause should be a hair longer than the requested integration time
-        values = [en, dcm.bragg.pv.REP] # this gives the best linarity between the Vortex and electrometer signals.
+                                    # this gives the best linarity between the Vortex and electrometer signals.
+        currentenergy = 
+        values = [dcm.current_energy(), en, dcm.bragg.pv.REP] 
         for (j,pv) in enumerate(measure):
             try:
                 this = pv.get()
@@ -322,10 +324,9 @@ for i in range(p['start'], p['start']+p['nscans'], 1):
         scan.handle.flush()
         energy = numpy.append(energy, [en])
         if plotmode[0] is 'f':
-            #mu = numpy.append(mu,     [(values[8]+values[12]+values[16]+values[20])/values[2]])
-            mu = numpy.append(mu,     [(values[8]+values[12]+values[20])/values[2]])
+            mu = numpy.append(mu,     [(values[9]+values[13]+values[17]+values[21])/values[3]])
         else:
-            mu = numpy.append(mu,     [numpy.log(values[2]/values[3])])
+            mu = numpy.append(mu,     [numpy.log(values[3]/values[4])])
 
         plt.clf()
         plt.title('%s %s scan %d' % (p['element'], p['filename'], i))

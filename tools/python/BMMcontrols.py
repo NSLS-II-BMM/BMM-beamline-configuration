@@ -315,6 +315,10 @@ class DCM():
         #self.kill_invacuum()
         #sleep(0.5)
         self.roll.kill()
+        ic  = IonChambers()
+        vor = Vortex()
+        ic.reset_avgtime()
+        vor.reset_avgtime()
         action = raw_input("any key to quit > ")
         exit()
         
@@ -688,7 +692,7 @@ class StepScan():
                          '# -------------------------------------------'])
 
     def units(self, label):
-        if label is 'energy':
+        if 'energy' in label:
             return 'eV'
         elif label in ('i0', 'it', 'ir'):
             return 'nA'
