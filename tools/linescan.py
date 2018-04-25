@@ -8,9 +8,12 @@ import signal
 
 
 x     = epics.Motor('xafs_liny')
-x0    = 97
-width = 5
-step  = 0.25
+x0    = 70.45
+width = 10
+step  = 0.5
+mode  = 'fluorescence'
+#mode  = 'transmission'
+
 # x     = epics.Motor('xafs_roll')
 # x0    = 0.316
 # width = 2
@@ -52,17 +55,22 @@ for p in numpy.arange(x0-width, x0+width, step):
     values = [p]
     values.extend(ic.measure())
     values.append(vor.get('roi1'))
+    values.append(vor.get('roi2'))
+    values.append(vor.get('roi3'))
+    values.append(vor.get('roi4'))
     pos = numpy.append(pos, [p])
-    signal = values[2]/values[1]
-    #signal = values[4]/values[1]
-    sig = numpy.append(sig, numpy.array([signal]))
-
-    line = " %.3f   %.7g   %.7g   %.7g   %.7g\n" % tuple(values)
+    if mode[0] is 'f':
+	signal = (values[4]+values[5]+values[6]+values[7])/values[1]
+    else:
+	signal = values[2]/values[1]
+    line = " %.3f   %.7g   %.7g   %.7g   %.7g   %.7g   %.7g   %.7g\n" % tuple(values)
     print line[:-1], signal
+
+    sig = numpy.append(sig, numpy.array([signal]))
     handle.write(line)
     
     plt.clf()
-    plt.title('knife scan through focused beam')
+    plt.title('line scan')
     plt.grid(True)
     plt.xlabel('position (mm)')
     plt.ylabel('it/i0')

@@ -3,10 +3,22 @@
 import warnings
 warnings.filterwarnings("ignore",".*GUI is implemented.*")
 from time import sleep
+from datetime import datetime
+from os import mkdir
+import os.path
 
 from termcolor import colored
 from argparse import ArgumentParser
 parser = ArgumentParser(description="Perform and XAFS step scan")
+
+##########
+## macros!
+parser.add_argument("-i", "--ini",                             dest="inifile",    default=None,
+                    help="ini file name")
+parser.add_argument("-r", "--run",      action="store_true",   dest="run",        default=False,
+                    help="flag to skip sanity confirmation")
+##########
+
 parser.add_argument("-e", "--e0",       type=float,            dest="e0",         default=None,
                     help="edge energy")
 parser.add_argument("-t", "--time",     type=float,            dest="inttime",    default=None,
@@ -46,7 +58,14 @@ defaults = {'e0'         : 7112,
             'channelcut' : False,
             'focus'      : True,
             'hr'         : False}
+inifile = 'scan.ini'
+if getattr(args, 'inifile') is not None:
+    inifile = getattr(args, 'inifile')
+if not os.path.isfile(inifile):
+    print colored("%s does not exist!" % inifile, 'red', attrs=['bold'])
+    exit()
 
+print colored("\nInitializing from %s" % inifile, 'white', attrs=['bold'])
 
 import signal
 import epics
@@ -67,7 +86,7 @@ import os.path
 
 from BMMcontrols import DCM, StepScan, IonChambers, Vortex
 
-dcm = DCM()
+dcm = DCM(crystals='311')
 signal.signal(signal.SIGINT, dcm.handler)
 xtals = '111'
 if dcm.is311:
@@ -79,7 +98,7 @@ if dcm.is311:
 
 import ConfigParser
 config = ConfigParser.ConfigParser()
-config.readfp(open('scan.ini'))
+config.readfp(open(inifile))
 
 ## ----- scan regions
 bounds = []
@@ -105,9 +124,15 @@ except:
 times = []
 try:
     for f in config.get('scan', 'times').split():
-        times.append(float(f))
+        try:
+            times.append(float(f))
+        except:
+            times.append(f)
 except:
     times = [0.5, 0.5, 0.5]
+
+
+    
 ## handle single value times by make a list len(steps) long of that value
 ## truncate or fill in values so len(times) == len(steps)
 ## also k-weighted times
@@ -175,7 +200,7 @@ vor.set_avgtime(p['inttime'])
 
 scalars = {'i0': True, 'it': True, 'ir': True,
            'vortex1': False, 'vortex2': False, 'vortex3': False, 'vortex4': False }
-labels  = ['energy', 'requested_energy', 'encoder']
+labels  = ['energy', 'requested_energy', 'encoder', 'measurement_time']
 measure = list()
 multiplier = list()
 plotmode = config.get('scan', 'mode')
@@ -202,7 +227,7 @@ for s in ('i0', 'it', 'ir', 'vortex1', 'vortex2', 'vortex3', 'vortex4'):
     #except ConfigParser.NoOptionError:
     #    scalars[s] = False
 
-template = " %.3f  %.3f  %11d"
+template = " %.3f  %.3f  %11d  %.4f"
 for f in range(0, len(measure)):
     template = template + '   %.9g'
 template = template + '\n'
@@ -226,22 +251,23 @@ for item in sorted(p.keys()):
     print '%s : %s' % (colored('%-10s'%item, 'green'), p[item])
 
 print colored('\nscan mode', 'cyan'), '         :', plotmode
+print colored('mono crystals', 'cyan'), '     :', dcm.description
 
 print colored('\ngrid boundaries', 'cyan'), '   :', bounds
 print colored('grid steps', 'cyan'), '        :', steps       
+#print colored('integration times', 'cyan'), ' :', times       
 if p["channelcut"]:
     channelenergy = dcm.channelcut_energy(p["e0"], bounds)
     print '%s : %.1f' % (colored('channel cut energy', 'cyan'), channelenergy)
+    print '%s : %.4f' % (colored('channel cut angle ', 'cyan'), dcm.angle(channelenergy))
 
 print '\n%s : %s' % (colored('files written to', 'cyan'), fname)
 print ''
 
-
-
-
-action = raw_input("q to quit -- any other key to start scans > ")
-if action is 'q':
-    exit()
+if getattr(args, 'run') is False:
+    action = raw_input("q to quit -- any other key to start scans > ")
+    if action is 'q':
+        exit()
 
 ## ----- check if shutter is open
 shutter_status = epics.PV("XF:06BM-PPS{Sh:A}Pos-Sts")
@@ -274,6 +300,7 @@ for i in range(p['start'], p['start']+p['nscans'], 1):
     basegrid = scan.conventional_grid(bounds,steps)
     if basegrid is None:
         print colored("Invalid step scan parameters", 'red', attrs=['bold'])
+        exit()
     
     scan.direction = 'increasing'
     if p['bothways']:
@@ -301,12 +328,25 @@ for i in range(p['start'], p['start']+p['nscans'], 1):
     ic.measure()
 
     npts = len(scan.grid)
+    begin = 0
     for (ne,en) in enumerate(scan.grid):
+        #begin = datetime.now()
+        #requested_time = timegrid[ne]
+        #number_of_measurements = int(requested_time / 0.004)
+        #measurement_time = number_of_measurements * 0.004
+        #ic.set_avgtime(measurement_time)
+        #vor.set_avgtime(measurement_time)
         dcm.moveto(en, quiet=True)
-        sleep(1.1*p['inttime'])     # the pause should be a hair longer than the requested integration time
+        sleep(1.1*p['inttime'])
+        #sleep(1.1*measurement_time)     # the pause should be a hair longer than the requested integration time
                                     # this gives the best linarity between the Vortex and electrometer signals.
-        currentenergy = 
-        values = [dcm.current_energy(), en, dcm.bragg.pv.REP] 
+        values = [dcm.current_energy(), en, dcm.bragg.pv.REP, p['inttime']] 
+
+        ## caput XF:06BM-BI{EM:1}EM180:AcquireMode 2             this puts the electrometer in Single acquire mode
+        ## caput XF:06BM-BI{EM:1}EM180:Acquire 1                 this makes one measurement over the averaging time
+        ## caput XF:06BM-ES:1{Sclr:1}.CONT 0                     this puts the Struck in OneCount mode
+        ## caput XF:06BM-ES:1{Sclr:1}.CNT 1                      this makes one measurement over the count time
+        
         for (j,pv) in enumerate(measure):
             try:
                 this = pv.get()
@@ -315,7 +355,6 @@ for i in range(p['start'], p['start']+p['nscans'], 1):
                 (roi,icr,ocr) = values[-3:]
                 values.append(vor.dtcorrect(roi,icr,ocr, time=p['inttime']))
         #sleep(p['inttime'])    # also, the pause should be *before* the measurement.
-                                # also, also, deadtime correction is essential for linearity, should compute that here 
 
         line = template % tuple(values)
         if not args.quiet:
@@ -324,9 +363,11 @@ for i in range(p['start'], p['start']+p['nscans'], 1):
         scan.handle.flush()
         energy = numpy.append(energy, [en])
         if plotmode[0] is 'f':
-            mu = numpy.append(mu,     [(values[9]+values[13]+values[17]+values[21])/values[3]])
+            mu = numpy.append(mu,     [(values[10]+values[14]+values[18]+values[22])/values[4]])
+        elif plotmode[0] is 'r':
+            mu = numpy.append(mu,     [numpy.log(values[5]/values[6])])
         else:
-            mu = numpy.append(mu,     [numpy.log(values[3]/values[4])])
+            mu = numpy.append(mu,     [numpy.log(values[4]/values[5])])
 
         plt.clf()
         plt.title('%s %s scan %d' % (p['element'], p['filename'], i))
@@ -338,6 +379,8 @@ for i in range(p['start'], p['start']+p['nscans'], 1):
         plt.pause(0.001)
 
     scan.handle.close()
+    #print('That scan took ', datetime.now()-begin)
+    #print '\n'
 
 if p["channelcut"]:
     print "Moving to %.1f and returning to fixed exit mode" % channelenergy
@@ -347,6 +390,7 @@ if p["channelcut"]:
 
 ic.reset_avgtime()
 vor.reset_avgtime()
-action = raw_input("RET to quit ")
+if getattr(args, 'run') is False:
+    action = raw_input("RET to quit ")
 plt.close()
     

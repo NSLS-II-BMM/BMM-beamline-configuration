@@ -144,7 +144,8 @@ class Vortex():
         self.ocr2 = epics.PV("XF:06BM-ES:1{Sclr:1}.S20")
         self.ocr3 = epics.PV("XF:06BM-ES:1{Sclr:1}.S22")
         self.ocr4 = epics.PV("XF:06BM-ES:1{Sclr:1}.S24")
-        self.avgtime = epics.PV("XF:06BM-ES:1{Sclr:1}.TP1")
+        self.avgtime = epics.PV("XF:06BM-ES:1{Sclr:1}.TP")    # count time
+        #self.avgtime = epics.PV("XF:06BM-ES:1{Sclr:1}.TP1")  # auto count time
         self.acquire = epics.PV("XF:06BM-ES:1{Sclr:1}.CONT")
         self.default_avgtime = 0.5
         self.multiplier = 1
@@ -234,8 +235,8 @@ class Vortex():
 class DCM():
     def __init__(self, crystals='111'):
         self.twod          = None
+        self.offset        = None
         self.description   = None
-        self.xtals(crystals)
         self.mono_offset   = 30   # mm
         self.emin          = 4000        # eV
         self.emax          = 22300       # eV
@@ -246,6 +247,7 @@ class DCM():
         self.roll          = BMM_Motor('dcm_roll')
         self.x             = BMM_Motor('dcm_x')
         self.y             = BMM_Motor('dcm_y')
+        self.xtals(crystals)
         self.perp.invacuum = self.para.invacuum = self.pitch.invacuum = self.roll.invacuum = True
         self.paraoffset    = 0
         self.perpoffset    = 0
@@ -253,12 +255,16 @@ class DCM():
         
     def xtals(self, crystals='111'):
         if crystals is '311':
-            self.twod = 2*1.63761489
+            self.offset = 16.504884
+            self.bragg.pv.put('OFF', self.offset)
+            self.twod = 2*1.63762644
             self.description = 'Si(311)'
         else:
             ## smaller beam
             #self.twod = 2*3.13543952
             ## larger beam 23 Jan 2018
+            self.offset = 16.5647
+            self.bragg.pv.put('OFF', self.offset)
             self.twod = 2*3.13597211
             self.description = 'Si(111)'
 
@@ -694,6 +700,8 @@ class StepScan():
     def units(self, label):
         if 'energy' in label:
             return 'eV'
+        elif 'time' is label:
+            return 'seconds'
         elif label in ('i0', 'it', 'ir'):
             return 'nA'
         elif label[:-1] in ('roi', 'icr', 'ocr'):
@@ -725,16 +733,27 @@ class StepScan():
     def conventional_grid(self, bounds, steps):
         if (len(bounds) - len(steps)) != 1:
             return None
+        #if (len(bounds) - len(times)) != 1:
+        #    return None
         for i,s in enumerate(bounds):
             if type(s) is str:
                 this = float(s[:-1])
                 bounds[i] = ktoe(this)
         grid = list()
+        #print bounds
+        #timegrid = list()
         for i,s in enumerate(steps):
             if type(s) is str:
                 step = float(s[:-1])
+                #print '>>>>>', step
                 ar = self.e0+ktoe(numpy.arange(etok(bounds[i]), etok(bounds[i+1]), step))
             else:
                 ar = numpy.arange(self.e0+bounds[i], self.e0+bounds[i+1], steps[i])
+            #print ar
             grid = grid + list(ar)
-        return grid
+            #if type(times[i]) is str:
+            #    tar = etok(ar-self.e0)*float(times[i][:-1])
+            #else:
+            #    tar = times[i]*numpy.ones(len(ar))
+            #timegrid = timegrid + list(tar)
+        return grid #, timegrid)
