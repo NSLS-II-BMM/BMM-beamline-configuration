@@ -195,7 +195,9 @@ for a in ('focus', 'hr'):
 ic  = IonChambers()
 vor = Vortex()
 ic.set_avgtime(p['inttime'])
+ic.acquiremode.put(2)
 vor.set_avgtime(p['inttime'])
+vor.acquiremode.put(1)
 
 
 scalars = {'i0': True, 'it': True, 'ir': True,
@@ -255,7 +257,7 @@ print colored('mono crystals', 'cyan'), '     :', dcm.description
 
 print colored('\ngrid boundaries', 'cyan'), '   :', bounds
 print colored('grid steps', 'cyan'), '        :', steps       
-#print colored('integration times', 'cyan'), ' :', times       
+print colored('integration times', 'cyan'), ' :', times       
 if p["channelcut"]:
     channelenergy = dcm.channelcut_energy(p["e0"], bounds)
     print '%s : %.1f' % (colored('channel cut energy', 'cyan'), channelenergy)
@@ -297,7 +299,7 @@ for i in range(p['start'], p['start']+p['nscans'], 1):
 
     scan.e0 = float(scan.e0)
 
-    basegrid = scan.conventional_grid(bounds,steps)
+    (basegrid, timegrid) = scan.conventional_grid(bounds,steps,times)
     if basegrid is None:
         print colored("Invalid step scan parameters", 'red', attrs=['bold'])
         exit()
@@ -331,16 +333,21 @@ for i in range(p['start'], p['start']+p['nscans'], 1):
     begin = 0
     for (ne,en) in enumerate(scan.grid):
         #begin = datetime.now()
-        #requested_time = timegrid[ne]
-        #number_of_measurements = int(requested_time / 0.004)
-        #measurement_time = number_of_measurements * 0.004
-        #ic.set_avgtime(measurement_time)
-        #vor.set_avgtime(measurement_time)
+        requested_time = timegrid[ne]
+        number_of_measurements = int(requested_time / 0.004)
+        measurement_time = number_of_measurements * 0.004
+        ic.set_avgtime(measurement_time)
+        vor.set_avgtime(measurement_time)
         dcm.moveto(en, quiet=True)
-        sleep(1.1*p['inttime'])
-        #sleep(1.1*measurement_time)     # the pause should be a hair longer than the requested integration time
+        
+        #sleep(1.1*p['inttime'])
+
+        ic.acquire.put(1)
+        vor.acquire.put(1)
+        sleep(1.1*measurement_time)     # the pause should be a hair longer than the requested integration time
                                     # this gives the best linarity between the Vortex and electrometer signals.
-        values = [dcm.current_energy(), en, dcm.bragg.pv.REP, p['inttime']] 
+        #values = [dcm.current_energy(), en, dcm.bragg.pv.REP, p['inttime']]
+        values = [dcm.current_energy(), en, dcm.bragg.pv.REP, measurement_time] 
 
         ## caput XF:06BM-BI{EM:1}EM180:AcquireMode 2             this puts the electrometer in Single acquire mode
         ## caput XF:06BM-BI{EM:1}EM180:Acquire 1                 this makes one measurement over the averaging time
@@ -354,7 +361,6 @@ for i in range(p['start'], p['start']+p['nscans'], 1):
             except:
                 (roi,icr,ocr) = values[-3:]
                 values.append(vor.dtcorrect(roi,icr,ocr, time=p['inttime']))
-        #sleep(p['inttime'])    # also, the pause should be *before* the measurement.
 
         line = template % tuple(values)
         if not args.quiet:
@@ -363,11 +369,11 @@ for i in range(p['start'], p['start']+p['nscans'], 1):
         scan.handle.flush()
         energy = numpy.append(energy, [en])
         if plotmode[0] is 'f':
-            mu = numpy.append(mu,     [(values[10]+values[14]+values[18]+values[22])/values[4]])
+            mu = numpy.append(mu, [(values[10]+values[14]+values[18]+values[22])/values[4]])
         elif plotmode[0] is 'r':
-            mu = numpy.append(mu,     [numpy.log(values[5]/values[6])])
+            mu = numpy.append(mu, [numpy.log(values[5]/values[6])])
         else:
-            mu = numpy.append(mu,     [numpy.log(values[4]/values[5])])
+            mu = numpy.append(mu, [numpy.log(values[4]/values[5])])
 
         plt.clf()
         plt.title('%s %s scan %d' % (p['element'], p['filename'], i))

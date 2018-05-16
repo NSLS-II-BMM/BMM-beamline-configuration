@@ -110,6 +110,7 @@ class IonChambers():
         self.avgtime = epics.PV("XF:06BM-BI{EM:1}EM180:AveragingTime")
         self.default_avgtime = 0.5
         self.multiplier = 1e9
+        self.acquiremode = epics.PV("XF:06BM-BI{EM:1}EM180:AcquireMode")
         self.acquire = epics.PV("XF:06BM-BI{EM:1}EM180:Acquire")
 
     def on(self):
@@ -132,21 +133,22 @@ class IonChambers():
     
 class Vortex():
     def __init__(self):
-        self.roi1 = epics.PV("XF:06BM-ES:1{Sclr:1}.S2")
+        self.roi1 = epics.PV("XF:06BM-ES:1{Sclr:1}.S3")
         self.roi2 = epics.PV("XF:06BM-ES:1{Sclr:1}.S4")
-        self.roi3 = epics.PV("XF:06BM-ES:1{Sclr:1}.S6")
-        self.roi4 = epics.PV("XF:06BM-ES:1{Sclr:1}.S8")
-        self.icr1 = epics.PV("XF:06BM-ES:1{Sclr:1}.S10")
-        self.icr2 = epics.PV("XF:06BM-ES:1{Sclr:1}.S12")
-        self.icr3 = epics.PV("XF:06BM-ES:1{Sclr:1}.S14")
-        self.icr4 = epics.PV("XF:06BM-ES:1{Sclr:1}.S16")
-        self.ocr1 = epics.PV("XF:06BM-ES:1{Sclr:1}.S18")
-        self.ocr2 = epics.PV("XF:06BM-ES:1{Sclr:1}.S20")
-        self.ocr3 = epics.PV("XF:06BM-ES:1{Sclr:1}.S22")
-        self.ocr4 = epics.PV("XF:06BM-ES:1{Sclr:1}.S24")
+        self.roi3 = epics.PV("XF:06BM-ES:1{Sclr:1}.S5")
+        self.roi4 = epics.PV("XF:06BM-ES:1{Sclr:1}.S6")
+        self.icr1 = epics.PV("XF:06BM-ES:1{Sclr:1}.S7")
+        self.icr2 = epics.PV("XF:06BM-ES:1{Sclr:1}.S8")
+        self.icr3 = epics.PV("XF:06BM-ES:1{Sclr:1}.S9")
+        self.icr4 = epics.PV("XF:06BM-ES:1{Sclr:1}.S10")
+        self.ocr1 = epics.PV("XF:06BM-ES:1{Sclr:1}.S11")
+        self.ocr2 = epics.PV("XF:06BM-ES:1{Sclr:1}.S12")
+        self.ocr3 = epics.PV("XF:06BM-ES:1{Sclr:1}.S13")
+        self.ocr4 = epics.PV("XF:06BM-ES:1{Sclr:1}.S14")
         self.avgtime = epics.PV("XF:06BM-ES:1{Sclr:1}.TP")    # count time
         #self.avgtime = epics.PV("XF:06BM-ES:1{Sclr:1}.TP1")  # auto count time
-        self.acquire = epics.PV("XF:06BM-ES:1{Sclr:1}.CONT")
+        self.acquiremode = epics.PV("XF:06BM-ES:1{Sclr:1}.CONT")
+        self.acquire = epics.PV("XF:06BM-ES:1{Sclr:1}.CNT")
         self.default_avgtime = 0.5
         self.multiplier = 1
         self.maxcount = 20
@@ -653,6 +655,7 @@ class StepScan():
         self.hr         = True
         self.channelcut = False
 
+        
 
     def file_header(self, dcm=None, material='', comment='quick measurement'):
         if dcm is None:
@@ -730,18 +733,18 @@ class StepScan():
             text = text + h + '\n'
         return text
 
-    def conventional_grid(self, bounds, steps):
+    def conventional_grid(self, bounds, steps, times):
         if (len(bounds) - len(steps)) != 1:
             return None
-        #if (len(bounds) - len(times)) != 1:
-        #    return None
+        if (len(bounds) - len(times)) != 1:
+            return None
         for i,s in enumerate(bounds):
             if type(s) is str:
                 this = float(s[:-1])
                 bounds[i] = ktoe(this)
         grid = list()
         #print bounds
-        #timegrid = list()
+        timegrid = list()
         for i,s in enumerate(steps):
             if type(s) is str:
                 step = float(s[:-1])
@@ -751,9 +754,9 @@ class StepScan():
                 ar = numpy.arange(self.e0+bounds[i], self.e0+bounds[i+1], steps[i])
             #print ar
             grid = grid + list(ar)
-            #if type(times[i]) is str:
-            #    tar = etok(ar-self.e0)*float(times[i][:-1])
-            #else:
-            #    tar = times[i]*numpy.ones(len(ar))
-            #timegrid = timegrid + list(tar)
-        return grid #, timegrid)
+            if type(times[i]) is str:
+                tar = etok(ar-self.e0)*float(times[i][:-1])
+            else:
+                tar = times[i]*numpy.ones(len(ar))
+            timegrid = timegrid + list(tar)
+        return (grid, timegrid)
