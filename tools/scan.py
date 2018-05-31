@@ -47,7 +47,7 @@ args = parser.parse_args()
 defaults = {'e0'         : 7112,
             'inttime'    : 1.0,
             'edge'       : 'K',
-            'folder'     : 'data',
+            'folder'     : '/home/bravel/commissioning/data',
             'element'    : 'Fe',
             'filename'   : 'Fe foil',
             'comment'    : 'quick measurement',
@@ -86,7 +86,7 @@ import os.path
 
 from BMMcontrols import DCM, StepScan, IonChambers, Vortex
 
-dcm = DCM(crystals='311')
+dcm = DCM(crystals='111')
 signal.signal(signal.SIGINT, dcm.handler)
 xtals = '111'
 if dcm.is311:
@@ -132,7 +132,7 @@ except:
     times = [0.5, 0.5, 0.5]
 
 
-    
+
 ## handle single value times by make a list len(steps) long of that value
 ## truncate or fill in values so len(times) == len(steps)
 ## also k-weighted times
@@ -155,7 +155,7 @@ try:
 except ConfigParser.NoOptionError:
     p['comment'] = defaults['comment']
 
-            
+
 ## integers
 for a in ('start', 'nscans'):
     if getattr(args, a) is not None:
@@ -178,7 +178,7 @@ for a in ('e0', 'inttime'):
 
 
 ## booleans
-for a in ('bothways', 'channelcut'):        
+for a in ('bothways', 'channelcut'):
     if getattr(args, a) is not None:
         p[a] = getattr(args, a)
     else:
@@ -212,7 +212,7 @@ if 'fluo' in plotmode:
     scalars['vortex2'] = True
     scalars['vortex3'] = True
     scalars['vortex4'] = True
-    
+
 for s in ('i0', 'it', 'ir', 'vortex1', 'vortex2', 'vortex3', 'vortex4'):
     #try:
         #scalars[s] = config.getboolean('scalars', s)
@@ -233,7 +233,7 @@ template = " %.3f  %.3f  %11d  %.4f"
 for f in range(0, len(measure)):
     template = template + '   %.9g'
 template = template + '\n'
-    
+
 
 #print labels
 #print template
@@ -241,13 +241,13 @@ template = template + '\n'
 #exit()
 
 ################################################################################
-        
-if not os.path.isdir('data/%s' % p['folder']):
-    mkdir('data/%s' % p['folder'])
+
+if not os.path.isdir(p['folder']):
+    mkdir(p['folder'])
 
 
 ## ----- verify scan parameters before moving on
-fname = 'data/%s/%s.###' % (p['folder'], p['filename'])
+fname = '%s/%s.###' % (p['folder'], p['filename'])
 print ''
 for item in sorted(p.keys()):
     print '%s : %s' % (colored('%-10s'%item, 'green'), p[item])
@@ -256,8 +256,8 @@ print colored('\nscan mode', 'cyan'), '         :', plotmode
 print colored('mono crystals', 'cyan'), '     :', dcm.description
 
 print colored('\ngrid boundaries', 'cyan'), '   :', bounds
-print colored('grid steps', 'cyan'), '        :', steps       
-print colored('integration times', 'cyan'), ' :', times       
+print colored('grid steps', 'cyan'), '        :', steps
+print colored('integration times', 'cyan'), ' :', times
 if p["channelcut"]:
     channelenergy = dcm.channelcut_energy(p["e0"], bounds)
     print '%s : %.1f' % (colored('channel cut energy', 'cyan'), channelenergy)
@@ -285,9 +285,9 @@ if p["channelcut"]:
     dcm.channelcut = True
 
 
-    
+
 for i in range(p['start'], p['start']+p['nscans'], 1):
-    fname = 'data/%s/%s.%3.3d' % (p['folder'], p['filename'], i)
+    fname = '%s/%s.%3.3d' % (p['folder'], p['filename'], i)
     if os.path.isfile(fname):
         print colored("%s already exists!" % fname, 'red', attrs=['bold'])
         exit()
@@ -303,7 +303,7 @@ for i in range(p['start'], p['start']+p['nscans'], 1):
     if basegrid is None:
         print colored("Invalid step scan parameters", 'red', attrs=['bold'])
         exit()
-    
+
     scan.direction = 'increasing'
     if p['bothways']:
         if i%2:
@@ -314,7 +314,7 @@ for i in range(p['start'], p['start']+p['nscans'], 1):
             scan.direction = 'increasing'
     else:
         scan.grid = basegrid
-        
+
     scan.file_header(dcm=dcm)
     scan.column_labels(labels)        # labels=('I0', 'It', 'Ir')
     scan.handle.write(scan.file_header_text())
@@ -339,7 +339,7 @@ for i in range(p['start'], p['start']+p['nscans'], 1):
         ic.set_avgtime(measurement_time)
         vor.set_avgtime(measurement_time)
         dcm.moveto(en, quiet=True)
-        
+
         #sleep(1.1*p['inttime'])
 
         ic.acquire.put(1)
@@ -347,13 +347,13 @@ for i in range(p['start'], p['start']+p['nscans'], 1):
         sleep(1.1*measurement_time)     # the pause should be a hair longer than the requested integration time
                                     # this gives the best linarity between the Vortex and electrometer signals.
         #values = [dcm.current_energy(), en, dcm.bragg.pv.REP, p['inttime']]
-        values = [dcm.current_energy(), en, dcm.bragg.pv.REP, measurement_time] 
+        values = [dcm.current_energy(), en, dcm.bragg.pv.REP, measurement_time]
 
         ## caput XF:06BM-BI{EM:1}EM180:AcquireMode 2             this puts the electrometer in Single acquire mode
         ## caput XF:06BM-BI{EM:1}EM180:Acquire 1                 this makes one measurement over the averaging time
         ## caput XF:06BM-ES:1{Sclr:1}.CONT 0                     this puts the Struck in OneCount mode
         ## caput XF:06BM-ES:1{Sclr:1}.CNT 1                      this makes one measurement over the count time
-        
+
         for (j,pv) in enumerate(measure):
             try:
                 this = pv.get()
@@ -399,4 +399,3 @@ vor.reset_avgtime()
 if getattr(args, 'run') is False:
     action = raw_input("RET to quit ")
 plt.close()
-    

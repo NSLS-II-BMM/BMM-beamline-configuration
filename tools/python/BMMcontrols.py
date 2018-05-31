@@ -56,7 +56,7 @@ class BMM_Motor():
             self.home_pv   = None # epics.PV(MOTORDATA[alias]['PV']+"_HOME_CMD_PROC")
         if 'lateral' in alias:
             self.invacuum = 1
-            
+
     def stop(self):
         if self.pv.get('MOVN'):
             self.pv.put('STOP', 1, wait=True)
@@ -65,7 +65,7 @@ class BMM_Motor():
 
     def enable(self):
         self.enable_pv.put(1)
-        
+
     def kill(self, really=False):
         if self.kill_pv is not None:
             if self.invacuum:
@@ -82,7 +82,7 @@ class BMM_Motor():
         template = '  %s --> %8.4f'
         sys.stdout.write(template % (self.description, self.pv.RBV))
 
-    
+
         if not self.pv.within_limits(val):
             print colored("Request to move outside limits on %s" % pv.DESC, 'red', attrs=['bold'])
             exit()
@@ -115,10 +115,10 @@ class IonChambers():
 
     def on(self):
         self.acquire.put(1)
-        
+
     def off(self):
         self.acquire.put(0)
-        
+
     def each(self):
         return (self.i0, self.it, self.ir)
 
@@ -127,10 +127,10 @@ class IonChambers():
 
     def set_avgtime(self, time):
         self.avgtime.put(time)
-    
+
     def reset_avgtime(self):
         self.avgtime.put(self.default_avgtime)
-    
+
 class Vortex():
     def __init__(self):
         self.roi1 = epics.PV("XF:06BM-ES:1{Sclr:1}.S3")
@@ -156,7 +156,7 @@ class Vortex():
 
     def on(self):
         self.acquire.put(1)
-        
+
     def off(self):
         self.acquire.put(0)
 
@@ -169,7 +169,7 @@ class Vortex():
 
     def get(self, scalar):
         return getattr(self, scalar).get()
-    
+
     def ch1(self):
         r = self.roi1.get()
         i = self.icr1.get()
@@ -194,10 +194,10 @@ class Vortex():
         o = self.ocr4.get()
         c = self.dtcorrect(r, i, o)
         return [r, i, o, c]
-    
+
     def set_avgtime(self, time):
         self.avgtime.put(time)
-    
+
     def reset_avgtime(self):
         self.avgtime.put(self.default_avgtime)
 
@@ -229,7 +229,7 @@ class Vortex():
                 test = 0
         self.iterations = count
         return rr * (totn*tt/oo)
-    
+
 ################################################################################
 ################################################################################
 ################################################################################
@@ -254,20 +254,20 @@ class DCM():
         self.paraoffset    = 0
         self.perpoffset    = 0
         self.channelcut    = False
-        
+
     def xtals(self, crystals='111'):
         if crystals is '311':
-            self.offset = 16.504884
+            self.offset = 15.99439325
             self.bragg.pv.put('OFF', self.offset)
-            self.twod = 2*1.63762644
+            self.twod = 2*1.63763854
             self.description = 'Si(311)'
         else:
             ## smaller beam
             #self.twod = 2*3.13543952
             ## larger beam 23 Jan 2018
-            self.offset = 16.5647
+            self.offset = 16.05442
             self.bragg.pv.put('OFF', self.offset)
-            self.twod = 2*3.13597211
+            self.twod = 2*3.13563694
             self.description = 'Si(111)'
 
     def is311(self):
@@ -275,7 +275,7 @@ class DCM():
             return True
         else:
             return False
-            
+
     def e2l(self, val):
         return 2*pi*HBARC/val
 
@@ -300,7 +300,7 @@ class DCM():
         wavelength = self.e2l(energy)
         angle      = arcsin(wavelength / self.twod)
         return self.mono_offset / (2*cos(angle))
-    
+
     def kill(self, axis):
         axis.kill_pv.put(1)
         return 1
@@ -313,7 +313,7 @@ class DCM():
 
     def seven(self):
         return(self.bragg, self.perp, self.para, self.pitch, self.roll, self.x, self.y)
-        
+
     def handler(self, signum, frame):
         print colored('\n\nGot CTRL+C, stopping all motors, disabling in-vacuum motors', 'red', attrs=['bold'])
         for ax in self.seven():
@@ -329,7 +329,7 @@ class DCM():
         vor.reset_avgtime()
         action = raw_input("any key to quit > ")
         exit()
-        
+
     def moveto(self, energy, para=None, perp=None, quiet=False):
         if energy < self.emin:
             print "cannot move to %.2f -- too low!" % energy
@@ -361,7 +361,7 @@ class DCM():
         axes     = (self.pitch, self.roll, self.x)
         template = ' pitch, roll, x --> %8.4f  %8.4f  %8.4f'
         self.generic_move(axes, values, template)
-        
+
     def generic_move(self, axes=None, values=None, template=None, quiet=False):
         if axes is None:
             print "Must provide a list of axes to generic_move"
@@ -389,7 +389,7 @@ class DCM():
                 print colored("Request to move outside limits on %s" % ax.pv.DESC, 'red', attrs=['bold'])
                 exit()
             ax.pv.move(val, wait=False)
-            
+
         ##------------------------------------------------------------------------
         ## wait for all three motors to get where they are going
         waiting = True
@@ -421,14 +421,14 @@ class DCM():
         wavelength = self.wavelength(aave)
         eave = self.e2l(wavelength)
         return eave
-    
+
     def prettyprint_energy(self, energy, status="Mono at", color="white", attrs=None):
         # print "%s = %.1f   %s = %s   (perp/para offset = %.2f/%.2f)" % \
         print "%s = %.1f   %s = %s" % \
             (colored(status,       color, attrs=attrs), energy,
              colored('reflection', color, attrs=attrs), self.description)  #  args.perpoffset, args.paraoffset)
 
-    
+
     def prettyprint_three_motors(self, mot1, mot2, mot3, color="white", status="current", attrs=None):
         # print "current: %s = %8.5f   %s = %7.4f (%7.4f)   %s = %8.4f (%8.4f)\n" %
         print "%s: %s = %8.5f   %s = %7.4f   %s = %8.4f" %\
@@ -443,7 +443,7 @@ class DCM():
              colored(self.bragg.pv.DESC,color, attrs=attrs), bragg,
              colored(self.perp.pv.DESC, color, attrs=attrs), perp,  #  - args.perpoffset,
              colored(self.para.pv.DESC, color, attrs=attrs), para)  #  - args.paraoffset)
-        
+
     def prettyline(self, color="white"):
         print colored('='*80, color)
 
@@ -465,7 +465,7 @@ class Mirror():
         self.set_mirror(m)
         self.current_positions()
         self.direction = None
-    
+
     def set_mirror(self, m):
         if m in (1,2,3,4):
             self.m = m
@@ -511,7 +511,7 @@ class Mirror():
 
     def five(self):
         return (self.yu, self.ydo, self.ydi, self.xu, self.xd)
-            
+
     def handler(self, signum, frame):
         print colored('\n\nGot CTRL+C, stopping all motors, disabling in-vacuum motors', 'red', attrs=['bold'])
         for ax in self.five():
@@ -521,7 +521,7 @@ class Mirror():
         self.where()
         exit(0)
 
-            
+
     def current_positions(self):
         self.vert  = (self.yu.pv.RBV  + (self.ydo.pv.RBV+self.ydi.pv.RBV)/2) / 2
         self.lat   = (self.xu.pv.RBV  + self.xd.pv.RBV)  / 2
@@ -543,7 +543,7 @@ class Mirror():
         print "%s: moving in %s by %.3f" % \
             (colored(self.description, color, attrs=attrs), self.direction, amount)
 
-        
+
     def move(self, axes, vals, rel=False):
 
         def message(string):
@@ -610,7 +610,7 @@ class Mirror():
 
         text = '\t%s = %.3f' % (colored(which, color1, attrs=['bold']), value)
         print text
-            
+
         if self.direction in ('vertical', 'pitch', 'roll'):
             print "\tRBVs: %s = %8.4f\t%s = %8.4f\t%s = %8.4f" % \
                 (colored('YU',  color1, attrs=['bold']), self.yu.pv.RBV,
@@ -655,7 +655,7 @@ class StepScan():
         self.hr         = True
         self.channelcut = False
 
-        
+
 
     def file_header(self, dcm=None, material='', comment='quick measurement'):
         if dcm is None:
@@ -672,22 +672,22 @@ class StepScan():
                          '# Mono.scan_type: step',
                          '# Beamline.name: 06BM',
                          '# Beamline.collimation: paraboloid mirror, 5 nm Rh on 30 nm Pt'])
-        
+
         if self.focus:
             self.xdi.append('# Beamline.focusing: torroidal mirror with bender, 5 nm Rh on 30 nm Pt')
         else:
             self.xdi.append('# Beamline.focusing: none')
-            
+
         if self.hr:
             self.xdi.append('# Beamline.harmonic_rejection: Pt stripe; Si stripe below 8 keV')
         else:
             self.xdi.append('# Beamline.harmonic_rejection: none')
-            
+
         if self.channelcut:
             self.xdi.append('# Mono.scan_mode: pseudo channel cut')
         else:
             self.xdi.append('# Mono.scan_mode: fixed exit')
-            
+
         self.xdi.extend(['# Facility.name: NSLS-II',
                          '# Facility.energy: 3 GeV',
                          '# Facility.xray_source: NSLS-II three-pole wiggler',
@@ -716,7 +716,7 @@ class StepScan():
         else:
             return ''
 
-        
+
     def column_labels(self, labels=('I0', 'It', 'Ir')):
         line = '# '
         i=0
