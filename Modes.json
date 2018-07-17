@@ -1,4 +1,22 @@
 {
+    "6bm:sixc_tbl_yui": {
+        "A": 0,
+        "A_REP": 0,
+        "B": 0,
+        "B_REP": 0,
+        "C": 0,
+        "C_REP": 0,
+        "D": 0,
+        "D_REP": 0,
+        "E": 0,
+        "E_REP": 0,
+        "F": 0,
+        "F_REP": 0,
+        "PV": "XF:06BM-ES{SixC-Ax:Tbl_YUI}Mtr",
+        "XRD": 407.74,
+        "XRD_REP": 10273772,
+        "desc": "XRD table Y us/ib"
+    },
     "6bm:sixc_txd": {
         "A": 0,
         "A_REP": 0,
@@ -13,6 +31,8 @@
         "F": 0,
         "F_REP": 0,
         "PV": "XF:06BM-ES{SixC-Ax:Tbl_XD}Mtr",
+        "XRD": -2.11971,
+        "XRD_REP": -5341,
         "desc": "XRD table X ds"
     },
     "6bm:sixc_txu": {
@@ -29,6 +49,8 @@
         "F": 0,
         "F_REP": 0,
         "PV": "XF:06BM-ES{SixC-Ax:Tbl_XU}Mtr",
+        "XRD": -2.11971,
+        "XRD_REP": -5341,
         "desc": "XRD table X us"
     },
     "6bm:sixc_tyd": {
@@ -45,23 +67,9 @@
         "F": 0,
         "F_REP": 0,
         "PV": "XF:06BM-ES{SixC-Ax:Tbl_YD}Mtr",
+        "XRD": 408.46,
+        "XRD_REP": 10291914,
         "desc": "XRD table Y ds"
-    },
-    "6bm:sixc_tyui": {
-        "A": 0,
-        "A_REP": 0,
-        "B": 0,
-        "B_REP": 0,
-        "C": 0,
-        "C_REP": 0,
-        "D": 0,
-        "D_REP": 0,
-        "E": 0,
-        "E_REP": 0,
-        "F": 0,
-        "F_REP": 0,
-        "PV": "XF:06BM-ES{SixC-Ax:Tbl_YUI}Mtr",
-        "desc": "XRD table Y us/ib"
     },
     "6bm:sixc_tyuo": {
         "A": 0,
@@ -77,6 +85,8 @@
         "F": 0,
         "F_REP": 0,
         "PV": "XF:06BM-ES{SixC-Ax:Tbl_YUO}Mtr",
+        "XRD": 407.74,
+        "XRD_REP": 10273772,
         "desc": "XRD table Y us/ob"
     },
     "6bm:sixc_tz": {
@@ -93,6 +103,8 @@
         "F": 0,
         "F_REP": 0,
         "PV": "XF:06BM-ES{SixC-Ax:Tbl_Z}Mtr",
+        "XRD": 0,
+        "XRD_REP": 0,
         "desc": "XRD table Z"
     },
     "dcm_bragg": {
@@ -109,6 +121,8 @@
         "F": 19.2389,
         "F_REP": 503233,
         "PV": "XF:06BMA-OP{Mono:DCM1-Ax:Bragg}Mtr",
+        "XRD": 19.2389,
+        "XRD_REP": 503233,
         "desc": "DCM Bragg"
     },
     "dcm_bragg2": {
@@ -125,6 +139,8 @@
         "F": 19.3418,
         "F_REP": 523783,
         "PV": "XF:06BMA-OP{Mono:DCM1-Ax:Bragg2}Mtr",
+        "XRD": 19.3418,
+        "XRD_REP": 523783,
         "desc": "Bragg 2ndenc."
     },
     "dcm_para": {
@@ -141,6 +157,8 @@
         "F": 48.0221,
         "F_REP": -183437,
         "PV": "XF:06BMA-OP{Mono:DCM1-Ax:Par2}Mtr",
+        "XRD": 48.0221,
+        "XRD_REP": -183437,
         "desc": "2ndxtal parallel"
     },
     "dcm_perp": {
@@ -157,6 +175,8 @@
         "F": 11.3071,
         "F_REP": -93556,
         "PV": "XF:06BMA-OP{Mono:DCM1-Ax:Per2}Mtr",
+        "XRD": 11.3071,
+        "XRD_REP": -93556,
         "desc": "2ndxtal perp."
     },
     "dcm_pitch": {
@@ -173,6 +193,8 @@
         "F": 5.52861,
         "F_REP": -1413,
         "PV": "XF:06BMA-OP{Mono:DCM1-Ax:P2}Mtr",
+        "XRD": 5.52861,
+        "XRD_REP": -1413,
         "desc": "2ndxtal pitch"
     },
     "dcm_roll": {
@@ -189,6 +211,8 @@
         "F": -6.2601,
         "F_REP": -38573,
         "PV": "XF:06BMA-OP{Mono:DCM1-Ax:R2}Mtr",
+        "XRD": -6.2601,
+        "XRD_REP": -38573,
         "desc": "2ndxtal roll"
     },
     "dcm_x": {
@@ -205,6 +229,8 @@
         "F": -33.0026,
         "F_REP": -330022,
         "PV": "XF:06BMA-OP{Mono:DCM1-Ax:X}Mtr",
+        "XRD": -33.0026,
+        "XRD_REP": -330022,
         "desc": "lateral trans."
     },
     "dcm_y": {
@@ -221,6 +247,8 @@
         "F": 0.0006,
         "F_REP": 6,
         "PV": "XF:06BMA-OP{Mono:DCM1-Ax:Y}Mtr",
+        "XRD": 0.0006,
+        "XRD_REP": 6,
         "desc": "vertical trans."
     },
     "dm1_filters1": {
@@ -237,6 +265,8 @@
         "F": 55,
         "F_REP": 550000,
         "PV": "XF:06BMA-BI{Fltr:01-Ax:Y1}Mtr",
+        "XRD": 55,
+        "XRD_REP": 550000,
         "desc": "assembly #1"
     },
     "dm1_filters2": {
@@ -253,6 +283,8 @@
         "F": 62.9996,
         "F_REP": 629996,
         "PV": "XF:06BMA-BI{Fltr:01-Ax:Y2}Mtr",
+        "XRD": 62.9996,
+        "XRD_REP": 629996,
         "desc": "assembly #2"
     },
     "dm2_fs": {
@@ -269,6 +301,8 @@
         "F": 73,
         "F_REP": 389430,
         "PV": "XF:06BMA-BI{Diag:02-Ax:Y}Mtr",
+        "XRD": 73,
+        "XRD_REP": 389430,
         "desc": "vertical actuator"
     },
     "dm2_slits_b": {
@@ -285,6 +319,8 @@
         "F": -4.0009,
         "F_REP": -12510,
         "PV": "XF:06BMA-OP{Slt:01-Ax:B}Mtr",
+        "XRD": -4.0009,
+        "XRD_REP": -12510,
         "desc": "bottom"
     },
     "dm2_slits_i": {
@@ -301,6 +337,8 @@
         "F": -7.3692,
         "F_REP": -40043,
         "PV": "XF:06BMA-OP{Slt:01-Ax:I}Mtr",
+        "XRD": -7.3692,
+        "XRD_REP": -40043,
         "desc": "inboard"
     },
     "dm2_slits_o": {
@@ -317,6 +355,8 @@
         "F": 10.6641,
         "F_REP": 65072,
         "PV": "XF:06BMA-OP{Slt:01-Ax:O}Mtr",
+        "XRD": 10.6641,
+        "XRD_REP": 65072,
         "desc": "outboard"
     },
     "dm2_slits_t": {
@@ -333,6 +373,8 @@
         "F": 7.2954,
         "F_REP": 37126,
         "PV": "XF:06BMA-OP{Slt:01-Ax:T}Mtr",
+        "XRD": 7.2954,
+        "XRD_REP": 37126,
         "desc": "top"
     },
     "dm3_bct": {
@@ -349,6 +391,8 @@
         "F": 19.89,
         "F_REP": 160131,
         "PV": "XF:06BM-BI{BCT-Ax:Y}Mtr",
+        "XRD": 32.466,
+        "XRD_REP": 288827,
         "desc": "vertical stage"
     },
     "dm3_bpm": {
@@ -365,6 +409,8 @@
         "F": -3.3648,
         "F_REP": 2,
         "PV": "XF:06BM-BI{BPM:1-Ax:Y}Mtr",
+        "XRD": -3.3653,
+        "XRD_REP": -3,
         "desc": "NanoBPM"
     },
     "dm3_foils": {
@@ -381,6 +427,8 @@
         "F": 41.0001,
         "F_REP": 437501,
         "PV": "XF:06BM-BI{Fltr:01-Ax:Y}Mtr",
+        "XRD": 40.9998,
+        "XRD_REP": 437498,
         "desc": "foils actuator"
     },
     "dm3_fs": {
@@ -397,6 +445,8 @@
         "F": -1.2,
         "F_REP": -53715,
         "PV": "XF:06BM-BI{FS:03-Ax:Y}Mtr",
+        "XRD": 33,
+        "XRD_REP": 288431,
         "desc": "fluo. screen"
     },
     "dm3_slits_b": {
@@ -413,6 +463,8 @@
         "F": -0.675,
         "F_REP": 27858,
         "PV": "XF:06BM-BI{Slt:02-Ax:B}Mtr",
+        "XRD": -0.675,
+        "XRD_REP": 27858,
         "desc": "dm3 bottom"
     },
     "dm3_slits_i": {
@@ -429,6 +481,8 @@
         "F": -4,
         "F_REP": 3881,
         "PV": "XF:06BM-BI{Slt:02-Ax:I}Mtr",
+        "XRD": -4,
+        "XRD_REP": 3881,
         "desc": "dm3 inboard"
     },
     "dm3_slits_o": {
@@ -445,6 +499,8 @@
         "F": 4,
         "F_REP": -56174,
         "PV": "XF:06BM-BI{Slt:02-Ax:O}Mtr",
+        "XRD": 4,
+        "XRD_REP": -56174,
         "desc": "dm3 outboard"
     },
     "dm3_slits_t": {
@@ -461,6 +517,8 @@
         "F": 0.675,
         "F_REP": 38245,
         "PV": "XF:06BM-BI{Slt:02-Ax:T}Mtr",
+        "XRD": 0.675,
+        "XRD_REP": 38245,
         "desc": "dm3 top"
     },
     "m1_xd": {
@@ -477,6 +535,8 @@
         "F": 2.1802,
         "F_REP": 24801,
         "PV": "XF:06BM-OP{Mir:M1-Ax:XD}Mtr",
+        "XRD": 2.1802,
+        "XRD_REP": 24801,
         "desc": "m1 ds lateral"
     },
     "m1_xu": {
@@ -493,6 +553,8 @@
         "F": 0.4832,
         "F_REP": 4832,
         "PV": "XF:06BM-OP{Mir:M1-Ax:XU}Mtr",
+        "XRD": 0.4832,
+        "XRD_REP": 4832,
         "desc": "m1 us lateral"
     },
     "m1_ydi": {
@@ -509,6 +571,8 @@
         "F": 0.5299,
         "F_REP": 24328,
         "PV": "XF:06BM-OP{Mir:M1-Ax:YDI}Mtr",
+        "XRD": 0.5299,
+        "XRD_REP": 24328,
         "desc": "m1 ds/ib jack"
     },
     "m1_ydo": {
@@ -525,6 +589,8 @@
         "F": -0.1033,
         "F_REP": 27327,
         "PV": "XF:06BM-OP{Mir:M1-Ax:YDO}Mtr",
+        "XRD": -0.1033,
+        "XRD_REP": 27327,
         "desc": "m1 ds/ob jack"
     },
     "m1_yu": {
@@ -541,6 +607,8 @@
         "F": -1.7332,
         "F_REP": -9774,
         "PV": "XF:06BM-OP{Mir:M1-Ax:YU}Mtr",
+        "XRD": -1.7332,
+        "XRD_REP": -9774,
         "desc": "m1 us jack"
     },
     "m2_bender": {
@@ -557,6 +625,8 @@
         "F": 0,
         "F_REP": 0,
         "PV": "XF:06BMA-OP{Mir:M2-Ax:Bend}Mtr",
+        "XRD": 163788,
+        "XRD_REP": 163789,
         "desc": "m2 bender"
     },
     "m2_xd": {
@@ -573,6 +643,8 @@
         "F": -0.3847,
         "F_REP": -31347,
         "PV": "XF:06BMA-OP{Mir:M2-Ax:XD}Mtr",
+        "XRD": 0.1289,
+        "XRD_REP": -26212,
         "desc": "m2 ds lateral"
     },
     "m2_xu": {
@@ -589,6 +661,8 @@
         "F": -0.415799999,
         "F_REP": -16348,
         "PV": "XF:06BMA-OP{Mir:M2-Ax:XU}Mtr",
+        "XRD": -0.1284,
+        "XRD_REP": -13475,
         "desc": "m2 us lateral"
     },
     "m2_ydi": {
@@ -605,6 +679,8 @@
         "F": 6,
         "F_REP": 56998,
         "PV": "XF:06BMA-OP{Mir:M2-Ax:YDI}Mtr",
+        "XRD": -2.61017,
+        "XRD_REP": -29102,
         "desc": "m2 ds/ib jack"
     },
     "m2_ydo": {
@@ -621,6 +697,8 @@
         "F": 6,
         "F_REP": 51098,
         "PV": "XF:06BMA-OP{Mir:M2-Ax:YDO}Mtr",
+        "XRD": -2.61007,
+        "XRD_REP": -35001,
         "desc": "m2 ds/ob jack"
     },
     "m2_yu": {
@@ -637,6 +715,8 @@
         "F": 6,
         "F_REP": 66500,
         "PV": "XF:06BMA-OP{Mir:M2-Ax:YU}Mtr",
+        "XRD": -6.08773,
+        "XRD_REP": -54377,
         "desc": "m2 us jack"
     },
     "m3_xd": {
@@ -653,6 +733,8 @@
         "F": -15.0006,
         "F_REP": -185586,
         "PV": "XF:06BMA-OP{Mir:M3-Ax:XD}Mtr",
+        "XRD": 15.0002,
+        "XRD_REP": 114420,
         "desc": "m3 ds lateral"
     },
     "m3_xu": {
@@ -669,6 +751,8 @@
         "F": -15,
         "F_REP": -167778,
         "PV": "XF:06BMA-OP{Mir:M3-Ax:XU}Mtr",
+        "XRD": 15,
+        "XRD_REP": 132229,
         "desc": "m3 us lateral"
     },
     "m3_ydi": {
@@ -685,6 +769,8 @@
         "F": 0.6669,
         "F_REP": 9069,
         "PV": "XF:06BMA-OP{Mir:M3-Ax:YDI}Mtr",
+        "XRD": -1.5,
+        "XRD_REP": -12618,
         "desc": "m3 ds/ib jack"
     },
     "m3_ydo": {
@@ -701,6 +787,8 @@
         "F": 0.6671,
         "F_REP": 10371,
         "PV": "XF:06BMA-OP{Mir:M3-Ax:YDO}Mtr",
+        "XRD": -1.5,
+        "XRD_REP": -11314,
         "desc": "m3 ds/ob jack"
     },
     "m3_yu": {
@@ -717,6 +805,8 @@
         "F": -0.6669,
         "F_REP": 11531,
         "PV": "XF:06BMA-OP{Mir:M3-Ax:YU}Mtr",
+        "XRD": -1.5,
+        "XRD_REP": 3207,
         "desc": "m3 us jack"
     },
     "xafs_xd": {
@@ -733,6 +823,8 @@
         "F": 16.9,
         "F_REP": 130000,
         "PV": "XF:06BMA-BI{XAFS-Ax:Tbl_XD}Mtr",
+        "XRD": 16.9,
+        "XRD_REP": 130000,
         "desc": "xafs table ds lat"
     },
     "xafs_xu": {
@@ -749,6 +841,8 @@
         "F": -4.6,
         "F_REP": -332000,
         "PV": "XF:06BMA-BI{XAFS-Ax:Tbl_XU}Mtr",
+        "XRD": -4.6,
+        "XRD_REP": -332000,
         "desc": "xafs table us lat"
     },
     "xafs_ydi": {
@@ -765,6 +859,8 @@
         "F": 100.43,
         "F_REP": 4913439,
         "PV": "XF:06BMA-BI{XAFS-Ax:Tbl_YDI}Mtr",
+        "XRD": 115.685,
+        "XRD_REP": 5707176,
         "desc": "xafs table ds/ib jack"
     },
     "xafs_ydo": {
@@ -781,6 +877,8 @@
         "F": 100.43,
         "F_REP": 6110187,
         "PV": "XF:06BMA-BI{XAFS-Ax:Tbl_YDO}Mtr",
+        "XRD": 115.685,
+        "XRD_REP": 6903924,
         "desc": "xafs table ds/ob jack"
     },
     "xafs_yu": {
@@ -797,6 +895,8 @@
         "F": 103.91,
         "F_REP": 8736787,
         "PV": "XF:06BMA-BI{XAFS-Ax:Tbl_YU}Mtr",
+        "XRD": 117.533,
+        "XRD_REP": 9445608,
         "desc": "xafs table us jack"
     }
 }
