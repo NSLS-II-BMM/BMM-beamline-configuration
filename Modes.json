@@ -391,8 +391,8 @@
         "F": 19.89,
         "F_REP": 160131,
         "PV": "XF:06BM-BI{BCT-Ax:Y}Mtr",
-        "XRD": 32.466,
-        "XRD_REP": 288827,
+        "XRD": 33.3556,
+        "XRD_REP": 297749,
         "desc": "vertical stage"
     },
     "dm3_bpm": {
@@ -679,8 +679,8 @@
         "F": 6,
         "F_REP": 56998,
         "PV": "XF:06BMA-OP{Mir:M2-Ax:YDI}Mtr",
-        "XRD": -2.61017,
-        "XRD_REP": -29102,
+        "XRD": -2.58696,
+        "XRD_REP": -28869,
         "desc": "m2 ds/ib jack"
     },
     "m2_ydo": {
@@ -697,8 +697,8 @@
         "F": 6,
         "F_REP": 51098,
         "PV": "XF:06BMA-OP{Mir:M2-Ax:YDO}Mtr",
-        "XRD": -2.61007,
-        "XRD_REP": -35001,
+        "XRD": -2.58686,
+        "XRD_REP": -34768,
         "desc": "m2 ds/ob jack"
     },
     "m2_yu": {
@@ -715,8 +715,8 @@
         "F": 6,
         "F_REP": 66500,
         "PV": "XF:06BMA-OP{Mir:M2-Ax:YU}Mtr",
-        "XRD": -6.08773,
-        "XRD_REP": -54377,
+        "XRD": -6.11104,
+        "XRD_REP": -54610,
         "desc": "m2 us jack"
     },
     "m3_xd": {
