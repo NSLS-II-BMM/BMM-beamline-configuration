@@ -1,0 +1,103 @@
+#!/usr/bin/python
+
+import sys
+import os
+import signal
+import epics
+from time import sleep
+from termcolor import colored
+#sys.path.append('/home/xf06bm/python')
+import BMMcontrols
+import datetime, time
+
+def writeline(string):
+    sys.stdout.write('\r')
+    sys.stdout.flush()
+    sys.stdout.write(string)
+
+i0           = epics.PV('XF:06BM-BI{EM:1}EM180:Current1:MeanValue_RBV')
+it           = epics.PV('XF:06BM-BI{EM:1}EM180:Current2:MeanValue_RBV')
+ring_current = epics.PV('SR:OPS-BI{DCCT:1}I:Real-I')
+sha          = epics.PV('XF:06BM-PPS{Sh:FE}Pos-Sts')
+shb          = epics.PV('XF:06BM-PPS{Sh:A}Pos-Sts')
+dcm          = BMMcontrols.DCM()
+
+pattern = "%Y-%m-%dT%H-%M-%S"
+
+print('\n')
+waiting = True
+while waiting:
+    if sha.get() == 1:
+        sha_show = colored('A shutter', 'red', attrs=['bold'])
+    else:
+        sha_show = colored('A shutter', 'green', attrs=['bold'])
+        
+    if shb.get() == 1:
+        shb_show = colored('B shutter', 'red', attrs=['bold'])
+    else:
+        shb_show = colored('B shutter', 'green', attrs=['bold'])
+
+    if ring_current.get() > 100:
+        ring_show = colored('%5.1f mA' % ring_current.get(), 'cyan', attrs=None)
+    else:
+        ring_show = colored('%5.1f mA' % ring_current.get(), 'red', attrs=None)
+
+
+    i0val = 0
+    try:
+        i0val = i0.get()*10**9
+    except:
+        pass
+    itval = 0
+    try:
+        itval = it.get()*10**9
+    except:
+        pass
+    
+    now  = datetime.datetime.now().strftime("%s")
+    left = '                            '
+    scan = colored('  idle   ', 'grey', 'on_white')
+
+    if os.path.isfile('/home/xf06bm/Data/.xafs.scan.running'):
+        #try:
+        with open('/home/xf06bm/Data/.xafs.scan.running', "r") as f:
+            start_string = f.readline()
+            estimate = f.readline()
+        elapsed = float(now) - start
+        remaining = int(estimate[:-1]) - elapsed # seconds
+        if remaining < 0: remaining = 0
+        hours = int(remaining/60./60.)
+        minutes = round((remaining - hours*60*60) / 60)
+        left = ' ~ %d h, %d m remaining' % (hours, minutes)
+        #except:
+        #    pass
+        scan = colored('xafs scan', 'grey', 'on_magenta')
+
+    elif os.path.isfile('/home/xf06bm/Data/.line.scan.running'):
+        scan = colored('line scan', 'grey', 'on_cyan')
+
+    elif os.path.isfile('/home/xf06bm/Data/.area.scan.running'):
+        #try:
+        with open('/home/xf06bm/Data/.area.scan.running', "r") as f:
+            start = float(f.readline())
+            estimate = f.readline()
+        elapsed = float(now) - start
+        remaining = int(estimate[:-1]) - elapsed # seconds
+        if remaining < 0: remaining = 0
+        minutes = int(remaining/60.)
+        seconds = round(remaining - minutes*60)
+        left = ' ~ %d m, %d s remaining' % (minutes, seconds)
+        #except:
+        #    pass
+        ## show time elapsed
+        scan = colored('area scan', 'grey', 'on_yellow')
+        
+    elif os.path.isfile('/home/xf06bm/Data/.time.scan.running'):
+        ## time elapsed
+        scan = colored('time scan', 'grey', 'on_blue', attrs=['bold'])
+
+    strut = u'\u25CF'  # u'\u2589'
+        
+    writeline("  [%s]  [%s] %s ring: %s %s I0: %7.3f nA   It: %7.3f nA %s mono: %.1f eV %s XAS station: %s %s" %
+              (sha_show, shb_show, strut, ring_show, strut, i0val, itval, strut, dcm.current_energy(), strut, scan, left))
+    sleep(1.0)
