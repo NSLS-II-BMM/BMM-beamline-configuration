@@ -14,6 +14,7 @@ def writeline(string):
     sys.stdout.write('\r')
     sys.stdout.flush()
     sys.stdout.write(string)
+    sys.stdout.flush()
 
 def signal_handler(sig, frame):
     print('\nQuitting cadashboard. Bye.')
@@ -23,10 +24,13 @@ signal.signal(signal.SIGINT, signal_handler)
 ## ----- various PVs and other scalars
 i0           = epics.PV('XF:06BM-BI{EM:1}EM180:Current1:MeanValue_RBV')
 it           = epics.PV('XF:06BM-BI{EM:1}EM180:Current2:MeanValue_RBV')
+bicron       = epics.PV('XF:06BM-ES:1{Sclr:1}.S25')
 ring_current = epics.PV('SR:OPS-BI{DCCT:1}I:Real-I')
 sha          = epics.PV('XF:06BM-PPS{Sh:FE}Pos-Sts')
 shb          = epics.PV('XF:06BM-PPS{Sh:A}Pos-Sts')
 dcm          = BMMcontrols.DCM()
+m2           = BMMcontrols.Mirror(2)
+
 
 pattern = "%Y-%m-%dT%H-%M-%S"
 strut = u'\u25CF'  # u'\u2589'
@@ -35,6 +39,10 @@ print('\n')
 waiting = True
 while waiting:
 
+    xrd = False
+    if m2.vert < 0 and m2.pitch > 3:
+        xrd = True
+    
     ## ----- shutters and ring current
     if sha.get() == 1:
         sha_show = colored('A shutter', 'red', attrs=['bold'])
@@ -66,27 +74,32 @@ while waiting:
     ## ----- current time for time updates
     now  = datetime.datetime.now().strftime("%s")
     left = '                            '
-    scan = colored('  idle   ', 'grey', 'on_white')
-
+    scan =     colored('  idle    ', 'grey', 'on_white')
+    if xrd:
+        scan = colored('not in use', 'grey', 'on_white')
+    
+    if dcm.x.pv.RBV < 0: dcm.xtals(crystals='111')
+    if dcm.x.pv.RBV > 0: dcm.xtals(crystals='311')
+    
     ## ----- this is an XAFS scan
     if os.path.isfile('/home/xf06bm/Data/.xafs.scan.running'):
         #try:
         with open('/home/xf06bm/Data/.xafs.scan.running', "r") as f:
-            start_string = f.readline()
+            start = float(f.readline())
             estimate = f.readline()
         elapsed = float(now) - start
-        remaining = int(estimate[:-1]) - elapsed # seconds
+        remaining = float(estimate[:-1]) - elapsed   # seconds
         if remaining < 0: remaining = 0
         hours = int(remaining/60./60.)
         minutes = round((remaining - hours*60*60) / 60)
-        left = ' ~ %d h, %d m remaining' % (hours, minutes)
+        left = ' ~ %d h, %d m remaining  ' % (hours, minutes)
         #except:
         #    pass
-        scan = colored('xafs scan', 'grey', 'on_magenta')
+        scan = colored('xafs scan ', 'grey', 'on_magenta')
 
     ## ----- this is a line scan
     elif os.path.isfile('/home/xf06bm/Data/.line.scan.running'):
-        scan = colored('line scan', 'grey', 'on_cyan')
+        scan = colored('line scan ', 'grey', 'on_cyan')
 
     ## ----- this is an area scan
     elif os.path.isfile('/home/xf06bm/Data/.area.scan.running'):
@@ -99,10 +112,10 @@ while waiting:
         if remaining < 0: remaining = 0
         minutes = int(remaining/60.)
         seconds = round(remaining - minutes*60)
-        left = ' ~ %d m, %d s remaining' % (minutes, seconds)
+        left = ' ~ %d m, %d s remaining  ' % (minutes, seconds)
         #except:
         #    pass
-        scan = colored('area scan', 'grey', 'on_yellow')
+        scan = colored('area scan ', 'grey', 'on_yellow')
         
     ## ----- this is a time scan
     elif os.path.isfile('/home/xf06bm/Data/.time.scan.running'):
@@ -112,9 +125,14 @@ while waiting:
         minutes = int(elapsed/60.)
         seconds = round(elapsed - minutes*60)
         left = ' ~ %d m, %d s elapsed' % (minutes, seconds)
-        scan = colored('time scan', 'grey', 'on_blue', attrs=['bold'])
+        scan = colored('time scan ', 'grey', 'on_blue', attrs=['bold'])
 
     ## ----- update the display
-    writeline("  [%s]  [%s] %s ring: %s %s I0: %7.3f nA   It: %7.3f nA %s mono: %.1f eV %s XAS station: %s %s" %
-              (sha_show, shb_show, strut, ring_show, strut, i0val, itval, strut, dcm.current_energy(), strut, scan, left))
-    sleep(1.0)
+    if xrd:
+        writeline("  [%s]  [%s] %s ring: %s %s APD: %6d counts %s mono: %.1f eV %s XAS station: %s %s" %
+                  (sha_show, shb_show, strut, ring_show, strut, int(bicron.get()), strut, dcm.current_energy(), strut, scan, left))
+        sleep(1.0)
+    else:
+        writeline("  [%s]  [%s] %s ring: %s %s I0: %7.3f nA   It: %7.3f nA %s mono: %.1f eV %s XAS station: %s %s" %
+                  (sha_show, shb_show, strut, ring_show, strut, i0val, itval, strut, dcm.current_energy(), strut, scan, left))
+        sleep(1.0)
