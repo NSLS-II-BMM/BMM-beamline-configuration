@@ -7,8 +7,10 @@ import epics
 from time import sleep
 from termcolor import colored
 #sys.path.append('/home/xf06bm/python')
-import BMMcontrols
+from BMMcontrols import Mirror
 import datetime, time
+from numpy import pi, sin, cos, arcsin, deg2rad
+HBARC = 1973.27053324
 
 def writeline(string):
     sys.stdout.write('\r')
@@ -28,9 +30,11 @@ bicron       = epics.PV('XF:06BM-ES:1{Sclr:1}.S25')
 ring_current = epics.PV('SR:OPS-BI{DCCT:1}I:Real-I')
 sha          = epics.PV('XF:06BM-PPS{Sh:FE}Pos-Sts')
 shb          = epics.PV('XF:06BM-PPS{Sh:A}Pos-Sts')
-dcm          = BMMcontrols.DCM()
-m2           = BMMcontrols.Mirror(2)
+bragg        = epics.PV('XF:06BMA-OP{Mono:DCM1-Ax:Bragg}Mtr.RBV')
+dcmx         = epics.PV('XF:06BMA-OP{Mono:DCM1-Ax:X}Mtr.RBV')
+m2           = Mirror(2)
 
+execfile('/home/xf06bm/.ipython/profile_collection/startup/19-dcm-parameters.py')
 
 pattern = "%Y-%m-%dT%H-%M-%S"
 strut = u'\u25CF'  # u'\u2589'
@@ -54,10 +58,13 @@ while waiting:
     else:
         shb_show = colored('B shutter', 'green', attrs=['bold'])
 
-    if ring_current.get() > 100:
-        ring_show = colored('%5.1f mA' % ring_current.get(), 'cyan', attrs=None)
-    else:
-        ring_show = colored('%5.1f mA' % ring_current.get(), 'red', attrs=None)
+    try:
+        if ring_current.get() > 100:
+            ring_show = colored('%5.1f mA' % ring_current.get(), 'cyan', attrs=None)
+        else:
+            ring_show = colored('%5.1f mA' % ring_current.get(), 'red', attrs=None)
+    except:
+            ring_show = colored('--------', 'red', attrs=None)
 
     ## ----- ion chamber signals
     i0val = 0
@@ -77,9 +84,6 @@ while waiting:
     scan =     colored('  idle    ', 'grey', 'on_white')
     if xrd:
         scan = colored('not in use', 'grey', 'on_white')
-    
-    if dcm.x.pv.RBV < 0: dcm.xtals(crystals='111')
-    if dcm.x.pv.RBV > 0: dcm.xtals(crystals='311')
     
     ## ----- this is an XAFS scan
     if os.path.isfile('/home/xf06bm/Data/.xafs.scan.running'):
@@ -128,11 +132,15 @@ while waiting:
         scan = colored('time scan ', 'grey', 'on_blue', attrs=['bold'])
 
     ## ----- update the display
+    if dcmx.get() < 0:
+        current_energy = (2*pi*HBARC) / (2*BMM_dcm.dspacing_111*sin(deg2rad(bragg.get())))
+    else:
+        current_energy = (2*pi*HBARC) / (2*BMM_dcm.dspacing_311*sin(deg2rad(bragg.get())))
     if xrd:
         writeline("  [%s]  [%s] %s ring: %s %s APD: %6d counts %s mono: %.1f eV %s XAS station: %s %s" %
-                  (sha_show, shb_show, strut, ring_show, strut, int(bicron.get()), strut, dcm.current_energy(), strut, scan, left))
+                  (sha_show, shb_show, strut, ring_show, strut, int(bicron.get()), strut, current_energy, strut, scan, left))
         sleep(1.0)
     else:
         writeline("  [%s]  [%s] %s ring: %s %s I0: %7.3f nA   It: %7.3f nA %s mono: %.1f eV %s XAS station: %s %s" %
-                  (sha_show, shb_show, strut, ring_show, strut, i0val, itval, strut, dcm.current_energy(), strut, scan, left))
+                  (sha_show, shb_show, strut, ring_show, strut, i0val, itval, strut, current_energy, strut, scan, left))
         sleep(1.0)

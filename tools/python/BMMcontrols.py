@@ -11,6 +11,10 @@ import json
 
 HBARC = 1973.27053324
 
+## this is the source of the BMM_dcm numbers
+execfile('/home/xf06bm/.ipython/profile_collection/startup/19-dcm-parameters.py')
+## this keeps those essential parameters in a single location for BlueSky and non-BlueSky applications
+
 GITREPO = '/home/bravel/git/BMM-beamline-configuration/'
 MOTORDATA = json.load(open(os.path.join(GITREPO, 'Modes.json')))
 
@@ -257,17 +261,14 @@ class DCM():
 
     def xtals(self, crystals='111'):
         if crystals is '311':
-            self.offset = 15.99235495
+            self.offset = BMM_dcm.offset_311
             self.bragg.pv.put('OFF', self.offset)
-            self.twod = 2*1.63763854
+            self.twod = 2*BMM_dcm.dspacing_311
             self.description = 'Si(311)'
         else:
-            ## smaller beam
-            #self.twod = 2*3.13543952
-            ## larger beam 23 Jan 2018
-            self.offset = 16.05684
+            self.offset = BMM_dcm.offset_111
             self.bragg.pv.put('OFF', self.offset)
-            self.twod = 2*3.13563694
+            self.twod = 2*BMM_dcm.dspacing_111
             self.description = 'Si(111)'
 
     def is311(self):
