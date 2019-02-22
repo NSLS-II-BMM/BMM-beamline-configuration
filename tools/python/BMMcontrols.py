@@ -84,7 +84,7 @@ class BMM_Motor():
 
 
         if not self.pv.within_limits(val):
-            print colored("Request to move outside limits on %s" % pv.DESC, 'red', attrs=['bold'])
+            print(colored("Request to move outside limits on %s" % pv.DESC, 'red', attrs=['bold']))
             exit()
         self.pv.move(val, relative=rel, wait=False)
         waiting = True
@@ -94,7 +94,7 @@ class BMM_Motor():
             sleep(0.1)
             waiting = not self.pv.done_moving
         message(template % (self.description, self.pv.RBV))
-        print ''
+        print('')
         return 0
 
 
@@ -257,7 +257,7 @@ class DCM():
 
     def xtals(self, crystals='111'):
         if crystals is '311':
-            self.offset = 15.99439325
+            self.offset = 15.99235495
             self.bragg.pv.put('OFF', self.offset)
             self.twod = 2*1.63763854
             self.description = 'Si(311)'
@@ -265,7 +265,7 @@ class DCM():
             ## smaller beam
             #self.twod = 2*3.13543952
             ## larger beam 23 Jan 2018
-            self.offset = 16.05442
+            self.offset = 16.05684
             self.bragg.pv.put('OFF', self.offset)
             self.twod = 2*3.13563694
             self.description = 'Si(111)'
@@ -315,10 +315,10 @@ class DCM():
         return(self.bragg, self.perp, self.para, self.pitch, self.roll, self.x, self.y)
 
     def handler(self, signum, frame):
-        print colored('\n\nGot CTRL+C, stopping all motors, disabling in-vacuum motors', 'red', attrs=['bold'])
+        print(colored('\n\nGot CTRL+C, stopping all motors, disabling in-vacuum motors', 'red', attrs=['bold']))
         for ax in self.seven():
             ax.stop()
-        print ""
+        print("")
         self.prettyprint_three_motors(self.bragg, self.perp, self.para, color="red", status="current")
         #self.kill_invacuum()
         #sleep(0.5)
@@ -332,10 +332,10 @@ class DCM():
 
     def moveto(self, energy, para=None, perp=None, quiet=False):
         if energy < self.emin:
-            print "cannot move to %.2f -- too low!" % energy
+            print("cannot move to %.2f -- too low!" % energy)
             return 0
         if energy > self.emax:
-            print "cannot move to %.2f -- too high!" % energy
+            print("cannot move to %.2f -- too high!" % energy)
             return 0
         if para is None:
             para = self.parallel(energy) + self.paraoffset
@@ -364,13 +364,13 @@ class DCM():
 
     def generic_move(self, axes=None, values=None, template=None, quiet=False):
         if axes is None:
-            print "Must provide a list of axes to generic_move"
+            print("Must provide a list of axes to generic_move")
             exit()
         if values is None:
-            print "Must provide a list of values to generic_move"
+            print("Must provide a list of values to generic_move")
             exit()
         if template is None:
-            print "Must provide a template to generic_move"
+            print("Must provide a template to generic_move")
             exit()
         ## also check on equal lengths of axes and values (and number of %f in template)
 
@@ -386,7 +386,7 @@ class DCM():
 
         for ax, val in zip(axes, values):
             if not ax.pv.within_limits(val):
-                print colored("Request to move outside limits on %s" % ax.pv.DESC, 'red', attrs=['bold'])
+                print(colored("Request to move outside limits on %s" % ax.pv.DESC, 'red', attrs=['bold']))
                 exit()
             ax.pv.move(val, wait=False)
 
@@ -408,7 +408,7 @@ class DCM():
             updt.append(ax.pv.RBV)
         if not quiet:
             message(template % tuple(updt))
-            print '\n'
+            print('\n')
 
     def channelcut_energy(self, e0, bounds):
         for i,s in enumerate(bounds):
@@ -424,28 +424,28 @@ class DCM():
 
     def prettyprint_energy(self, energy, status="Mono at", color="white", attrs=None):
         # print "%s = %.1f   %s = %s   (perp/para offset = %.2f/%.2f)" % \
-        print "%s = %.1f   %s = %s" % \
-            (colored(status,       color, attrs=attrs), energy,
-             colored('reflection', color, attrs=attrs), self.description)  #  args.perpoffset, args.paraoffset)
+        print("%s = %.1f   %s = %s" %
+              (colored(status,       color, attrs=attrs), energy,
+               colored('reflection', color, attrs=attrs), self.description))  #  args.perpoffset, args.paraoffset)
 
 
     def prettyprint_three_motors(self, mot1, mot2, mot3, color="white", status="current", attrs=None):
         # print "current: %s = %8.5f   %s = %7.4f (%7.4f)   %s = %8.4f (%8.4f)\n" %
-        print "%s: %s = %8.5f   %s = %7.4f   %s = %8.4f" %\
-            (status,
-             colored(mot1.pv.DESC, color, attrs=attrs), mot1.pv.RBV,
-             colored(mot2.pv.DESC, color, attrs=attrs), mot2.pv.RBV,  #  - args.perpoffset,
-             colored(mot3.pv.DESC, color, attrs=attrs), mot3.pv.RBV)  #  - args.paraoffset)
+        print("%s: %s = %8.5f   %s = %7.4f   %s = %8.4f" %
+              (status,
+               colored(mot1.pv.DESC, color, attrs=attrs), mot1.pv.RBV,
+               colored(mot2.pv.DESC, color, attrs=attrs), mot2.pv.RBV,  #  - args.perpoffset,
+               colored(mot3.pv.DESC, color, attrs=attrs), mot3.pv.RBV))  #  - args.paraoffset)
 
     def prettyprint_target_energy(self, bragg, perp, para, color="white", status='target ', attrs=None):
-        print "%s: %s = %8.5f   %s = %7.4f   %s = %8.4f" %\
-            (status,
-             colored(self.bragg.pv.DESC,color, attrs=attrs), bragg,
-             colored(self.perp.pv.DESC, color, attrs=attrs), perp,  #  - args.perpoffset,
-             colored(self.para.pv.DESC, color, attrs=attrs), para)  #  - args.paraoffset)
+        print("%s: %s = %8.5f   %s = %7.4f   %s = %8.4f" %
+              (status,
+               colored(self.bragg.pv.DESC,color, attrs=attrs), bragg,
+               colored(self.perp.pv.DESC, color, attrs=attrs), perp,  #  - args.perpoffset,
+               colored(self.para.pv.DESC, color, attrs=attrs), para))  #  - args.paraoffset)
 
     def prettyline(self, color="white"):
-        print colored('='*80, color)
+        print(colored('='*80, color))
 
 
 ################################################################################
@@ -513,11 +513,11 @@ class Mirror():
         return (self.yu, self.ydo, self.ydi, self.xu, self.xd)
 
     def handler(self, signum, frame):
-        print colored('\n\nGot CTRL+C, stopping all motors, disabling in-vacuum motors', 'red', attrs=['bold'])
+        print(colored('\n\nGot CTRL+C, stopping all motors, disabling in-vacuum motors', 'red', attrs=['bold']))
         for ax in self.five():
             ax.stop()
             ax.kill()
-        print ""
+        print("")
         self.where()
         exit(0)
 
@@ -532,16 +532,16 @@ class Mirror():
 
     def where(self, color='white', attrs=None):
         self.current_positions()
-        print colored(self.description, color, attrs=attrs)
-        print "\tvertical = %7.3f mm\t\tYU  = %7.3f"   % (self.vert,  self.yu.pv.RBV)
-        print "\tlateral  = %7.3f mm\t\tYDO = %7.3f"   % (self.lat,   self.ydo.pv.RBV)
-        print "\tpitch    = %7.3f mrad\t\tYDI = %7.3f" % (self.pitch, self.ydi.pv.RBV)
-        print "\troll     = %7.3f mrad\t\tXU  = %7.3f" % (self.roll,  self.xu.pv.RBV)
-        print "\tyaw      = %7.3f mrad\t\tXD  = %7.3f" % (self.yaw,   self.xd.pv.RBV)
+        print(colored(self.description, color, attrs=attrs))
+        print("\tvertical = %7.3f mm\t\tYU  = %7.3f"   % (self.vert,  self.yu.pv.RBV))
+        print("\tlateral  = %7.3f mm\t\tYDO = %7.3f"   % (self.lat,   self.ydo.pv.RBV))
+        print("\tpitch    = %7.3f mrad\t\tYDI = %7.3f" % (self.pitch, self.ydi.pv.RBV))
+        print("\troll     = %7.3f mrad\t\tXU  = %7.3f" % (self.roll,  self.xu.pv.RBV))
+        print("\tyaw      = %7.3f mrad\t\tXD  = %7.3f" % (self.yaw,   self.xd.pv.RBV))
 
     def common_text(self, amount, color='white', attrs=None):
-        print "%s: moving in %s by %.3f" % \
-            (colored(self.description, color, attrs=attrs), self.direction, amount)
+        print("%s: moving in %s by %.3f" %
+              (colored(self.description, color, attrs=attrs), self.direction, amount))
 
 
     def move(self, axes, vals, rel=False):
@@ -559,8 +559,8 @@ class Mirror():
         ## start moving...
         for ax, val in zip(axes, vals):
             if not ax.pv.within_limits(val):
-                print colored("\nRequest to move outside limits on %s" % ax.pv.DESC, 'red', attrs=['bold'])
-                print colored("Requested %.3f   Current %.3f" % (val, ax.pv.RBV), 'red', attrs=['bold'])
+                print(colored("\nRequest to move outside limits on %s" % ax.pv.DESC, 'red', attrs=['bold']))
+                print(colored("Requested %.3f   Current %.3f" % (val, ax.pv.RBV), 'red', attrs=['bold']))
                 exit()
             if not ax.disconnected:
                 ax.pv.move(val, relative=rel, wait=False)
@@ -585,7 +585,7 @@ class Mirror():
         for ax in self.five():
             updt.append(ax.pv.RBV)
         message(template % tuple(updt))
-        print '\n'
+        print('\n')
         return 0
 
     def prettyprint_motors(self, color1="white", color2="white"):
@@ -609,25 +609,25 @@ class Mirror():
             value = self.yaw
 
         text = '\t%s = %.3f' % (colored(which, color1, attrs=['bold']), value)
-        print text
+        print(text)
 
         if self.direction in ('vertical', 'pitch', 'roll'):
-            print "\tRBVs: %s = %8.4f\t%s = %8.4f\t%s = %8.4f" % \
-                (colored('YU',  color1, attrs=['bold']), self.yu.pv.RBV,
-                 colored('YDO', color1, attrs=['bold']), self.ydo.pv.RBV,
-                 colored('YDI', color1, attrs=['bold']), self.ydi.pv.RBV)
-            print "\tREPs: %s = %8d\t%s = %8d\t%s = %8d\n" % \
-                (colored('YU',  color2), self.yu.pv.REP,
-                 colored('YDO', color2), self.ydo.pv.REP,
-                 colored('YDI', color2), self.ydi.pv.REP)
+            print("\tRBVs: %s = %8.4f\t%s = %8.4f\t%s = %8.4f" %
+                  (colored('YU',  color1, attrs=['bold']), self.yu.pv.RBV,
+                   colored('YDO', color1, attrs=['bold']), self.ydo.pv.RBV,
+                   colored('YDI', color1, attrs=['bold']), self.ydi.pv.RBV))
+            print("\tREPs: %s = %8d\t%s = %8d\t%s = %8d\n" %
+                  (colored('YU',  color2), self.yu.pv.REP,
+                   colored('YDO', color2), self.ydo.pv.REP,
+                   colored('YDI', color2), self.ydi.pv.REP))
 
         elif self.direction in ('lateral', 'yaw'):
-            print "\tRBVs: %s = %.4f\t%s = %.4f" % \
-                (colored('XU', color1, attrs=['bold']), self.xu.pv.RBV,
-                 colored('XD', color1, attrs=['bold']), self.xd.pv.RBV)
-            print "\tREPs: %s = %d\t%s = %d\n" % \
-                (colored('XU', color2), self.xu.pv.REP,
-                 colored('XD', color2), self.xd.pv.REP)
+            print("\tRBVs: %s = %.4f\t%s = %.4f" %
+                  (colored('XU', color1, attrs=['bold']), self.xu.pv.RBV,
+                   colored('XD', color1, attrs=['bold']), self.xd.pv.RBV))
+            print("\tREPs: %s = %d\t%s = %d\n" %
+                  (colored('XU', color2), self.xu.pv.REP,
+                   colored('XD', color2), self.xd.pv.REP))
         else:
             self.where()
 

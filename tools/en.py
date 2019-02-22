@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(0, '/home/bravel/git/BMM-beamline-configuration/tools/python')
 
 from argparse import ArgumentParser
 parser = ArgumentParser(description="Compute energy from current mono position")
