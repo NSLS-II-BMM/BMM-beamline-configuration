@@ -53,6 +53,7 @@ my @list;
 foreach my $ext (int($start) .. int($end)) {
 
   my $f = sprintf('%s.%3.3d', $name, $ext);
+  next if not -e $f;
   my $data = Demeter::Data->new(file=>File::Spec->catfile($folder, $f),
 				@common
 			       );
