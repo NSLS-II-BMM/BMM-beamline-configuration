@@ -132,7 +132,7 @@ while waiting:
         scan = colored('time scan ', 'grey', 'on_blue', attrs=['bold'])
 
     ## ----- update the display
-    if dcmx.get() < 0:
+    if dcmx.get() < 10:
         current_energy = (2*pi*HBARC) / (2*BMM_dcm.dspacing_111*sin(deg2rad(bragg.get())))
     else:
         current_energy = (2*pi*HBARC) / (2*BMM_dcm.dspacing_311*sin(deg2rad(bragg.get())))

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+ioc=$1
+
+rsync -avz bravel@xf06bm-ioc1:/epics/iocs/$ioc/ ./$ioc

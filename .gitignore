@@ -9,3 +9,4 @@
 **/.hg/**
 **/.hgignore
 **/.bzr/**
+.directory
