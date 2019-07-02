@@ -1,0 +1,10 @@
+#
+#epicsEnvSet("P1",  "SR-C26-BI{BPM:$(BPM_ID)}")
+file fofb.template
+{ pattern 
+{P,       NO, MAX_BYTE, FA_WFM_LEN}
+{ "\$(P)",  "\$(NO)", "\$(MAX_BYTE)", "\$(FA_WFM_LEN)" }
+#{ SR:C01-FOFB, 1, 104,       10000}
+}
+
+

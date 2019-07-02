@@ -1,0 +1,5 @@
+record(waveform, "$(P)InX") {
+  field(FTVL, "DOUBLE")
+  field(NELM, "$(NELM)")
+  field(FLNK, "$(FLNK=)")
+}

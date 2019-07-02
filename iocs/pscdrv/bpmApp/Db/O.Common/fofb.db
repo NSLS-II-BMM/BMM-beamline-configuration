@@ -1,0 +1,1260 @@
+#
+#
+#
+
+record(longout,"$(P){CC}Corr:ID1-SP") {
+	field(DESC, "PS ID Setting 1")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 560") 
+    field(HOPR,"0xF")
+    field(LOPR,"0x1")    
+    field(EGU,  "ID")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(bo, "$(P){CC}Corr:KickEnable1-SP") {
+    field(DESC, "PS Kicker enable/disable")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_1 1 160") 
+    field(ZNAM, "Disable")
+    field(ONAM, "Enable")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(bo, "$(P){CC}Corr:FofbMode1-SP") {
+    field(DESC, "PS FoFb control Mode")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_1 1 208") 
+    field(ZNAM, "FOFB Mode")
+    field(ONAM, "TEST Mode")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout,"$(P){CC}Corr:Set1-SP") {
+	field(DESC, "PS Current Setting 1")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 608") 
+	field(HOPR,"524280")
+	field(LOPR,"-524280")	
+	field(DRVH,"524280")	
+	field(DRVL,"-524280") 
+#    field(EGU,  "")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout,"$(P){CC}KpSet1-SP") {
+	field(DESC, "PS KP 1")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 800") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+record(longout,"$(P){CC}KiSet1-SP") {
+	field(DESC, "PS KI 1")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 848") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+record(longout,"$(P){CC}KdSet1-SP") {
+	field(DESC, "PS KD 1")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 896") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+#record(longout, "$(P){CC}send74") {
+#	field(DTYP, "PSC Ctrl Send")
+#	field(OUT , "@aie_tx_1")
+#	field(VAL , "74")
+#	field(FLNK, "$(P){CC}send")
+#}
+
+#record(waveform,"$(P){CC}V1-SP") {
+#	field(DESC, "V1")
+#	field(DTYP, "PSC Block F32 Out")
+#	field(INP , "@aie_tx_1 74")
+#	field(FTVL, "DOUBLE")
+#	field(NELM, "540")
+#	field(FLNK, "$(P){CC}send74")
+#}
+
+#record(ao, "$(P){CC}Kp1-SP") {
+#	field(DESC, "Kp1 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 800")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+#record(ao, "$(P){CC}Ki1-SP") {
+#	field(DESC, "Ki1 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 848")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+#record(ao, "$(P){CC}Kd1-SP") {
+#	field(DESC, "Kd1 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 896")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+
+
+#
+#
+#
+
+record(longout,"$(P){CC}Corr:ID2-SP") {
+	field(DESC, "PS ID Setting 2")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 564") 
+    field(HOPR,"0xF")
+    field(LOPR,"0x1")    
+    field(EGU,  "ID")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(bo, "$(P){CC}Corr:KickEnable2-SP") {
+    field(DESC, "PS Kicker enable/disable")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_1 1 164") 
+    field(ZNAM, "Disable")
+    field(ONAM, "Enable")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(bo, "$(P){CC}Corr:FofbMode2-SP") {
+    field(DESC, "PS FoFb control Mode")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_1 1 212") 
+    field(ZNAM, "FOFB Mode")
+    field(ONAM, "TEST Mode")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout,"$(P){CC}Corr:Set2-SP") {
+	field(DESC, "PS Current Setting 2")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 612") 
+	field(HOPR,"524280")
+	field(LOPR,"-524280")	
+	field(DRVH,"524280")	
+	field(DRVL,"-524280") 
+#    field(EGU,  "")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout,"$(P){CC}KpSet2-SP") {
+	field(DESC, "PS KP 2")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 804") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+record(longout,"$(P){CC}KiSet2-SP") {
+	field(DESC, "PS KI 2")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 852") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+record(longout,"$(P){CC}KdSet2-SP") {
+	field(DESC, "PS KD 2")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 900") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+#record(longout, "$(P){CC}send75") {
+#	field(DTYP, "PSC Ctrl Send")
+#	field(OUT , "@aie_tx_1")
+#	field(VAL , "75")
+#	field(FLNK, "$(P){CC}send")
+#}
+
+#record(waveform,"$(P){CC}V2-SP") {
+#	field(DESC, "V1")
+#	field(DTYP, "PSC Block F32 Out")
+#	field(INP , "@aie_tx_1 75")
+#	field(FTVL, "DOUBLE")
+#	field(NELM, "540")
+#	field(FLNK, "$(P){CC}send75")
+#}
+
+#record(ao, "$(P){CC}Kp2-SP") {
+#	field(DESC, "Kp2 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 804")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+#record(ao, "$(P){CC}Ki2-SP") {
+#	field(DESC, "Ki2 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 852")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+#record(ao, "$(P){CC}Kd2-SP") {
+#	field(DESC, "Kd2 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 890")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+
+
+#
+#
+#
+
+record(longout,"$(P){CC}Corr:ID3-SP") {
+	field(DESC, "PS ID Setting 3")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 568") 
+    field(HOPR,"0xF")
+    field(LOPR,"0x1")    
+    field(EGU,  "ID")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(bo, "$(P){CC}Corr:KickEnable3-SP") {
+    field(DESC, "PS Kicker enable/disable")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_1 1 168") 
+    field(ZNAM, "Disable")
+    field(ONAM, "Enable")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(bo, "$(P){CC}Corr:FofbMode3-SP") {
+    field(DESC, "PS FoFb control Mode")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_1 1 216") 
+    field(ZNAM, "FOFB Mode")
+    field(ONAM, "TEST Mode")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout,"$(P){CC}Corr:Set3-SP") {
+	field(DESC, "PS Current Setting 3")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 616") 
+	field(HOPR,"524280")
+	field(LOPR,"-524280")	
+	field(DRVH,"524280")	
+	field(DRVL,"-524280") 
+#    field(EGU,  "")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout,"$(P){CC}KpSet3-SP") {
+	field(DESC, "PS KP 3")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 808") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+record(longout,"$(P){CC}KiSet3-SP") {
+	field(DESC, "PS KI 3")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 856") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+record(longout,"$(P){CC}KdSet3-SP") {
+	field(DESC, "PS KD 3")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 904") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+#record(longout, "$(P){CC}send76") {
+#	field(DTYP, "PSC Ctrl Send")
+#	field(OUT , "@aie_tx_1")
+#	field(VAL , "76")
+#	field(FLNK, "$(P){CC}send")
+#}
+
+#record(waveform,"$(P){CC}V3-SP") {
+#	field(DESC, "V1")
+#	field(DTYP, "PSC Block F32 Out")
+#	field(INP , "@aie_tx_1 76")
+#	field(FTVL, "DOUBLE")
+#	field(NELM, "540")
+#	field(FLNK, "$(P){CC}send76")
+#}
+
+#record(ao, "$(P){CC}Kp3-SP") {
+#	field(DESC, "Kp3 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 808")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+#record(ao, "$(P){CC}Ki3-SP") {
+#	field(DESC, "Ki3 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 856")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+#record(ao, "$(P){CC}Kd3-SP") {
+#	field(DESC, "Kd3 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 894")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+
+
+#
+#
+#
+
+record(longout,"$(P){CC}Corr:ID4-SP") {
+	field(DESC, "PS ID Setting 4")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 572") 
+    field(HOPR,"0xF")
+    field(LOPR,"0x1")    
+    field(EGU,  "ID")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(bo, "$(P){CC}Corr:KickEnable4-SP") {
+    field(DESC, "PS Kicker enable/disable")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_1 1 172") 
+    field(ZNAM, "Disable")
+    field(ONAM, "Enable")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(bo, "$(P){CC}Corr:FofbMode4-SP") {
+    field(DESC, "PS FoFb control Mode")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_1 1 220") 
+    field(ZNAM, "FOFB Mode")
+    field(ONAM, "TEST Mode")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout,"$(P){CC}Corr:Set4-SP") {
+	field(DESC, "PS Current Setting 4")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 620") 
+	field(HOPR,"524280")
+	field(LOPR,"-524280")	
+	field(DRVH,"524280")	
+	field(DRVL,"-524280") 
+#    field(EGU,  "")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout,"$(P){CC}KpSet4-SP") {
+	field(DESC, "PS KP 4")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 812") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+record(longout,"$(P){CC}KiSet4-SP") {
+	field(DESC, "PS KI 4")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 860") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+record(longout,"$(P){CC}KdSet4-SP") {
+	field(DESC, "PS KD 4")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 908") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+#record(longout, "$(P){CC}send77") {
+#	field(DTYP, "PSC Ctrl Send")
+#	field(OUT , "@aie_tx_1")
+#	field(VAL , "77")
+#	field(FLNK, "$(P){CC}send")
+#}
+
+#record(waveform,"$(P){CC}V4-SP") {
+#	field(DESC, "V1")
+#	field(DTYP, "PSC Block F32 Out")
+#	field(INP , "@aie_tx_1 77")
+#	field(FTVL, "DOUBLE")
+#	field(NELM, "540")
+#	field(FLNK, "$(P){CC}send77")
+#}
+
+#record(ao, "$(P){CC}Kp4-SP") {
+#	field(DESC, "Kp4 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 812")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+#record(ao, "$(P){CC}Ki4-SP") {
+#	field(DESC, "Ki4 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 860")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+#record(ao, "$(P){CC}Kd4-SP") {
+#	field(DESC, "Kd4 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 898")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+
+
+#
+#
+#
+
+record(longout,"$(P){CC}Corr:ID5-SP") {
+	field(DESC, "PS ID Setting 5")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 576") 
+    field(HOPR,"0xF")
+    field(LOPR,"0x1")    
+    field(EGU,  "ID")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(bo, "$(P){CC}Corr:KickEnable5-SP") {
+    field(DESC, "PS Kicker enable/disable")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_1 1 176") 
+    field(ZNAM, "Disable")
+    field(ONAM, "Enable")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(bo, "$(P){CC}Corr:FofbMode5-SP") {
+    field(DESC, "PS FoFb control Mode")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_1 1 224") 
+    field(ZNAM, "FOFB Mode")
+    field(ONAM, "TEST Mode")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout,"$(P){CC}Corr:Set5-SP") {
+	field(DESC, "PS Current Setting 5")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 624") 
+	field(HOPR,"524280")
+	field(LOPR,"-524280")	
+	field(DRVH,"524280")	
+	field(DRVL,"-524280") 
+#    field(EGU,  "")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout,"$(P){CC}KpSet5-SP") {
+	field(DESC, "PS KP 5")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 816") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+record(longout,"$(P){CC}KiSet5-SP") {
+	field(DESC, "PS KI 5")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 864") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+record(longout,"$(P){CC}KdSet5-SP") {
+	field(DESC, "PS KD 5")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 912") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+#record(longout, "$(P){CC}send78") {
+#	field(DTYP, "PSC Ctrl Send")
+#	field(OUT , "@aie_tx_1")
+#	field(VAL , "78")
+#	field(FLNK, "$(P){CC}send")
+#}
+
+#record(waveform,"$(P){CC}V5-SP") {
+#	field(DESC, "V1")
+#	field(DTYP, "PSC Block F32 Out")
+#	field(INP , "@aie_tx_1 78")
+#	field(FTVL, "DOUBLE")
+#	field(NELM, "540")
+#	field(FLNK, "$(P){CC}send78")
+#}
+
+#record(ao, "$(P){CC}Kp5-SP") {
+#	field(DESC, "Kp5 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 816")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+#record(ao, "$(P){CC}Ki5-SP") {
+#	field(DESC, "Ki5 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 864")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+#record(ao, "$(P){CC}Kd5-SP") {
+#	field(DESC, "Kd5 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 902")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+
+
+#
+#
+#
+
+record(longout,"$(P){CC}Corr:ID6-SP") {
+	field(DESC, "PS ID Setting 6")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 580") 
+    field(HOPR,"0xF")
+    field(LOPR,"0x1")    
+    field(EGU,  "ID")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(bo, "$(P){CC}Corr:KickEnable6-SP") {
+    field(DESC, "PS Kicker enable/disable")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_1 1 180") 
+    field(ZNAM, "Disable")
+    field(ONAM, "Enable")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(bo, "$(P){CC}Corr:FofbMode6-SP") {
+    field(DESC, "PS FoFb control Mode")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_1 1 228") 
+    field(ZNAM, "FOFB Mode")
+    field(ONAM, "TEST Mode")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout,"$(P){CC}Corr:Set6-SP") {
+	field(DESC, "PS Current Setting 6")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 628") 
+	field(HOPR,"524280")
+	field(LOPR,"-524280")	
+	field(DRVH,"524280")	
+	field(DRVL,"-524280") 
+#    field(EGU,  "")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout,"$(P){CC}KpSet6-SP") {
+	field(DESC, "PS KP 6")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 820") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+record(longout,"$(P){CC}KiSet6-SP") {
+	field(DESC, "PS KI 6")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 868") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+record(longout,"$(P){CC}KdSet6-SP") {
+	field(DESC, "PS KD 6")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 916") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+#record(longout, "$(P){CC}send79") {
+#	field(DTYP, "PSC Ctrl Send")
+#	field(OUT , "@aie_tx_1")
+#	field(VAL , "79")
+#	field(FLNK, "$(P){CC}send")
+#}
+
+#record(waveform,"$(P){CC}V6-SP") {
+#	field(DESC, "V1")
+#	field(DTYP, "PSC Block F32 Out")
+#	field(INP , "@aie_tx_1 79")
+#	field(FTVL, "DOUBLE")
+#	field(NELM, "540")
+#	field(FLNK, "$(P){CC}send79")
+#}
+
+#record(ao, "$(P){CC}Kp6-SP") {
+#	field(DESC, "Kp6 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 820")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+#record(ao, "$(P){CC}Ki6-SP") {
+#	field(DESC, "Ki6 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 868")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+#record(ao, "$(P){CC}Kd6-SP") {
+#	field(DESC, "Kd6 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 906")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+
+
+#
+#
+#
+
+record(longout,"$(P){CC}Corr:ID7-SP") {
+	field(DESC, "PS ID Setting 7")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 584") 
+    field(HOPR,"0xF")
+    field(LOPR,"0x1")    
+    field(EGU,  "ID")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(bo, "$(P){CC}Corr:KickEnable7-SP") {
+    field(DESC, "PS Kicker enable/disable")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_1 1 184") 
+    field(ZNAM, "Disable")
+    field(ONAM, "Enable")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(bo, "$(P){CC}Corr:FofbMode7-SP") {
+    field(DESC, "PS FoFb control Mode")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_1 1 232") 
+    field(ZNAM, "FOFB Mode")
+    field(ONAM, "TEST Mode")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout,"$(P){CC}Corr:Set7-SP") {
+	field(DESC, "PS Current Setting 7")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 632") 
+	field(HOPR,"524280")
+	field(LOPR,"-524280")	
+	field(DRVH,"524280")	
+	field(DRVL,"-524280") 
+#    field(EGU,  "")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout,"$(P){CC}KpSet7-SP") {
+	field(DESC, "PS KP 7")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 824") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+record(longout,"$(P){CC}KiSet7-SP") {
+	field(DESC, "PS KI 7")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 872") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+record(longout,"$(P){CC}KdSet7-SP") {
+	field(DESC, "PS KD 7")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 920") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+#record(longout, "$(P){CC}send80") {
+#	field(DTYP, "PSC Ctrl Send")
+#	field(OUT , "@aie_tx_1")
+#	field(VAL , "80")
+#	field(FLNK, "$(P){CC}send")
+#}
+
+#record(waveform,"$(P){CC}V7-SP") {
+#	field(DESC, "V1")
+#	field(DTYP, "PSC Block F32 Out")
+#	field(INP , "@aie_tx_1 80")
+#	field(FTVL, "DOUBLE")
+#	field(NELM, "540")
+#	field(FLNK, "$(P){CC}send80")
+#}
+
+#record(ao, "$(P){CC}Kp7-SP") {
+#	field(DESC, "Kp7 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 824")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+#record(ao, "$(P){CC}Ki7-SP") {
+#	field(DESC, "Ki7 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 872")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+#record(ao, "$(P){CC}Kd7-SP") {
+#	field(DESC, "Kd7 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 910")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+
+
+#
+#
+#
+
+record(longout,"$(P){CC}Corr:ID8-SP") {
+	field(DESC, "PS ID Setting 8")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 592") 
+    field(HOPR,"0xF")
+    field(LOPR,"0x1")    
+    field(EGU,  "ID")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(bo, "$(P){CC}Corr:KickEnable8-SP") {
+    field(DESC, "PS Kicker enable/disable")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_1 1 188") 
+    field(ZNAM, "Disable")
+    field(ONAM, "Enable")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(bo, "$(P){CC}Corr:FofbMode8-SP") {
+    field(DESC, "PS FoFb control Mode")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_1 1 236") 
+    field(ZNAM, "FOFB Mode")
+    field(ONAM, "TEST Mode")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout,"$(P){CC}Corr:Set8-SP") {
+	field(DESC, "PS Current Setting 8")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 636") 
+	field(HOPR,"524280")
+	field(LOPR,"-524280")	
+	field(DRVH,"524280")	
+	field(DRVL,"-524280") 
+#    field(EGU,  "")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout,"$(P){CC}KpSet8-SP") {
+	field(DESC, "PS KP 8")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 828") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+record(longout,"$(P){CC}KiSet8-SP") {
+	field(DESC, "PS KI 8")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 876") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+record(longout,"$(P){CC}KdSet8-SP") {
+	field(DESC, "PS KD 8")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 924") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+#record(longout, "$(P){CC}send81") {
+#	field(DTYP, "PSC Ctrl Send")
+#	field(OUT , "@aie_tx_1")
+#	field(VAL , "81")
+#	field(FLNK, "$(P){CC}send")
+#}
+
+#record(waveform,"$(P){CC}V8-SP") {
+#	field(DESC, "V1")
+#	field(DTYP, "PSC Block F32 Out")
+#	field(INP , "@aie_tx_1 81")
+#	field(FTVL, "DOUBLE")
+#	field(NELM, "540")
+#	field(FLNK, "$(P){CC}send81")
+#}
+
+#record(ao, "$(P){CC}Kp8-SP") {
+#	field(DESC, "Kp8 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 828")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+#record(ao, "$(P){CC}Ki8-SP") {
+#	field(DESC, "Ki8 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 876")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+#record(ao, "$(P){CC}Kd8-SP") {
+#	field(DESC, "Kd8 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 914")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+
+
+#
+#
+#
+
+record(longout,"$(P){CC}Corr:ID9-SP") {
+	field(DESC, "PS ID Setting 9")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 596") 
+    field(HOPR,"0xF")
+    field(LOPR,"0x1")    
+    field(EGU,  "ID")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(bo, "$(P){CC}Corr:KickEnable9-SP") {
+    field(DESC, "PS Kicker enable/disable")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_1 1 192") 
+    field(ZNAM, "Disable")
+    field(ONAM, "Enable")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(bo, "$(P){CC}Corr:FofbMode9-SP") {
+    field(DESC, "PS FoFb control Mode")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_1 1 240") 
+    field(ZNAM, "FOFB Mode")
+    field(ONAM, "TEST Mode")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout,"$(P){CC}Corr:Set9-SP") {
+	field(DESC, "PS Current Setting 9")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 640") 
+	field(HOPR,"524280")
+	field(LOPR,"-524280")	
+	field(DRVH,"524280")	
+	field(DRVL,"-524280") 
+#    field(EGU,  "")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout,"$(P){CC}KpSet9-SP") {
+	field(DESC, "PS KP 9")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 832") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+record(longout,"$(P){CC}KiSet9-SP") {
+	field(DESC, "PS KI 9")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 880") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+record(longout,"$(P){CC}KdSet9-SP") {
+	field(DESC, "PS KD 9")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 928") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+#record(longout, "$(P){CC}send82") {
+#	field(DTYP, "PSC Ctrl Send")
+#	field(OUT , "@aie_tx_1")
+#	field(VAL , "82")
+#	field(FLNK, "$(P){CC}send")
+#}
+
+#record(waveform,"$(P){CC}V9-SP") {
+#	field(DESC, "V1")
+#	field(DTYP, "PSC Block F32 Out")
+#	field(INP , "@aie_tx_1 82")
+#	field(FTVL, "DOUBLE")
+#	field(NELM, "540")
+#	field(FLNK, "$(P){CC}send82")
+#}
+
+#record(ao, "$(P){CC}Kp9-SP") {
+#	field(DESC, "Kp9 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 832")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+#record(ao, "$(P){CC}Ki9-SP") {
+#	field(DESC, "Ki9 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 880")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+#record(ao, "$(P){CC}Kd9-SP") {
+#	field(DESC, "Kd9 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 918")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+
+
+#
+#
+#
+
+record(longout,"$(P){CC}Corr:ID10-SP") {
+	field(DESC, "PS ID Setting 10")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 600") 
+    field(HOPR,"0xF")
+    field(LOPR,"0x1")    
+    field(EGU,  "ID")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(bo, "$(P){CC}Corr:KickEnable10-SP") {
+    field(DESC, "PS Kicker enable/disable")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_1 1 196") 
+    field(ZNAM, "Disable")
+    field(ONAM, "Enable")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(bo, "$(P){CC}Corr:FofbMode10-SP") {
+    field(DESC, "PS FoFb control Mode")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_1 1 244") 
+    field(ZNAM, "FOFB Mode")
+    field(ONAM, "TEST Mode")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout,"$(P){CC}Corr:Set10-SP") {
+	field(DESC, "PS Current Setting 10")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 644") 
+	field(HOPR,"524280")
+	field(LOPR,"-524280")	
+	field(DRVH,"524280")	
+	field(DRVL,"-524280") 
+#    field(EGU,  "")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout,"$(P){CC}KpSet10-SP") {
+	field(DESC, "PS KP 10")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 836") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+record(longout,"$(P){CC}KiSet10-SP") {
+	field(DESC, "PS KI 10")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 884") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+record(longout,"$(P){CC}KdSet10-SP") {
+	field(DESC, "PS KD 10")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 932") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+#record(longout, "$(P){CC}send83") {
+#	field(DTYP, "PSC Ctrl Send")
+#	field(OUT , "@aie_tx_1")
+#	field(VAL , "83")
+#	field(FLNK, "$(P){CC}send")
+#}
+
+#record(waveform,"$(P){CC}V10-SP") {
+#	field(DESC, "V1")
+#	field(DTYP, "PSC Block F32 Out")
+#	field(INP , "@aie_tx_1 83")
+#	field(FTVL, "DOUBLE")
+#	field(NELM, "540")
+#	field(FLNK, "$(P){CC}send83")
+#}
+
+#record(ao, "$(P){CC}Kp10-SP") {
+#	field(DESC, "Kp10 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 836")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+#record(ao, "$(P){CC}Ki10-SP") {
+#	field(DESC, "Ki10 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 884")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+#record(ao, "$(P){CC}Kd10-SP") {
+#	field(DESC, "Kd10 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 922")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+
+
+#
+#
+#
+
+record(longout,"$(P){CC}Corr:ID11-SP") {
+	field(DESC, "PS ID Setting 11")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 604") 
+    field(HOPR,"0xF")
+    field(LOPR,"0x1")    
+    field(EGU,  "ID")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(bo, "$(P){CC}Corr:KickEnable11-SP") {
+    field(DESC, "PS Kicker enable/disable")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_1 1 200") 
+    field(ZNAM, "Disable")
+    field(ONAM, "Enable")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(bo, "$(P){CC}Corr:FofbMode11-SP") {
+    field(DESC, "PS FoFb control Mode")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_1 1 248") 
+    field(ZNAM, "FOFB Mode")
+    field(ONAM, "TEST Mode")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout,"$(P){CC}Corr:Set11-SP") {
+	field(DESC, "PS Current Setting 11")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 648") 
+	field(HOPR,"524280")
+	field(LOPR,"-524280")	
+	field(DRVH,"524280")	
+	field(DRVL,"-524280") 
+#    field(EGU,  "")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout,"$(P){CC}KpSet11-SP") {
+	field(DESC, "PS KP 11")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 840") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+record(longout,"$(P){CC}KiSet11-SP") {
+	field(DESC, "PS KI 11")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 888") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+record(longout,"$(P){CC}KdSet11-SP") {
+	field(DESC, "PS KD 11")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 936") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+#record(longout, "$(P){CC}send84") {
+#	field(DTYP, "PSC Ctrl Send")
+#	field(OUT , "@aie_tx_1")
+#	field(VAL , "84")
+#	field(FLNK, "$(P){CC}send")
+#}
+
+#record(waveform,"$(P){CC}V11-SP") {
+#	field(DESC, "V1")
+#	field(DTYP, "PSC Block F32 Out")
+#	field(INP , "@aie_tx_1 84")
+#	field(FTVL, "DOUBLE")
+#	field(NELM, "540")
+#	field(FLNK, "$(P){CC}send84")
+#}
+
+#record(ao, "$(P){CC}Kp11-SP") {
+#	field(DESC, "Kp11 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 840")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+#record(ao, "$(P){CC}Ki11-SP") {
+#	field(DESC, "Ki11 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 888")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+#record(ao, "$(P){CC}Kd11-SP") {
+#	field(DESC, "Kd11 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 926")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+
+
+#
+#
+#
+
+record(longout,"$(P){CC}Corr:ID12-SP") {
+	field(DESC, "PS ID Setting 12")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 608") 
+    field(HOPR,"0xF")
+    field(LOPR,"0x1")    
+    field(EGU,  "ID")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(bo, "$(P){CC}Corr:KickEnable12-SP") {
+    field(DESC, "PS Kicker enable/disable")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_1 1 204") 
+    field(ZNAM, "Disable")
+    field(ONAM, "Enable")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(bo, "$(P){CC}Corr:FofbMode12-SP") {
+    field(DESC, "PS FoFb control Mode")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_1 1 252") 
+    field(ZNAM, "FOFB Mode")
+    field(ONAM, "TEST Mode")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout,"$(P){CC}Corr:Set12-SP") {
+	field(DESC, "PS Current Setting 12")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 652") 
+	field(HOPR,"524280")
+	field(LOPR,"-524280")	
+	field(DRVH,"524280")	
+	field(DRVL,"-524280") 
+#    field(EGU,  "")
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout,"$(P){CC}KpSet12-SP") {
+	field(DESC, "PS KP 12")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 844") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+record(longout,"$(P){CC}KiSet12-SP") {
+	field(DESC, "PS KI 12")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 892") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+record(longout,"$(P){CC}KdSet12-SP") {
+	field(DESC, "PS KD 12")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_1 1 940") 
+    field(HOPR, "0xFFFFF")
+    field(LOPR, "0x1")    
+	field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+#record(longout, "$(P){CC}send85") {
+#	field(DTYP, "PSC Ctrl Send")
+#	field(OUT , "@aie_tx_1")
+#	field(VAL , "85")
+#	field(FLNK, "$(P){CC}send")
+#}
+
+#record(waveform,"$(P){CC}V12-SP") {
+#	field(DESC, "V1")
+#	field(DTYP, "PSC Block F32 Out")
+#	field(INP , "@aie_tx_1 85")
+#	field(FTVL, "DOUBLE")
+#	field(NELM, "540")
+#	field(FLNK, "$(P){CC}send85")
+#}
+
+#record(ao, "$(P){CC}Kp12-SP") {
+#	field(DESC, "Kp12 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 844")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+#record(ao, "$(P){CC}Ki12-SP") {
+#	field(DESC, "Ki12 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 892")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+#record(ao, "$(P){CC}Kd12-SP") {
+#	field(DESC, "Kd12 Coefficent")
+#	field(DTYP, "PSC Single F32")
+#	field(OUT , "@aie_tx_1 1 930")
+#	field(FLNK, "$(P){CC}GoRegSingleWrite")
+#}
+
+

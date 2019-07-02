@@ -1,0 +1,4 @@
+NAME=CamSampleProsilica
+USER=softioc
+PORT=5150
+HOST=xf11bm-ioc1

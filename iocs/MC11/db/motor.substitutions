@@ -1,0 +1,13 @@
+file "db/motor.db"
+{
+pattern
+{P,             M,                   MOTOR,  PORT,  ADDR,  DESC,           DTYP,      MRES,          EGU,  PREC,  ALIAS            }
+{"XF:06BM-ES",  "{SixC-Ax:VTTH}Mtr", "M0",   "P0",  1,     "V_two theta",  asynMotor, "5e-05",       "deg", 4,     "6bm:sixc_vtth"  }
+{"XF:06BM-ES",  "{SixC-Ax:VTH}Mtr",  "M0",   "P0",  2,     "V_theta",      asynMotor, "5e-05",       "deg", 4,     "6bm:sixc_vth"   }
+{"XF:06BM-ES",  "{SixC-Ax:CHI}Mtr",  "M0",   "P0",  3,     "chi",          asynMotor, "5e-05",       "deg", 4,     "6bm:sixc_chi"   }
+{"XF:06BM-ES",  "{SixC-Ax:PHI}Mtr",  "M0",   "P0",  4,     "phi",          asynMotor, "2.5e-06",     "deg", 4,     "6bm:sixc_phi"   }
+{"XF:06BM-ES",  "{SixC-Ax:HTH}Mtr",  "M0",   "P0",  5,     "H_theta",      asynMotor, "1e-05",  "deg", 4,     "6bm:sixc_hth"   }
+{"XF:06BM-ES",  "{SixC-Ax:HTTH}Mtr", "M0",   "P0",  6,     "H_two theta",  asynMotor, "5e-05",       "deg", 4,     "6bm:sixc_htth"  }
+{"XF:06BM-ES",  "{SixC-Ax:ANAL}Mtr", "M0",   "P0",  7,     "Analyzer",     asynMotor, "7.8125e-06",  "deg", 4,     "6bm:sixc_anal"  }
+{"XF:06BM-ES",  "{SixC-Ax:DET}Mtr",  "M0",   "P0",  8,     "Detector",     asynMotor, "7.8125e-06",  "deg", 4,     "6bm:sixc_det"   }
+}

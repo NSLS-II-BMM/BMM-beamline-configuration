@@ -1,0 +1,72 @@
+##flush reg to socket buffer, trigger send to send all socket buffer to PSC
+record(bo, "$(P){CC}send") {
+        field(DTYP, "PSC Ctrl Send All")
+        field(OUT , "@aie_wfm_rx_$(NO)")
+        field(ZNAM, "Send")
+        field(ONAM, "Send")
+}
+
+record(longout, "$(P){CC}GoRegSingleWrite") {
+        field(DTYP, "PSC Ctrl Send")
+        field(OUT , "@aie_wfm_rx_$(NO)")
+        field(VAL , "1")
+        field(FLNK, "$(P){CC}send")
+}
+
+#Soft trigger to DDR
+record(bo, "$(P){}Trig:Strig-SP") {
+        field(DESC, "Soft Trigger by user")
+        field(DTYP, "PSC Single U32")
+        field(OUT , "@aie_wfm_rx_$(NO) 1 0")
+        field(ZNAM,"Rdy")
+        field(ONAM,"Trig")
+        field(FLNK, "$(P){CC}GoRegSingleWrite")
+        field(HIGH,".2")    #500 ms after low
+}
+
+
+record(bo, "$(P){}Trig:Src-SP") {
+        field(DESC, "Soft Trigger source select")
+        field(DTYP, "PSC Single U32")
+        field(OUT , "@aie_wfm_rx_$(NO) 1 4")
+        field(ZNAM, "EXT")
+        field(ONAM, "SOFT")
+        field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+record(longout, "$(P){}BurstLen-SP") {
+        field(DESC, "Cell SDI Packet Delay 8 ns step")
+        field(DTYP, "PSC Single I32")
+        field(OUT , "@aie_wfm_rx_$(NO) 1 8")
+        field(HOPR, "30")
+        field(LOPR, "1")
+        field(FLNK, "$(P){CC}GoRegSingleWrite")
+}
+
+
+# all 
+record(waveform,"all") {
+        field(DTYP, "PSC Block I32 In")
+        field(INP , "@aie_wfm_rx_$(NO) 32")
+        field(SCAN,"I/O Intr")
+        field(FTVL,"DOUBLE")
+        field(NELM,"100000")
+}
+
+# x orbit
+record(waveform,"x") {
+        field(DTYP, "PSC Block I32 In")
+        field(INP , "@aie_wfm_rx_$(NO) 33 0")
+        field(SCAN,"I/O Intr")
+        field(FTVL,"DOUBLE")
+        field(NELM,"240")
+}
+
+
+record(waveform,"y") {
+        field(DTYP, "PSC Block I32 In")
+        field(INP , "@aie_wfm_rx_$(NO) 33 960")
+        field(SCAN,"I/O Intr")
+        field(FTVL,"DOUBLE")
+        field(NELM,"240")
+}

@@ -1,0 +1,4 @@
+NAME=MC13
+USER=softioc
+PORT=6013
+HOST=xf06bm-ioc1

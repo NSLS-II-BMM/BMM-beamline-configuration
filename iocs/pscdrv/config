@@ -1,0 +1,8 @@
+NAME=pscdrv
+PORT=4153
+USER=softioc
+HOST=xf06bm-ioc1
+
+CHDIR="$CHDIR/iocBoot/iocpscenc"
+EXEC="$CHDIR/st.cmd"
+

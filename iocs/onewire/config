@@ -1,0 +1,5 @@
+NAME=onewire
+PORT=4505
+USER=softioc
+HOST=xf06bm-ioc1
+#CHDIR="$CHDIR/iocBoot/ioconeWire"

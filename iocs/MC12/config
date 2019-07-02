@@ -1,0 +1,4 @@
+NAME=MC12
+USER=softioc
+PORT=6012
+HOST=xf06bm-ioc1

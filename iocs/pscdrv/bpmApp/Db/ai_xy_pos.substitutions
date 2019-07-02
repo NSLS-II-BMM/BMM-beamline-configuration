@@ -1,0 +1,6 @@
+file ai_xy_pos.template
+{ pattern
+{CNO,       N, OFFSET_X, OFFSET_Y, LEN}
+{ "\$(CNO)",  "\$(N)", "\$(OFFSET_X)", "\$(OFFSET_Y)", "\$(LEN)" }
+}
+

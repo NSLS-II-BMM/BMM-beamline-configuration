@@ -1,0 +1,13 @@
+file "db/motor.db"
+{
+pattern
+{P,             M,                      MOTOR,  PORT,  ADDR,  DESC,                   DTYP,      MRES,             EGU,  PREC,  ALIAS                }
+{"XF:06BM-ES",  "{SixC-Ax:DETHOR}Mtr",  "M0",   "P0",  1,     "Detector Horizontal",  asynMotor, "3.69875e-5",  "mm", 4,     "6bm:sixc_det_h"     }
+{"XF:06BM-ES",  "{SixC-Ax:WHEEL1}Mtr",  "M0",   "P0",  2,     "Wheel1",               asynMotor, "0.0005",         "mm", 4,     "6bm:sixc_wh1"       }
+{"XF:06BM-ES",  "{SixC-Ax:WHEEL2}Mtr",  "M0",   "P0",  3,     "Wheel2",               asynMotor, "5e-05",          "mm", 4,     "6bm:sixc_wh2"       }
+{"XF:06BM-ES",  "{SixC-Ax:SAMX}Mtr",    "M0",   "P0",  4,     "Sample X",             asynMotor, "5e-05",          "mm", 4,     "6bm:sixc_samx"      }
+{"XF:06BM-ES",  "{SixC-Ax:SAMY}Mtr",    "M0",   "P0",  5,     "Sample Y",             asynMotor, "0.0001",         "mm", 4,     "6bm:sixc_samy"      }
+{"XF:06BM-ES",  "{SixC-Ax:SAMZ}Mtr",    "M0",   "P0",  6,     "Sample Z",             asynMotor, "3.125e-6",         "mm", 4,     "6bm:sixc_samz"      }
+{"XF:06BM-ES",  "{SixC-Ax:Tbl_YD}Mtr",  "M0",   "P0",  7,     "Table Y Dn",           asynMotor, "3.96875e-5",    "mm", 4,     "6bm:sixc_tyd"       }
+{"XF:06BM-ES",  "{SixC-Ax:Tbl_YUI}Mtr", "M0",   "P0",  8,     "Table Y Up Inb",       asynMotor, "3.96875e-5",    "mm", 4,     "6bm:sixc_tbl_tyui"  }
+}

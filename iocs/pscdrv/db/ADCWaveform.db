@@ -1,0 +1,760 @@
+# ============= ADC10k:0 - 16 ============= #
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC10k:0_Bin_") {
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@Rx$(PS,undefined) 16")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "$(ADC10K_POINTS,undefined)")
+	field(FLNK, "$(PSy,undefined){$(PS,undefined)}ADC10k:0_asub_")
+}
+
+record(aSub, "$(PSy,undefined){$(PS,undefined)}ADC10k:0_asub_")
+{
+	field(SNAM, "subADCWfProc")
+	field(INPA, "$(PSy,undefined){$(PS,undefined)}ADC10k:0_Bin_.VAL")
+	field(FTA,  "DOUBLE")
+	field(NOA,  "$(ADC10K_POINTS,undefined)")
+	field(INPB, "$(PSy,undefined){$(PS,undefined)}ADC10k:0_Bin_.NORD")
+	field(FTB,  "LONG")
+	field(NOB,  "1")
+	field(INPC, "$(PSy,undefined){$(PS,undefined)}ADC10k:0_Bin_.NELM")
+	field(FTC,  "LONG")
+	field(NOC,  "1")
+	field(FTVA, "FLOAT")
+	field(NOVA, "$(ADC10K_POINTS,undefined)")
+	field(OUTA, "$(PSy,undefined){$(PS,undefined)}ADC10k:0_Raw-I PP")
+	field(FLNK, "")
+}
+
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC10k:0_Raw-I")
+{
+	field(NELM, "$(ADC10K_POINTS,undefined)")
+	field(FTVL, "FLOAT")
+	
+	# sync timestamp with the dedicated record whose timestamp correspond to
+	# a previos cycle start (BT0)
+	field(TSEL, "$(TIMESTAMP,undefined).TIME")
+}
+
+# ============= ADC10k:1 - 17 ============= #
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC10k:1_Bin_") {
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@Rx$(PS,undefined) 17")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "$(ADC10K_POINTS,undefined)")
+	field(FLNK, "$(PSy,undefined){$(PS,undefined)}ADC10k:1_asub_")
+}
+
+record(aSub, "$(PSy,undefined){$(PS,undefined)}ADC10k:1_asub_")
+{
+	field(SNAM, "subADCWfProc")
+	field(INPA, "$(PSy,undefined){$(PS,undefined)}ADC10k:1_Bin_.VAL")
+	field(FTA,  "DOUBLE")
+	field(NOA,  "$(ADC10K_POINTS,undefined)")
+	field(INPB, "$(PSy,undefined){$(PS,undefined)}ADC10k:1_Bin_.NORD")
+	field(FTB,  "LONG")
+	field(NOB,  "1")
+	field(INPC, "$(PSy,undefined){$(PS,undefined)}ADC10k:1_Bin_.NELM")
+	field(FTC,  "LONG")
+	field(NOC,  "1")
+	field(FTVA, "FLOAT")
+	field(NOVA, "$(ADC10K_POINTS,undefined)")
+	field(OUTA, "$(PSy,undefined){$(PS,undefined)}ADC10k:1_Raw-I PP")
+	field(FLNK, "")
+}
+
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC10k:1_Raw-I")
+{
+	field(NELM, "$(ADC10K_POINTS,undefined)")
+	field(FTVL, "FLOAT")
+	
+	# sync timestamp with the dedicated record whose timestamp correspond to
+	# a previos cycle start (BT0)
+	field(TSEL, "$(TIMESTAMP,undefined).TIME")
+}
+
+# ============= ADC:00 - 32 ============= #
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:00_Bin_") {
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@Rx$(PS,undefined) 32")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FLNK, "$(PSy,undefined){$(PS,undefined)}ADC:00_asub_")
+}
+
+record(aSub, "$(PSy,undefined){$(PS,undefined)}ADC:00_asub_")
+{
+	field(SNAM, "subADCWfProc")
+	field(INPA, "$(PSy,undefined){$(PS,undefined)}ADC:00_Bin_.VAL")
+	field(FTA,  "DOUBLE")
+	field(NOA,  "$(ADC1K_POINTS,undefined)")
+	field(INPB, "$(PSy,undefined){$(PS,undefined)}ADC:00_Bin_.NORD")
+	field(FTB,  "LONG")
+	field(NOB,  "1")
+	field(INPC, "$(PSy,undefined){$(PS,undefined)}ADC:00_Bin_.NELM")
+	field(FTC,  "LONG")
+	field(NOC,  "1")
+	field(FTVA, "FLOAT")
+	field(NOVA, "$(ADC1K_POINTS,undefined)")
+	field(OUTA, "$(PSy,undefined){$(PS,undefined)}ADC:00_Raw-I PP")
+	field(FLNK, "")
+}
+
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:00_Raw-I")
+{
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FTVL, "FLOAT")
+	
+	# sync timestamp with the dedicated record whose timestamp correspond to
+	# a previos cycle start (BT0)
+	field(TSEL, "$(TIMESTAMP,undefined).TIME")
+}
+
+# ============= ADC:01 - 33 ============= #
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:01_Bin_") {
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@Rx$(PS,undefined) 33")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FLNK, "$(PSy,undefined){$(PS,undefined)}ADC:01_asub_")
+}
+
+record(aSub, "$(PSy,undefined){$(PS,undefined)}ADC:01_asub_")
+{
+	field(SNAM, "subADCWfProc")
+	field(INPA, "$(PSy,undefined){$(PS,undefined)}ADC:01_Bin_.VAL")
+	field(FTA,  "DOUBLE")
+	field(NOA,  "$(ADC1K_POINTS,undefined)")
+	field(INPB, "$(PSy,undefined){$(PS,undefined)}ADC:01_Bin_.NORD")
+	field(FTB,  "LONG")
+	field(NOB,  "1")
+	field(INPC, "$(PSy,undefined){$(PS,undefined)}ADC:01_Bin_.NELM")
+	field(FTC,  "LONG")
+	field(NOC,  "1")
+	field(FTVA, "FLOAT")
+	field(NOVA, "$(ADC1K_POINTS,undefined)")
+	field(OUTA, "$(PSy,undefined){$(PS,undefined)}ADC:01_Raw-I PP")
+	field(FLNK, "")
+}
+
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:01_Raw-I")
+{
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FTVL, "FLOAT")
+	
+	# sync timestamp with the dedicated record whose timestamp correspond to
+	# a previos cycle start (BT0)
+	field(TSEL, "$(TIMESTAMP,undefined).TIME")
+}
+
+# ============= ADC:02 - 34 ============= #
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:02_Bin_") {
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@Rx$(PS,undefined) 34")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FLNK, "$(PSy,undefined){$(PS,undefined)}ADC:02_asub_")
+}
+
+record(aSub, "$(PSy,undefined){$(PS,undefined)}ADC:02_asub_")
+{
+	field(SNAM, "subADCWfProc")
+	field(INPA, "$(PSy,undefined){$(PS,undefined)}ADC:02_Bin_.VAL")
+	field(FTA,  "DOUBLE")
+	field(NOA,  "$(ADC1K_POINTS,undefined)")
+	field(INPB, "$(PSy,undefined){$(PS,undefined)}ADC:02_Bin_.NORD")
+	field(FTB,  "LONG")
+	field(NOB,  "1")
+	field(INPC, "$(PSy,undefined){$(PS,undefined)}ADC:02_Bin_.NELM")
+	field(FTC,  "LONG")
+	field(NOC,  "1")
+	field(FTVA, "FLOAT")
+	field(NOVA, "$(ADC1K_POINTS,undefined)")
+	field(OUTA, "$(PSy,undefined){$(PS,undefined)}ADC:02_Raw-I PP")
+	field(FLNK, "")
+}
+
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:02_Raw-I")
+{
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FTVL, "FLOAT")
+	
+	# sync timestamp with the dedicated record whose timestamp correspond to
+	# a previos cycle start (BT0)
+	field(TSEL, "$(TIMESTAMP,undefined).TIME")
+}
+
+# ============= ADC:03 - 35 ============= #
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:03_Bin_") {
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@Rx$(PS,undefined) 35")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FLNK, "$(PSy,undefined){$(PS,undefined)}ADC:03_asub_")
+}
+
+record(aSub, "$(PSy,undefined){$(PS,undefined)}ADC:03_asub_")
+{
+	field(SNAM, "subADCWfProc")
+	field(INPA, "$(PSy,undefined){$(PS,undefined)}ADC:03_Bin_.VAL")
+	field(FTA,  "DOUBLE")
+	field(NOA,  "$(ADC1K_POINTS,undefined)")
+	field(INPB, "$(PSy,undefined){$(PS,undefined)}ADC:03_Bin_.NORD")
+	field(FTB,  "LONG")
+	field(NOB,  "1")
+	field(INPC, "$(PSy,undefined){$(PS,undefined)}ADC:03_Bin_.NELM")
+	field(FTC,  "LONG")
+	field(NOC,  "1")
+	field(FTVA, "FLOAT")
+	field(NOVA, "$(ADC1K_POINTS,undefined)")
+	field(OUTA, "$(PSy,undefined){$(PS,undefined)}ADC:03_Raw-I PP")
+	field(FLNK, "")
+}
+
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:03_Raw-I")
+{
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FTVL, "FLOAT")
+	
+	# sync timestamp with the dedicated record whose timestamp correspond to
+	# a previos cycle start (BT0)
+	field(TSEL, "$(TIMESTAMP,undefined).TIME")
+}
+
+# ============= ADC:04 - 36 ============= #
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:04_Bin_") {
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@Rx$(PS,undefined) 36")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FLNK, "$(PSy,undefined){$(PS,undefined)}ADC:04_asub_")
+}
+
+record(aSub, "$(PSy,undefined){$(PS,undefined)}ADC:04_asub_")
+{
+	field(SNAM, "subADCWfProc")
+	field(INPA, "$(PSy,undefined){$(PS,undefined)}ADC:04_Bin_.VAL")
+	field(FTA,  "DOUBLE")
+	field(NOA,  "$(ADC1K_POINTS,undefined)")
+	field(INPB, "$(PSy,undefined){$(PS,undefined)}ADC:04_Bin_.NORD")
+	field(FTB,  "LONG")
+	field(NOB,  "1")
+	field(INPC, "$(PSy,undefined){$(PS,undefined)}ADC:04_Bin_.NELM")
+	field(FTC,  "LONG")
+	field(NOC,  "1")
+	field(FTVA, "FLOAT")
+	field(NOVA, "$(ADC1K_POINTS,undefined)")
+	field(OUTA, "$(PSy,undefined){$(PS,undefined)}ADC:04_Raw-I PP")
+	field(FLNK, "")
+}
+
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:04_Raw-I")
+{
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FTVL, "FLOAT")
+	
+	# sync timestamp with the dedicated record whose timestamp correspond to
+	# a previos cycle start (BT0)
+	field(TSEL, "$(TIMESTAMP,undefined).TIME")
+}
+
+# ============= ADC:05 - 37 ============= #
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:05_Bin_") {
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@Rx$(PS,undefined) 37")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FLNK, "$(PSy,undefined){$(PS,undefined)}ADC:05_asub_")
+}
+
+record(aSub, "$(PSy,undefined){$(PS,undefined)}ADC:05_asub_")
+{
+	field(SNAM, "subADCWfProc")
+	field(INPA, "$(PSy,undefined){$(PS,undefined)}ADC:05_Bin_.VAL")
+	field(FTA,  "DOUBLE")
+	field(NOA,  "$(ADC1K_POINTS,undefined)")
+	field(INPB, "$(PSy,undefined){$(PS,undefined)}ADC:05_Bin_.NORD")
+	field(FTB,  "LONG")
+	field(NOB,  "1")
+	field(INPC, "$(PSy,undefined){$(PS,undefined)}ADC:05_Bin_.NELM")
+	field(FTC,  "LONG")
+	field(NOC,  "1")
+	field(FTVA, "FLOAT")
+	field(NOVA, "$(ADC1K_POINTS,undefined)")
+	field(OUTA, "$(PSy,undefined){$(PS,undefined)}ADC:05_Raw-I PP")
+	field(FLNK, "")
+}
+
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:05_Raw-I")
+{
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FTVL, "FLOAT")
+	
+	# sync timestamp with the dedicated record whose timestamp correspond to
+	# a previos cycle start (BT0)
+	field(TSEL, "$(TIMESTAMP,undefined).TIME")
+}
+
+# ============= ADC:06 - 38 ============= #
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:06_Bin_") {
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@Rx$(PS,undefined) 38")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FLNK, "$(PSy,undefined){$(PS,undefined)}ADC:06_asub_")
+}
+
+record(aSub, "$(PSy,undefined){$(PS,undefined)}ADC:06_asub_")
+{
+	field(SNAM, "subADCWfProc")
+	field(INPA, "$(PSy,undefined){$(PS,undefined)}ADC:06_Bin_.VAL")
+	field(FTA,  "DOUBLE")
+	field(NOA,  "$(ADC1K_POINTS,undefined)")
+	field(INPB, "$(PSy,undefined){$(PS,undefined)}ADC:06_Bin_.NORD")
+	field(FTB,  "LONG")
+	field(NOB,  "1")
+	field(INPC, "$(PSy,undefined){$(PS,undefined)}ADC:06_Bin_.NELM")
+	field(FTC,  "LONG")
+	field(NOC,  "1")
+	field(FTVA, "FLOAT")
+	field(NOVA, "$(ADC1K_POINTS,undefined)")
+	field(OUTA, "$(PSy,undefined){$(PS,undefined)}ADC:06_Raw-I PP")
+	field(FLNK, "")
+}
+
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:06_Raw-I")
+{
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FTVL, "FLOAT")
+	
+	# sync timestamp with the dedicated record whose timestamp correspond to
+	# a previos cycle start (BT0)
+	field(TSEL, "$(TIMESTAMP,undefined).TIME")
+}
+
+# ============= ADC:07 - 39 ============= #
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:07_Bin_") {
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@Rx$(PS,undefined) 39")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FLNK, "$(PSy,undefined){$(PS,undefined)}ADC:07_asub_")
+}
+
+record(aSub, "$(PSy,undefined){$(PS,undefined)}ADC:07_asub_")
+{
+	field(SNAM, "subADCWfProc")
+	field(INPA, "$(PSy,undefined){$(PS,undefined)}ADC:07_Bin_.VAL")
+	field(FTA,  "DOUBLE")
+	field(NOA,  "$(ADC1K_POINTS,undefined)")
+	field(INPB, "$(PSy,undefined){$(PS,undefined)}ADC:07_Bin_.NORD")
+	field(FTB,  "LONG")
+	field(NOB,  "1")
+	field(INPC, "$(PSy,undefined){$(PS,undefined)}ADC:07_Bin_.NELM")
+	field(FTC,  "LONG")
+	field(NOC,  "1")
+	field(FTVA, "FLOAT")
+	field(NOVA, "$(ADC1K_POINTS,undefined)")
+	field(OUTA, "$(PSy,undefined){$(PS,undefined)}ADC:07_Raw-I PP")
+	field(FLNK, "")
+}
+
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:07_Raw-I")
+{
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FTVL, "FLOAT")
+	
+	# sync timestamp with the dedicated record whose timestamp correspond to
+	# a previos cycle start (BT0)
+	field(TSEL, "$(TIMESTAMP,undefined).TIME")
+}
+
+# ============= ADC:16 - 40 ============= #
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:16_Bin_") {
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@Rx$(PS,undefined) 40")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FLNK, "$(PSy,undefined){$(PS,undefined)}ADC:16_asub_")
+}
+
+record(aSub, "$(PSy,undefined){$(PS,undefined)}ADC:16_asub_")
+{
+	field(SNAM, "subADCWfProc")
+	field(INPA, "$(PSy,undefined){$(PS,undefined)}ADC:16_Bin_.VAL")
+	field(FTA,  "DOUBLE")
+	field(NOA,  "$(ADC1K_POINTS,undefined)")
+	field(INPB, "$(PSy,undefined){$(PS,undefined)}ADC:16_Bin_.NORD")
+	field(FTB,  "LONG")
+	field(NOB,  "1")
+	field(INPC, "$(PSy,undefined){$(PS,undefined)}ADC:16_Bin_.NELM")
+	field(FTC,  "LONG")
+	field(NOC,  "1")
+	field(FTVA, "FLOAT")
+	field(NOVA, "$(ADC1K_POINTS,undefined)")
+	field(OUTA, "$(PSy,undefined){$(PS,undefined)}ADC:16_Raw-I PP")
+	field(FLNK, "")
+}
+
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:16_Raw-I")
+{
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FTVL, "FLOAT")
+	
+	# sync timestamp with the dedicated record whose timestamp correspond to
+	# a previos cycle start (BT0)
+	field(TSEL, "$(TIMESTAMP,undefined).TIME")
+}
+
+# ============= ADC:08 - 48 ============= #
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:08_Bin_") {
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@Rx$(PS,undefined) 48")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FLNK, "$(PSy,undefined){$(PS,undefined)}ADC:08_asub_")
+}
+
+record(aSub, "$(PSy,undefined){$(PS,undefined)}ADC:08_asub_")
+{
+	field(SNAM, "subADCWfProc")
+	field(INPA, "$(PSy,undefined){$(PS,undefined)}ADC:08_Bin_.VAL")
+	field(FTA,  "DOUBLE")
+	field(NOA,  "$(ADC1K_POINTS,undefined)")
+	field(INPB, "$(PSy,undefined){$(PS,undefined)}ADC:08_Bin_.NORD")
+	field(FTB,  "LONG")
+	field(NOB,  "1")
+	field(INPC, "$(PSy,undefined){$(PS,undefined)}ADC:08_Bin_.NELM")
+	field(FTC,  "LONG")
+	field(NOC,  "1")
+	field(FTVA, "FLOAT")
+	field(NOVA, "$(ADC1K_POINTS,undefined)")
+	field(OUTA, "$(PSy,undefined){$(PS,undefined)}ADC:08_Raw-I PP")
+	field(FLNK, "")
+}
+
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:08_Raw-I")
+{
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FTVL, "FLOAT")
+	
+	# sync timestamp with the dedicated record whose timestamp correspond to
+	# a previos cycle start (BT0)
+	field(TSEL, "$(TIMESTAMP,undefined).TIME")
+}
+
+# ============= ADC:09 - 49 ============= #
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:09_Bin_") {
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@Rx$(PS,undefined) 49")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FLNK, "$(PSy,undefined){$(PS,undefined)}ADC:09_asub_")
+}
+
+record(aSub, "$(PSy,undefined){$(PS,undefined)}ADC:09_asub_")
+{
+	field(SNAM, "subADCWfProc")
+	field(INPA, "$(PSy,undefined){$(PS,undefined)}ADC:09_Bin_.VAL")
+	field(FTA,  "DOUBLE")
+	field(NOA,  "$(ADC1K_POINTS,undefined)")
+	field(INPB, "$(PSy,undefined){$(PS,undefined)}ADC:09_Bin_.NORD")
+	field(FTB,  "LONG")
+	field(NOB,  "1")
+	field(INPC, "$(PSy,undefined){$(PS,undefined)}ADC:09_Bin_.NELM")
+	field(FTC,  "LONG")
+	field(NOC,  "1")
+	field(FTVA, "FLOAT")
+	field(NOVA, "$(ADC1K_POINTS,undefined)")
+	field(OUTA, "$(PSy,undefined){$(PS,undefined)}ADC:09_Raw-I PP")
+	field(FLNK, "")
+}
+
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:09_Raw-I")
+{
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FTVL, "FLOAT")
+	
+	# sync timestamp with the dedicated record whose timestamp correspond to
+	# a previos cycle start (BT0)
+	field(TSEL, "$(TIMESTAMP,undefined).TIME")
+}
+
+# ============= ADC:10 - 50 ============= #
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:10_Bin_") {
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@Rx$(PS,undefined) 50")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FLNK, "$(PSy,undefined){$(PS,undefined)}ADC:10_asub_")
+}
+
+record(aSub, "$(PSy,undefined){$(PS,undefined)}ADC:10_asub_")
+{
+	field(SNAM, "subADCWfProc")
+	field(INPA, "$(PSy,undefined){$(PS,undefined)}ADC:10_Bin_.VAL")
+	field(FTA,  "DOUBLE")
+	field(NOA,  "$(ADC1K_POINTS,undefined)")
+	field(INPB, "$(PSy,undefined){$(PS,undefined)}ADC:10_Bin_.NORD")
+	field(FTB,  "LONG")
+	field(NOB,  "1")
+	field(INPC, "$(PSy,undefined){$(PS,undefined)}ADC:10_Bin_.NELM")
+	field(FTC,  "LONG")
+	field(NOC,  "1")
+	field(FTVA, "FLOAT")
+	field(NOVA, "$(ADC1K_POINTS,undefined)")
+	field(OUTA, "$(PSy,undefined){$(PS,undefined)}ADC:10_Raw-I PP")
+	field(FLNK, "")
+}
+
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:10_Raw-I")
+{
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FTVL, "FLOAT")
+	
+	# sync timestamp with the dedicated record whose timestamp correspond to
+	# a previos cycle start (BT0)
+	field(TSEL, "$(TIMESTAMP,undefined).TIME")
+}
+
+# ============= ADC:11 - 51 ============= #
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:11_Bin_") {
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@Rx$(PS,undefined) 51")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FLNK, "$(PSy,undefined){$(PS,undefined)}ADC:11_asub_")
+}
+
+record(aSub, "$(PSy,undefined){$(PS,undefined)}ADC:11_asub_")
+{
+	field(SNAM, "subADCWfProc")
+	field(INPA, "$(PSy,undefined){$(PS,undefined)}ADC:11_Bin_.VAL")
+	field(FTA,  "DOUBLE")
+	field(NOA,  "$(ADC1K_POINTS,undefined)")
+	field(INPB, "$(PSy,undefined){$(PS,undefined)}ADC:11_Bin_.NORD")
+	field(FTB,  "LONG")
+	field(NOB,  "1")
+	field(INPC, "$(PSy,undefined){$(PS,undefined)}ADC:11_Bin_.NELM")
+	field(FTC,  "LONG")
+	field(NOC,  "1")
+	field(FTVA, "FLOAT")
+	field(NOVA, "$(ADC1K_POINTS,undefined)")
+	field(OUTA, "$(PSy,undefined){$(PS,undefined)}ADC:11_Raw-I PP")
+	field(FLNK, "")
+}
+
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:11_Raw-I")
+{
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FTVL, "FLOAT")
+	
+	# sync timestamp with the dedicated record whose timestamp correspond to
+	# a previos cycle start (BT0)
+	field(TSEL, "$(TIMESTAMP,undefined).TIME")
+}
+
+# ============= ADC:12 - 52 ============= #
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:12_Bin_") {
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@Rx$(PS,undefined) 52")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FLNK, "$(PSy,undefined){$(PS,undefined)}ADC:12_asub_")
+}
+
+record(aSub, "$(PSy,undefined){$(PS,undefined)}ADC:12_asub_")
+{
+	field(SNAM, "subADCWfProc")
+	field(INPA, "$(PSy,undefined){$(PS,undefined)}ADC:12_Bin_.VAL")
+	field(FTA,  "DOUBLE")
+	field(NOA,  "$(ADC1K_POINTS,undefined)")
+	field(INPB, "$(PSy,undefined){$(PS,undefined)}ADC:12_Bin_.NORD")
+	field(FTB,  "LONG")
+	field(NOB,  "1")
+	field(INPC, "$(PSy,undefined){$(PS,undefined)}ADC:12_Bin_.NELM")
+	field(FTC,  "LONG")
+	field(NOC,  "1")
+	field(FTVA, "FLOAT")
+	field(NOVA, "$(ADC1K_POINTS,undefined)")
+	field(OUTA, "$(PSy,undefined){$(PS,undefined)}ADC:12_Raw-I PP")
+	field(FLNK, "")
+}
+
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:12_Raw-I")
+{
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FTVL, "FLOAT")
+	
+	# sync timestamp with the dedicated record whose timestamp correspond to
+	# a previos cycle start (BT0)
+	field(TSEL, "$(TIMESTAMP,undefined).TIME")
+}
+
+# ============= ADC:13 - 53 ============= #
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:13_Bin_") {
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@Rx$(PS,undefined) 53")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FLNK, "$(PSy,undefined){$(PS,undefined)}ADC:13_asub_")
+}
+
+record(aSub, "$(PSy,undefined){$(PS,undefined)}ADC:13_asub_")
+{
+	field(SNAM, "subADCWfProc")
+	field(INPA, "$(PSy,undefined){$(PS,undefined)}ADC:13_Bin_.VAL")
+	field(FTA,  "DOUBLE")
+	field(NOA,  "$(ADC1K_POINTS,undefined)")
+	field(INPB, "$(PSy,undefined){$(PS,undefined)}ADC:13_Bin_.NORD")
+	field(FTB,  "LONG")
+	field(NOB,  "1")
+	field(INPC, "$(PSy,undefined){$(PS,undefined)}ADC:13_Bin_.NELM")
+	field(FTC,  "LONG")
+	field(NOC,  "1")
+	field(FTVA, "FLOAT")
+	field(NOVA, "$(ADC1K_POINTS,undefined)")
+	field(OUTA, "$(PSy,undefined){$(PS,undefined)}ADC:13_Raw-I PP")
+	field(FLNK, "")
+}
+
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:13_Raw-I")
+{
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FTVL, "FLOAT")
+	
+	# sync timestamp with the dedicated record whose timestamp correspond to
+	# a previos cycle start (BT0)
+	field(TSEL, "$(TIMESTAMP,undefined).TIME")
+}
+
+# ============= ADC:14 - 54 ============= #
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:14_Bin_") {
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@Rx$(PS,undefined) 54")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FLNK, "$(PSy,undefined){$(PS,undefined)}ADC:14_asub_")
+}
+
+record(aSub, "$(PSy,undefined){$(PS,undefined)}ADC:14_asub_")
+{
+	field(SNAM, "subADCWfProc")
+	field(INPA, "$(PSy,undefined){$(PS,undefined)}ADC:14_Bin_.VAL")
+	field(FTA,  "DOUBLE")
+	field(NOA,  "$(ADC1K_POINTS,undefined)")
+	field(INPB, "$(PSy,undefined){$(PS,undefined)}ADC:14_Bin_.NORD")
+	field(FTB,  "LONG")
+	field(NOB,  "1")
+	field(INPC, "$(PSy,undefined){$(PS,undefined)}ADC:14_Bin_.NELM")
+	field(FTC,  "LONG")
+	field(NOC,  "1")
+	field(FTVA, "FLOAT")
+	field(NOVA, "$(ADC1K_POINTS,undefined)")
+	field(OUTA, "$(PSy,undefined){$(PS,undefined)}ADC:14_Raw-I PP")
+	field(FLNK, "")
+}
+
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:14_Raw-I")
+{
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FTVL, "FLOAT")
+	
+	# sync timestamp with the dedicated record whose timestamp correspond to
+	# a previos cycle start (BT0)
+	field(TSEL, "$(TIMESTAMP,undefined).TIME")
+}
+
+# ============= ADC:15 - 55 ============= #
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:15_Bin_") {
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@Rx$(PS,undefined) 55")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FLNK, "$(PSy,undefined){$(PS,undefined)}ADC:15_asub_")
+}
+
+record(aSub, "$(PSy,undefined){$(PS,undefined)}ADC:15_asub_")
+{
+	field(SNAM, "subADCWfProc")
+	field(INPA, "$(PSy,undefined){$(PS,undefined)}ADC:15_Bin_.VAL")
+	field(FTA,  "DOUBLE")
+	field(NOA,  "$(ADC1K_POINTS,undefined)")
+	field(INPB, "$(PSy,undefined){$(PS,undefined)}ADC:15_Bin_.NORD")
+	field(FTB,  "LONG")
+	field(NOB,  "1")
+	field(INPC, "$(PSy,undefined){$(PS,undefined)}ADC:15_Bin_.NELM")
+	field(FTC,  "LONG")
+	field(NOC,  "1")
+	field(FTVA, "FLOAT")
+	field(NOVA, "$(ADC1K_POINTS,undefined)")
+	field(OUTA, "$(PSy,undefined){$(PS,undefined)}ADC:15_Raw-I PP")
+	field(FLNK, "")
+}
+
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:15_Raw-I")
+{
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FTVL, "FLOAT")
+	
+	# sync timestamp with the dedicated record whose timestamp correspond to
+	# a previos cycle start (BT0)
+	field(TSEL, "$(TIMESTAMP,undefined).TIME")
+}
+
+# ============= ADC:17 - 56 ============= #
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:17_Bin_") {
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@Rx$(PS,undefined) 56")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FLNK, "$(PSy,undefined){$(PS,undefined)}ADC:17_asub_")
+}
+
+record(aSub, "$(PSy,undefined){$(PS,undefined)}ADC:17_asub_")
+{
+	field(SNAM, "subADCWfProc")
+	field(INPA, "$(PSy,undefined){$(PS,undefined)}ADC:17_Bin_.VAL")
+	field(FTA,  "DOUBLE")
+	field(NOA,  "$(ADC1K_POINTS,undefined)")
+	field(INPB, "$(PSy,undefined){$(PS,undefined)}ADC:17_Bin_.NORD")
+	field(FTB,  "LONG")
+	field(NOB,  "1")
+	field(INPC, "$(PSy,undefined){$(PS,undefined)}ADC:17_Bin_.NELM")
+	field(FTC,  "LONG")
+	field(NOC,  "1")
+	field(FTVA, "FLOAT")
+	field(NOVA, "$(ADC1K_POINTS,undefined)")
+	field(OUTA, "$(PSy,undefined){$(PS,undefined)}ADC:17_Raw-I PP")
+	field(FLNK, "$(PSy,undefined){$(PS,undefined)}regsend")
+}
+
+record(waveform, "$(PSy,undefined){$(PS,undefined)}ADC:17_Raw-I")
+{
+	field(NELM, "$(ADC1K_POINTS,undefined)")
+	field(FTVL, "FLOAT")
+	
+	# sync timestamp with the dedicated record whose timestamp correspond to
+	# a previos cycle start (BT0)
+	field(TSEL, "$(TIMESTAMP,undefined).TIME")
+}
+

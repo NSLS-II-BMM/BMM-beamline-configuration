@@ -1,0 +1,65 @@
+Sensors in IXS hutch A
+Device	ROM_ID			Sens#	Location
+DS18B20	9B0000058FCF6C28	2	top		
+DS18B20	730000058FB0EC28	4	bottom
+DS18B20	B80000058F870D28	3	mid
+DS18B20	360000058FB64B28	1	roof
+DS18B20	390000058E74E728	5	Roof (humidity/temperature)
+================
+Sensors in IXS hutch B
+# Hutch string
+Device	ROM_ID			Sens#	Location
+DS18B20	EA0000056AB5DE28	1	top
+DS18B20	AD0000058EB6F528	4	bottom
+DS18B20	F70000058F45AB28	3	middle DS
+DS18B20	390000058E74E728	2	middle US
+
+# Bag of connectors
+Device	ROM_ID			Sens#	Location
+DS18B20	BB0000058FB60028	
+DS18B20	260000058EFA3128	
+DS18B20	FE0000058EB6A928	
+DS18B20	290000058F9FF528
+DS2438	670000006D761826
+
+==============
+Hutch C
+Device	ROM_ID			Sens#	Location
+DS18B20	DE0000058FA32C28	4	bottom
+DS18B20	630000058F8F7128	3	middle
+DS18B20	C90000058E470928	2	top
+DS18B20	730000032611D728	1	Roof
+
+==============
+Hutch D
+
+OWServer_v2-Enet {usr/pswd: admin/eds}
+MAC:  "D8:80:39:15:B9:7D"
+IP:   10.10.2.185
+GW:   10.10.2.254
+Mask: 255.255.254.0
+DNS:  10.0.137.1
+Firmware Version:	1.42->1.44
+
+Inside the RG:D1 rack
+Device	ROM_ID			Health	Channel	Resolution	UsrByte1	UsrByte2
+DS18B20	DA0000058F69CA28	7	1	12		75		70
+DS18B20	910000058F9D9E28 	7	1	12		75		70
+DS18B20	1F0000058E802728 	7	1	12		75		70
+DS2438	490000006DA1B426	7	2	
+++++++++++++++++++++++
+Hutch D chain inside the hutch
+Device	ROM_ID			Sens#	Location	Health	Channel	Resolution	UsrByte1	UsrByte2
+DS18B20	660000058FBD6228	2	top		7	1	12		75		70
+DS18B20	2F0000058F915E28 	4	bottom		7	1	12		75		70
+DS18B20	8F0000058FA53528	1	outside_IB
+DS18B20	820000058F609D28	3	midddle		7	1	12		75		70
+DS2438	C20000006CDF9826	5	bottom+hum	7	2	
++++++++++++++++++
+
+To read sensor address (capital S, then lowercase s):
+telnet 10.10.57 4008
+S ->     660000058FBD6228
+s ->	 2F0000058F915E28
+s
+s

@@ -1,0 +1,8 @@
+record(bo,"$(Sys){$(Dev)}$(Sig)") {
+    field(DESC, "$(DESC)")
+    field(DTYP, "EtherIP")
+    field(OUT, "@$(PLC) $(Tag) S 1")
+    field(ZNAM,"$(ZNAM)")
+    field(ONAM,"$(ONAM)")
+}
+

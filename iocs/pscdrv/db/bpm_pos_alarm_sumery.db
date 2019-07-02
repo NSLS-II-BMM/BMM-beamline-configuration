@@ -1,0 +1,61 @@
+#
+#	C31 SDI BPM Data Alarm Summery 
+#
+record(sub, "SR-C31{AI}C$(CN)-PosX_Alrm-Sub_")
+{
+        field(DESC, "Alarm Calc")
+        field(INPA, "SR:C31-C$(CN):Pos:x1_Sts-Cal.SEVR")
+        field(INPB, "SR:C31-C$(CN):Pos:x2_Sts-Cal.SEVR")
+        field(INPC, "SR:C31-C$(CN):Pos:x3_Sts-Cal.SEVR")
+        field(INPD, "SR:C31-C$(CN):Pos:x4_Sts-Cal.SEVR")
+        field(INPE, "SR:C31-C$(CN):Pos:x5_Sts-Cal.SEVR")
+        field(INPF, "SR:C31-C$(CN):Pos:x6_Sts-Cal.SEVR")
+        field(INPK, "$(MAXBPM)")
+        field(INAM, "subCalcInit")
+        field(SNAM, "subCalcAlarm")
+}
+
+record(mbbi, "SR-C31{AI}C$(CN)-PosX_SumAlrm-Sts")
+{
+	field(DESC, "Severity")
+	field(SCAN, "1 second")
+	field(INP,  "SR-C31{AI}C$(CN)-PosX_Alrm-Sub_ PP MSS")
+	field(ZRST, "No Alarm")
+	field(ONST, "Minor Alarm")
+	field(TWST, "Major Alarm")
+	field(THST, "Invalid Alarm")
+	field(ZRSV, "NO_ALARM")
+	field(ONSV, "MINOR")
+	field(TWSV, "MAJOR")
+	field(THSV, "INVALID")
+}
+
+
+record(sub, "SR-C31{AI}C$(CN)-PosY_Alrm-Sub_")
+{
+        field(DESC, "Alarm Calc")
+        field(INPA, "SR:C31-C$(CN):Pos:y1_Sts-Cal.SEVR")
+        field(INPB, "SR:C31-C$(CN):Pos:y2_Sts-Cal.SEVR")
+        field(INPC, "SR:C31-C$(CN):Pos:y3_Sts-Cal.SEVR")
+        field(INPD, "SR:C31-C$(CN):Pos:y4_Sts-Cal.SEVR")
+        field(INPE, "SR:C31-C$(CN):Pos:y5_Sts-Cal.SEVR")
+        field(INPF, "SR:C31-C$(CN):Pos:y6_Sts-Cal.SEVR")
+        field(INPK, "$(MAXBPM)")
+        field(INAM, "subCalcInit")
+        field(SNAM, "subCalcAlarm")
+}
+
+record(mbbi, "SR-C31{AI}C$(CN)-PosY_SumAlrm-Sts")
+{
+        field(DESC, "Severity")
+        field(SCAN, "1 second")
+        field(INP,  "SR-C31{AI}C$(CN)-PosY_Alrm-Sub_ PP MSS")
+        field(ZRST, "No Alarm")
+        field(ONST, "Minor Alarm")
+        field(TWST, "Major Alarm")
+        field(THST, "Invalid Alarm")
+        field(ZRSV, "NO_ALARM")
+        field(ONSV, "MINOR")
+        field(TWSV, "MAJOR")
+        field(THSV, "INVALID")
+}

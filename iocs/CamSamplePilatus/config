@@ -1,0 +1,4 @@
+NAME=CamSamplePilatus
+USER=softioc
+PORT=4152
+HOST=xf11bm-ioc1

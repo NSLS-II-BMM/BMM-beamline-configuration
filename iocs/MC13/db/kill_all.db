@@ -1,0 +1,9 @@
+# Database to kill all motors on mirror
+
+record(stringout, "$(P)Cmd:Kill-Cmd") {
+	field(DESC, "Motor kill command")
+	field(DTYP, "stream")
+	field(VAL,  "#1k#2k#3k#4k#5k#6k#7k#8k")
+	field(OUT,  "@pmac.proto sendString() $(Port)")
+}
+

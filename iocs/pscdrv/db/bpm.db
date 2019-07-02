@@ -1,0 +1,5233 @@
+#############################################################
+#
+#	BPM Database for pscDrv IOC
+#	10/31/2013
+#	0303/2015 update
+#
+#############################################################
+
+record(bo, "$(P){BPM:$(NO)}wfm-RECONNECT") {
+  field(DTYP, "PSC Ctrl Reconnect")
+  field(OUT , "@aie_wfm_rx_$(NO)")
+  field(ZNAM, "Wfm Reconnect")
+  field(ONAM, "Wfm Reconnect")
+}
+
+
+record(bo, "$(P){BPM:$(NO)}TX-RECONNECT") {
+  field(DTYP, "PSC Ctrl Reconnect")
+  field(OUT , "@aie_tx_$(NO)")
+  field(ZNAM, "Ctrl Reconnect")
+  field(ONAM, "Ctrl Reconnect")
+}
+
+
+
+record(bo, "$(P){BPM:$(NO)}LocGbl-Sel") {
+    field(PINI, "YES")
+    field(ZNAM, "Local")
+    field(ONAM, "Global")
+    field(OUT, "$(P){BPM:$(NO)}LocGbl-FOut_ PP")
+    info(autosaveFields, "VAL")
+}
+
+record(dfanout, "$(P){BPM:$(NO)}LocGbl-FOut_") {
+    field(OUTA, "$(P){BPM:$(NO)}Rf:PtPwr-SP.OMSL PP")
+    field(OUTB, "$(P){BPM:$(NO)}Trig:TrigSrc-SP.OMSL PP")
+}
+
+###
+record(bi, "$(P){BPM:$(NO)}wfm-conn") {
+	field(DTYP, "PSC Ctrl Connected")
+	field(INP , "@aie_wfm_rx_$(NO)")
+	field(SCAN, "I/O Intr")
+	field(ZNAM, "Disconnected")
+	field(ONAM, "Connected")
+	field(ZSV , "MAJOR")
+}
+
+record(bi, "$(P){BPM:$(NO)}Rx-conn") {
+	field(DTYP, "PSC Ctrl Connected")
+	field(INP , "@Rx$(NO)")
+	field(SCAN, "I/O Intr")
+	field(ZNAM, "Disconnected")
+	field(ONAM, "Connected")
+	field(ZSV , "MAJOR")
+}
+
+record(stringin, "$(P){BPM:$(NO)}tx-msg") {
+	field(DTYP, "PSC Ctrl Message")
+	field(INP , "@aie_tx_$(NO)")
+	field(DESC, "Last message")
+	field(SCAN, "I/O Intr")
+}
+
+##flush reg to socket buffer, trigger send to send all socket buffer to PSC
+record(bo, "$(P){BPM:$(NO)}send") {
+	field(DTYP, "PSC Ctrl Send All")
+	field(OUT , "@aie_tx_$(NO)")
+	field(ZNAM, "Send")
+	field(ONAM, "Send")
+}
+
+record(longout, "$(P){BPM:$(NO)}GoRegSingleWrite") {
+	field(DTYP, "PSC Ctrl Send")
+	field(OUT , "@aie_tx_$(NO)")
+	field(VAL , "1")
+	field(FLNK, "$(P){BPM:$(NO)}send")
+}
+
+
+record(longout, "$(P){BPM:$(NO)}regsend2") {
+	field(DTYP, "PSC Ctrl Send")
+	field(OUT , "@aie_tx_$(NO)")
+	field(VAL , "2")
+	field(FLNK, "$(P){BPM:$(NO)}send")
+}
+
+record(longout, "$(P){BPM:$(NO)}regsend3") {
+	field(DESC, "FLOAT32 type write")
+	field(DTYP, "PSC Ctrl Send")
+	field(OUT , "@aie_tx_$(NO)")
+	field(VAL , "3")
+	field(FLNK, "$(P){BPM:$(NO)}send")
+}
+
+
+#####################
+### CONTEROLS
+#####################
+#Soft trigger to DDR
+record(bo, "$(P){BPM:$(NO)}Trig:Strig-SP") {
+	field(DESC, "Soft Trigger by user")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 0")
+    field(ZNAM,"Rdy")
+    field(ONAM,"Trig")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+    field(HIGH,".2")	#500 ms after low
+}
+
+
+#Data simulation or Real data mode selection
+record(bo, "$(P){BPM:$(NO)}Ddr:NpiData-SP_") {
+	field(DESC, "NPI data input count or real signal")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 4")
+    field(ZNAM,"Real")
+    field(ONAM,"Count")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+#PT output power control
+record(bo, "$(P){BPM:$(NO)}Rf:PtPwr-SP") {
+	field(DESC, "Pilot tone power Ctrl")
+	field(DTYP, "PSC Single U32")
+#    field(DOL , "$(SYS=SR)-HLA{}AllBPMs-Rf:PtPwr-SP CP")
+	field(OUT , "@aie_tx_$(NO) 1 8")
+    field(ZNAM,"Off")
+    field(ONAM,"On")
+    info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+#ADC all channel input Gain selection
+record(bo, "$(P){BPM:$(NO)}ADC_PGA") {
+	field(DESC, "ADC PGA Select")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 12")
+    field(ZNAM,"Gain 1.0")
+    field(ONAM,"Gain 1.5")
+    info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+#ADC all channel random data generate
+record(bo, "$(P){BPM:$(NO)}ADC_RAND") {
+	field(DESC, "ADC Norma or Random data Select")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 16")
+    field(ZNAM,"NORMAL")
+    field(ONAM,"RAND")
+    info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+# ADC all channel shutdown
+record(bo, "$(P){BPM:$(NO)}ADC_SHDN") {
+	field(DESC, "ADC Shut down Select")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 20")
+    field(ZNAM,"NORMAL")
+    field(ONAM,"SHDN")
+    info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+#ADC all channel dithering
+record(bo, "$(P){BPM:$(NO)}ADC_DITH") {
+	field(DESC, "ADC Dith control Select")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 24")
+    field(ZNAM,"NORMAL")
+    field(ONAM,"DITH")
+    info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+# Machin clock source (Internal/External)
+record(bo, "$(P){BPM:$(NO)}Clk:Mclk-SP") {
+	field(DESC, "Machin Clock source")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 28")
+	field(ZNAM,"EXT")
+	field(ONAM,"INT")
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+# ADC bandpass filter bypass
+record(bo, "$(P){BPM:$(NO)}BandBypass-SP") {
+	field(DESC, "Band pass filter bypass")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 32")
+    field(ZNAM,"DISABLE")
+    field(ONAM,"ENABLE")
+    info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+
+# ADC Fifo enable
+record(bo, "$(P){BPM:$(NO)}ADC:FifoEnable-SP") {
+	field(DESC, "Linac Beam Delay calibration")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 40")
+    field(ZNAM,"Normal")
+    field(ONAM,"Cal")
+    field(HIGH,".2")	#500 ms after low
+    info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+
+
+
+#########################
+# Trigger source 4/23/13
+#########################
+
+
+record(mbbo, "$(P){BPM:$(NO)}Ddr:BurstEn-SP") {
+	field(DESC, "NPI port enable/disable")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 64")
+	field( ZRST, "DDR STOP")
+	field( ONST, "DDR ALL ENABLED")
+	field( ZRVL, "0")
+	field( ONVL, "7")
+
+	field( IVOA, "Don't drive outputs")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+
+# Postmortem selection (Enable/Disable)
+record(bo, "$(P){BPM:$(NO)}Pm-SP") {
+	field(DESC, "Post Morterm Enable")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 56")
+    field(ZNAM,"Enable")
+    field(ONAM,"Disable")
+    info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+# DDR clear to zero
+record(bo, "$(P){BPM:$(NO)}DDR-Clr-SP") {
+	field(DESC, "DDR clear")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 60")
+    field(ZNAM,"CLEAR")
+    field(ONAM,"Disable")
+    field(HIGH,".2")	#500 ms after low
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+record(bo, "$(P){BPM:$(NO)}Rst:GTX-SP") {
+	field(DESC, "Gtx Reset")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 112")
+	field(MASK,"0x1")
+	field(ZNAM,"OK")
+	field(ONAM,"GTX-RST")	
+	field(HIGH,".2")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+record(bo, "$(P){BPM:$(NO)}Rst:PllLed-SP") {
+	field(DESC, "Gtx Reset")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 112")
+	field(MASK,"0x2")
+	field(ZNAM,"OK")
+	field(ONAM,"PLED-RST")	
+	field(HIGH,".2")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+#
+record(bo, "$(P){BPM:$(NO)}Wd:Ctrl-SP") {
+    field(DESC, "Watch Dog Enable")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 324")
+	field(MASK, "0x1")
+    field(ZNAM, "DISABLE")
+    field(ONAM, "ENABLE")	
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+record(bo, "$(P){BPM:$(NO)}Mb:Intr-SP") {
+    field(DESC, "10 Hz interrupt source")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 328")
+	field(MASK, "0x1")
+    field(ZNAM, "MC")
+    field(ONAM, "Internal")	
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+################################################
+# ADC data selection for DDR memory copy
+record(mbbo, "$(P){BPM:$(NO)}DDR:RawSigSel-SP") {
+	field(DESC, "ADC data type select")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 68")
+#	field( PINI, "YES")
+	field( ZRST, "RAW ADC")
+	field( ONST, "Bp_BT_Filtered")
+	field( TWST, "Bp_PT_Filtered")
+	field( THST, "SinCos Lookup")
+	field( FRST, "Lookup")
+	field( ZRVL, "0")
+	field( ONVL, "1")
+	field( TWVL, "2")
+	field( THVL, "3")
+	field( FRVL, "4")
+#	field( IVOA, "Don't drive outputs")
+#	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+# Machine select
+record(mbbo, "$(P){BPM:$(NO)}Loc:Machine-SP") {
+	field(DESC, "Machine select")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 76")
+#	field( PINI, "YES")
+	field( ZRST, "TEST MODE")
+	field( ONST, "LINAC")
+	field( TWST, "LTB")
+	field( THST, "BOOSTER") 
+	field( FRST, "BTS") 
+	field( FVST, "SR") 
+	field( ZRVL, "0")
+	field( ONVL, "1")
+	field( TWVL, "2")
+	field( THVL, "3")
+	field( FRVL, "4")
+	field( FVVL, "5")
+#	field( IVOA, "Don't drive outputs")
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+# Linac trigger rate 
+record(mbbo, "$(P){BPM:$(NO)}Trig:Rate-SP") {
+	field(DESC, "Linac Trigge rate")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 80")
+	field( ZRST, "1Hz")
+	field( ONST, "2Hz")
+	field( TWST, "1+10Hz")
+	field( ZRVL, "0")
+	field( ONVL, "1")
+	field( TWVL, "2")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+# mbbo for PT frequency selection
+record(mbbo, "$(P){BPM:$(NO)}Rf:PtFreq-SP") {
+	field(DESC, "PT Frequency select")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 104")
+	field( PINI, "YES")
+	field( ZRST, "000 MHz")
+	field( ONST, "499 MHz")
+#	field( TWST, "499 MHz")
+#	field( THST, "CALC")
+	field( ZRVL, "0")
+	field( ONVL, "1")
+#	field( TWVL, "2")
+#	field( THVL, "3")
+#	field( IVOA, "Don't drive outputs")
+#	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+
+
+
+#####################################################
+# 	longout record for Control
+#
+#   Rf Attenuator control 0..30 dB
+#####################################################
+record(longout, "$(P){BPM:$(NO)}Gain:RfAtte-SP") {
+	field(DESC, "RF Input Attenuator Control")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 132")
+	field(HOPR,"31")
+	field(LOPR,"0")	
+	field(DRVH,"31")	
+	field(DRVL,"0")		
+	field(EGU, "dB")
+#	field(PINI, "YES")
+#	field(VAL, "10")
+#	field(UDF, "0")
+#	field(TPRO, 1)
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+# Pilotton Rf output attenuator contrl 0..30 dB
+record(longout, "$(P){BPM:$(NO)}Gain:PtAtte-SP") {
+	field(DESC, "Pilotone Attenuator Control")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 136")
+	field(HOPR,"31")
+	field(LOPR,"0")	
+	field(DRVH,"31")	
+	field(DRVL,"0")	
+	field(EGU, "dB")
+#	field(PINI, "YES")
+#	field(VAL, "10")
+#	field(UDF, "0")
+#	field(TPRO, 1)
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+record(longout, "$(P){BPM:$(NO)}Pt:Reg-SP") {
+	field(DESC, "Pilotone Control Register")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 140")
+	field(HOPR,"0xFFFFFFFF")
+	field(LOPR,"0")		
+	field(EGU, "Hex")
+#	field(PINI, "YES")
+#	field(VAL, "20")
+	field(UDF, "0")
+	field(TPRO, 1)
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+record(ao, "$(P){BPM:$(NO)}Gain:Adc0-SP") {
+	field(DESC, "ADC0 Gain")
+	field(DTYP, "PSC Single F32")
+	field(HOPR,"1.00000")
+	field(LOPR,"0.50000")
+	field(DRVH,"1.00000")
+	field(DRVL,"0.50000")
+	field(EGU, "G")
+	field(PINI, "YES")
+	field(PREC,"3")
+	field(VAL, "1.0")
+	field(LINR,"LINEAR")
+	info(autosaveFields, "VAL")
+	field(OUT , "@aie_tx_$(NO) 1 160")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+record(ao, "$(P){BPM:$(NO)}Gain:Adc1-SP") {
+        field(DESC, "ADC1 Gain")
+	field(DTYP, "PSC Single F32")
+        field(HOPR,"1.00000")
+        field(LOPR,"0.50000")
+        field(DRVH,"1.00000")
+        field(DRVL,"0.50000")
+        field(EGU, "G")
+        field(PINI, "YES")
+        field(PREC,"3")
+        field(VAL, "1.0")
+        field(LINR,"LINEAR")
+        info(autosaveFields, "VAL")
+        field(OUT , "@aie_tx_$(NO) 1 164")
+        field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+record(ao, "$(P){BPM:$(NO)}Gain:Adc2-SP") {
+        field(DESC, "ADC2 Gain")
+	field(DTYP, "PSC Single F32")
+        field(HOPR,"1.00000")
+        field(LOPR,"0.50000")
+        field(DRVH,"1.00000")
+        field(DRVL,"0.50000")
+        field(EGU, "G")
+        field(PINI, "YES")
+        field(PREC,"3")
+        field(VAL, "0.99")
+        field(LINR,"LINEAR")
+        info(autosaveFields, "VAL")
+        field(OUT , "@aie_tx_$(NO) 1 168")
+        field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+record(ao, "$(P){BPM:$(NO)}Gain:Adc3-SP") {
+        field(DESC, "ADC3 Gain")
+	field(DTYP, "PSC Single F32")
+        field(HOPR,"1.00000")
+        field(LOPR,"0.50000")
+        field(DRVH,"1.00000")
+        field(DRVL,"0.50000")
+        field(EGU, "G")
+        field(PINI, "YES")
+        field(PREC,"3")
+        field(VAL, "1.0")
+        field(LINR,"LINEAR")
+        info(autosaveFields, "VAL")
+        field(OUT , "@aie_tx_$(NO) 1 172")
+        field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+###
+###	DDS Frequency control : range 29.0 MHz ~ 21 MHz
+###	Offset : 18
+# NCO (sin/cos) IF frequency fine control
+record(ao, "$(P){BPM:$(NO)}DDS-freq") {
+	field(DESC, "NCO Digital IF frequency")
+	field(DTYP, "PSC Single F32")
+	field(OUT , "@aie_tx_$(NO) 1 256")
+	field(PREC,"3")
+	field(EGU, "MHz")
+	field(EGUF,"35.0")
+	field(EGUL,"29.0")
+	field(HOPR,"34.0")
+	field(LOPR,"29.0")	
+#	field(PINI, "YES")
+#	field(VAL, "30.4")
+#	info(autosaveFields, "VAL")
+}
+
+
+
+
+########### PT LMX2541 CONTROL
+record(longout, "$(P){BPM:$(NO)}PT:FS-SP") {
+	field(DESC, "ADC Sampling Frequency")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 104")
+	field(PINI, "YES")
+	field(VAL, "117330000")	
+	field(EGU, "Hz")
+#	info(autosaveFields, "VAL")
+}
+
+record(ao, "$(P){BPM:$(NO)}PT:R-SP") {
+	field(DESC, "LMX2541 R")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 104")
+	field(PINI, "YES")
+	field(VAL, "4")		
+	field(EGU, "")
+	field(LINR, "LINEAR")	
+	info(autosaveFields, "VAL")
+}
+
+record(ao, "$(P){BPM:$(NO)}PT:VCODIV-SP") {
+	field(DESC, "LMX2541 Vco divice")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 104")
+	field(PINI, "YES")
+	field(VAL, "7")		
+	field(EGU, "")
+	field(LINR, "LINEAR")	
+	info(autosaveFields, "VAL")
+}
+
+record(ao, "$(P){BPM:$(NO)}PT:NINT-SP") {
+	field(DESC, "LMX2541 Number of Int")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 104")
+	field(PINI, "YES")
+	field(VAL, "120")		
+	field(EGU, "")
+	field(LINR, "LINEAR")	
+	info(autosaveFields, "VAL")
+}
+
+record(ao, "$(P){BPM:$(NO)}PT:NNUM-SP") {
+	field(DESC, "LMX2541 NNUM")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 104")
+	field(PINI, "YES")
+	field(VAL, "33211")		
+	field(EGU, "")
+	field(LINR, "LINEAR")	
+	info(autosaveFields, "VAL")
+}
+
+
+record(ao, "$(P){BPM:$(NO)}PT:NDEN-SP") {
+	field(DESC, "LMX2541 NDEN")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 104")
+	field(PINI, "YES")
+	field(VAL, "62021")		
+	field(EGU, "")
+	field(LINR, "LINEAR")	
+	info(autosaveFields, "VAL")
+}
+
+
+#
+#	Gain and Offset
+#	gain_off.db
+
+#################
+##
+## Reference value and Offset value
+##
+record(ao, "$(P){BPM:$(NO)}Pos:Href-SP") {
+	field(DESC, "H reference setting value")
+    field(DTYP, "Soft Channel")
+    field(HOPR, "15.0")
+    field(LOPR, "-15.0")
+    field(DRVH,"15.0") 
+    field(DRVL,"-15.0")
+    field(PREC, "3")    
+	field(EGU, "mm")
+#    field(OUT,  "$(P)Pos:Href-I PP")
+#    field(OMSL, "closed_loop")
+    field(EGU,  "mm")
+}
+record(ai, "$(P){BPM:$(NO)}Pos:Href-I") {
+    field(DTYP, "Soft Channel")
+    field(EGU,  "um")
+    field(PREC, "1")
+    field(HOPR, "10")
+    field(LOPR, "-10")
+    field(PREC, "3")
+}
+
+record(calc , "$(P){BPM:$(NO)}Pos:Hdiff-Calc") {
+    field(INPA, "$(P){BPM:$(NO)}Pos:X-I")
+    field(INPB, "$(P){BPM:$(NO)}Pos:Href-I")
+    field(CALC, "A-B")
+    field(EGU,  "um")
+    field(PREC, "1")
+    field(HOPR, "10")
+    field(LOPR, "-10")
+    field(PREC, "3")
+}
+
+record(ao, "$(P){BPM:$(NO)}Pos:Vref-SP") {
+	field(DESC, "Y reference setting value")
+    field(DTYP, "Soft Channel")
+    field(HOPR, "15.0")
+    field(LOPR, "-15.0")
+    field(DRVH,"15.0") 
+    field(DRVL,"-15.0")
+    field(PREC, "3")    
+	field(EGU, "mm")
+#    field(OUT,  "$(P)Pos:Vref-I PP")
+#    field(OMSL, "closed_loop")
+    field(EGU,  "mm")
+}
+record(ai, "$(P){BPM:$(NO)}Pos:Vref-I") {
+    field(DTYP, "Soft Channel")
+    field(EGU,  "um")
+    field(PREC, "1")
+    field(HOPR, "10")
+    field(LOPR, "-10")
+    field(PREC, "3")
+}
+record(calc , "$(P){BPM:$(NO)}Pos:Vdiff-Calc") {
+#    field(INPA, "$(P){BPM:$(NO)}Pos:V-I")
+    field(INPB, "$(P){BPM:$(NO)}Pos:Vref-I")
+    field(CALC, "A-B")
+    field(EGU,  "um")
+    field(PREC, "1")
+    field(HOPR, "10")
+    field(LOPR, "-10")
+    field(PREC, "3")
+}
+
+#######
+record(ao, "$(P){BPM:$(NO)}Kx-SP") {
+	field(DESC, "Kx mm")
+	field(DTYP,"Soft Channel")
+	field(PREC,"3")
+	field(HOPR, "25")
+    field(LOPR, "-25")
+	field(EGU, "mm")
+	field(VAL, "10")	
+#	field(OUT,  "$(P){BPM:$(NO)}Kx-cal PP")
+#	field(OMSL, "closed_loop")
+	field(FLNK, "$(P){BPM:$(NO)}Kx-cal")
+}
+record(ao, "$(P){BPM:$(NO)}Ky-SP") {
+	field(DESC, "Kx mm")
+	field(DTYP,"Soft Channel")
+	field(PREC,"3") 
+	field(HOPR, "25")
+    field(LOPR, "-25")	
+	field(EGU, "mm")
+	field(VAL, "10")
+#	field(OUT,  "$(P){BPM:$(NO)}Ky-cal PP")
+#	field(OMSL, "closed_loop")
+	field(FLNK, "$(P){BPM:$(NO)}Ky-cal")
+}
+record(ao, "$(P){BPM:$(NO)}BbaXOff-SP") {
+	field(DESC, "BbaXOff mm")
+	field(DTYP,"Soft Channel")
+	field(PREC,"3") 
+	field(HOPR, "25")
+        field(LOPR, "-25")	
+        field(ASG, "BPMEXPERT")
+	field(EGU, "mm")
+#	field(OUT,  "$(P){BPM:$(NO)}BbaXOff-cal PP")
+#	field(OMSL, "closed_loop")
+	field(FLNK, "$(P){BPM:$(NO)}BbaXOff-cal")
+}
+record(ao, "$(P){BPM:$(NO)}BbaYOff-SP") {
+	field(DESC, "BbaYOff mm")
+	field(DTYP,"Soft Channel")
+	field(PREC,"3") 
+	field(HOPR, "25")
+        field(LOPR, "-25")	
+        field(ASG, "BPMEXPERT")
+	field(EGU, "mm")
+#	field(OUT,  "$(P){BPM:$(NO)}BbaYOff-cal PP")
+#	field(OMSL, "closed_loop")
+	field(FLNK, "$(P){BPM:$(NO)}BbaYOff-cal")
+}
+
+record(calcout , "$(P){BPM:$(NO)}Kx-cal") 
+{
+	field(DESC, "Kx calc")
+    field(INPA, "$(P){BPM:$(NO)}Kx-SP.VAL")
+    field(INPB, "1000000")
+    field(CALC, "A*B")
+    field(EGU,  "mm")
+    field(HOPR, "25")
+    field(LOPR, "-25")
+    field(PREC, "3")
+	field(OUT,  "$(P){BPM:$(NO)}Pos:Kx-SP.VAL")	
+	field(FLNK, "$(P){BPM:$(NO)}Pos:Kx-SP")	
+}
+record(calcout , "$(P){BPM:$(NO)}Ky-cal") 
+{
+	field(DESC, "Ky calc")
+    field(INPA, "$(P){BPM:$(NO)}Ky-SP.VAL")
+    field(INPB, "1000000")
+    field(CALC, "A*B")
+    field(EGU,  "mm")
+    field(HOPR, "25")
+    field(LOPR, "-25")
+    field(PREC, "3")
+	field(OUT,  "$(P){BPM:$(NO)}Pos:Ky-SP.VAL")	
+	field(FLNK, "$(P){BPM:$(NO)}Pos:Ky-SP")	
+}
+record(calcout , "$(P){BPM:$(NO)}BbaXOff-cal") 
+{
+	field(DESC, "BbaXOff calc")
+    field(INPA, "$(P){BPM:$(NO)}BbaXOff-SP.VAL")
+    field(INPB, "1000000")
+    field(CALC, "A*B")
+    field(EGU,  "mm")
+    field(HOPR, "25")
+    field(LOPR, "-25")
+    field(PREC, "3")
+	field(OUT,  "$(P){BPM:$(NO)}Pos:BbaXOff-SP.VAL")	
+	field(FLNK, "$(P){BPM:$(NO)}Pos:BbaXOff-SP")	
+}
+
+record(calcout , "$(P){BPM:$(NO)}BbaYOff-cal") 
+{
+	field(DESC, "BbaYOff calc")
+    field(INPA, "$(P){BPM:$(NO)}BbaYOff-SP.VAL")
+    field(INPB, "1000000")
+    field(CALC, "A*B")
+    field(EGU,  "mm")
+    field(HOPR, "25")
+    field(LOPR, "-25")
+    field(PREC, "3")
+	field(OUT,  "$(P){BPM:$(NO)}Pos:BbaYOff-SP.VAL")	
+	field(FLNK, "$(P){BPM:$(NO)}Pos:BbaYOff-SP")	
+}
+
+# calibration factor KX   NSLS-II 10 mm
+record(longout, "$(P){BPM:$(NO)}Pos:Kx-SP") {
+	field(DESC, "Kx value")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 144")
+	field(HOPR,"25000000")
+	field(LOPR,"-25000000")	
+	field(DRVH,"25000000")	
+	field(DRVL,"-25000000")		
+	field(EGU, "nm")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+# Ky
+record(longout, "$(P){BPM:$(NO)}Pos:Ky-SP") {
+	field(DESC, "Ky value")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 148")
+	field(HOPR,"25000000")
+	field(LOPR,"-25000000")	
+	field(DRVH,"25000000")	
+	field(DRVL,"-25000000")		
+	field(EGU, "nm")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+##########################
+#Linac position update rate
+record(longout, "$(P){BPM:$(NO)}Rate:Update-SP") {
+	field(DESC, "Position Update rate")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 104")
+	field(HOPR,"200")
+	field(LOPR,"0")		
+	field(PINI, "YES")
+	field(VAL, "10")
+	field(EGU, "Sec")
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+# position X offset value
+# +/- 5,000,000 nm  ( +/- 5 mm)
+record(longout, "$(P){BPM:$(NO)}Pos:BbaXOff-SP") {
+	field(DESC, "BBA X Offset")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 152")
+	field(HOPR,"25000000")
+	field(LOPR,"-250000000")	
+	field(DRVH,"25000000")	
+	field(DRVL,"-25000000")	
+	field(EGU, "mm")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+	field(ASG, "BPMEXPERT")
+}
+# position Y offset value
+record(longout, "$(P){BPM:$(NO)}Pos:BbaYOff-SP") {
+	field(DESC, "BBA Y Offset")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 156")
+	field(HOPR,"25000000")
+	field(LOPR,"-25000000")	
+	field(DRVH,"25000000")	
+	field(DRVL,"-25000000")	
+	field(EGU, "nm")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+	field(ASG, "BPMEXPERT")
+}
+
+# position Q offset value
+#record(longout, "$(P){BPM:$(NO)}Pos:BbaQOff-SP") {
+#	field(DESC, "Q Offset")
+#	field(DTYP, "PSC Single I32")
+#	field(OUT , "@aie_tx_$(NO) 1 188")
+#	field(HOPR,"25000000")
+#	field(LOPR,"-25000000")	
+#	field(DRVH,"2500000")	
+#	field(DRVL,"-2500000")
+#	field(EGU, "nm")
+#	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+#}
+
+record(ao, "$(P){BPM:$(NO)}Pos:BbaQOff-SP") {
+	field(DESC, "Q Offset")
+	field(DTYP, "PSC Single F32")
+	field(OUT , "@aie_tx_$(NO) 1 188")
+	field(HOPR,"2000000")
+	field(LOPR,"-2000000")	
+	field(DRVH,"200000")	
+	field(DRVL,"-200000")
+	field(EGU, "nm")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+### BPM REBOOT ###
+record(bo, "$(P){BPM:$(NO)}REBOOT-SP") {
+	field(DESC, "Soft REBOOT")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 88")
+    field(ZNAM, "READY")
+    field(ONAM, "REBOOT")
+	field(HIGH,".2")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+############## timing.db
+
+## event enable/disable
+record(bo, "$(P){BPM:$(NO)}Trig:EventSet-SP") {
+	field(DESC, "Trig 0 enable/disable")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 92")
+    field(ZNAM,"Off")
+    field(ONAM,"On")
+#    info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+###
+record(bo, "$(P){BPM:$(NO)}Trig:FaSrc-SP") {
+	field(DESC, "FA Trigger source")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 396")
+    field(ZNAM, "EVG")
+    field(ONAM, "INT")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+## setting event number
+record(longout, "$(P){BPM:$(NO)}Trig:EventNo-SP") {
+	field(DESC, "Trig 0 Event code set")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 320")
+	field(HOPR,"254")
+	field(LOPR,"1")		
+	field(PINI, "YES")
+	field(VAL, "10")
+	field(EGU, "")
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+# BPM embedded EVR Trig delay 0   0x64(100)
+record(longout, "$(P){BPM:$(NO)}Trig:Dly0-SP") {
+	field(DESC, "EVR Pulse-0 delay")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 400")
+	field(HOPR,"1000000")
+	field(LOPR,"0")		
+	field(PINI, "YES")
+	field(VAL, "1")
+	field(EGU, "Turns")
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+record(ao, "$(P){BPM:$(NO)}Trig:Wid0-SP") {
+	field(DESC, "EVR Pulse-0 width")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 404")
+	field(HOPR,"10000000")
+	field(LOPR,"300")
+	field(DRVH,"10000000")	
+	field(DRVL,"300")		# Limit 300 ns	
+	field(EGU, "ns")
+	field(ESLO, "0.125")	#8 ns step increment
+	field(LINR, "LINEAR")
+	field(PINI, "YES")	
+	field(VAL, "30")
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+# BPM embedded EVR Trig delay 1 
+record(ao, "$(P){BPM:$(NO)}Trig:Dly1-SP") {
+	field(DESC, "EVR Pulse-1 delay")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 408")
+	field(HOPR,"10000000")
+	field(LOPR,"1")		
+	field(EGU, "ns")
+	field(ESLO, "0.125")	#8 ns step increment
+	field(LINR, "LINEAR")	
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+record(ao, "$(P){BPM:$(NO)}Trig:Wid1-SP") {
+	field(DESC, "EVR Pulse-1 width")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 412")
+	field(HOPR,"10000000")
+	field(LOPR,"300")	
+	field(DRVH,"10000000")	
+	field(DRVL,"300")		# Limit 300 ns	
+	field(EGU, "ns")
+	field(ESLO, "0.125")	#8 ns step increment
+	field(LINR, "LINEAR")	
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+
+# BPM embedded EVR Trig delay 2
+record(ao, "$(P){BPM:$(NO)}Trig:Dly2-SP") {
+	field(DESC, "EVR Pulse-2 delay")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 416")
+	field(HOPR,"10000000")
+#	field(LOPR,"1")		
+	field(EGU, "ns")
+	field(ESLO, "0.125")	#8 ns step increment
+	field(LINR, "LINEAR")	
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+record(ao, "$(P){BPM:$(NO)}Trig:Wid2-SP") {
+	field(DESC, "EVR Pulse-2 width")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 420")
+	field(HOPR,"10000000")
+#	field(LOPR,"300")	
+	field(DRVH,"10000000")	
+#	field(DRVL,"300")		# Limit 300 ns	
+	field(EGU, "ns")
+	field(ESLO, "0.125")	#8 ns step increment
+	field(LINR, "LINEAR")	
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+#TBT gate delay for averaging
+record(longout, "$(P){BPM:$(NO)}Tbt:GateDly-SP") {
+	field(DESC, "TBT Gate Delay")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 192")
+	field(HOPR,"310")
+	field(LOPR,"0")		
+	field(EGU, "Turns")
+	field(PINI, "YES")
+	field(VAL, "2")
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+#TBT gate width for averaging
+record(longout, "$(P){BPM:$(NO)}Tbt:GateWidth-SP") {
+	field(DESC, "TBT Gate Width")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 196")
+	field(HOPR,"308")
+	field(LOPR,"0")		
+	field(PINI, "YES")
+	field(VAL, "300")
+	field(EGU, "Turns")
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+### ADC beam delay control
+record(longout, "$(P){BPM:$(NO)}Trig:AdcDelay-SP") {
+	field(DESC, "LI/LTB Adc delay for NPI write")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 272")
+	field(HOPR, "120000000")
+	field(DRVH, "120000000")
+	field(LOPR, "1")		
+	field(PINI, "YES")
+	field(VAL, "0")
+	field(EGU, "9ns")
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+
+
+
+####################################################################
+### SDI and SFP for FOFB
+####################################################################
+
+
+record(bo, "$(P){BPM:$(NO)}Sdi:TestDataSel-SP") {
+    field(DESC, "SDI Test Data Select Ramp/Cos")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 352")
+    field(ZNAM,"COS")
+    field(ONAM,"Ramp")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+record(bo, "$(P){BPM:$(NO)}Sdi:DataIsFa-SP") {
+    field(DESC, "SDI Data Select FA 10 kHz")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 376")
+    field(ZNAM,"TestData")
+    field(ONAM,"Fa10kHz")
+    field(PINI, "YES")
+    field(VAL, "1")
+    field(UDF, "0")
+    field(TPRO, 1)
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+# SDI Reg clear to zero
+record(bo, "$(P){BPM:$(NO)}Sdi:RegClr-SP") {
+    field(DESC, "SDI Reg clear")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 380")
+    field(ZNAM,"Ready")
+    field(ONAM,"Clearing")
+    field(HIGH,".2")	#500 ms after low
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+record(longout, "$(P){BPM:$(NO)}Sdi:TestCosFreq-SP") {
+    field(DESC, "Test Cos wavefrom frequency")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 356")
+    field(HOPR,"1000")
+    field(LOPR,"1")
+    field(EGU, "Hz")
+    field(PINI, "YES")
+    field(VAL, "100")
+    field(UDF, "0")
+    field(TPRO, 1)
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+# BPM Kx
+record(longout, "$(P){BPM:$(NO)}Sdi:TestCosKx-SP") {
+    field(DESC, "Test Cos wavefrom Kx Gain")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 360")
+    field(HOPR,"10000000")
+    field(LOPR,"10")
+    field(PINI, "YES")
+    field(VAL, "10000")
+    field(UDF, "0")
+    field(TPRO, 1)
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+record(longout, "$(P){BPM:$(NO)}Sdi:TestCosKy-SP") {
+	field(DESC, "Test Cos wavefrom Ky Gain")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 364")
+	field(HOPR,"10000000")
+	field(LOPR,"10")
+	field(PINI, "YES")
+	field(VAL, "10000")
+	field(UDF, "0")
+	field(TPRO, 1)
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+
+## Waveform Tx Status
+record(longin, "$(P){BPM:$(NO)}DDR:TxStatus-I") {
+	field(DESC, "DDR Wfm Tx status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 520")
+    field(SCAN,"I/O Intr")
+}
+record(longin, "$(P){BPM:$(NO)}Wfm:TxCnt-I") {
+	field(DESC, "Wfm tx count")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 516")
+	field(SCAN,"I/O Intr")
+}
+
+##################################
+# mbbo for Waveform selection
+##################################
+record(mbbo, "$(P){BPM:$(NO)}DDR:WfmSel-SP") {
+	field(DESC, "DDR Waveform select")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 524")
+	field(MASK, "0xFFF")
+	field( PINI, "YES")
+	field( ZRST, "ADC Wfm")
+	field( ONST, "TBT Wfm")
+	field( TWST, "FA Wfm")
+	field( THST, "SA Wfm")
+	field( FRST, "PM ")
+	field( ZRVL, "0")
+	field( ONVL, "1")
+	field( TWVL, "2")
+	field( THVL, "3")
+	field( FRVL, "4")
+	field( FVSV, "INVALID")
+	field( SXSV, "INVALID")
+	field( SVSV, "INVALID")
+	field( EISV, "INVALID")
+	field( IVOA, "Don't drive outputs")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+record(longout, "$(P){BPM:$(NO)}Burst:AdcEnableLen-SP") {
+	field(DESC, "Wfm Tx Count Reset")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 516")
+	field(HOPR,"10000000")
+	field(LOPR,"0")		
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+# ADC raw waveform transfer width to DDR memory
+record(longout, "$(P){BPM:$(NO)}Burst:AdcEnableLen-SP") {
+	field(DESC, "ADC raw to DDR enable width, 117 MHz")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 176")
+	field(HOPR,"1200000")
+	field(LOPR,"0")		
+	field(EGU, "point")
+#	field(PINI, "YES")
+	field(VAL, "1000000")
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+# TBT (A,B,C,D,X,Y,S,Q) waveform transfer width to DDR memory
+record(longout, "$(P){BPM:$(NO)}Burst:TbtEnableLen-SP") {
+	field(DESC, "TBT data to DDR enable width")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 180")
+	field(HOPR,"2000000")
+	field(LOPR,"0")	
+#	field(PINI, "YES")
+	field(VAL, "100000")	
+	field(EGU, "Turns")
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+# FA (A,B,C,D,X,Y,S,Q) waveform transfer width to DDR memory
+record(longout, "$(P){BPM:$(NO)}Burst:FaEnableLen-SP") {
+	field(DESC, "FA enable time")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 184")
+	field(HOPR,"100000")
+	field(LOPR,"0")	
+#	field(PINI, "YES")
+	field(VAL, "9000")	
+	field(EGU, "100 us")
+#	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+# ADC raw waveform transfer width to DDR memory
+record(longout, "$(P){BPM:$(NO)}ERec:AdcEnableLen-SP") {
+	field(DESC, "ADC raw to DDR enable width, for epics")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 528")
+	field(HOPR,"512000")
+	field(LOPR,"0")	
+	field(DRVH,"512000")	
+	field(DRVL,"0")		
+	field(EGU, "point")
+	field(PINI, "YES")
+	field(VAL, "1000000")
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+# TBT (A,B,C,D,X,Y,S,Q) waveform transfer width to DDR memory
+record(longout, "$(P){BPM:$(NO)}ERec:TbtEnableLen-SP") {
+	field(DESC, "TBT data to DDR enable width record")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 532")
+	field(HOPR,"100000")
+	field(LOPR,"0")	
+	field(DRVH,"100000")	
+	field(DRVL,"0")	
+	field(PINI, "YES")
+	field(VAL, "10000")	
+	field(EGU, "Turns")
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+# FA (A,B,C,D,X,Y,S,Q) waveform transfer width to DDR memory
+record(longout, "$(P){BPM:$(NO)}ERec:FaEnableLen-SP") {
+	field(DESC, "FA enable length for epics record")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 536")
+	field(HOPR,"100000")
+	field(LOPR,"0")	
+	field(DRVH,"100000")	
+	field(DRVL,"0")	
+	field(PINI, "YES")
+	field(VAL, "9000")	
+	field(EGU, "100 us")
+#	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+record(longout, "$(P){BPM:$(NO)}ERec:SaEnableLen-SP") {
+	field(DESC, "SA enable time for epics")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 540")
+	field(HOPR,"100001")
+	field(LOPR,"0")	
+	field(DRVH,"100001")	
+	field(DRVL,"1000")	
+	field(PINI, "YES")
+	field(VAL, "10000")	
+	field(EGU, "100 us")
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+#############################################
+## DDR Memory Offset address
+#############################################
+record(ao, "$(P){BPM:$(NO)}ddrAdcOffset") {
+	field(DESC, "DDR address offset for ADC")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 544")
+    field(LINR,"LINEAR")
+	field(HOPR,"2000000")
+	field(LOPR,"0")	
+	field(DRVH,"2000000")	
+	field(DRVL,"0")	
+	field(PINI, "YES")
+	field(VAL, "0")	
+#	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+record(ao, "$(P){BPM:$(NO)}ddrTbtOffset") {
+	field(DESC, "DDR address offset for TBT")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 548")
+    field(LINR,"LINEAR")
+	field(HOPR,"2000000")
+	field(LOPR,"0")	
+	field(DRVH,"2000000")	
+	field(DRVL,"0")		
+#	field(PINI, "YES")
+#	field(VAL, "0")
+#	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+record(ao, "$(P){BPM:$(NO)}ddrFaOffset") {
+	field(DESC, "DDR address offset for FA")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 552")
+    field(LINR,"LINEAR")
+	field(HOPR,"2000000")
+	field(LOPR,"0")	
+	field(DRVH,"2000000")	
+	field(DRVL,"0")		
+#	field(PINI, "YES")
+#	field(VAL, "0")
+#	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+record(ao, "$(P){BPM:$(NO)}ddrSaOffset") {
+	field(DESC, "DDR address offset for SA")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 556")
+    field(LINR,"LINEAR")
+	field(HOPR,"2000000")
+	field(LOPR,"0")	
+	field(DRVH,"2000000")	
+	field(DRVL,"0")		
+#	field(PINI, "YES")
+#	field(VAL, "0")
+#	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+
+### ADC RAW
+record(waveform,"$(P){BPM:$(NO)}Ampl:ARaw-I") {
+	field(DESC, "117 MHz ADC0 raw waveform")
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@aie_wfm_rx_$(NO) 51 8 8")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(HOPR, "32768")
+	field(LOPR, "-32767")
+	field(NELM,"$(ADC_WFM_LEN)")
+	field(FLNK, "$(P){BPM:$(NO)}ADC:WA-A")
+	field(TSE , "-2")
+	info("TimeFromBlock", "0")
+}
+
+record(waveform,"$(P){BPM:$(NO)}Ampl:BRaw-I") {
+	field(DESC, "117 MHz ADC1 raw waveform")
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@aie_wfm_rx_$(NO) 51 10 8")
+	field(SCAN,"I/O Intr")
+	field(FTVL,"DOUBLE")
+	field(HOPR, "32768")
+	field(LOPR, "-32767")
+	field(NELM,"$(ADC_WFM_LEN)")
+	field(FLNK, "$(P){BPM:$(NO)}ADC:WA-B")
+	field(TSE , "-2")
+	info("TimeFromBlock", "0")
+}
+record(waveform,"$(P){BPM:$(NO)}Ampl:CRaw-I") {
+	field(DESC, "117 MHz ADC2 raw waveform")
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@aie_wfm_rx_$(NO) 51 12 8")
+	field(SCAN,"I/O Intr")
+	field(FTVL,"DOUBLE")
+	field(HOPR, "32768")
+	field(LOPR, "-32767")
+	field(NELM,"$(ADC_WFM_LEN)")
+	field(FLNK, "$(P){BPM:$(NO)}ADC:WA-C")
+	field(TSE , "-2")
+	info("TimeFromBlock", "0")
+
+}
+record(waveform,"$(P){BPM:$(NO)}Ampl:DRaw-I") {
+	field(DESC, "117 MHz ADC3 raw waveform")
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@aie_wfm_rx_$(NO) 51 14 8")
+	field(SCAN,"I/O Intr")
+	field(FTVL,"DOUBLE")
+	field(HOPR, "32768")
+	field(LOPR, "-32767")
+	field(NELM,"$(ADC_WFM_LEN)")
+#    field(FLNK, "$(P){BPM:$(NO)}TS:AdcTrigDate-I")	
+	field(TSE , "-2")
+	info("TimeFromBlock", "0")
+}
+
+
+
+
+#############################
+### TBT Waveform
+#############################
+record(waveform,"$(P){BPM:$(NO)}TBT-A") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 52 0 48")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(TBT_WFM_LEN)")	
+#	field(FLNK, "$(P){BPM:$(NO)}Tbt:Sum-Calc")	
+}
+
+record(waveform,"$(P){BPM:$(NO)}TBT-B") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 52 4 48")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(TBT_WFM_LEN)")
+}
+record(waveform,"$(P){BPM:$(NO)}TBT-C") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 52 8 48")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(TBT_WFM_LEN)")
+#	field(FLNK, "$(P){BPM:$(NO)}Unit:Tbt-Calc")	
+}
+record(waveform,"$(P){BPM:$(NO)}TBT-D") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 52 12 48")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(TBT_WFM_LEN)")
+#	field(FLNK, "$(P){BPM:$(NO)}PY:Tbt-Calc")	
+}
+
+record(waveform,"$(P){BPM:$(NO)}TBT-X") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 52 16 48")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(TBT_WFM_LEN)")
+    field(FLNK, "$(P){BPM:$(NO)}TBT:WA-X")
+}
+
+record(waveform,"$(P){BPM:$(NO)}TBT-Y") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 52 20 48")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(TBT_WFM_LEN)")
+    field(FLNK, "$(P){BPM:$(NO)}TBT:WA-Y")
+}
+
+record(waveform,"$(P){BPM:$(NO)}TBT-S") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 52 24 48")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(TBT_WFM_LEN)")
+    field(FLNK, "$(P){BPM:$(NO)}TBT:WA-S")
+}
+record(waveform,"$(P){BPM:$(NO)}TBT-Q") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 52 28 48")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(TBT_WFM_LEN)")
+}
+
+
+
+##############################
+### FA 10 kHz
+##############################
+record(waveform,"$(P){BPM:$(NO)}FA-A") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 53 0 48")
+	field(SCAN,"I/O Intr")
+	field(FTVL,"DOUBLE")
+	field(NELM,"$(FA_WFM_LEN)")
+	field(FLNK, "$(P){BPM:$(NO)}FA1-Fout_")
+}
+
+record(fanout, "$(P){BPM:$(NO)}FA1-Fout_") {
+	field(LNK1, "$(P){BPM:$(NO)}FA-B")
+	field(LNK2, "$(P){BPM:$(NO)}FA-C")
+	field(LNK3, "$(P){BPM:$(NO)}FA-D")
+	field(LNK4, "$(P){BPM:$(NO)}FA-X")
+	field(LNK5, "$(P){BPM:$(NO)}FA-Y")
+	field(LNK6, "$(P){BPM:$(NO)}FA-S")
+	field(FLNK, "$(P){BPM:$(NO)}FA2-Fout_")
+}
+
+record(fanout, "$(P){BPM:$(NO)}FA2-Fout_") {
+	field(LNK1, "$(FAFWD)")
+	field(LNK2, "")
+	field(LNK3, "")
+	field(LNK4, "")
+	field(LNK5, "")
+	field(LNK6, "")
+	field(FLNK, "")
+}
+
+record(waveform,"$(P){BPM:$(NO)}FA-B") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 53 4 48")
+	field(FTVL,"DOUBLE")
+	field(NELM,"$(FA_WFM_LEN)")
+}
+
+record(waveform,"$(P){BPM:$(NO)}FA-C") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 53 8 48")
+	field(FTVL,"DOUBLE")
+	field(NELM,"$(FA_WFM_LEN)")
+}
+
+record(waveform,"$(P){BPM:$(NO)}FA-D") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 53 12 48")
+	field(FTVL,"DOUBLE")
+	field(NELM,"$(FA_WFM_LEN)")
+}
+record(waveform,"$(P){BPM:$(NO)}FA-X") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 53 16 48")
+	field(FTVL,"DOUBLE")
+	field(NELM,"$(FA_WFM_LEN)")
+	field(FLNK, "$(P){BPM:$(NO)}FA:WA-X")
+}
+record(waveform,"$(P){BPM:$(NO)}FA-Y") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 53 20 48")
+	field(FTVL,"DOUBLE")
+	field(NELM,"$(FA_WFM_LEN)")
+	field(FLNK, "$(P){BPM:$(NO)}FA:WA-Y")
+}
+record(waveform,"$(P){BPM:$(NO)}FA-S") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 53 24 48")
+	field(FTVL,"DOUBLE")
+	field(NELM,"$(FA_WFM_LEN)")
+	field(FLNK, "$(P){BPM:$(NO)}FA:WA-S")
+}
+
+
+####################################################
+### FA filter and delta position
+####################################################
+record(waveform,"$(P){BPM:$(NO)}FA-Q") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 53 28 48")
+	field(SCAN,"I/O Intr")
+	field(FTVL,"DOUBLE")
+	field(NELM,"$(FA_WFM_LEN)")
+}
+
+### IIR2 filter
+record(waveform,"$(P){BPM:$(NO)}FA:iir-x") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 53 32 48")
+	field(SCAN,"I/O Intr")
+	field(FTVL,"DOUBLE")
+	field(NELM,"$(FA_WFM_LEN)")
+}
+record(waveform,"$(P){BPM:$(NO)}FA:iir-y") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 53 36 48")
+	field(SCAN,"I/O Intr")
+	field(FTVL,"DOUBLE")
+	field(NELM,"$(FA_WFM_LEN)")
+}
+### FIR 4 tap filter
+record(waveform,"$(P){BPM:$(NO)}FA:fir-x") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 53 40 48")
+	field(SCAN,"I/O Intr")
+	field(FTVL,"DOUBLE")
+	field(NELM,"$(FA_WFM_LEN)")
+}
+record(waveform,"$(P){BPM:$(NO)}FA:fir-y") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 53 44 48")
+	field(SCAN,"I/O Intr")
+	field(FTVL,"DOUBLE")
+	field(NELM,"$(FA_WFM_LEN)")
+}
+
+
+
+##############################
+### SA Waveform
+##############################
+record(waveform,"$(P){BPM:$(NO)}SA-A") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 54 0 96")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(SA_WFM_LEN)")
+}
+record(waveform,"$(P){BPM:$(NO)}SA-B") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 54 4 96")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(SA_WFM_LEN)")
+}
+record(waveform,"$(P){BPM:$(NO)}SA-C") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 54 8 96")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(SA_WFM_LEN)")
+}
+record(waveform,"$(P){BPM:$(NO)}SA-D") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 54 12 96")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(SA_WFM_LEN)")
+}
+record(waveform,"$(P){BPM:$(NO)}SA-X") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 54 16 96")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(SA_WFM_LEN)")
+}
+record(waveform,"$(P){BPM:$(NO)}SA-Y") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 54 20 96")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(SA_WFM_LEN)")
+}
+record(waveform,"$(P){BPM:$(NO)}SA-S") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 54 24 96")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(SA_WFM_LEN)")
+}
+record(waveform,"$(P){BPM:$(NO)}SA-Q") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 54 28 96")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(SA_WFM_LEN)")
+}
+
+
+record(waveform,"$(P){BPM:$(NO)}SA-INTCNT") {
+        field(DESC, "SA SUM")
+        field(DTYP, "PSC Block I32 In")
+        field(INP , "@aie_wfm_rx_$(NO) 54 76 96")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(SA_WFM_LEN)")
+}
+
+record(waveform,"$(P){BPM:$(NO)}SA-TS:SEC") {
+	field(DESC, "SA SUM") 
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 54 80 96")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(SA_WFM_LEN)")
+}
+record(waveform,"$(P){BPM:$(NO)}SA-TS:OFF") {
+	field(DESC, "SA Q") 
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 54 84 96")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(SA_WFM_LEN)")
+}
+
+record(waveform,"$(P){BPM:$(NO)}SA-Afe-temp0") {
+	field(DESC, "SA Q") 
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 54 56 96")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(SA_WFM_LEN)")
+}
+
+record(waveform,"$(P){BPM:$(NO)}SA-Afe-temp1") {
+	field(DESC, "SA Q") 
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 54 60 96")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(SA_WFM_LEN)")
+}
+
+
+
+
+########
+record(ai,"$(P){BPM:$(NO)}TBT:WA-X:baseLine") {
+        field(DESC,"baseline to subtract")
+        field(DTYP,"Soft Channel")
+}
+record(ai,"$(P){BPM:$(NO)}TBT:WA-X:xres") {
+        field(DESC,"x resolution")
+        field(DTYP,"Soft Channel")
+        field(PREC,"2")
+}
+record(ai,"$(P){BPM:$(NO)}TBT:WA-X:xoff") {
+        field(DESC,"x offset")
+        field(DTYP,"Soft Channel")
+        field(PREC,"2")
+}
+
+record(waveAnl,"$(P){BPM:$(NO)}TBT:WA-X") {
+	field(DESC,"TBT X position Waveform analysis")
+	field(SCAN,"Passive")
+	field(NELM,"1000")
+#	field(NELM,"$(P){BPM:$(NO)}ERec:TbtEnableLen-SP.VAL NPP MS")
+	field(INP,"$(P){BPM:$(NO)}mm:Tbt-x")
+#	field(INP,"$(P){BPM:$(NO)}TBT-X")
+	field(PREC,"5")
+	field(EGUX,"uS")	#Engineering units for X axis fields
+	field(HORX,"50")
+	field(LORX,"0")
+	field(EGUY,"mm")
+	field(HORY,"1000")
+	field(LORY,"-1000")
+	field(INAM,"")	#initTest
+	field(SNAM,"")
+	field(BLOL,"$(P){BPM:$(NO)}TBT:WA-X:baseLine PP NMS")
+	field(XRSL,"$(P){BPM:$(NO)}TBT:WA-X:xres PP NMS")
+	field(XOFL,"$(P){BPM:$(NO)}TBT:WA-X:xoff PP NMS")
+}
+
+# Turn by Turn Y Position
+record(waveAnl,"$(P){BPM:$(NO)}TBT:WA-Y") {
+	field(DESC,"TBT Y position Waveform analysis")
+	field(SCAN,"Passive")
+	field(NELM,"1000")
+#	field(NELM,"$(P){BPM:$(NO)}ERec:TbtEnableLen-SP.VAL NPP MS")
+	field(INP,"$(P){BPM:$(NO)}mm:Tbt-y")
+#	field(INP,"$(P){BPM:$(NO)}TBT-Y")
+	field(PREC,"5")
+	field(EGUX,"uS")	#Engineering units for X axis fields
+	field(HORX,"50")
+	field(LORX,"0")
+	field(EGUY,"mm")
+	field(HORY,"1000")
+	field(LORY,"-1000")
+	field(INAM,"")	#initTest
+	field(SNAM,"")
+#	field(BLOL,"$(P){BPM:$(NO)}TBT:WA-X:baseLine PP NMS")
+#	field(XRSL,"$(P){BPM:$(NO)}TBT:WA-X:xres PP NMS")
+#	field(XOFL,"$(P){BPM:$(NO)}TBT:WA-X:xoff PP NMS")
+}
+
+record(waveAnl,"$(P){BPM:$(NO)}TBT:WA-S") {
+	field(DESC,"TBT Sum Waveform analysis")
+	field(SCAN,"Passive")
+	field(NELM,"1000")
+#	field(NELM,"$(P){BPM:$(NO)}ERec:TbtEnableLen-SP.VAL NPP MS")
+	#field(INP,"$(P){BPM:$(NO)}TBT-S  PP NMS")
+	field(INP,"$(P){BPM:$(NO)}TBT-S")
+	field(PREC,"0")
+	field(EGUX,"uS")	#Engineering units for X axis fields
+	field(HORX,"50")
+	field(LORX,"0")
+	field(EGUY,"")
+	field(HORY,"1000")
+	field(LORY,"-1000")
+	field(INAM,"")	#initTest
+	field(SNAM,"")
+#	field(BLOL,"$(P){BPM:$(NO)}TBT:WA-X:baseLine PP NMS")
+#	field(XRSL,"$(P){BPM:$(NO)}TBT:WA-X:xres PP NMS")
+#	field(XOFL,"$(P){BPM:$(NO)}TBT:WA-X:xoff PP NMS")
+}
+
+
+# FA X position
+record(waveAnl,"$(P){BPM:$(NO)}FA:WA-X") {
+	field(DESC,"FA X position Waveform analysis")
+	field(SCAN,"Passive")
+	field(NELM,"1000")
+	field(INP,"$(P){BPM:$(NO)}mm:Fa-x")
+	#field(INP,"$(P){BPM:$(NO)}FA-X")
+	field(PREC,"5")
+	field(EGUX,"uS")	#Engineering units for X axis fields
+	field(HORX,"50")
+	field(LORX,"0")
+	field(EGUY,"mm")
+	field(HORY,"1000")
+	field(LORY,"-1000")
+	field(INAM,"")	#initTest
+	field(SNAM,"")
+}
+
+# FA Y Position
+record(waveAnl,"$(P){BPM:$(NO)}FA:WA-Y") {
+	field(DESC,"FA Y position Waveform analysis")
+	field(SCAN,"Passive")
+	field(NELM,"1000")
+	field(INP,"$(P){BPM:$(NO)}mm:Fa-y")
+	#field(INP,"$(P){BPM:$(NO)}FA-Y")
+	field(PREC,"5")
+	field(EGUX,"uS")	#Engineering units for X axis fields
+	field(HORX,"50")
+	field(LORX,"0")
+	field(EGUY,"mm")
+	field(HORY,"1000")
+	field(LORY,"-1000")
+	field(INAM,"")	#initTest
+	field(SNAM,"")
+}
+
+record(waveAnl,"$(P){BPM:$(NO)}FA:WA-S") {
+	field(DESC,"FA Sum Waveform analysis")
+	field(SCAN,"Passive")
+	field(NELM,"1000")
+	#field(INP,"$(P){BPM:$(NO)}FA-S  PP NMS")
+	field(INP,"$(P){BPM:$(NO)}FA-S")
+	field(PREC,"0")
+	field(EGUX,"uS")	#Engineering units for X axis fields
+	field(HORX,"50")
+	field(LORX,"0")
+	field(EGUY,"")
+	field(HORY,"1000")
+	field(LORY,"-1000")
+	field(INAM,"")	#initTest
+	field(SNAM,"")
+}
+
+
+record(waveAnl,"$(P){BPM:$(NO)}ADC:WA-A") {
+	field(DESC,"ADC Waveform analysis")
+	field(SCAN,"Passive")
+	field(NELM,"1000")
+	field(INP,"$(P){BPM:$(NO)}Ampl:ARaw-I")
+	field(PREC,"0")
+	field(EGUX,"uS")	#Engineering units for X axis fields
+	field(HORX,"50")
+	field(LORX,"0")
+	field(EGUY,"")
+	field(HORY,"32000")
+	field(LORY,"-32000")
+	field(INAM,"")	#initTest
+	field(SNAM,"")
+}
+
+record(waveAnl,"$(P){BPM:$(NO)}ADC:WA-B") {
+	field(DESC,"ADC Waveform analysis")
+	field(SCAN,"Passive")
+	field(NELM,"1000")
+	field(INP,"$(P){BPM:$(NO)}Ampl:BRaw-I")
+	field(PREC,"0")
+	field(EGUX,"uS")	#Engineering units for X axis fields
+	field(HORX,"50")
+	field(LORX,"0")
+	field(EGUY,"")
+	field(HORY,"32000")
+	field(LORY,"-32000")
+	field(INAM,"")	#initTest
+	field(SNAM,"")
+}
+
+record(waveAnl,"$(P){BPM:$(NO)}ADC:WA-C") {
+	field(DESC,"ADC Waveform analysis")
+	field(SCAN,"Passive")
+	field(NELM,"1000")
+	field(INP,"$(P){BPM:$(NO)}Ampl:CRaw-I")
+	field(PREC,"0")
+	field(EGUX,"uS")	#Engineering units for X axis fields
+	field(HORX,"50")
+	field(LORX,"0")
+	field(EGUY,"")
+	field(HORY,"32000")
+	field(LORY,"-32000")
+	field(INAM,"")	#initTest
+	field(SNAM,"")
+}
+
+record(waveAnl,"$(P){BPM:$(NO)}ADC:WA-D") {
+	field(DESC,"ADC Waveform analysis")
+	field(SCAN,"Passive")
+	field(NELM,"1000")
+	field(INP,"$(P){BPM:$(NO)}Ampl:DRaw-I")
+	field(PREC,"0")
+	field(EGUX,"uS")	#Engineering units for X axis fields
+	field(HORX,"50")
+	field(LORX,"0")
+	field(EGUY,"")
+	field(HORY,"32000")
+	field(LORY,"-32000")
+	field(INAM,"")	#initTest
+	field(SNAM,"")
+}
+
+record(calc, "$(P){BPM:$(NO)}ADC:WA-S")  {
+	field(DESC, "ADC SUM")
+	field(SCAN,"2 second")
+	field(CALC, "(A+B+C+D)/4")		
+  	field(INPA, "$(P){BPM:$(NO)}ADC:WA-A.PKPK NPP MS")
+ 	field(INPB, "$(P){BPM:$(NO)}ADC:WA-B.PKPK NPP MS")
+	field(INPC, "$(P){BPM:$(NO)}ADC:WA-C.PKPK NPP MS")
+	field(INPC, "$(P){BPM:$(NO)}ADC:WA-D.PKPK NPP MS")
+}
+
+
+###
+record(calc, "$(P){BPM:$(NO)}BeamCal-Sts")  {
+	field(DESC, "Beam Loss?")
+	field(SCAN,"2 second")
+	field(CALC, "A>500?0:1")		
+  	field(INPA, "$(P){BPM:$(NO)}ADC:WA-S.VAL NPP MS")
+# 	field(INPB, "$(P){BPM:$(NO)}Rate:Trig-I.VAL NPP MS")
+#	field(INPC, "$(P){BPM:$(NO)}Alarm:PLL-I.VAL NPP MS")
+}
+
+
+record(mbbi, "$(P){BPM:$(NO)}Beam-Sts")
+{
+  	field(INP, "$(P){BPM:$(NO)}BeamCal-Sts NPP MS")
+	field(SCAN,"2 second")
+#
+  field(ZRST, "BEAM ON")
+  field(ONST, "BEAM OFF")
+#  field(TWST, "Mclk-Heartbeat Fail")
+#  field(THST, "PLL UnLock")
+#  field(FRST, "MINOR_RECOVBL")
+#
+  field(ZRSV, "NO_ALARM")
+  field(ONSV, "MAJOR")
+#  field(TWSV, "MAJOR")
+#  field(THSV, "MINOR")
+#  field(FRSV, "NO_ALARM")	
+	
+}
+
+
+
+
+
+
+###########################
+### BI
+###########################
+
+###
+###	Every 10 Hz Readback registers
+###
+
+######  STATUS
+# Soft trigger status
+record(bi, "$(P){BPM:$(NO)}Trig:Strig-I") {
+	field(DESC, "Readback Soft trig status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 0")
+	field(MASK, "0x1")
+    field(SCAN,"I/O Intr")
+    field(ZNAM,"Rdy")
+    field(ONAM,"Trig")
+    field(ZSV,"NO_ALARM")
+    field(OSV,"MAJOR")
+}
+
+
+
+record(bi, "$(P){BPM:$(NO)}Adc:NpiMode-I") {
+	field(DESC, "Readback npiMode status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 4")
+	field(MASK, "0x1")
+    field(SCAN,"I/O Intr")
+    field(ZNAM,"Real")
+    field(ONAM,"Count")
+    field(ZSV,"NO_ALARM")
+    field(OSV,"MAJOR")
+}
+
+record(bi, "$(P){BPM:$(NO)}Rf:PtPwr-I") {
+	field(DESC, "Readback PT on/off")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 8")
+	field(MASK, "0x1")
+    field(SCAN,"I/O Intr")
+    field(ZNAM,"Off")
+    field(ONAM,"On")
+#    field(ZSV,"NO_ALARM")
+#    field(OSV,"MAJOR")
+}
+
+record(bi, "$(P){BPM:$(NO)}Adc:Pga-I") {
+	field(DESC, "Readback ADC_PGA status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 12")
+	field(MASK, "0x1")
+    field(SCAN,"I/O Intr")
+    field(ZNAM,"Gain 1.0")
+    field(ONAM,"Gain 1.5")
+    field(ZSV,"NO_ALARM")
+    field(OSV,"MAJOR")
+}
+
+record(bi, "$(P){BPM:$(NO)}Adc:Rand-I") {
+	field(DESC, "Readback rb_ADC_RAND status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 16")
+	field(MASK, "0x1")
+    field(SCAN,"I/O Intr")
+    field(ZNAM,"NORMAL")
+    field(ONAM,"RAND")
+    field(ZSV,"NO_ALARM")
+    field(OSV,"MAJOR")
+}
+
+record(bi, "$(P){BPM:$(NO)}Adc:Shdn-I") {
+	field(DESC, "Readback ADC_SHDN status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 20")
+	field(MASK, "0x1")
+    field(SCAN,"I/O Intr")
+    field(ZNAM,"NORMAL")
+    field(ONAM,"SHDN")
+    field(ZSV,"NO_ALARM")
+    field(OSV,"MAJOR")
+}
+
+record(bi, "$(P){BPM:$(NO)}Adc:Dith-I") {
+	field(DESC, "Readback ADC_DITH status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 24")
+	field(MASK, "0x1")
+    field(SCAN,"I/O Intr")
+    field(ZNAM,"NORMAL")
+    field(ONAM,"DITH")
+    field(ZSV,"NO_ALARM")
+    field(OSV,"MAJOR")
+}
+
+
+
+record(bi, "$(P){BPM:$(NO)}Clk:Mclk-I") {
+	field(DESC, "Readback TBT clk")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 28")
+	field(MASK, "0x1")
+    field(SCAN,"I/O Intr")
+	field(ZNAM,"EXT")
+	field(ONAM,"INT")
+    field(ZSV,"NO_ALARM")
+    field(OSV,"MAJOR")
+}
+
+record(bi, "$(P){BPM:$(NO)}BandBypass-I") {
+	field(DESC, "Raw data banspass filter enable")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 32")
+	field(MASK, "0x1")
+    field(SCAN,"I/O Intr")
+    field(ZNAM,"Nomal")
+    field(ONAM,"Cal")
+    field(ZSV,"NO_ALARM")
+    field(OSV,"MAJOR")
+}
+
+record(bi, "$(P){BPM:$(NO)}Adc:FifoEnable-") {
+	field(DESC, "Fifo enable status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 40")
+	field(MASK, "0x1")
+    field(SCAN,"I/O Intr")
+    field(ZNAM,"DISABLE")
+    field(ONAM,"ENABLE")
+    field(ZSV,"NO_ALARM")
+    field(OSV,"MAJOR")
+}
+
+record(bi, "$(P){BPM:$(NO)}Beam:DlyCal-I") {
+	field(DESC, "Beam delay cal status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 44")
+	field(MASK, "0x1")
+    field(SCAN,"I/O Intr")
+    field(ZNAM,"Nomal")
+    field(ONAM,"Calibration")
+    field(ZSV,"NO_ALARM")
+    field(OSV,"MAJOR")
+}
+
+record(bi, "$(P){BPM:$(NO)}Trig:TrigSrc-I") {
+	field(DESC, "Trigger source")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 52")
+	field(MASK, "0x1")
+    field(SCAN,"I/O Intr")
+    field(ZNAM,"INT")
+    field(ONAM,"EXT")
+    field(ZSV,"NO_ALARM")
+    field(OSV,"MAJOR")
+}
+
+record(bi, "$(P){BPM:$(NO)}Alarm:PLL-I") {
+	field(DESC, "PLL Status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 60")
+	field(MASK, "0x2")
+	field(SCAN,"I/O Intr")
+	field(ZNAM,"PLL FAIL")
+	field(ONAM,"PLL OK")
+	#field(ZSV,"NO_ALARM")
+	#field(OSV,"MAJOR")
+}
+record(bi, "$(P){BPM:$(NO)}Sdi:CW-Link-I") {
+	field(DESC, "SFP2 Link Status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 60")
+	field(MASK, "0x10")
+	field(SCAN,"I/O Intr")
+	field(ZNAM,"OK")
+	field(ONAM,"Fail")
+}
+record(bi, "$(P){BPM:$(NO)}Sdi:CCW-Link-I") {
+	field(DESC, "SFP3 Link Status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 60")
+	field(MASK, "0x20")
+	field(SCAN,"I/O Intr")
+	field(ZNAM,"OK")
+	field(ONAM,"Fail")
+}
+
+record(bi, "$(P){BPM:$(NO)}Fa:Busy-I") {
+	field(DESC, "Burst Active Status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 60")
+	field(MASK, "0x100")
+	field(SCAN,"I/O Intr")
+	field(ZNAM,"Ready")
+	field(ONAM,"Busy")
+}
+record(bi, "$(P){BPM:$(NO)}Tbt:Busy-I") {
+	field(DESC, "Burst Active Status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 60")
+	field(MASK, "0x200")
+	field(SCAN,"I/O Intr")
+	field(ZNAM,"Ready")
+	field(ONAM,"Busy")
+}
+
+### System Status
+record(mbbi, "$(P){BPM:$(NO)}Sys:Status-I") {
+	field(DESC, "addr=System status (V42)")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 60")
+	field(SCAN, "I/O Intr")
+}
+
+# Direct
+record(mbbiDirect, "$(P){BPM:$(NO)}Sys:Status2-I") {
+	field(DESC, "Direct System status (V42)")
+	field(DTYP, "PSC Reg")
+	field(SHFT, "0")
+	field(INP , "@Rx$(NO) 30 60")
+	field(SCAN, "I/O Intr")
+}
+
+record(mbbiDirect, "$(P){BPM:$(NO)}Sys:Status3-I") {
+	field(DESC, "Direct System status (V42)")
+	field(DTYP, "PSC Reg")
+	field(SHFT, "16")
+	field(INP , "@Rx$(NO) 30 60")
+	field(SCAN, "I/O Intr")
+}
+
+
+#
+#
+record(longin, "$(P){BPM:$(NO)}Loc:Machine-I") {
+	field(DESC, "addr 19: Machine select status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 76")
+    field(SCAN,"I/O Intr")
+}
+
+record(mbbi, "$(P){BPM:$(NO)}Machine-Sts")
+{
+	field(INP , "$(P){BPM:$(NO)}Loc:Machine-I NPP MS")
+	field(SCAN, "2 second")
+	field(ZRST, "ALS")
+	field(ONST, "LINAC")
+	field(TWST, "LTB")
+	field(THST, "BR")
+	field(FRST, "BTS")
+	field(FVST, "SR")
+	field(ZRSV, "NO_ALARM")
+	field(ONSV, "NO_ALARM")
+	field(TWSV, "NO_ALARM")
+	field(THSV, "NO_ALARM")
+	field(FRSV, "NO_ALARM")
+	field(FVSV, "NO_ALARM")
+}
+
+
+##
+record(longin, "$(P){BPM:$(NO)}Trig:Cnt-I") {
+	field(DESC, "10 Hz FPGA count values")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 76")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "msec")	
+}
+
+record(longin, "$(P){BPM:$(NO)}Gain:RfAtte-I") {
+	field(DESC, "RF Attenuator")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 132")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "dB")	
+}
+record(longin, "$(P){BPM:$(NO)}Gain:PtAtte-I") {
+	field(DESC, "PT RF Attenuator")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 136")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "dB")	
+}
+
+record(longin, "$(P){BPM:$(NO)}Burst:AdcLength-I") {
+	field(DESC, "ADC Raw Data Burst Length")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 176")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "point")	
+}
+record(longin, "$(P){BPM:$(NO)}Burst:TbtLength-I") {
+	field(DESC, "TBT Data Burst Length")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 180")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "point")	
+}
+record(longin, "$(P){BPM:$(NO)}Burst:FaLength-I") {
+	field(DESC, "FA Data Burst Length")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 184")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "point")	
+}
+
+record(longin, "$(P){BPM:$(NO)}Tbt:GateDly-I") {
+        field(DESC, "Geo Delay")
+        field(DTYP, "PSC Reg")
+        field(INP , "@Rx$(NO) 30 192")
+    field(SCAN,"I/O Intr")
+        field(EGU,  "")
+}
+record(longin, "$(P){BPM:$(NO)}Trig:AdcDelay-I") {
+        field(DESC, "Adc trig Delay")
+        field(DTYP, "PSC Reg")
+        field(INP , "@Rx$(NO) 30 272")
+    field(SCAN,"I/O Intr")
+        field(EGU,  "")
+}
+
+
+record(longin, "$(P){BPM:$(NO)}DDR:SaPtrAddr-I") {
+	field(DESC, "SA data ddr point address 154x4")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 616")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "")	
+}
+
+record(longin, "$(P){BPM:$(NO)}DDR:SaPtrAddrTs-I") {
+	field(DESC, "SA data ddr point address timestamp")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 620")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "sec")
+#epics DB timestamp	
+        field(TSE, "-2")
+	info("TimeFromBlock", "620")
+	info("TimeNSScale", "8")	
+	field(FLNK, "$(P){BPM:$(NO)}TS:SaWfmAddr-I")	
+}
+
+record(stringin, "$(P){BPM:$(NO)}TS:SaWfmAddr-I") {
+    field(DTYP, "Soft Timestamp")
+    field(INP , "@ %m/%d/%Y,%H:%M:%S")
+    field(TSEL, "$(P){BPM:$(NO)}DDR:SaPtrAddrTs-I.TIME")
+}
+
+
+record(ai, "$(P){BPM:$(NO)}Pos:Kx-I") {
+	field(DESC, "Kx read")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 144")
+    field(SCAN,"I/O Intr")
+	field(ASLO, "0.000001")
+	field(PREC, "3")
+	field(EGU,  "mm")	
+}
+	
+
+record(ai, "$(P){BPM:$(NO)}Pos:Ky-I") {
+	field(DESC, "Ky read")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 148")
+    field(SCAN,"I/O Intr")
+	field(ASLO, "0.000001")
+	field(PREC, "3")
+	field(EGU,  "mm")	
+}
+
+
+record(longin, "$(P){BPM:$(NO)}Pos:XOff-I") {
+	field(DESC, "X offset read")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 152")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "nm")	
+}
+record(longin, "$(P){BPM:$(NO)}Pos:YOff-I") {
+	field(DESC, "X offset read")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 156")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "nm")	
+}
+
+record(longin, "$(P){BPM:$(NO)}Gain:Adc0-I") {
+	field(DESC, "ADC-0 gain set read")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 160")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "")	
+}
+
+record(longin, "$(P){BPM:$(NO)}Gain:Adc1-I") {
+	field(DESC, "ADC-1 gain set read")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 164")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "")	
+}
+
+record(longin, "$(P){BPM:$(NO)}Gain:Adc2-I") {
+	field(DESC, "ADC-2 gain set read")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 168")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "")	
+}
+
+record(longin, "$(P){BPM:$(NO)}Gain:Adc3-I") {
+	field(DESC, "ADC-3 gain set read")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 172")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "")	
+}
+
+
+record(longin, "$(P){BPM:$(NO)}Trig:EvrTrig0-I") {
+	field(DESC, "Reg Event trigger rate")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 472")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "sec")	
+}
+
+
+record(longin, "$(P){BPM:$(NO)}Trig:TsOff-I") {
+	field(DESC, "DDR trig Ts offset")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 264")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "nsec")	
+}
+
+record(longin, "$(P){BPM:$(NO)}Trig:TsSec-I") {
+	field(DESC, "DDR trig Ts sec")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 268")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "sec")	
+}
+
+
+
+#######################################
+########  Analog Input
+#######################################
+
+record(longin, "$(P){BPM:$(NO)}Fpga:FwVer-I") {
+	field(DESC, "Firmware Version addr=51")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 204")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "Ver")	
+}
+record(longin, "$(P){BPM:$(NO)}MB:FwVer-I") {
+	field(DESC, "Microblaze Firmware Version addr=51")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 452")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "Ver")	
+}
+
+## DFE and AFE Temperature sensor
+record(ai, "$(P){BPM:$(NO)}Temp:DfeSense0-I") {
+	field(DESC, "DFE Temp0 read")
+	field(DTYP, "PSC Reg F32")
+	field(INP , "@Rx$(NO) 30 208")
+    field(LINR,"LINEAR")
+    field(PREC,"3")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "C")	
+	field(HIHI,"60")
+	field(LOLO,"-0.5")
+	field(HIGH,"50")
+	field(LOW,"10")
+	field(HHSV,"MAJOR")
+	field(HSV,"MINOR")
+	field(LLSV,"INVALID")
+	field(LSV,"MINOR")
+}
+
+record(ai, "$(P){BPM:$(NO)}Temp:DfeSense1-I") {
+	field(DESC, "DFE Temp1 read")
+	field(DTYP, "PSC Reg F32")
+	field(INP , "@Rx$(NO) 30 212")
+    field(LINR,"LINEAR")
+    field(PREC,"3")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "C")
+	field(HIHI,"60")
+	field(LOLO,"-0.5")
+	field(HIGH,"50")
+	field(LOW,"10")
+	field(HHSV,"MAJOR")
+	field(HSV,"MINOR")
+	field(LLSV,"INVALID")
+	field(LSV,"MINOR")	
+}
+
+record(ai, "$(P){BPM:$(NO)}Temp:DfeSense2-I") {
+	field(DESC, "DFE Temp2 read")
+	field(DTYP, "PSC Reg F32")
+	field(INP , "@Rx$(NO) 30 216")
+    field(LINR,"LINEAR")
+    field(PREC,"3")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "C")	
+	field(HIHI,"60")
+	field(LOLO,"-0.5")
+	field(HIGH,"50")
+	field(LOW,"10")
+	field(HHSV,"MAJOR")
+	field(HSV,"MINOR")
+	field(LLSV,"INVALID")
+	field(LSV,"MINOR")
+}
+
+record(ai, "$(P){BPM:$(NO)}Temp:DfeSense3-I") {
+	field(DESC, "DFE Temp3 read")
+	field(DTYP, "PSC Reg F32")
+	field(INP , "@Rx$(NO) 30 220")
+    field(LINR,"LINEAR")
+    field(PREC,"3")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "C")	
+	field(HIHI,"60")
+	field(LOLO,"-0.5")
+	field(HIGH,"50")
+	field(LOW,"10")
+	field(HHSV,"MAJOR")
+	field(HSV,"MINOR")
+	field(LLSV,"INVALID")
+	field(LSV,"MINOR")
+}
+
+record(ai, "$(P){BPM:$(NO)}Temp:AfeSense0-I") {
+	field(DESC, "AFE Temp0 read")
+	field(DTYP, "PSC Reg F32")
+	field(INP , "@Rx$(NO) 30 224")
+    field(LINR,"LINEAR")
+    field(PREC,"3")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "C")	
+	field(HIHI,"45")
+	field(LOLO,"-0.5")
+	field(HIGH,"37")
+	field(LOW,"10")
+	field(HHSV,"MAJOR")
+	field(HSV,"MINOR")
+	field(LLSV,"INVALID")
+	field(LSV,"MINOR")
+}
+
+record(ai, "$(P){BPM:$(NO)}Temp:AfeSense1-I") {
+	field(DESC, "AFE Temp1 read")
+	field(DTYP, "PSC Reg F32")
+	field(INP , "@Rx$(NO) 30 228")
+    field(LINR,"LINEAR")
+    field(PREC,"3")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "C")
+	field(HIHI,"60")
+	field(LOLO,"-0.5")
+	field(HIGH,"50")
+	field(LOW,"10")
+	field(HHSV,"MAJOR")
+	field(HSV,"MINOR")
+	field(LLSV,"INVALID")
+	field(LSV,"MINOR")	
+}
+
+
+
+###
+### BASE 0x60(96)
+###
+record(ai, "$(P){BPM:$(NO)}Temp:FpgaDie-I") {
+	field(DESC, "FPGA Die temperature read")
+	field(DTYP, "PSC Reg F32")
+	field(INP , "@Rx$(NO) 30 384")
+    field(LINR,"LINEAR")
+    field(PREC,"3")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "C")	
+}
+
+record(ai, "$(P){BPM:$(NO)}Fpga:VccInt-I") {
+	field(DESC, "FPGA VccInt read")
+	field(DTYP, "PSC Reg F32")
+	field(INP , "@Rx$(NO) 30 388")
+    field(LINR,"LINEAR")
+    field(PREC,"3")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "V")	
+}
+
+record(ai, "$(P){BPM:$(NO)}Fpga:VccAux-I") {
+	field(DESC, "FPGA VccAux read")
+	field(DTYP, "PSC Reg F32")
+	field(INP , "@Rx$(NO) 30 392")
+    field(LINR,"LINEAR")
+    field(PREC,"3")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "V")	
+}
+
+record(ai, "$(P){BPM:$(NO)}Dfe:Vcc5V-I") {
+	field(DESC, "DFE 5V read")
+	field(DTYP, "PSC Reg F32")
+	field(INP , "@Rx$(NO) 30 396")
+    field(LINR,"LINEAR")
+    field(PREC,"3")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "V")	
+}
+
+
+record(ai, "$(P){BPM:$(NO)}Button:APwr-I") {
+	field(DESC, "RF button power A")
+	field(DTYP, "PSC Reg F32")
+	field(INP , "@Rx$(NO) 30 456")
+    field(LINR,"LINEAR")
+    field(PREC,"3")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "dBm")	
+}
+record(ai, "$(P){BPM:$(NO)}Button:BPwr-I") {
+	field(DESC, "RF button power B")
+	field(DTYP, "PSC Reg F32")
+	field(INP , "@Rx$(NO) 30 460")
+    field(LINR,"LINEAR")
+    field(PREC,"3")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "dBm")	
+}
+record(ai, "$(P){BPM:$(NO)}Button:CPwr-I") {
+	field(DESC, "RF button power C")
+	field(DTYP, "PSC Reg F32")
+	field(INP , "@Rx$(NO) 30 464")
+    field(LINR,"LINEAR")
+    field(PREC,"3")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "dBm")	
+}
+record(ai, "$(P){BPM:$(NO)}Button:DPwr-I") {
+	field(DESC, "RF button power D")
+	field(DTYP, "PSC Reg F32")
+	field(INP , "@Rx$(NO) 30 468")
+    field(LINR,"LINEAR")
+    field(PREC,"3")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "dBm")	
+}
+
+### ADC INput Volt 01/29/14 added
+record(ai, "$(P){BPM:$(NO)}ADC:Avolt-I") {
+	field(DESC, "RF button Volt A, reg 140")
+	field(DTYP, "PSC Reg F32")
+	field(INP , "@Rx$(NO) 30 560")
+	field(LINR,"LINEAR")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "(V)")
+	field(HIHI,"1.45")
+	field(LOLO,"-0.1")
+	field(HIGH,"1.35")
+	field(LOW,"-0.1")
+	field(HHSV,"MAJOR")
+	field(HSV,"MINOR")
+#	field(LLSV,"MAJOR")
+#	field(LSV,"MINOR")	
+}
+
+record(ai, "$(P){BPM:$(NO)}ADC:Bvolt-I") {
+	field(DESC, "RF button Volt B, reg 141")
+	field(DTYP, "PSC Reg F32")
+	field(INP , "@Rx$(NO) 30 564")
+	field(LINR,"LINEAR")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "(V)")
+	field(HIHI,"1.45")
+	field(LOLO,"-0.1")
+	field(HIGH,"1.35")
+	field(LOW,"-0.1")
+	field(HHSV,"MAJOR")
+	field(HSV,"MINOR")
+#	field(LLSV,"MAJOR")
+#	field(LSV,"MINOR")		
+}
+record(ai, "$(P){BPM:$(NO)}ADC:Cvolt-I") {
+	field(DESC, "RF button Volt C, reg 142")
+	field(DTYP, "PSC Reg F32")
+	field(INP , "@Rx$(NO) 30 568")
+	field(LINR,"LINEAR")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "(V)")
+	field(HIHI,"1.45")
+	field(LOLO,"-0.1")
+	field(HIGH,"1.35")
+	field(LOW,"-0.1")
+	field(HHSV,"MAJOR")
+	field(HSV,"MINOR")
+#	field(LLSV,"MAJOR")
+#	field(LSV,"MINOR")		
+}
+record(ai, "$(P){BPM:$(NO)}ADC:Dvolt-I") {
+	field(DESC, "RF button Volt D, reg 143")
+	field(DTYP, "PSC Reg F32")
+	field(INP , "@Rx$(NO) 30 572")
+	field(LINR,"LINEAR")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "(V)")
+	field(HIHI,"1.45")
+	field(LOLO,"-0.1")
+	field(HIGH,"1.35")
+	field(LOW,"-0.1")
+	field(HHSV,"MAJOR")
+	field(HSV,"MINOR")
+#	field(LLSV,"MAJOR")
+#	field(LSV,"MINOR")		
+}
+
+##############################
+### EEPROM System Data reading
+##############################
+
+
+record(stringin, "$(P){BPM:$(NO)}EE:Note-I") {
+  field(DTYP, "PSC Block")
+  field(INP , "@aie_wfm_rx_$(NO) 32")
+  field(SCAN, "I/O Intr")
+}
+
+record(stringin, "$(P){BPM:$(NO)}EE:Ip-I") {
+  field(DTYP, "PSC Block")
+  field(INP , "@aie_wfm_rx_$(NO) 33")
+  field(SCAN, "I/O Intr")
+}
+
+
+################################
+### Alarm
+################################
+record(calc, "$(P){BPM:$(NO)}AlarmCal-Sts")  {
+	field(DESC, "PT Output RF frequency")
+	field(SCAN,"2 second")		
+#	field(CALC, "A=-1?1:C=0?3:(B<5)?2:E=1?5:D>60?4:0")
+        field(CALC, "A=0?1:C=0?3:(B<5)?2:E=1?5:D>60?4:0")
+ 	field(INPB, "$(P){BPM:$(NO)}Rate:Trig-I.VAL NPP MS")
+	field(INPA, "$(P){BPM:$(NO)}Rx-conn.VAL NPP MS")
+	field(INPC, "$(P){BPM:$(NO)}Alarm:PLL-I.VAL NPP MS")
+	field(INPD, "$(P){BPM:$(NO)}Temp:FpgaDie-I.VAL NPP MS")
+	field(INPE, "$(P){BPM:$(NO)}Rf:PtPwr-I NPP MS")
+}
+
+
+record(mbbi, "$(P){BPM:$(NO)}Alarm-Sts")
+{
+	field(INP, "$(P){BPM:$(NO)}AlarmCal-Sts NPP MS")
+	field(SCAN,"1 second")
+	#
+	field(ZRST, "OK")
+	field(ONST, "Comm_Fail")
+	field(TWST, "Mclk-Heartbeat Fail")
+	field(THST, "PLL UnLock")
+	field(FRST, "FPGA_OVER_TEMP")
+	field(FVST, "PT ON")
+	#
+	field(ZRSV, "NO_ALARM")
+	field(ONSV, "MAJOR")
+	field(TWSV, "INVALID")
+	field(THSV, "MAJOR")
+	field(FRSV, "MAJOR")
+	field(FVSV, "MINOR")
+	field(FLNK, "$(P){BPM}Alrm-Sub_")
+}
+
+##########
+record(ai, "$(P){BPM:$(NO)}Cnt:TrigPrev-I_") {
+	field(DESC, "10 Hz Trigger count value")
+    field(INP,"$(P){BPM:$(NO)}Cnt:Trig-I")
+}
+
+record(calc, "$(P){BPM:$(NO)}Rate:Trig-I") {
+	field(DESC, "Trigger rate")
+	field(SCAN, "10 second")
+	# Rate of change w/ rollover at 2^32
+	field(CALC, "(B-A+(B<A?C:0))/10")
+	field(INPA, "$(P){BPM:$(NO)}Cnt:TrigPrev-I_ NPP")
+	field(INPB, "$(P){BPM:$(NO)}Cnt:TrigPrev-I_ PP")
+	field(INPC, "0xffffffff")
+	field(EGU,  "Cnt/s")	
+	field(LOLO , "5.0")
+	field(LOW , "7.0")
+	field(HIGH, "15.0")
+	field(PREC, "1")
+	field(HSV , "MAJOR")
+	field(LSV , "MAJOR")
+	field(LLSV, "INVALID")
+}
+
+
+
+####################################################################
+### SDI and SFP for FOFB
+####################################################################
+
+
+record(bo, "$(P){BPM:$(NO)}Sdi:TestDataSel-SP") {
+    field(DESC, "SDI Test Data Select Ramp/Cos")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 352")
+    field(ZNAM,"COS")
+    field(ONAM,"Ramp")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+record(bo, "$(P){BPM:$(NO)}Sdi:DataIsFa-SP") {
+    field(DESC, "SDI Data Select FA 10 kHz")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 376")
+    field(ZNAM,"TestData")
+    field(ONAM,"Fa10kHz")
+    #field(PINI, "YES")
+    field(VAL, "1")
+    #field(UDF, "0")
+    #field(TPRO, 1)
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+
+record(longout, "$(P){BPM:$(NO)}Sdi:TestCosFreq-SP") {
+    field(DESC, "Test Cos wavefrom frequency")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 356")
+    field(HOPR,"1000")
+    field(LOPR,"1")
+    field(EGU, "Hz")
+#    field(PINI, "YES")
+    field(VAL, "100")
+#    field(UDF, "0")
+#    field(TPRO, 1)
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+record(longout, "$(P){BPM:$(NO)}Sdi:TestCosKx-SP") {
+    field(DESC, "Test Cos wavefrom Kx Gain")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 360")
+    field(HOPR,"10000000")
+    field(LOPR,"10")
+#    field(PINI, "YES")
+    field(VAL, "10000")
+#    field(UDF, "0")
+#    field(TPRO, 1)
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+record(longout, "$(P){BPM:$(NO)}Sdi:TestCosKy-SP") {
+    field(DESC, "Test Cos wavefrom Ky Gain")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 364")
+    field(HOPR,"10000000")
+    field(LOPR,"10")
+#    field(PINI, "YES")
+    field(VAL, "10000")
+#    field(UDF, "0")
+#    field(TPRO, 1)
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+record(longout, "$(P){BPM:$(NO)}Sdi:MaskSet-SP") {
+	field(DESC, "SDI Mask Set")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 452")
+	field(HOPR,"0xFFFF")
+	field(LOPR,"1")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+record(longout, "$(P){BPM:$(NO)}Sdi:IdSet-SP") {
+	field(DESC, "SDI ID Set")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 456")
+	field(HOPR,"12")
+	field(LOPR,"0")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+record(longout, "$(P){BPM:$(NO)}Sdi:ReHeadAddr-SP") {
+	field(DESC, "Remote Head address set")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 460")
+	field(HOPR,"12")
+	field(LOPR,"0")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+###
+#record(bo, "$(P){BPM:$(NO)}SA:TRIG-SP") {
+#    field(DESC, "10Hz EVG or Internal")
+#	field(DTYP, "PSC Single U32")
+#	field(OUT , "@aie_tx_$(NO) 1 464")
+#    field(ZNAM,	"INT")
+#    field(ONAM,	"EXT")
+#	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+#}
+record(bo, "$(P){BPM:$(NO)}SA:TRIG-SP") {
+    field(DESC, "10Hz EVG or Internal for FPGA")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 392")
+    field(ZNAM,	"EVG")
+    field(ONAM,	"INT")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+record(bo, "$(P){BPM:$(NO)}IL:RST-SP") {
+    field(DESC, "IL Reset")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 468")
+    field(ZNAM,	"Ready")
+    field(ONAM,	"Reset")
+	field(HIGH,".2")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+record(ao, "$(P){BPM:$(NO)}IL:X-SP") {
+	field(DESC, "IL X Offset")
+	field(DTYP, "PSC Single F32")
+	field(OUT , "@aie_tx_$(NO) 1 472")
+	field(HOPR,"20")
+	field(LOPR,"-20")	
+	field(DRVH,"20")	
+	field(DRVL,"-20")
+	field(EGU, "mm")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+record(ao, "$(P){BPM:$(NO)}IL:Y-SP") {
+	field(DESC, "IL Y Offset")
+	field(DTYP, "PSC Single F32")
+	field(OUT , "@aie_tx_$(NO) 1 476")
+	field(HOPR,"20")
+	field(LOPR,"-20")	
+	field(DRVH,"20")	
+	field(DRVL,"-20")
+	field(EGU, "mm")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+record(ao, "$(P){BPM:$(NO)}FA:COEFF-SP") {
+	field(DESC, "IL Y Offset")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 480")
+	field(HOPR,"20000")
+	field(LOPR,"100")	
+	field(DRVH,"20000")	
+	field(DRVL,"100")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+##4/22/2013
+### SFP RX Power
+record(ai, "$(P){BPM:$(NO)}SFP0:RxPow-I") {
+    field(DESC, "SFP 0 EVR SFP Rx Power")
+	field(DTYP, "PSC Reg F32")
+	field(INP , "@Rx$(NO) 30 328")
+    field(LINR,"LINEAR")
+    field(PREC,"1")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "(uW)")
+}
+record(ai, "$(P){BPM:$(NO)}SFP1:RxPow-I") {
+    field(DESC, "SFP 1 SFP Rx Power")
+	field(DTYP, "PSC Reg F32")
+	field(INP , "@Rx$(NO) 30 332")
+    field(LINR,"LINEAR")
+    field(PREC,"1")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "(uW)")
+}
+record(ai, "$(P){BPM:$(NO)}SFP2:RxPow-I") {
+    field(DESC, "SFP 2 SFP Rx Power")
+	field(DTYP, "PSC Reg F32")
+	field(INP , "@Rx$(NO) 30 336")
+    field(LINR,"LINEAR")
+    field(PREC,"1")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "(uW)")
+}
+
+
+#### 4/22/2013  SDI
+
+record(longin,  "$(P){BPM:$(NO)}Sdi:EvrTrigCnt-I") {
+    field(DESC, "Sdi 10 kHz trigger count")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 480")
+    field(SCAN, "I/O Intr")
+    #field(EGU,  "(us)")
+}
+
+###
+record(longin,  "$(P){BPM:$(NO)}Sdi:CW_CrcErrorCnt-I") {
+    field(DESC, "CW CRC timeout count")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 484")
+    field(SCAN, "I/O Intr")
+    #field(EGU,  "N")
+}
+record(longin,  "$(P){BPM:$(NO)}Sdi:CCW_CrcErrorCnt-I") {
+    field(DESC, "CCW CRC timeout count")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 488")
+    field(SCAN, "I/O Intr")
+    #field(EGU,  "N")
+}
+
+###
+record(longin,  "$(P){BPM:$(NO)}Sdi:CW_LbLoPacketTO-I") {
+    field(DESC, "CW Loop Back Local Pacet Timeout error")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 492")
+    field(SCAN, "I/O Intr")
+    #field(EGU,  "N")
+}
+record(longin,  "$(P){BPM:$(NO)}Sdi:CCW_LbLoPacketTO-I") {
+    field(DESC, "CCW Loop Back Local Pacet Timeout error")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 496")
+    field(SCAN, "I/O Intr")
+    #field(EGU,  "N")
+}
+
+###
+record(longin,  "$(P){BPM:$(NO)}Sdi:CW_RePacketTO-I") {
+    field(DESC, "CW Remote Packet Timeout error")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 500")
+    field(SCAN, "I/O Intr")
+    #field(EGU,  "N")
+}
+
+record(longin,  "$(P){BPM:$(NO)}Sdi:CCW_RePacketTO-I") {
+    field(DESC, "CCW Remote Packet Timeout error")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 504")
+    field(SCAN, "I/O Intr")
+    #field(EGU,  "N")
+}
+
+
+record(longin,  "$(P){BPM:$(NO)}Sdi:MaskErrCnt-I") {
+    field(DESC, "Mask error count")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 576")
+    field(SCAN, "I/O Intr")
+}
+
+#record(longin,  "$(P){BPM:$(NO)}ADC:MAXV_A-I") {
+#	field(DESC, "ADC-A Max Volt")
+#	field(DTYP, "PSC Reg")
+#	field(INP , "@Rx$(NO) 30 584")
+#	field(SCAN, "I/O Intr")
+#	field(FLNK, "$(P){BPM:$(NO)}ADC:MAX_SUM-Cal")
+#}
+
+record(ai, "$(P){BPM:$(NO)}ADC:MAXV_A-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 584")
+	field(SCAN, "I/O Intr")
+#	field(ESLO, "0.39216")
+	field(PREC, "1")
+	field(LINR, "LINEAR")
+	field(FLNK, "$(P){BPM:$(NO)}ADC:MAX_SUM-Cal")
+}
+
+record(ai, "$(P){BPM:$(NO)}ADC:MAXV_B-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 588")
+	field(SCAN, "I/O Intr")
+#	field(ESLO, "0.39216")
+	field(PREC, "1")
+	field(LINR, "LINEAR")
+}
+record(ai, "$(P){BPM:$(NO)}ADC:MAXV_C-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 592")
+	field(SCAN, "I/O Intr")
+#	field(ESLO, "0.39216")
+	field(PREC, "1")
+	field(LINR, "LINEAR")
+}
+record(ai, "$(P){BPM:$(NO)}ADC:MAXV_D-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 596")
+	field(SCAN, "I/O Intr")
+#	field(ESLO, "0.39216")
+	field(PREC, "1")
+	field(LINR, "LINEAR")
+}
+
+
+#record(longin,  "$(P){BPM:$(NO)}ADC:MAXV_B-I") {
+#        field(DESC, "ADC-B Max Volt")
+#        field(DTYP, "PSC Reg")
+#        field(INP , "@Rx$(NO) 30 588")
+#        field(SCAN, "I/O Intr")
+#}
+#record(longin,  "$(P){BPM:$(NO)}ADC:MAXV_C-I") {
+#        field(DESC, "ADC-C Max Volt")
+#        field(DTYP, "PSC Reg")
+#        field(INP , "@Rx$(NO) 30 592")
+#        field(SCAN, "I/O Intr")
+#}
+#record(longin,  "$(P){BPM:$(NO)}ADC:MAXV_D-I") {
+#        field(DESC, "ADC-D Max Volt")
+#        field(DTYP, "PSC Reg")
+#        field(INP , "@Rx$(NO) 30 596")
+#        field(SCAN, "I/O Intr")
+#}
+
+
+
+record(calc, "$(P){BPM:$(NO)}ADC:MAX_SUM-Cal")  {
+        field(DESC, "ADC MAX SUM")
+        field(CALC, "(A+B+C+D)")
+        field(INPA, "$(P){BPM:$(NO)}ADC:MAXV_A-I.VAL NPP MS")
+        field(INPB, "$(P){BPM:$(NO)}ADC:MAXV_B-I.VAL NPP MS")
+        field(INPC, "$(P){BPM:$(NO)}ADC:MAXV_C-I.VAL NPP MS")
+        field(INPD, "$(P){BPM:$(NO)}ADC:MAXV_D-I.VAL NPP MS")
+}
+
+
+##d GTX loss count
+record(longin,  "$(P){BPM:$(NO)}Sdi:Cw-LossCnt-I") {
+    field(DESC, "Mask error count")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 508")
+    field(SCAN, "I/O Intr")
+    #field(EGU,  "N")
+}
+record(longin,  "$(P){BPM:$(NO)}Sdi:CCw-LossCnt-I") {
+    field(DESC, "Mask error count ")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 512")
+    field(SCAN, "I/O Intr")
+    #field(EGU,  "N")
+}
+
+#########################################################################
+#
+#	NSLS-2 Digital BPM
+# 		Pv list for 10 Hz SLOW DATA 
+#
+#
+#
+#	Ampl : Button Amplitude
+#   Pos  : Position
+#	TS   : EVR time stamp
+#	Cnt  : FPGA internal count
+#
+#
+#	July 28, 2011 : 10 AM ~ 12:AM 2nd reviewed.
+#			Bob, Maicle, Layne, Yuke
+#
+#
+#########################################################################
+
+record(longin, "$(P){BPM:$(NO)}Slow:Func40-I") {
+	field(DESC, "Addres 40 for SA")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 160")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){BPM:$(NO)}Slow:Func-I") {
+	field(DESC, "Addres 0 for SA")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 0")
+    field(SCAN,"I/O Intr")
+}
+record(longin, "$(P){BPM:$(NO)}Slow:Func1-I") {
+	field(DESC, "Addres 0 for SA")
+#    field(SCAN,"I/O Intr")
+}
+record(longin, "$(P){BPM:$(NO)}Slow:Func2-I") {
+	field(DESC, "Addres 0 for SA")
+#    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){BPM:$(NO)}Cnt:Trig-I") {
+	field(DESC, "10 Hz Trigger count value")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 96")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "Cnt")
+}
+
+record(longin, "$(P){BPM:$(NO)}TS-I") {
+	field(DESC, "EVR Timestamp second for SA")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 12")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "sec")
+
+	field(TSE , "-2")
+	info("TimeFromBlock", "12")
+        info("TimeNSScale", "8")
+}
+
+record(longin, "$(P){BPM:$(NO)}TS:NS-I") {
+	field(DESC, "EVR Timestamp nano second for SA")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 16")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "ns")
+####
+	field(TSE , "-2")
+	info("TimeFromBlock", "12")
+       info("TimeNSScale", "8")
+}
+
+
+
+#
+#	.RVAL/ (0x7fffffff)
+record(ai, "$(P){BPM:$(NO)}Ampl:ASA-I") {
+	field(DESC, "Button A Raw Ampl.")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 20")
+	field(SCAN, "I/O Intr")	
+	field(ESLO, "0.0000000004656612873077392578125")
+	field(HOPR, "0.8")
+	field(PREC, "6")
+	field(LINR, "LINEAR")
+#	field(EGU,  "Amp")	
+}
+
+
+# Slow Button B 
+record(ai, "$(P){BPM:$(NO)}Ampl:BSA-I") {
+	field(DESC, "Button B Raw Ampl.")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 24")
+	field(SCAN, "I/O Intr")	
+	field(ESLO, "0.0000000004656612873077392578125")
+	field(HOPR, "0.8")
+	field(PREC, "6")
+	field(LINR,"LINEAR")
+#	field(EGU,  "Amp")
+}
+
+# Slow Button C
+record(ai, "$(P){BPM:$(NO)}Ampl:CSA-I") {
+	field(DESC, "Button C Raw Ampl.")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 28")
+	field(SCAN, "I/O Intr")	
+	field(ESLO, "0.0000000004656612873077392578125")
+	field(HOPR, "0.8")
+	field(PREC, "6")
+	field(LINR,"LINEAR")
+#	field(EGU,  "Amp")
+}
+
+# Slow Button D
+record(ai, "$(P){BPM:$(NO)}Ampl:DSA-I") {
+	field(DESC, "Button D Raw Ampl.")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 32")
+	field(SCAN, "I/O Intr")	
+	field(ESLO, "0.0000000004656612873077392578125")
+	field(HOPR, "0.8")
+	field(PREC, "6")
+	field(LINR,"LINEAR")
+#	field(EGU,  "Amp")
+	field(FLNK, "$(P){BPM:$(NO)}Ampl:SSA-Calc")
+}
+
+################ PT SLOW
+#
+#	.RVAL/ (0x7fffffff)
+#record(ai, "$(P){BPM:$(NO)}Ampl:PtASA-I") {
+#	field(DESC, "PT slow A Raw Ampl.")
+#	field(DTYP, "PSC Reg")
+#	field(INP , "@Rx$(NO) 31 52")
+#	field(SCAN, "I/O Intr")	
+#	field(ESLO, "0.0000000004656612873077392578125")
+#	field(HOPR, "0.8")
+#	field(PREC, "6")
+#	field(LINR, "LINEAR")
+#	field(FLNK, "$(P){BPM:$(NO)}Pos:PtXSA-Calc")
+#}
+
+record(longin, "$(P){BPM:$(NO)}PM:StopAddr-I") {
+	field(DESC, "PM Stop BRAM address")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 52")
+	field(SCAN,"I/O Intr")
+	####
+	field(TSE , "-2")
+	info("TimeFromBlock", "12")
+	info("TimeNSScale", "8")
+}
+
+record(longin, "$(P){BPM:$(NO)}PM:AdcSumStopAddr-I") {
+        field(DESC, "PM ADC SUM Stop BRAM address")
+        field(DTYP, "PSC Reg")
+        field(INP , "@Rx$(NO) 31 56")
+        field(SCAN,"I/O Intr")
+        ####
+        field(TSE , "-2")
+        info("TimeFromBlock", "12")
+        info("TimeNSScale", "8")
+}
+
+record(longin, "$(P){BPM:$(NO)}PM:FaStopAddr-I") {
+        field(DESC, "PM FA Stop BRAM address")
+        field(DTYP, "PSC Reg")
+        field(INP , "@Rx$(NO) 31 60")
+        field(SCAN,"I/O Intr")
+        ####
+        field(TSE , "-2")
+        info("TimeFromBlock", "12")
+        info("TimeNSScale", "8")
+}
+
+############## RMS ##############
+record(ai, "$(P){BPM:$(NO)}RMS_10Hz_Y-I") {
+	field(DESC, "10 Hz Y rms, 100 nm to mm")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 64")
+	field(SCAN, "I/O Intr")
+	field(ESLO, "0.000001")
+	field(PREC, "6")
+	field(LINR,"LINEAR")
+	field(EGU,  "um")
+}
+
+record(longin, "$(P){BPM:$(NO)}RMS_10Hz_YL-I") {
+	field(DESC, "10 Hz Y rms, 100 nm to mm")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 64")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(P){BPM:$(NO)}RMS_10Hz_YL-I") {
+	field(DESC, "10 Hz Y rms, 100 nm to mm")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 64")
+	field(SCAN, "I/O Intr")
+}
+
+
+record(ai, "$(P){BPM:$(NO)}RMS_10Hz_X-I") {
+	field(DESC, "10 Hz X rms 100 nm to mm")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 48")
+	field(SCAN, "I/O Intr")
+	field(ESLO, "0.000001")
+	field(PREC, "6")
+	field(LINR,"LINEAR")
+	field(EGU,  "um")
+}
+################
+
+# Slow PT D
+record(ai, "$(P){BPM:$(NO)}Ampl:PtDSA-I") {
+	field(DESC, "PT Slow D Raw Ampl.")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 64")
+	field(SCAN, "I/O Intr")	
+	field(ESLO, "0.0000000004656612873077392578125")
+	field(HOPR, "0.8")
+	field(PREC, "6")
+	field(LINR,"LINEAR")
+#	field(EGU,  "Amp")
+	field(FLNK, "$(P){BPM:$(NO)}Ampl:PtSSA-Calc")
+}
+
+record(calc, "$(P){BPM:$(NO)}Ampl:PtSSA-Calc") {
+	field(DESC, "Pt Button Sum calculation")
+	field(CALC, "A+B+C+D")
+	field(INPA, "$(P){BPM:$(NO)}Ampl:PtASA-I.VAL NPP MS")
+	field(INPB, "$(P){BPM:$(NO)}Ampl:PtBSA-I.VAL NPP MS")
+	field(INPC, "$(P){BPM:$(NO)}Ampl:PtCSA-I.VAL NPP MS")
+	field(INPD, "$(P){BPM:$(NO)}Ampl:PtDSA-I.VAL NPP MS")
+	field(PREC, "6")
+	field(EGU,  "I")
+	field(FLNK, "$(P){BPM:$(NO)}Pos:PtQ-Calc")
+}
+
+record(calc, "$(P){BPM:$(NO)}Pos:PtQ-Calc") {
+	field(DESC, "Slow Piloton Q calculation")
+	field(CALC, "((((A+C)-(B+D))/E) * F)-G")
+	field(INPA, "$(P){BPM:$(NO)}Ampl:PtASA-I.VAL NPP MS")
+	field(INPB, "$(P){BPM:$(NO)}Ampl:PtBSA-I.VAL NPP MS")
+	field(INPC, "$(P){BPM:$(NO)}Ampl:PtCSA-I.VAL NPP MS")
+	field(INPD, "$(P){BPM:$(NO)}Ampl:PtDSA-I.VAL NPP MS")
+	field(INPE, "$(P){BPM:$(NO)}Ampl:PtSSA-Calc.VAL NPP MS")
+	field(INPF, "10")
+	field(INPG, "$(P){BPM:$(NO)}Pos:BbaQOff-SP.VAL NPP MS")	
+	field(PREC,"3")
+	field(EGU,  "(um)")
+	field(FLNK, "$(P){BPM:$(NO)}Pos:PtXSA-Calc")	
+}
+##Xpos   =  (((( a +  d ) - ( b + c )) / mb_sum) * 10000000) - offset;
+
+record(calc, "$(P){BPM:$(NO)}Pos:PtXSA-Calc") {
+	field(DESC, "Slow Piloton X calculation")
+	field(CALC, "((((A+D)-(B+C))/E) * F)-G")
+	field(INPA, "$(P){BPM:$(NO)}Ampl:PtASA-I.VAL NPP MS")
+	field(INPB, "$(P){BPM:$(NO)}Ampl:PtBSA-I.VAL NPP MS")
+	field(INPC, "$(P){BPM:$(NO)}Ampl:PtCSA-I.VAL NPP MS")
+	field(INPD, "$(P){BPM:$(NO)}Ampl:PtDSA-I.VAL NPP MS")
+	field(INPE, "$(P){BPM:$(NO)}Ampl:PtSSA-Calc.VAL NPP MS")
+	field(INPF, "10000")
+	field(INPG, "$(P){BPM:$(NO)}Pos:BbaXOff-SP.VAL NPP MS")
+	field(PREC,"3")
+	field(EGU,  "(um)")	
+	field(FLNK, "$(P){BPM:$(NO)}Pos:PtYSA-Calc")	
+}
+
+#Ypos   =  (((( a +  b ) - ( c + d )) / mb_sum) * DFE_CONTROL_REGS->ioReg[KY_SCALE]) - DFE_CONTROL_REGS->ioReg[SA_Y_POS_OFFSET];	
+record(calc, "$(P){BPM:$(NO)}Pos:PtYSA-Calc") {
+	field(DESC, "Slow Piloton Y calculation")
+	field(CALC, "((((A+B)-(C+D))/E) * F)-G")
+	field(INPA, "$(P){BPM:$(NO)}Ampl:PtASA-I.VAL NPP MS")
+	field(INPB, "$(P){BPM:$(NO)}Ampl:PtBSA-I.VAL NPP MS")
+	field(INPC, "$(P){BPM:$(NO)}Ampl:PtCSA-I.VAL NPP MS")
+	field(INPD, "$(P){BPM:$(NO)}Ampl:PtDSA-I.VAL NPP MS")
+	field(INPE, "$(P){BPM:$(NO)}Ampl:PtSSA-Calc.VAL NPP MS")
+	field(INPF, "10000")
+#	field(INPG, "$(P){BPM:$(NO)}Pos:POBbaYOff-SP.VAL NPP MS")
+	field(PREC,"3")
+	field(EGU,  "(um)")	
+}
+
+
+################################
+# Slow 10 Hz X position 
+# Raw data format nm	Min/Max is +/-2,147,483,647  
+#		
+# for [um] conversion ".RVAL/1000"
+#     [mm] /100000
+#
+
+record(ai, "$(P){BPM:$(NO)}Pos:X-I") {
+	field(DESC,"10 Hz X position")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 36")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"4")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+#	field(FLNK, "$(P){BPM:$(NO)}Pos:XwUsrOff-Calc")
+	field(FLNK, "$(P){BPM:$(NO)}Pos:X-Calc")
+	field(TSE , "-2")
+	info("TimeFromBlock", "12")
+info("TimeNSScale", "8")
+}
+
+# Slow Y
+record(ai, "$(P){BPM:$(NO)}Pos:Y-I") {
+	field(DESC,"10 Hz Y position")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 40")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"4")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+	field(FLNK, "$(P){BPM:$(NO)}Pos:Y-Calc")
+	field(TSE , "-2")
+	info("TimeFromBlock", "12")
+info("TimeNSScale", "8")
+}
+
+# Slow X with user offset
+record(calc, "$(P){BPM:$(NO)}Pos:XwUsrOff-Calc") {
+	field(DESC, "Slow position X calculation with offset")
+	field(CALC, "B=0?A-C-D:A*0")
+	field(INPA, "$(P){BPM:$(NO)}Pos:X-I.VAL  NPP MS")
+	field(INPB, "$(P){BPM:$(NO)}Ampl:SSA-Calc.SEVR")
+	field(INPC, "$(P){BPM:$(NO)}Pos:UsrXoffset-SP.VAL NPP MS")
+	field(INPD, "$(P){BPM:$(NO)}Pos:Href-SP.VAL NPP MS")
+	field(PREC, "4")
+	field(EGU,  "mm")
+	
+}
+
+
+
+# Slow Y with user offset
+record(calc, "$(P){BPM:$(NO)}Pos:YwUsrOff-Calc") {
+	field(DESC, "Slow position Y calculation with offset")
+	field(CALC, "B=0?A-C-D:A*0")
+	field(INPA, "$(P){BPM:$(NO)}Pos:Y-I.VAL  NPP MS")
+	field(INPB, "$(P){BPM:$(NO)}Ampl:SSA-Calc.SEVR")
+	field(INPC, "$(P){BPM:$(NO)}Pos:UsrYoffset-SP.VAL NPP MS")
+	field(INPD, "$(P){BPM:$(NO)}Pos:Vref-SP.VAL NPP MS")
+	field(PREC, "4")
+	field(EGU,  "mm")	
+}
+
+
+##############################
+# Slow S
+# Raw data format FIX32_28
+# F:FFFFFF   1/0xFFFFFF (28-bit)
+record(ai, "$(P){BPM:$(NO)}Ampl:Sum-I") {
+	field(DESC,"10 Hz A+B+C+D Sum")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 44")
+	field(LINR,"LINEAR")
+	field(ESLO,"4.657e-10")
+	field(PREC,"6")
+	field(SCAN,"I/O Intr")
+	field(FLNK, "$(P){BPM:$(NO)}I-I")   ## Beam current calculation
+}
+
+# Input for low sum signal offset
+record(ao, "$(P){BPM:$(NO)}SaSum:Th-SP") {
+	field(DESC, "Slow Sum threshold")
+	field(DTYP,"Soft Channel")
+#	field(PINI, "YES")
+	field(VAL, "0.001")
+	field(PREC,"5")
+	field(LINR,"LINEAR")
+	field(OUT,"$(P){BPM:$(NO)}Ampl:SSA-Calc.LOW")
+}
+
+record(calc, "$(P){BPM:$(NO)}Ampl:SSA-Calc") {
+        field(DESC, "Button Sum calculation")
+        field(CALC, "A+B+C+D")
+        field(INPA, "$(P){BPM:$(NO)}Ampl:ASA-I.VAL NPP MS")
+        field(INPB, "$(P){BPM:$(NO)}Ampl:BSA-I.VAL NPP MS")
+        field(INPC, "$(P){BPM:$(NO)}Ampl:CSA-I.VAL NPP MS")
+        field(INPD, "$(P){BPM:$(NO)}Ampl:DSA-I.VAL NPP MS")
+        field(PREC, "5")
+        field(HIHI,"3.0")
+        field(LOLO,"-10.0")
+        field(HIGH,"2.5")
+		field(HSV, "MINOR")	
+		field(LSV, "MINOR")	
+		field(HHSV, "MAJOR")	
+		field(LLSV, "MAJOR")	
+        field(HYST,"0.00001")
+        field(FLNK, "$(P){BPM:$(NO)}Pos:QSA-Calc")
+}
+
+
+## New added July 28 @ review
+record(calc, "$(P){BPM:$(NO)}I-I") {
+	field(DESC, "Beam Current calculation")
+	field(CALC, "(A*B)-C")
+#	field(INPA, "$(P){BPM:$(NO)}Ampl:Sum-I.VAL  NPP MS")
+	field(INPA, "$(P){BPM:$(NO)}Ampl:SSA-Calc.VAL  NPP MS")	
+	field(INPB, "$(P){BPM:$(NO)}Beam:Gain-SP.VAL NPP MS")
+	field(INPC, "$(P){BPM:$(NO)}Beam:Off-SP.VAL NPP MS")
+	field(PREC,"6")
+	field(EGU,  "mA")	
+}
+
+
+# NOT USE
+##Xpos   =  (((( a +  d ) - ( b + c )) / mb_sum) * 10000000) - offset;
+##Q      =  (((( a +  c ) - ( b + d )) / mb_sum) * 10000000) ;	
+# Slow Q
+#record(ai, "$(P){BPM:$(NO)}Pos:Q-I") {
+#	field(DTYP, "PSC Reg")
+#	field(INP , "@Rx$(NO) 31 48")
+#	field(LINR,"LINEAR")
+#	field(ESLO,"1E-3")
+#	field(HIGH,"$(QMAX=5000)")		# Need change for actual machine
+#	field(LOW, "$(QMIN=-5000)")	
+#	field(SCAN,"I/O Intr")
+#	field(PREC,"3")
+#	field(EGU,  "um")
+#}
+
+record(calc, "$(P){BPM:$(NO)}Pos:QSA-Calc") {
+	field(DESC, "Button Q calculation")
+	field(CALC, "(((A+C)-(B+D))/E) * F")
+	field(INPA, "$(P){BPM:$(NO)}Ampl:ASA-I.VAL NPP MS")
+	field(INPB, "$(P){BPM:$(NO)}Ampl:BSA-I.VAL NPP MS")
+	field(INPC, "$(P){BPM:$(NO)}Ampl:CSA-I.VAL NPP MS")
+	field(INPD, "$(P){BPM:$(NO)}Ampl:DSA-I.VAL NPP MS")
+	field(INPE, "$(P){BPM:$(NO)}Ampl:SSA-Calc.VAL NPP MS")
+	field(INPF, "1")
+	field(PREC, "3")
+	field(EGU,  "mm")	
+}
+
+##
+## Position X, Y Averaging and Min/Max clculation
+record(compress,"$(P){BPM:$(NO)}Pos:XAvg-I")
+{
+	field(DESC, "1 Hz X Position")
+	field(INP,"$(P){BPM:$(NO)}Pos:X-I.VAL CP NMS")
+	field(ALG,"N to 1 Average")
+	field(NSAM,"$(SAVG_NSAM)")
+	field(N,"$(SAVG_N)")
+	field(HOPR,"10000")
+	field(LOPR,"-10000")
+	field(PREC,"3")
+	field(EGU,"mm")
+}
+
+record(compress,"$(P){BPM:$(NO)}Pos:YAvg-I")
+{
+	field(DESC, "1 Hz Y Position")
+	field(INP,"$(P){BPM:$(NO)}Pos:Y-I.VAL CP NMS")
+	field(ALG,"N to 1 Average")
+	field(NSAM,"$(SAVG_NSAM)")
+	field(N,"$(SAVG_N)")
+	field(HOPR,"10000")
+	field(LOPR,"-10000")
+	field(PREC,"3")
+	field(EGU,"mm")
+}
+
+record(compress,"$(P){BPM:$(NO)}Ampl:IAvg-I")
+{
+	field(DESC, "Current Averaging")
+	field(INP,"$(P){BPM:$(NO)}I-I.VAL CP NMS")
+	field(ALG,"N to 1 Average")
+	field(NSAM,"$(SAVG_NSAM)")
+	field(N,"$(SAVG_N)")
+	field(HOPR,"10000")
+	field(LOPR,"-10000")
+	field(PREC,"3")
+#	field(EGU,"um")
+}
+
+###
+record(compress, "$(P){BPM:$(NO)}Pos:XMax-I") {
+	field(DESC, "MAX Buffer")
+	field(INP,"$(P){BPM:$(NO)}Pos:X-I.VAL CP NMS")
+	field(ALG, "N to 1 High Value")
+	field(PREC, "3")
+	field(EGU, "um")
+	field(N,"$(SAVG_N)")
+}
+
+record(compress, "$(P){BPM:$(NO)}Pos:XMin-I") {
+	field(DESC, "MIN Buffer")
+	field(INP,"$(P){BPM:$(NO)}Pos:X-I.VAL CP NMS")
+	field(ALG, "N to 1 Low Value")
+	field(PREC, "3")
+	field(EGU, "um")
+	field(N,"$(SAVG_N)")
+}
+
+record(compress, "$(P){BPM:$(NO)}Pos:YMax-I") {
+	field(DESC, "MAX Buffer")
+	field(INP,"$(P){BPM:$(NO)}Pos:Y-I.VAL CP NMS")
+	field(ALG, "N to 1 High Value")
+	field(PREC, "3")
+	field(EGU, "um")
+	field(N,"$(SAVG_N)")
+}
+
+record(compress, "$(P){BPM:$(NO)}Pos:YMin-I") {
+	field(DESC, "MIN Buffer")
+	field(INP,"$(P){BPM:$(NO)}Pos:Y-I.VAL CP NMS")
+	field(ALG, "N to 1 Low Value")
+	field(PREC, "3")
+	field(EGU, "um")
+	field(N,"$(SAVG_N)")
+}
+
+
+
+###############
+### 10 Hz STANDARD DIVATION
+###############
+### 
+### CH-A
+### Number in Sample
+record(compress, "$(P){BPM:$(NO)}Ampl:CirbufA-I_") {	
+	field(INP, "$(P){BPM:$(NO)}Ampl:ASA-I CP NMS")
+	field(ALG, "Circular Buffer")
+	field(NSAM,"$(SAVG_NSAM)")
+	field(FLNK, "$(P){BPM:$(NO)}Ampl:AStd-I")
+}
+
+record(compress, "$(P){BPM:$(NO)}Ampl:CirbufB-I_") {	
+	field(INP, "$(P){BPM:$(NO)}Ampl:BSA-I CP NMS")
+	field(ALG, "Circular Buffer")
+	field(NSAM,"$(SAVG_NSAM)")
+	field(FLNK, "$(P){BPM:$(NO)}Ampl:BStd-I")
+}
+
+record(compress, "$(P){BPM:$(NO)}Ampl:CirbufC-I_") {	
+	field(INP, "$(P){BPM:$(NO)}Ampl:CSA-I CP NMS")
+	field(ALG, "Circular Buffer")
+	field(NSAM,"$(SAVG_NSAM)")
+	field(FLNK, "$(P){BPM:$(NO)}Ampl:CStd-I")
+}
+
+record(compress, "$(P){BPM:$(NO)}Ampl:CirbufD-I_") {	
+	field(INP, "$(P){BPM:$(NO)}Ampl:DSA-I CP NMS")
+	field(ALG, "Circular Buffer")
+	field(NSAM,"$(SAVG_NSAM)")
+	field(FLNK, "$(P){BPM:$(NO)}Ampl:DStd-I")
+}
+
+
+### X
+record(compress, "$(P){BPM:$(NO)}Pos:CirbufX-I_") {	
+	field(INP, "$(P){BPM:$(NO)}Pos:X-I CP NMS")
+	field(ALG, "Circular Buffer")
+	field(NSAM,"$(SAVG_NSAM)")
+	field(FLNK, "$(P){BPM:$(NO)}Pos:XStd-I") 
+}
+
+### Y
+record(compress, "$(P){BPM:$(NO)}Pos:CirbufY-I_") {	
+	field(INP, "$(P){BPM:$(NO)}Pos:Y-I CP NMS")
+	field(ALG, "Circular Buffer")
+	field(NSAM,"$(SAVG_NSAM)")
+	field(FLNK, "$(P){BPM:$(NO)}Pos:YStd-I") 
+}
+
+
+### SUM
+record(compress, "$(P){BPM:$(NO)}Ampl:CirbufSUM-I_") {	
+	field(INP, "$(P){BPM:$(NO)}Ampl:SSA-Calc CP NMS")
+	field(ALG, "Circular Buffer")
+	field(NSAM,"$(SAVG_NSAM)")
+	field(FLNK, "$(P){BPM:$(NO)}Ampl:SumStd-I") 
+}
+
+### Use Macro
+record(sub, "$(P){BPM:$(NO)}Ampl:AStd-I") {
+	field(INAM, "SaStdCalSupInit")
+	field(SNAM, "SaStdCalSup")
+	field(INPA, "$(P){BPM:$(NO)}Ampl:CirbufA-I_")
+	field(INPB, "$(P){BPM:$(NO)}Rate:Update-SP")
+	field(PREC,"6")
+}
+
+record(sub, "$(P){BPM:$(NO)}Ampl:BStd-I") {
+	field(INAM, "SaStdCalSupInit")
+	field(SNAM, "SaStdCalSup")
+	field(INPA, "$(P){BPM:$(NO)}Ampl:CirbufB-I_")
+	field(INPB, "$(P){BPM:$(NO)}Rate:Update-SP")
+	field(PREC,"6")
+}
+record(sub, "$(P){BPM:$(NO)}Ampl:CStd-I") {
+	field(INAM, "SaStdCalSupInit")
+	field(SNAM, "SaStdCalSup")
+	field(INPA, "$(P){BPM:$(NO)}Ampl:CirbufC-I_")
+	field(INPB, "$(P){BPM:$(NO)}Rate:Update-SP")
+	field(PREC,"6")
+}
+record(sub, "$(P){BPM:$(NO)}Ampl:DStd-I") {
+	field(INAM, "SaStdCalSupInit")
+	field(SNAM, "SaStdCalSup")
+	field(INPA, "$(P){BPM:$(NO)}Ampl:CirbufD-I_")
+	field(INPB, "$(P){BPM:$(NO)}Rate:Update-SP")
+	field(PREC,"6")
+}
+
+record(sub, "$(P){BPM:$(NO)}Pos:XStd-I") {
+	field(INAM, "SaStdCalSupInit")
+	field(SNAM, "SaStdCalSup")
+	field(INPA, "$(P){BPM:$(NO)}Pos:CirbufX-I_")
+	field(INPB, "$(P){BPM:$(NO)}Rate:Update-SP")
+	field(PREC,"6")
+	field(EGU, "mm")
+}
+
+record(sub, "$(P){BPM:$(NO)}Pos:YStd-I") {
+	field(INAM, "SaStdCalSupInit")
+	field(SNAM, "SaStdCalSup")
+	field(INPA, "$(P){BPM:$(NO)}Pos:CirbufY-I_")
+	field(INPB, "$(P){BPM:$(NO)}Rate:Update-SP")
+	field(PREC,"6")
+	field(EGU, "mm")
+}
+
+record(sub, "$(P){BPM:$(NO)}Ampl:SumStd-I") {
+	field(INAM, "SaStdCalSupInit")
+	field(SNAM, "SaStdCalSup")
+	field(INPA, "$(P){BPM:$(NO)}Ampl:CirbufSUM-I_")
+	field(INPB, "$(P){BPM:$(NO)}Rate:Update-SP")
+	field(PREC,"6")
+}
+
+
+########################################
+#	10 Hz X,Y RMS Calculation
+#
+########################################
+#	10 Hz X,Y RMS Calculation
+#
+# Add .dbd
+#function(fbckSupInit)
+#function(fbckSupRMSCalc)
+#
+########################################
+
+### X RMS calculation
+record(calc, "$(P){BPM:$(NO)}Pos:X-SQ") {
+	field(FLNK, "$(P){BPM:$(NO)}Pos:X-SQHST")
+	field(CALC, "A*1")
+	field(INPA, "$(P){BPM:$(NO)}Pos:X-I.VAL CP NMS")		## 10 Hz Pos X
+	field(PREC,"3")
+}
+
+record(compress, "$(P){BPM:$(NO)}Pos:X-SQHST") {
+	field(FLNK, "$(P){BPM:$(NO)}Pos:X-RMS")
+	field(INP, "$(P){BPM:$(NO)}Pos:X-SQ")
+	field(ALG, "Circular Buffer")
+	field(NSAM,"$(SAVG_NSAM)")
+	field(EGU,  "um")
+}
+
+record(sub, "$(P){BPM:$(NO)}Pos:X-RMS") {
+	field(SNAM, "fbckSupRMSCalc")
+	field(INPA, "$(P){BPM:$(NO)}Pos:X-SQHST")
+	field(FLNK, "$(P){BPM:$(NO)}Pos:X-RMSHST")
+	field(INAM, "fbckSupInit")
+	field(PREC,"6")
+	field(EGU,  "mm")
+}
+
+record(compress, "$(P){BPM:$(NO)}Pos:X-RMSHST") {
+	field(INP, "$(P){BPM:$(NO)}Pos:X-RMS")
+	field(ALG, "Circular Buffer")
+	field(NSAM,"$(SAVG_NSAM)")
+}
+
+
+### Y RMS calculation
+record(calc, "$(P){BPM:$(NO)}Pos:Y-SQ") {
+	field(FLNK, "$(P){BPM:$(NO)}Pos:Y-SQHST")
+	field(CALC, "A*1")
+	field(INPA, "$(P){BPM:$(NO)}Pos:Y-I.VAL CP NMS")		## 10 Hz Pos X
+	field(PREC,"3")	
+}
+
+record(compress, "$(P){BPM:$(NO)}Pos:Y-SQHST") {
+	field(FLNK, "$(P){BPM:$(NO)}Pos:Y-RMS")
+	field(INP, "$(P){BPM:$(NO)}Pos:Y-SQ")
+	field(ALG, "Circular Buffer")
+	field(NSAM,"$(SAVG_NSAM)")
+}
+
+record(sub, "$(P){BPM:$(NO)}Pos:Y-RMS") {
+	field(INAM, "fbckSupInit")
+	field(SNAM, "fbckSupRMSCalc")
+	field(INPA, "$(P){BPM:$(NO)}Pos:Y-SQHST")
+	field(FLNK, "$(P){BPM:$(NO)}Pos:Y-RMSHST")	
+	field(EGU,  "mm")
+	field(PREC,"6")
+}
+
+record(compress, "$(P){BPM:$(NO)}Pos:Y-RMSHST") {
+	field(INP, "$(P){BPM:$(NO)}Pos:Y-RMS")
+	field(ALG, "Circular Buffer")
+	field(NSAM,"$(SAVG_NSAM)")
+}
+
+
+record(ao, "$(P){BPM:$(NO)}Beam:Off-SP") {
+	field(DESC, "Beam Current Offset")
+	field(DTYP,"Soft Channel")
+	field(PINI, "YES")
+	field(VAL, "0.001")
+	field(PREC,"3")
+	field(EGU, "mA")
+	field(LINR,"LINEAR")
+}
+
+record(ao, "$(P){BPM:$(NO)}Beam:Gain-SP") {
+	field(DESC, "Beam current Gain")
+	field(DTYP,"Soft Channel")
+	field(PINI, "YES")
+	field(VAL, "100.0")
+	field(PREC,"3")
+	field(EGU, "mA")
+	field(LINR,"LINEAR")
+}
+
+record(ao, "$(P){BPM:$(NO)}Pos:UsrYoffset-SP") {
+	field(DESC, "User Y position Offset")
+    field(DTYP, "Soft Channel")
+    field(HOPR, "15.0")
+    field(LOPR, "-15.0")
+    field(DRVH,"15.0") 
+    field(DRVL,"-15.0")
+    field(PREC, "3")    
+	field(EGU, "mm")
+#    field(OUT,  "$(P){BPM:$(NO)}Pos:Href-I PP")
+#    field(OMSL, "closed_loop")
+}
+
+record(ao, "$(P){BPM:$(NO)}Pos:UsrXoffset-SP") {
+	field(DESC, "User X position Offset")
+    field(DTYP, "Soft Channel")
+    field(HOPR, "15.0")
+    field(LOPR, "-15.0")
+    field(DRVH,"15.0") 
+    field(DRVL,"-15.0")
+    field(PREC, "3")    
+	field(EGU, "mm")
+#    field(OUT,  "$(P){BPM:$(NO)}Pos:Href-I PP")
+#    field(OMSL, "closed_loop")
+}
+
+
+
+
+
+
+#
+#
+#	LINAC and LTB Slow data
+#
+
+# Linac Beam Delay calibration
+record(bo, "$(P){BPM:$(NO)}Beam:DlyCal-SP") {
+	field(DESC, "Linac Beam Delay calibration")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 44")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+    field(ZNAM,"Nomal")
+    field(ONAM,"Cal")
+    field(HIGH,".2")	#500 ms after low
+    info(autosaveFields, "VAL")
+}
+
+record(longout, "$(P){BPM:$(NO)}Trig:AdcDlyTh-SP") {
+	field(DESC, "Adc delay Threshold Reg45")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 276")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+	field(HOPR,"131068")
+	field(LOPR,"50")		
+	field(PINI, "YES")
+	field(VAL, "500")
+	field(EGU, "Count")
+	info(autosaveFields, "VAL")
+}
+
+
+### Slow data Msg ID 31
+record(ai, "$(P){BPM:$(NO)}LTB:MbAvgA-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 104")
+	field(LINR,"LINEAR")
+	field(SCAN,"I/O Intr")
+	field(ESLO, "0.0000000004656612873077392578125")
+	field(PREC,"6")
+	field(EGU,  "A")
+}
+
+record(ai, "$(P){BPM:$(NO)}LTB:MbAvgB-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 108")
+	field(LINR,"LINEAR")
+	field(SCAN,"I/O Intr")
+	field(ESLO, "0.0000000004656612873077392578125")
+	field(PREC,"6")
+	field(EGU,  "A")
+}
+
+record(ai, "$(P){BPM:$(NO)}LTB:MbAvgC-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 112")
+	field(LINR,"LINEAR")
+	field(SCAN,"I/O Intr")
+	field(ESLO, "0.0000000004656612873077392578125")
+	field(PREC,"6")
+	field(EGU,  "A")
+}
+record(ai, "$(P){BPM:$(NO)}LTB:MbAvgD-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 116")
+	field(LINR,"LINEAR")
+	field(SCAN,"I/O Intr")
+	field(ESLO, "0.0000000004656612873077392578125")
+	field(PREC,"6")
+	field(EGU,  "A")
+}
+
+record(ai, "$(P){BPM:$(NO)}LTB:MbAvgX-I") {
+	field(DESC,"10 Hz Y position")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 120")
+	field(LINR,"LINEAR")
+	field(ESLO,"1E-3")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "um")
+	field(FLNK, "$(P){BPM:$(NO)}Pos:PC-X-I")	
+}
+
+record(ai, "$(P){BPM:$(NO)}LTB:MbAvgY-I") {
+	field(DESC,"10 Hz Y position")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 124")
+	field(LINR,"LINEAR")
+	field(ESLO,"1E-3")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "um")	
+	field(FLNK, "$(P){BPM:$(NO)}Pos:PC-Y-I")
+}
+
+record(ai, "$(P){BPM:$(NO)}LTB:MbAvgS-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 128")
+	field(LINR,"LINEAR")
+	field(SCAN,"I/O Intr")
+	field(ESLO, "0.0000000004656612873077392578125")
+	field(PREC,"6")
+	field(EGU,  "A")
+	field(FLNK, "$(P){BPM:$(NO)}LTB:MbAvgS-Calc")
+}
+
+
+record(calc, "$(P){BPM:$(NO)}LTB:MbAvgS-Calc") {
+	field(DESC, "Sum averaging calculation")
+	field(CALC, "A+B+C+D")
+	field(INPA, "$(P){BPM:$(NO)}LTB:MbAvgA-I.VAL NPP MS")
+	field(INPB, "$(P){BPM:$(NO)}LTB:MbAvgB-I.VAL NPP MS")
+	field(INPC, "$(P){BPM:$(NO)}LTB:MbAvgC-I.VAL NPP MS")
+	field(INPD, "$(P){BPM:$(NO)}LTB:MbAvgD-I.VAL NPP MS")
+	field(PREC, "6")
+	field(EGU,  "I")	
+	field(FLNK, "$(P){BPM:$(NO)}LTB:Iavg-Calc")
+}
+
+
+record(longin, "$(P){BPM:$(NO)}Trig:EventNo-I") {
+	field(DESC, "event code read")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 84")
+    field(SCAN,"I/O Intr")
+}
+
+#### STD
+record(ai, "$(P){BPM:$(NO)}LTB:MbStdA-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 132")
+	field(LINR,"LINEAR")
+	field(SCAN,"I/O Intr")
+	field(PREC,"6")
+	field(EGU,  "A")
+}
+record(ai, "$(P){BPM:$(NO)}LTB:MbStdB-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 136")
+	field(LINR,"LINEAR")
+	field(SCAN,"I/O Intr")
+	field(PREC,"6")
+	field(EGU,  "A")
+}
+record(ai, "$(P){BPM:$(NO)}LTB:MbStdC-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 140")
+	field(LINR,"LINEAR")
+	field(SCAN,"I/O Intr")
+	field(PREC,"6")
+	field(EGU,  "A")
+}
+record(ai, "$(P){BPM:$(NO)}LTB:MbStdD-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 144")
+	field(LINR,"LINEAR")
+	field(SCAN,"I/O Intr")
+	field(PREC,"6")
+	field(EGU,  "A")
+}
+
+record(ai, "$(P){BPM:$(NO)}LTB:MbStdX-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 148")
+	field(LINR,"LINEAR")
+	field(ESLO,"1E-6")
+	field(SCAN,"I/O Intr")
+	field(PREC,"3")
+	field(EGU,  "um")
+}
+
+record(ai, "$(P){BPM:$(NO)}LTB:MbStdY-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 152")
+	field(LINR,"LINEAR")
+	field(ESLO,"1E-6")
+	field(SCAN,"I/O Intr")
+	field(PREC,"3")
+	field(EGU,  "um")
+}
+
+#
+record(ai, "$(P){BPM:$(NO)}LTB:MbStdS-I") {
+	field(DESC, "LTB Sum Std err")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 156")
+	field(LINR,"LINEAR")
+	field(SCAN,"I/O Intr")
+	field(PREC,"6")
+	field(EGU,  "A")
+}
+
+############
+##
+record(longin, "$(P){BPM:$(NO)}Ddr:PulseDataLoc-I") {
+	field(DESC, "LTB ddr tbt data location")
+#    field(FLNK, "$(P){BPM:$(NO)}Beam:OptDlyTime-Cal")
+#	field(DTYP, "PSC Reg")
+#	field(INP , "@Rx$(NO) 31 312")
+#    field(SCAN,"I/O Intr")
+	field(EGU,  "turns")	
+}
+
+#record(longin, "$(P){BPM:$(NO)}Beam:OptDly-I") {
+#	field(DESC, "LTB Beam delay values from Trigger")
+#	field(DTYP, "PSC Reg")
+#	field(INP , "@Rx$(NO) 31 88")
+#   field(FLNK, "$(P){BPM:$(NO)}Beam:OptDlyTime-Cal")
+#    field(SCAN,"I/O Intr")
+#}
+
+#record(calcout, "$(P){BPM:$(NO)}Beam:OptDlyTime-Cal") {
+#	field(DESC, "LTB Beam data positin in the DDR")	
+#	field(INPA, "$(P){BPM:$(NO)}Beam:OptDly-I.VAL")
+#	field(CALC, "A-10")
+#	field(PREC, "3")
+#	field(EGU,  "ns")
+#	field(OUT,  "$(P){BPM:$(NO)}Trig:AdcDelay-SP PP")
+#	field(OUT,  "$(P){BPM:$(NO)}ddrAdcOffset PP")
+#}
+
+record(calc, "$(P){BPM:$(NO)}Beam:OptDlyUs-Cal") {
+	field(DESC, "LTB Beam data positin in the DDR")
+	field(CALC, "A*(1/117.3491)")
+#	field(INPA, "$(P){BPM:$(NO)}Beam:OptDly-I.VAL CP NMS")	
+	field(PREC,"3")
+	field(EGU,  "us")
+}
+record(calc, "$(P){BPM:$(NO)}Beam:OptDlyTbtTime-Cal") {
+	field(DESC, "Delay times")
+	field(CALC, "(A/310)*B")
+#	field(INPA, "$(P){BPM:$(NO)}Beam:OptDly-I.VAL CP NMS")	
+	field(INPB, "1")
+	field(PREC, "0")
+	field(EGU,  "turns")
+}
+
+## LTB beam current conversion
+record(calc, "$(P){BPM:$(NO)}LTB:Iavg-Calc") {
+	field(DESC, "Beam Current calculation for LTB")
+	field(CALC, "(A*B)-C")
+	field(INPA, "$(P){BPM:$(NO)}LTB:MbAvgS-Calc.VAL  NPP MS")
+	field(INPB, "$(P){BPM:$(NO)}Beam:Gain-SP.VAL NPP MS")
+	field(INPC, "$(P){BPM:$(NO)}Beam:Off-SP.VAL NPP MS")
+	field(PREC,"6")
+	field(EGU,  "mA")	
+	field(FLNK, "$(P){BPM:$(NO)}LTB:Istd-Calc")
+}
+## LTB beam current Std err
+record(calc, "$(P){BPM:$(NO)}LTB:Istd-Calc") {
+	field(DESC, "Beam Current calculation for LTB")
+	field(CALC, "(A*B)-C")
+	field(INPA, "$(P){BPM:$(NO)}LTB:MbStdS-I.VAL  NPP MS")
+	field(INPB, "$(P){BPM:$(NO)}Beam:Gain-SP.VAL NPP MS")
+	field(INPC, "$(P){BPM:$(NO)}Beam:Off-SP.VAL NPP MS")
+	field(PREC,"6")
+	field(EGU,  "mA")	
+}
+
+
+### BPM Pick Up Linearization
+record(ao, "$(P){BPM:$(NO)}K:Kx10-SP") {
+	field(DESC, "X One-demensional")
+	field(DTYP,"Soft Channel")
+	field(PINI, "YES")
+	field(VAL, "13.2")
+	field(PREC,"3")
+	field(EGU,  "mm")
+}
+record(ao, "$(P){BPM:$(NO)}K:Kx12-SP") {
+	field(DESC, "X 2D correction term")
+	field(DTYP,"Soft Channel")
+	field(PINI, "YES")
+	field(VAL, "-15.3")
+	field(PREC,"3")
+	field(EGU,  "mm")
+}
+record(ao, "$(P){BPM:$(NO)}K:Kx30-SP") {
+	field(DESC, "X 3rd order One-demensional")
+	field(DTYP,"Soft Channel")
+	field(PINI, "YES")
+	field(VAL, "13.3")
+	field(PREC,"3")
+	field(EGU,  "mm")
+}
+
+record(ao, "$(P){BPM:$(NO)}K:Ky10-SP") {
+	field(DESC, "y One-demensional")
+	field(DTYP,"Soft Channel")
+	field(PINI, "YES")
+	field(VAL, "13.2")
+	field(PREC,"3")
+	field(EGU,  "mm")
+}
+record(ao, "$(P){BPM:$(NO)}K:Ky12-SP") {
+	field(DESC, "y 2D correction term")
+	field(DTYP,"Soft Channel")
+	field(PINI, "YES")
+	field(VAL, "-15.3")
+	field(PREC,"3")
+	field(EGU,  "mm")
+}
+record(ao, "$(P){BPM:$(NO)}K:Ky30-SP") {
+	field(DESC, "y 3rd order One-demensional")
+	field(DTYP,"Soft Channel")
+	field(PINI, "YES")
+	field(VAL, "13.3")
+	field(PREC,"3")
+	field(EGU,  "mm")
+}
+
+###
+record(sub, "$(P){BPM:$(NO)}Pos:PC-X-I") {
+	field(INAM, "posPolyCoeffCalSupInit")
+	field(SNAM, "posPolyCoeffCalSup")
+	field(SCAN,"1 second")
+	field(INPA, "$(P){BPM:$(NO)}Pos:X-I")
+	field(INPB, "$(P){BPM:$(NO)}Pos:Y-I")
+	field(INPC, "$(P){BPM:$(NO)}K:Kx10-SP")
+	field(INPD, "$(P){BPM:$(NO)}K:Kx12-SP")
+	field(INPE, "$(P){BPM:$(NO)}K:Kx30-SP")
+	field(INPF, "$(P){BPM:$(NO)}Ampl:SSA-Calc")
+	## mm input ?
+	field(INPG, "$(P){BPM:$(NO)}Kx-SP")
+	field(INPH, "$(P){BPM:$(NO)}Ky-SP")
+	field(INPI, "0")	## X
+	field(PREC, "6")
+}
+###
+record(sub, "$(P){BPM:$(NO)}Pos:PC-Y-I") {
+	field(INAM, "posPolyCoeffCalSupInit")
+	field(SNAM, "posPolyCoeffCalSup")
+	field(SCAN,"1 second")
+	field(INPA, "$(P){BPM:$(NO)}Pos:X-I")
+	field(INPB, "$(P){BPM:$(NO)}Pos:Y-I")
+	field(INPC, "$(P){BPM:$(NO)}K:Ky10-SP")
+	field(INPD, "$(P){BPM:$(NO)}K:Ky12-SP")
+	field(INPE, "$(P){BPM:$(NO)}K:Ky30-SP")
+	field(INPF, "$(P){BPM:$(NO)}Ampl:SSA-Calc")
+	## mm input ?
+	field(INPG, "$(P){BPM:$(NO)}Kx-SP")
+	field(INPH, "$(P){BPM:$(NO)}Ky-SP")
+	field(INPI, "1")	## Y
+	field(PREC, "6")
+}
+
+##########################
+### DDR Trig Timestamp
+record(waveform,"$(P){BPM:$(NO)}DDR:WFM-TS-I") {
+	field(DESC, "Time stamp")
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 50")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+    field(NELM, "8")
+	field(FLNK, "$(P){BPM:$(NO)}TS:DdrTrigDate-I")
+	field(TSE , "-2")
+	info("TimeFromBlock", "0")
+}
+
+record(stringin, "$(P){BPM:$(NO)}TS:DdrTrigDate-I") {
+    field(DTYP, "Soft Timestamp")
+    field(INP , "@ %m/%d/%Y,%H:%M:%S")
+    field(TSEL, "$(P){BPM:$(NO)}DDR:WFM-TS-I.TIME")
+#	field(TSEL, "$(P){BPM:$(NO)}Ampl:DRaw-I.TIME")
+}
+
+###
+record(aSub, "$(P){BPM:$(NO)}Unit:Tbt-Calc")
+{
+	field(SNAM, "bpmPosXyUnitConvrsion")
+	field(INPA, "$(P){BPM:$(NO)}TBT-X")
+	field(INPB, "$(P){BPM:$(NO)}TBT-Y")
+	field(INPC, "$(P){BPM:$(NO)}Ampl:SSA-Calc.SEVR")
+	field(INPD, "$(P){BPM:$(NO)}ERec:TbtEnableLen-SP")
+	field(FTA,  "FLOAT")	
+	field(FTB,  "FLOAT")
+	field(FTC,  "LONG")
+	field(FTD,  "LONG")
+	field(NOA,  "$(TBT_WFM_LEN)")
+	field(NOB,  "$(TBT_WFM_LEN)")
+	field(NOC,  "1")
+	field(NOD,  "1")
+	field(OUTA, "$(P){BPM:$(NO)}mm:Tbt-x PP")
+	field(OUTB, "$(P){BPM:$(NO)}mm:Tbt-y PP")
+	field(NOVA, "$(TBT_WFM_LEN)")
+	field(NOVB, "$(TBT_WFM_LEN)")
+	field(FTVA, "FLOAT")
+	field(FTVB, "FLOAT")
+#
+	field(SCAN, "1 second")
+}
+
+record(aSub, "$(P){BPM:$(NO)}Unit:Fa-Calc")
+{
+	field(SNAM, "bpmPosXyUnitConvrsion")
+	field(INPA, "$(P){BPM:$(NO)}FA-X")
+	field(INPB, "$(P){BPM:$(NO)}FA-Y")
+	field(INPC, "$(P){BPM:$(NO)}Ampl:SSA-Calc.SEVR")
+	field(INPD, "$(P){BPM:$(NO)}ERec:FaEnableLen-SP")
+	field(FTA,  "FLOAT")	
+	field(FTB,  "FLOAT")
+	field(FTC,  "LONG")
+	field(FTD,  "LONG")
+	field(NOA,  "$(FA_WFM_LEN)")
+	field(NOB,  "$(FA_WFM_LEN)")
+	field(NOC,  "1")
+	field(NOD,  "1")
+	field(OUTA, "$(P){BPM:$(NO)}mm:Fa-x PP")
+	field(OUTB, "$(P){BPM:$(NO)}mm:Fa-y PP")
+	field(NOVA, "$(FA_WFM_LEN)")
+	field(NOVB, "$(FA_WFM_LEN)")
+	field(FTVA, "FLOAT")
+	field(FTVB, "FLOAT")
+#
+field(SCAN,"1 second")
+}
+
+
+## TBT OUT
+record(waveform, "$(P){BPM:$(NO)}mm:Tbt-x")
+{
+	field(NELM, "$(TBT_WFM_LEN)")
+	field(FTVL, "FLOAT")
+	field(PREC, "3")
+}
+record(waveform, "$(P){BPM:$(NO)}mm:Tbt-y")
+{
+	field(NELM, "$(TBT_WFM_LEN)")
+	field(FTVL, "FLOAT")
+	field(PREC, "3")
+}
+### FA OUT
+record(waveform, "$(P){BPM:$(NO)}mm:Fa-x")
+{
+	field(NELM, "$(FA_WFM_LEN)")
+	field(FTVL, "FLOAT")
+	field(PREC, "3")
+#	field(FLNK, "$(P){BPM:$(NO)}FA:WA-X")
+}
+record(waveform, "$(P){BPM:$(NO)}mm:Fa-y")
+{
+	field(NELM, "$(FA_WFM_LEN)")
+	field(FTVL, "FLOAT")
+	field(PREC, "3")
+#	field(FLNK, "$(P){BPM:$(NO)}FA:WA-Y")
+}
+
+
+record(aSub, "$(P){BPM:$(NO)}PY:Tbt-Calc")
+{
+	field(SNAM, "bpmWfmPolyCoeffCalSup")
+	field(INPA, "$(P){BPM:$(NO)}TBT-X")
+	field(INPB, "$(P){BPM:$(NO)}TBT-Y")
+	field(INPC,  "$(P){BPM:$(NO)}K:Ky10-SP")
+	field(INPD,  "$(P){BPM:$(NO)}K:Ky12-SP")
+	field(INPE,  "$(P){BPM:$(NO)}K:Ky30-SP")
+	field(FTA,  "FLOAT")	
+	field(FTB,  "FLOAT")
+	field(FTC,  "FLOAT")
+	field(FTD,  "FLOAT")
+	field(FTE,  "FLOAT")
+	field(NOA,  "$(TBT_WFM_LEN)")
+	field(NOB,  "$(TBT_WFM_LEN)")
+	field(NOC,  "1")
+	field(NOD,  "1")
+	field(NOE,  "1")
+	field(OUTA, "$(P){BPM:$(NO)}PY:Tbt-x PP")
+	field(OUTB, "$(P){BPM:$(NO)}PY:Tbt-y PP")
+	field(NOVA, "$(TBT_WFM_LEN)")
+	field(NOVB, "$(TBT_WFM_LEN)")
+	field(NOVC, "1")
+	field(NOVD, "1")
+	field(NOVE, "1")
+	field(FTVA, "FLOAT")
+	field(FTVB, "FLOAT")
+	field(FTVC, "FLOAT")
+	field(FTVD, "FLOAT")
+	field(FTVE, "FLOAT")
+}
+
+record(aSub, "$(P){BPM:$(NO)}PY:Fa-Calc")
+{
+	field(SNAM, "bpmWfmPolyCoeffCalSup")
+	field(INPA, "$(P){BPM:$(NO)}FA-X")
+	field(INPB, "$(P){BPM:$(NO)}FA-Y")
+	field(INPC,  "$(P){BPM:$(NO)}K:Ky10-SP")
+	field(INPD,  "$(P){BPM:$(NO)}K:Ky12-SP")
+	field(INPE,  "$(P){BPM:$(NO)}K:Ky30-SP")	
+	field(FTA,  "FLOAT")	
+	field(FTB,  "FLOAT")	
+	field(FTC,  "FLOAT")
+	field(FTD,  "FLOAT")
+	field(FTE,  "FLOAT")
+	field(NOA,  "$(FA_WFM_LEN)")
+	field(NOB,  "$(FA_WFM_LEN)")
+	field(NOC,  "1")
+	field(NOD,  "1")
+	field(NOE,  "1")	
+	field(OUTA, "$(P){BPM:$(NO)}PY:Fa-x PP")
+	field(OUTB, "$(P){BPM:$(NO)}PY:Fa-y PP")
+	field(NOVA, "$(FA_WFM_LEN)")
+	field(NOVB, "$(FA_WFM_LEN)")
+	field(NOVC, "1")
+	field(NOVD, "1")
+	field(NOVE, "1")	
+	field(FTVA, "FLOAT")
+	field(FTVB, "FLOAT")
+	field(FTVC, "FLOAT")
+	field(FTVD, "FLOAT")
+	field(FTVE, "FLOAT")	
+}
+
+## TBT OUT
+record(waveform, "$(P){BPM:$(NO)}PY:Tbt-x")
+{
+	field(NELM, "$(TBT_WFM_LEN)")
+	field(FTVL, "FLOAT")
+	field(PREC, "3")
+}
+record(waveform, "$(P){BPM:$(NO)}PY:Tbt-y")
+{
+	field(NELM, "$(TBT_WFM_LEN)")
+	field(FTVL, "FLOAT")
+	field(PREC, "3")
+}
+### FA OUT
+record(waveform, "$(P){BPM:$(NO)}PY:Fa-x")
+{
+	field(NELM, "$(FA_WFM_LEN)")
+	field(FTVL, "FLOAT")
+	field(PREC, "3")
+}
+record(waveform, "$(P){BPM:$(NO)}PY:Fa-y")
+{
+	field(NELM, "$(FA_WFM_LEN)")
+	field(FTVL, "FLOAT")
+	field(PREC, "3")
+}
+
+#  
+record(aSub, "$(P){BPM:$(NO)}Fa:Sum-Calc")
+{
+	field(SNAM, "bpmPosButtonSum")
+	field(INPA, "$(P){BPM:$(NO)}FA-A")
+	field(INPB, "$(P){BPM:$(NO)}FA-B")
+	field(INPC, "$(P){BPM:$(NO)}FA-C")
+	field(INPD, "$(P){BPM:$(NO)}FA-D")
+	field(INPE, "$(P){BPM:$(NO)}ERec:FaEnableLen-SP")
+	field(FTA,  "LONG")
+	field(FTB,  "LONG")
+	field(FTC,  "LONG")
+	field(FTD,  "LONG")
+	field(FTE,  "LONG")
+	field(NOA,  "$(FA_WFM_LEN)")
+	field(NOB,  "$(FA_WFM_LEN)")
+	field(NOC,  "$(FA_WFM_LEN)")
+	field(NOD,  "$(FA_WFM_LEN)")
+	field(NOE,  "1")
+	field(OUTA, "$(P){BPM:$(NO)}Fa:A-Cal PP")
+	field(OUTB, "$(P){BPM:$(NO)}Fa:B-Cal PP")
+	field(OUTC, "$(P){BPM:$(NO)}Fa:C-Cal PP")
+	field(OUTD, "$(P){BPM:$(NO)}Fa:D-Cal PP")
+	field(OUTE, "$(P){BPM:$(NO)}Fa-sum PP")
+	field(NOVA, "$(FA_WFM_LEN)")
+	field(NOVB, "$(FA_WFM_LEN)")
+	field(NOVC, "$(FA_WFM_LEN)")
+	field(NOVD, "$(FA_WFM_LEN)")
+	field(NOVE, "$(FA_WFM_LEN)")
+	field(FTVA, "FLOAT")
+	field(FTVB, "FLOAT")
+	field(FTVC, "FLOAT")
+	field(FTVD, "FLOAT")
+	field(FTVE, "FLOAT")
+	field(SCAN, "1 second")
+}
+
+### 
+record(aSub, "$(P){BPM:$(NO)}Tbt:Sum-Calc")
+{
+	field(SNAM, "bpmPosButtonSum")
+	field(INPA, "$(P){BPM:$(NO)}TBT-A")
+	field(INPB, "$(P){BPM:$(NO)}TBT-B")
+	field(INPC, "$(P){BPM:$(NO)}TBT-C")
+	field(INPD, "$(P){BPM:$(NO)}TBT-D")
+	field(INPE, "$(P){BPM:$(NO)}ERec:TbtEnableLen-SP")	
+	field(FTA,  "LONG")
+	field(FTB,  "LONG")
+	field(FTC,  "LONG")
+	field(FTD,  "LONG")
+	field(FTE,  "LONG")
+	field(NOA,  "$(TBT_WFM_LEN)")
+	field(NOB,  "$(TBT_WFM_LEN)")
+	field(NOC,  "$(TBT_WFM_LEN)")
+	field(NOD,  "$(TBT_WFM_LEN)")
+	field(NOE,  "1")
+	field(OUTA, "$(P){BPM:$(NO)}Tbt:A-Cal PP")
+	field(OUTB, "$(P){BPM:$(NO)}Tbt:B-Cal PP")
+	field(OUTC, "$(P){BPM:$(NO)}Tbt:C-Cal PP")
+	field(OUTD, "$(P){BPM:$(NO)}Tbt:D-Cal PP")
+	field(OUTE, "$(P){BPM:$(NO)}Tbt-sum PP")
+	field(NOVA, "$(TBT_WFM_LEN)")
+	field(NOVB, "$(TBT_WFM_LEN)")
+	field(NOVC, "$(TBT_WFM_LEN)")
+	field(NOVD, "$(TBT_WFM_LEN)")
+	field(NOVE, "$(TBT_WFM_LEN)")
+	field(FTVA, "FLOAT")
+	field(FTVB, "FLOAT")
+	field(FTVC, "FLOAT")
+	field(FTVD, "FLOAT")
+	field(FTVE, "FLOAT")
+	field(SCAN, "1 second")
+}
+
+record(waveform, "$(P){BPM:$(NO)}Tbt:A-Cal")
+{
+	field(NELM, "$(TBT_WFM_LEN)")
+	field(FTVL, "FLOAT")
+	field(PREC, "3")
+}
+
+record(waveform, "$(P){BPM:$(NO)}Tbt:B-Cal")
+{
+	field(NELM, "$(TBT_WFM_LEN)")
+	field(FTVL, "FLOAT")
+	field(PREC, "3")
+}
+
+record(waveform, "$(P){BPM:$(NO)}Tbt:C-Cal")
+{
+	field(NELM, "$(TBT_WFM_LEN)")
+	field(FTVL, "FLOAT")
+	field(PREC, "3")
+}
+record(waveform, "$(P){BPM:$(NO)}Tbt:D-Cal")
+{
+	field(NELM, "$(TBT_WFM_LEN)")
+	field(FTVL, "FLOAT")
+	field(PREC, "3")
+}
+record(waveform, "$(P){BPM:$(NO)}Tbt-sum")
+{
+	field(NELM, "$(TBT_WFM_LEN)")
+	field(FTVL, "FLOAT")
+	field(PREC, "3")
+}
+###################
+
+record(waveform, "$(P){BPM:$(NO)}Fa:A-Cal")
+{
+	field(NELM, "$(FA_WFM_LEN)")
+	field(FTVL, "FLOAT")
+	field(PREC, "3")
+}
+record(waveform, "$(P){BPM:$(NO)}Fa:B-Cal")
+{
+	field(NELM, "$(FA_WFM_LEN)")
+	field(FTVL, "FLOAT")
+	field(PREC, "3")
+}
+record(waveform, "$(P){BPM:$(NO)}Fa:C-Cal")
+{
+	field(NELM, "$(FA_WFM_LEN)")
+	field(FTVL, "FLOAT")
+	field(PREC, "3")
+}
+record(waveform, "$(P){BPM:$(NO)}Fa:D-Cal")
+{
+	field(NELM, "$(FA_WFM_LEN)")
+	field(FTVL, "FLOAT")
+	field(PREC, "3")
+}
+record(waveform, "$(P){BPM:$(NO)}Fa-sum")
+{
+	field(NELM, "$(FA_WFM_LEN)")
+	field(FTVL, "FLOAT")
+	field(PREC, "3")
+}
+
+
+record(calc, "$(P){BPM:$(NO)}Pos:X-Calc") {
+	field(DESC, "Position calculation")
+#	field(CALC, "B=0?A-C-D:A*0")
+#	field(CALC, "B=0?A-C:A*0")
+	field(CALC, "B=0?A:A*0")
+	field(INPA, "$(P){BPM:$(NO)}Pos:X-I.VAL  NPP MS")
+	field(INPB, "$(P){BPM:$(NO)}Ampl:SSA-Calc.SEVR")
+#	field(INPC, "$(P){BPM:$(NO)}Pos:UsrXoffset-SP.VAL NPP MS")
+#	field(INPD, "$(P){BPM:$(NO)}Pos:Href-SP.VAL NPP MS")
+	field(PREC, "4")
+	field(EGU,  "mm")
+	field(FLNK, "$(P){BPM:$(NO)}Pos:XwUsrOff-Calc")
+        field(TSEL, "$(P){BPM:$(NO)}Pos:X-I.TIME")
+}
+
+record(calc, "$(P){BPM:$(NO)}Pos:Y-Calc") {
+	field(DESC, "Position calculation")
+#	field(CALC, "B=0?A-C-D:A*0")
+#	field(CALC, "B=0?A-C:A*0")
+	field(CALC, "B=0?A:A*0")
+	field(INPA, "$(P){BPM:$(NO)}Pos:Y-I.VAL  NPP MS")
+	field(INPB, "$(P){BPM:$(NO)}Ampl:SSA-Calc.SEVR")
+#	field(INPC, "$(P){BPM:$(NO)}Pos:UsrYoffset-SP.VAL NPP MS")
+#	field(INPD, "$(P){BPM:$(NO)}Pos:Vref-SP.VAL NPP MS")
+	field(PREC, "4")
+	field(EGU,  "mm")	
+	field(FLNK, "$(P){BPM:$(NO)}Pos:YwUsrOff-Calc")
+        field(TSEL, "$(P){BPM:$(NO)}Pos:Y-I.TIME")
+}
+
+
+### Beam Currrent monitoring
+record(calc, "$(P){BPM:$(NO)}BeamCal-Sts")  {
+	field(DESC, "Beam Current ")
+	field(SCAN,"2 second")
+	field(CALC, "A=0?0:1")
+#	field(INPA, "$(P){BPM:$(NO)}Pos:Y-Calc.VAL NPP MS")
+	field(INPA, "$(P){BPM:$(NO)}Ampl:SSA-Calc.SEVR NPP MS")
+}
+
+
+record(mbbi, "$(P){BPM:$(NO)}Beam-Sts")
+{
+	field(INP, "$(P){BPM:$(NO)}BeamCal-Sts NPP MS")
+	field(SCAN,"2 second")
+	field(ZRST, "BEAM ON")
+	field(ONST, "NO BEAM")
+	field(ZRSV, "NO_ALARM")
+	field(ONSV, "MAJOR")
+}
+
+record(longin, "$(P){BPM:$(NO)}BootUpTime-I") {
+	field(DESC, "Bootup time DDR2_SLOW->BootTimestamp")
+	field(DTYP, "PSC Reg")
+#	field(INP , "@Rx$(NO) 31 88")
+	field(INP , "@Rx$(NO) 31 164")
+	field(SCAN,"I/O Intr")
+#epics DB timestamp
+	field(TSE, "-2")
+	info("TimeFromBlock", "164")
+	info("TimeNSScale", "8")
+	field(FLNK, "$(P){BPM:$(NO)}BootUpTime-SI")	
+}
+
+
+record(stringin, "$(P){BPM:$(NO)}BootUpTime-SI") {
+    field(DTYP, "Soft Timestamp")
+    field(INP , "@ %m/%d/%Y,%H:%M:%S")
+    field(TSEL, "$(P){BPM:$(NO)}BootUpTime-I.TIME")
+}
+
+
+record(calc, "$(P){BPM:$(NO)}AdcVoltCal-Sts")  {
+	field(DESC, "ADC voltage")
+	field(SCAN,"2 second")
+#	field(CALC, "(A=0)&&(B=0)&&(C=0)&&(D=0)?0:1")
+#	field(INPA, "$(P){BPM:$(NO)}ADC:Avolt-I.SEVR NPP MS")
+#	field(INPB, "$(P){BPM:$(NO)}ADC:Bvolt-I.SEVR NPP MS")
+#	field(INPC, "$(P){BPM:$(NO)}ADC:Cvolt-I.SEVR NPP MS")
+#	field(INPD, "$(P){BPM:$(NO)}ADC:Dvolt-I.SEVR NPP MS")
+### 11/24/14
+       field(CALC, "(A>250)||(B>250)||(C>250)||(D>250)?1:0")
+       field(INPA, "$(P){BPM:$(NO)}ADC:MAXV_A-I NPP MS")
+       field(INPB, "$(P){BPM:$(NO)}ADC:MAXV_B-I NPP MS")
+       field(INPC, "$(P){BPM:$(NO)}ADC:MAXV_C-I NPP MS")
+       field(INPD, "$(P){BPM:$(NO)}ADC:MAXV_D-I NPP MS")
+}
+
+record(mbbi, "$(P){BPM:$(NO)}AdcAlarm-Sts")
+{
+	field(INP, "$(P){BPM:$(NO)}AdcVoltCal-Sts NPP MS")
+	field(SCAN,"2 second")
+	field(ZRST, "OK")
+	field(ONST, "SATURATED")
+	field(ZRSV, "NO_ALARM")
+	field(ONSV, "MAJOR")
+}
+
+########################
+### Single short mode
+########################
+record(subArray, "$(P){BPM:$(NO)}Tbt-Arry-x") {
+	field(FTVL, "LONG")
+	field(INP,  "$(P){BPM:$(NO)}TBT-X")
+	field(INDX, "3")
+	field(MALM, "32")
+	field(SCAN, "Passive")
+	field(PHAS, "2")
+	field(PINI, "NO")
+}
+
+record(subArray, "$(P){BPM:$(NO)}Tbt-Arry-y") {
+	field(FTVL, "LONG")
+	field(INP,  "$(P){BPM:$(NO)}TBT-Y")
+	field(INDX, "3")
+	field(MALM, "32")
+	field(SCAN, "Passive")
+	field(PHAS, "2")
+	field(PINI, "NO")
+}
+
+# Single Shot tbt data
+record(calc, "$(P){BPM:$(NO)}SPos-x") {
+	field(SCAN, "1 second")
+	field(CALC, "A*B")
+	field(INPA, "$(P){BPM:$(NO)}Tbt-Arry-x.VAL PP")	
+	field(INPB, "0.000001")
+	field(PREC, "3")
+	field(EGU,  "mm")
+}
+
+record(calc, "$(P){BPM:$(NO)}SPos-y") {
+	field(SCAN, "1 second")
+	field(CALC, "A*B")
+	field(INPA, "$(P){BPM:$(NO)}Tbt-Arry-y.VAL PP")	
+	field(INPB, "0.000001")
+	field(PREC, "3")
+	field(EGU,  "mm")
+}
+
+#############################################
+# FA slow X
+#############################################
+record(ai, "$(P){BPM:$(NO)}Pos:FaRaw-X-I") {
+	field(DESC,"10 kHz X um bpm cal position")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 48")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.001")
+	field(PREC,"4")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+
+record(ai, "$(P){BPM:$(NO)}Pos:FA-X-I") {
+	field(DESC,"10 kHz X um filted pos")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 52")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.001")
+	field(PREC,"4")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+
+# FA Slow Y
+record(ai, "$(P){BPM:$(NO)}Pos:FA-Y-I") {
+	field(DESC,"10 kHz Y filted pos")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 56")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.001")
+	field(PREC,"4")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+
+record(ai, "$(P){BPM:$(NO)}Pos:FA-DX-I") {
+	field(DESC,"10 kHz X um delta pos")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 60")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "um")	
+}
+
+# FA Slow Y
+record(ai, "$(P){BPM:$(NO)}Pos:FA-DY-I") {
+	field(DESC,"10 kHz Y delta pos")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 64")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "um")	
+}
+
+
+###############################################
+######  TEST LOCAL/GLOBAL MODE
+###############################################
+
+#
+#	BPM PV for Trigger source selection
+#
+record(mbbo, "$(P){BPM:$(NO)}Trig:SRC-SP") {
+	field(DESC, "Trigge source select")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 52")
+	field(ZRST, "INT Soft")
+	field(ONST, "EXT EVR")
+	field(TWST, "EVR Soft")
+	field(ZRVL, "0")
+	field(ONVL, "1")
+	field(TWVL, "2")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+#Trigger source (Internal/External)
+record(bo, "$(P){BPM:$(NO)}Trig:TrigSrc-SP") {
+	field(DESC, "Trigger source")
+	field(DTYP, "PSC Single U32")
+#    field(DOL , "$(SYS=SR)-HLA{}AllBPMs-Trig:TrigSrc-SP CP")
+	field(OUT , "@aie_tx_$(NO) 1 52")
+	field(ZNAM,"INT")
+	field(ONAM,"EXT")	
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+
+### 08/21/14
+# EPICS setpoint and readback point check
+#
+record(calc, "$(P){BPM:$(NO)}SetParmCal-Sts")  {
+        field(DESC, "BPM Parm check")
+        field(SCAN,"5 second")
+        field(CALC, "(A=B)&&(C=D)?0:1")
+        field(INPA, "$(P){BPM:$(NO)}Trig:AdcDelay-SP.SEVR NPP MS")
+        field(INPB, "$(P){BPM:$(NO)}Trig:AdcDelay-I.SEVR NPP MS")
+        field(INPC, "$(P){BPM:$(NO)}Gain:RfAtte-SP.SEVR NPP MS")
+        field(INPD, "$(P){BPM:$(NO)}Gain:RfAtte-I.SEVR NPP MS")
+}
+
+record(mbbi, "$(P){BPM:$(NO)}SetParmAlarm-Sts")
+{
+        field(INP, "$(P){BPM:$(NO)}SetParmCal-Sts NPP MS")
+        field(SCAN,"5 second")
+        field(ZRST, "OK")
+        field(ONST, "SETTING FAIL")
+        field(ZRSV, "NO_ALARM")
+        field(ONSV, "MAJOR")
+}
+
+### 10 kHz FIR Filter
+### 10 kHz FIR Filter
+#record(bo, "$(P){BPM:$(NO)}FA_FIR_EN-SP") {
+#	field(DESC, "FA FIR enable")
+#	field(DTYP, "PSC Single U32")
+#	field(OUT , "@aie_tx_$(NO) 1 484")
+#	field(ZNAM, "Disable")
+#	field(ONAM, "Enable")
+#	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+#}
+record(mbbo, "$(P){BPM:$(NO)}FA_FIR_EN-SP") {
+	field(DESC, "SDI FA filter select")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 484")
+	field(ZRST, "RAW")
+	field(ONST, "FIR")
+	field(TWST, "IIR2")
+	field( THST, "AVG")
+	field(ZRVL, "0")
+	field(ONVL, "1")
+	field(TWVL, "2")
+	field(THVL, "3")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+
+
+record(longout, "$(P){BPM:$(NO)}FA_FIR_GX-SP") {
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 488")
+	field(HOPR,"0xFFFFFFFF")
+	field(LOPR,"0")
+	field(UDF, "0")
+	field(TPRO, 1)
+	field(VAL, "523449139")	#(1.95*2^28)
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+record(longout, "$(P){BPM:$(NO)}FA_FIR_GY-SP") {
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 492")
+	field(HOPR,"0xFFFFFFFF")
+	field(LOPR,"0")
+	field(UDF, "0")
+	field(TPRO, 1)
+#    field(PINI, "YES")
+    	field(VAL, "523449139")
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+
+#################################################
+### DataIsFa-SP.VAL : 0 - simulation
+###                   1 - FA 10 kHz
+### beam current 0.2 mA
+#################################################
+record(calcout,"$(P){BPM:$(NO)}FaMode-Cal") {
+        field(INPA, "$(P){BPM:$(NO)}Sdi:DataIsFa-SP.VAL CP")
+        field(INPB, "SR:C03-BI{DCCT:1}I:Total-I CP")
+        #field(INPB, "$(P){BPM:$(NO)}Gain:PtAtte-SP CP")
+        field(CALC,"B>2 && A=0?1:0")
+        field(OOPT,"When Non-zero")
+        field(OUT, "$(P){BPM:$(NO)}Sdi:DataIsFa-SP.VAL CA")
+        field(FLNK, "$(P){BPM:$(NO)}FaMode-Cal2")
+}
+
+record(calcout,"$(P){BPM:$(NO)}FaMode-Cal2") {
+        #field(INPB, "$(P){BPM:$(NO)}Gain:PtAtte-SP ")
+        field(INPB, "SR:C03-BI{DCCT:1}I:Total-I CP")
+        field(CALC,"B>2?1:0")
+        field(OUT, "$(P){BPM:$(NO)}Sdi:DataIsFa-SP.DISP CA")
+}
+
+
+### PT
+record(calcout,"$(P){BPM:$(NO)}Rf:PtPwr-Cal") {
+        field(INPA, "$(P){BPM:$(NO)}Rf:PtPwr-SP.VAL CP")
+        field(INPB, "SR:C03-BI{DCCT:1}I:Total-I CP")
+#        field(INPB, "$(P){BPM:$(NO)}Gain:PtAtte-SP CP")
+        field(CALC,"B>2 && A=1? 0:1")
+        field(OOPT,"When Zero")
+        field(OUT, "$(P){BPM:$(NO)}Rf:PtPwr-SP.VAL CA")
+        field(FLNK, "$(P){BPM:$(NO)}Rf:PtPwr-Cal2")
+}
+
+record(calcout,"$(P){BPM:$(NO)}Rf:PtPwr-Cal2") {
+#        field(INPB, "$(P){BPM:$(NO)}Gain:PtAtte-SP ")
+        field(INPB, "SR:C03-BI{DCCT:1}I:Total-I CP")
+        field(CALC,"B>2?1:0")
+        field(OUT, "$(P){BPM:$(NO)}Rf:PtPwr-SP.DISP CA")
+}
+
+
+record(bo, "$(P){BPM:$(NO)}PM:RST-SP") {
+	field(DESC, "PM Reset, 127")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 508")
+	field(ZNAM, "PM Ready")
+	field(ONAM, "PM Reset")
+	field(HIGH,".1")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+record(mbbo, "$(P){BPM:$(NO)}IIR:CoeffSel-SP") {
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 500")
+#	field( PINI, "YES")
+	field( ZRST, "0.9")
+	field( ONST, "0.1")
+	field( TWST, "0.3")
+	field( THST, "0.5")
+	field( FRST, "0.7")
+	field( ZRVL, "0")
+	field( ONVL, "1")
+	field( TWVL, "2")
+	field( THVL, "3")
+	field( FRVL, "4")
+#	field( IVOA, "Don't drive outputs")
+#	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+record(bo, "$(P){BPM:$(NO)}PM:Fault-SP") {
+	field(DESC, "PM Reset, 126")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 504")
+	field(ZNAM, "PM Ready")
+	field(ONAM, "PM Fault")
+	field(HIGH,".1")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+record(bo, "$(P){BPM:$(NO)}DDR:SaPtrRst-SP") {
+	field(DESC, "SA waveform DDR addr reset, 128")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 684")
+	field(ZNAM, "Ready")
+	field(ONAM, "Addr Reset")
+	field(HIGH,".1")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+#	PM 32K
+#
+record(waveform,"$(P){BPM:$(NO)}PM-X") {
+	field(DTYP, "PSC Block F32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 55 0 12")
+	field(SCAN,"I/O Intr")
+	field(FTVL,"DOUBLE")
+	field(NELM,"32767")
+}
+
+record(waveform,"$(P){BPM:$(NO)}PM-Y") {
+	field(DTYP, "PSC Block F32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 55 4 12")
+	field(SCAN,"I/O Intr")
+	field(FTVL,"DOUBLE")
+	field(NELM,"32767")
+}
+
+record(waveform,"$(P){BPM:$(NO)}PM-SUM") {
+	field(DTYP, "PSC Block F32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 55 8 12")
+	field(SCAN,"I/O Intr")
+	field(FTVL,"DOUBLE")
+	field(NELM,"32767")
+}
+
+
+##### ADC PM
+record(waveform,"$(P){BPM:$(NO)}PM:ADCRaw-I") {
+        field(DESC, "117 MHz ADC0 raw waveform")
+        field(DTYP, "PSC Block I16 In")
+        field(INP , "@aie_wfm_rx_$(NO) 56 0")
+        field(SCAN, "I/O Intr")
+        field(FTVL, "DOUBLE")
+        field(HOPR, "32768")
+        field(LOPR, "-32767")
+    field(NELM,"256000")
+}
+
+record(mbbo, "$(P){BPM:$(NO)}Gain:Mode-SP") {
+	field(DESC, "Gain and Offset Cal Mode, 137")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 716")
+	field( ZRST, "ABCD")
+	field( ONST, "XY")
+	field( TWST, "PV")
+	field( ZRVL, "0")
+	field( ONVL, "1")
+	field( TWVL, "2")
+	field( IVOA, "Don't drive outputs")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+# position X offset value
+# +/- 5,000,000 nm  ( +/- 5 mm)
+record(longout, "$(P){BPM:$(NO)}Pos:Ex-SP") {
+	field(DESC, "Electronics X Offset")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 708")
+	field(HOPR,"25000000")
+	field(LOPR,"-25000000")	
+	field(DRVH,"25000000")	
+	field(DRVL,"-25000000")	
+	field(EGU, "nm")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+# position Y offset value
+record(longout, "$(P){BPM:$(NO)}Pos:Ey-SP") {
+	field(DESC, "Electronics Y Offset")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 712")
+	field(HOPR,"25000000")
+	field(LOPR,"-25000000")	
+	field(DRVH,"25000000")	
+	field(DRVL,"-25000000")	
+	field(EGU, "nm")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+record(longin, "$(P){BPM:$(NO)}Pos:Ex-I") {
+	field(DESC, "Electronics X Offset readback 156")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 624")
+    field(SCAN,"I/O Intr")
+}
+record(longin, "$(P){BPM:$(NO)}Pos:Ey-I") {
+	field(DESC, "Electronics X Offset readback 157")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 628")
+	field(SCAN,"I/O Intr")
+}
+record(longin, "$(P){BPM:$(NO)}Gain:Mode-I") {
+        field(DESC, "Gain Cal Mode ")
+        field(DTYP, "PSC Reg")
+        field(INP , "@Rx$(NO) 30 632")
+        field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(P){BPM:$(NO)}PM:Ts-Sec-I") {
+	field(DESC, "PM Ts latch sec 163")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 636")
+	field(SCAN,"I/O Intr")
+#epics DB timestamp
+	field(TSE, "-2")
+	info("TimeFromBlock", "636")
+	info("TimeNSScale", "8")
+	field(FLNK, "$(P){BPM:$(NO)}PM:Time-SI")	
+}
+record(longin, "$(P){BPM:$(NO)}PM:Ts-Off-I") {
+	field(DESC, "PM Ts latch nsec 164")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 640")
+	field(SCAN,"I/O Intr")
+}
+
+record(stringin, "$(P){BPM:$(NO)}PM:Time-SI") {
+    field(DTYP, "Soft Timestamp")
+    field(INP , "@ %m/%d/%Y,%H:%M:%S")
+    field(TSEL, "$(P){BPM:$(NO)}PM:Ts-Sec-I.TIME")
+}
+
+
+
+
+
+#### 021425
+record(longout, "$(P){BPM:$(NO)}PM:TbtBramStopSize-SP") {
+        field(DTYP, "PSC Single I32")
+        field(OUT , "@aie_tx_$(NO) 1 688")
+        field(HOPR,"25000")
+        field(LOPR,"250")
+        field(DRVH,"25000")
+        field(DRVL,"250")
+        field(EGU, "turns")
+        field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+record(ao, "$(P){BPM:$(NO)}TbtSumRef-SP") {
+        field(DESC, "TBT Sum reference ")
+	field(DTYP, "PSC Single F32")
+        field(PREC,"3")
+        field(LINR,"LINEAR")
+#       info(autosaveFields, "VAL")
+        field(OUT , "@aie_tx_$(NO) 1 692")
+        field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+record(bo, "$(P){BPM:$(NO)}BeamStatus-SP") {
+        field(DESC, "Beam status set")
+        field(DTYP, "PSC Single U32")
+        field(OUT , "@aie_tx_$(NO) 1 696")
+        field(ZNAM, "Beam OFF")
+        field(ONAM, "Beam ON")
+        field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+record(ao, "$(P){BPM:$(NO)}Gain:RfAtteF-SP") {
+        field(DESC, "RF attenator Float ")
+	field(DTYP, "PSC Single F32")
+        field(PREC,"3")
+        field(LINR,"LINEAR")
+        field(HOPR,"31")
+        field(LOPR,"0")
+        field(DRVH,"31")
+        field(DRVL,"0")
+#       info(autosaveFields, "VAL")
+        field(OUT , "@aie_tx_$(NO) 1 700")
+        field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+record(bo, "$(P){BPM:$(NO)}PM:LemoReset-SP") {
+	field(DESC, "PM reset to Lemo out 1")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 720")
+	field(ZNAM, "PM Ready")
+	field(ONAM, "PM Reset")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+record(longin, "$(P){BPM:$(NO)}DDR:SA_TsPtrAddr-I") {
+	field(DESC, "SA WFM TS start index")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 644")
+	field(SCAN,"I/O Intr")
+}
+
+record(longout, "$(P){BPM:$(NO)}DDR:SA_TsPtr-SP") {
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 704")
+	field(HOPR,"90000000000")
+	field(DRVH,"90000000000")
+	field(EGU, "sec")
+	field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+### PM FA WAVEFORM
+record(waveform,"$(P){BPM:$(NO)}PM:FA-X") {
+	field(DTYP, "PSC Block F32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 57 4 8")
+	field(SCAN,"I/O Intr")
+	field(FTVL,"DOUBLE")
+	field(NELM,"10000")
+}
+
+record(waveform,"$(P){BPM:$(NO)}PM:FA-Y") {
+	field(DTYP, "PSC Block F32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 57 0 8")
+	field(SCAN,"I/O Intr")
+	field(FTVL,"DOUBLE")
+	field(NELM,"10000")
+}
+
+record(bi, "$(P){BPM:$(NO)}PM:Status-I") {
+	field(INP , "$(P){BPM:$(NO)}Sys:Status3-I.B0 CP")
+	field(ZNAM,"PM Detected")
+	field(ONAM,"PM Ready")
+	field(TSE , "-2")
+	info("TimeFromBlock", "636")
+	info("TimeNSScale", "8")
+}
+
+record(bo, "$(P){BPM:$(NO)}PllLatchReset-SP") {
+        field(DTYP, "PSC Single U32")
+        field(OUT , "@aie_tx_$(NO) 1 724")
+        field(ZNAM, "PLL latch Ready")
+        field(ONAM, "PLL latch Reset")
+        field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+
+record(mbbo, "$(P){BPM:$(NO)}SDI_glitchSel-SP") {
+        field(DESC, "SDI glitch type select")
+        field(DTYP, "PSC Single U32")
+        field(OUT , "@aie_tx_$(NO) 1 732")
+#       field( PINI, "YES")
+        field( ZRST, "NO Glitch")
+        field( ONST, "Mode 1")
+        field( TWST, "Mode 2")
+        field( THST, "Mode 3")
+        field( FRST, "Mode 4")
+        field( ZRVL, "0")
+        field( ONVL, "1")
+        field( TWVL, "2")
+        field( THVL, "3")
+        field( FRVL, "4")
+#       field( IVOA, "Don't drive outputs")
+#       info(autosaveFields, "VAL")
+        field(FLNK, "$(P){BPM:$(NO)}GoRegSingleWrite")
+}
+
+##########
+## E N D
+##########
+

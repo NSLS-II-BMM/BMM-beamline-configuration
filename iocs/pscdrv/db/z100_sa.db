@@ -1,0 +1,192 @@
+##flush reg to socket buffer, trigger send to send all socket buffer to PSC
+record(bo, "$(P)send") {
+        field(DTYP, "PSC Ctrl Send All")
+        field(OUT , "@aie_tx_$(NO)")
+        field(ZNAM, "Send")
+        field(ONAM, "Send")
+}
+
+record(longout, "$(P)GoRegSingleWrite") {
+        field(DTYP, "PSC Ctrl Send")
+        field(OUT , "@aie_tx_$(NO)")
+        field(VAL , "1")
+        field(FLNK, "$(P)send")
+}
+
+record(longout, "$(P){CC}regsend2") {
+        field(DTYP, "PSC Ctrl Send")
+        field(OUT , "@aie_tx_$(NO)")
+        field(VAL , "2")
+        field(FLNK, "$(P)send")
+}
+
+record(longout, "Set1-SP") {
+        field(DESC, "Cell SDI Packet Delay 8 ns step")
+        field(DTYP, "PSC Single I32")
+        field(OUT , "@aie_tx_$(NO) 1 0")
+        field(HOPR, "100000")
+        field(LOPR, "1")
+        field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+record(longout, "Set2-SP") {
+        field(DESC, "Trig1 delay")
+        field(DTYP, "PSC Single I32")
+        field(OUT , "@aie_tx_$(NO) 1 4")
+        field(HOPR, "100000")
+        field(LOPR, "1")
+        field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+### waveform
+record(waveform,"$(P)xy_wfm") {
+        field(DTYP, "PSC Block I32 In")
+        field(INP , "@aie_wfm_rx_$(NO) 31")
+        field(SCAN,"I/O Intr")
+        field(FTVL,"DOUBLE")
+        field(NELM,"362")
+}
+record(waveform,"$(P)x_wfm") {
+        field(DTYP, "PSC Block I32 In")
+        field(INP , "@aie_wfm_rx_$(NO) 31 8")
+        field(SCAN,"I/O Intr")
+        field(FTVL,"DOUBLE")
+        field(NELM,"180")
+	field(FLNK, "$(P)Pos:CO-WA-X")
+}
+
+record(waveform,"$(P)y_wfm") {
+        field(DTYP, "PSC Block I32 In")
+        field(INP , "@aie_wfm_rx_$(NO) 31 728")
+        field(SCAN,"I/O Intr")
+        field(FTVL,"DOUBLE")
+        field(NELM,"180")
+	field(FLNK, "$(P)Pos:CO-WA-Y")
+}
+
+
+##############
+record(waveAnl,"$(P)Pos:CO-WA-X") {
+        field(DESC,"Closed Orbit X Waveform analysis")
+        field(SCAN,"Passive")
+        field(NELM,"180")
+        field(INP,"$(P)x_wfm")
+        field(PREC,"0")
+        field(EGUX,"nm")
+        field(HORX,"50")
+        field(LORX,"0")
+        field(EGUY,"")
+        field(HORY,"25000000")
+        field(LORY,"-25000000")
+        field(INAM,"")
+        field(SNAM,"")
+}
+
+record(calc, "$(P)Pos:CO-X-Mean")  {
+        field(DESC, "X Mean")
+        field(CALC, "A*0.000001")
+        field(INPA, "$(P)Pos:CO-WA-X.MEAN CP")
+        field(PREC,"5")
+        field(EGU,  "mm")
+}
+
+record(calc, "$(P)Pos:CO-X-SDEV")  {
+        field(DESC, "X Standard deviation")
+        field(CALC, "A*0.000001")
+        field(INPA, "$(P)Pos:CO-WA-X.SDEV CP")
+        field(PREC,"5")
+        field(EGU,  "mm")
+}
+
+record(calc, "$(P)Pos:CO-X-Max")  {
+        field(DESC, "X Max")
+        field(CALC, "A*0.000001")
+        field(INPA, "$(P)Pos:CO-WA-X.MAX CP")
+        field(PREC,"3")
+        field(EGU,  "mm")
+}
+
+record(calc, "$(P)Pos:CO-X-PkPk")  {
+        field(DESC, "X Peak to Peak")
+        field(CALC, "A*0.000001")
+        field(INPA, "$(P)Pos:CO-WA-X.PKPK CP")
+        field(PREC,"3")
+        field(EGU,  "mm")
+}
+
+#######
+record(waveAnl,"$(P)Pos:CO-WA-Y") {
+        field(DESC,"Closed Orbit X Waveform analysis")
+        field(SCAN,"Passive")
+        field(NELM,"180")
+        field(INP,"$(P)y_wfm")
+        field(PREC,"0")
+        field(EGUX,"nm")
+        field(HORX,"50")
+        field(LORX,"0")
+        field(EGUY,"")
+        field(HORY,"25000000")
+        field(LORY,"-25000000")
+        field(INAM,"")
+        field(SNAM,"")
+}
+
+record(calc, "$(P)Pos:CO-Y-Mean")  {
+        field(DESC, "X Mean")
+        field(CALC, "A*0.000001")
+        field(INPA, "$(P)Pos:CO-WA-Y.MEAN CP")
+        field(PREC,"5")
+        field(EGU,  "mm")
+}
+
+record(calc, "$(P)Pos:CO-Y-SDEV")  {
+        field(DESC, "X Standard deviation")
+        field(CALC, "A*0.000001")
+        field(INPA, "$(P)Pos:CO-WA-Y.SDEV CP")
+        field(PREC,"5")
+        field(EGU,  "mm")
+}
+
+record(calc, "$(P)Pos:CO-Y-Max")  {
+        field(DESC, "X Max")
+        field(CALC, "A*0.000001")
+        field(INPA, "$(P)Pos:CO-WA-Y.MAX CP")
+        field(PREC,"3")
+        field(EGU,  "mm")
+}
+
+record(calc, "$(P)Pos:CO-Y-PkPk")  {
+        field(DESC, "X Peak to Peak")
+        field(CALC, "A*0.000001")
+        field(INPA, "$(P)Pos:CO-WA-Y.PKPK CP")
+        field(PREC,"3")
+        field(EGU,  "mm")
+}
+
+record(longin, "$(P)CNT-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx_$(NO) 31 4")
+	field(SCAN,"I/O Intr")
+}
+
+record(ai, "$(P)C01:x1-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx_$(NO) 31 8")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")
+}
+
+record(ai, "$(P)C01:y1-I") {
+        field(DTYP, "PSC Reg")
+        field(INP , "@aie_wfm_rx_$(NO) 31 728")
+        field(LINR,"LINEAR")
+        field(ESLO,"0.000001")
+        field(PREC,"3")
+        field(SCAN,"I/O Intr")
+        field(EGU,  "mm")
+}

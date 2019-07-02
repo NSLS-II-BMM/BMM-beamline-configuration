@@ -1,0 +1,249 @@
+#!/bin/bash
+
+: << DESCRIPTION
+Generation of 6A PSs IOC start script
+
+DESCRIPTION
+
+numpsc=([0]=17 [1]=18 [2]=19 [3]=20 [4]=21 [5]=22 [6]=23 [7]=24 [8]=25 [9]=26 [10]=27 [11]=28 [12]=29 [13]=30 [14]=31 [15]=32 [16]=33 [17]=34 [18]=35 [19]=36 [20]=37 [21]=38 [22]=39 [23]=40 [24]=41 [25]=42 [26]=43 [27]=44)
+
+PSLIST="BR:DS-PS{6A:CXW2} BR:A1-PS{6A:CX1} BR:A1-PS{6A:CX2} BR:A1-PS{6A:CX3} BR:DS-PS{6A:CXW1} BR:A1-PS{6A:SF1} 
+        BR:A1-PS{6A:CY1} BR:A1-PS{6A:CY2} BR:A1-PS{6A:CY3} BR:A1-PS{6A:CY4} BR:A1-PS{6A:SD1} BR:A1-PS{6A:SD2} BR:A1-PS{6A:SF2} NONE
+        BR:XS-PS{6A:CXW2} BR:A2-PS{6A:CX1} BR:A2-PS{6A:CX2} BR:A2-PS{6A:CX3} BR:XS-PS{6A:CXW1} BR:A2-PS{6A:SF1}
+        BR:A2-PS{6A:CY1} BR:A2-PS{6A:CY2} BR:A2-PS{6A:CY3} BR:A2-PS{6A:CY4} BR:A2-PS{6A:SD1} BR:A2-PS{6A:SD2} BR:A2-PS{6A:SF2} NONE
+        BR:CS-PS{6A:CXW2} BR:A3-PS{6A:CX1} BR:A3-PS{6A:CX2} BR:A3-PS{6A:CX3} BR:CS-PS{6A:CXW1} BR:A3-PS{6A:SF1}
+        BR:A3-PS{6A:CY1} BR:A3-PS{6A:CY2} BR:A3-PS{6A:CY3} BR:A3-PS{6A:CY4} BR:A3-PS{6A:SD1} BR:A3-PS{6A:SD2} BR:A3-PS{6A:SF2} NONE
+        BR:IS-PS{6A:CXW2} BR:A4-PS{6A:CX1} BR:A4-PS{6A:CX2} BR:A4-PS{6A:CX3} BR:IS-PS{6A:CXW1} BR:A4-PS{6A:SF1}
+        BR:A4-PS{6A:CY1} BR:A4-PS{6A:CY2} BR:A4-PS{6A:CY3} BR:A4-PS{6A:CY4} BR:A4-PS{6A:SD1} BR:A4-PS{6A:SD2} BR:A4-PS{6A:SF2} NONE"
+
+echo '#!../../bin/linux-x86/psc'
+echo
+
+echo '< envPaths'
+echo
+
+echo 'epicsEnvSet("EPICS_CA_AUTO_ADDR_LIST","NO")'
+echo 'epicsEnvSet("EPICS_CA_ADDR_LIST","10.0.153.255")'
+echo 'epicsEnvSet("IOCNAME", "ps-br-6a-ng")'
+echo
+
+echo '# to avoid a lot of "scanOnce: Ring buffer overflow" during save/restore initialization'
+echo 'scanOnceSetQueueSize(4000)'
+echo
+
+echo "#epicsThreadSleep 5"
+echo
+
+echo 'cd ${TOP}'
+echo
+
+echo '## Register all support components'
+echo 'dbLoadDatabase("dbd/psc.dbd",0,0)'
+echo 'psc_registerRecordDeviceDriver(pdbbase)'
+echo
+
+echo '## Load record instances'
+echo
+
+count=0  
+while [ $count -le 27 ]
+do
+  echo
+  echo 'dbLoadRecords("db/Commands.db",       "PriSys=BR, PS=PSC'${numpsc[$count]}'")'
+  echo 'dbLoadRecords("db/Status.db",         "PriSys=BR, PS=PSC'${numpsc[$count]}'")'
+  echo '# ADC waveforms (both 10k and 1k)'
+  echo 'dbLoadRecords("db/ADCWaveform.db",    "PSy=BR, PS=PSC'${numpsc[$count]}', TIMESTAMP=BST-TS{EVR:B1A}Cnt:BRPrev-I, ADC1K_POINTS=1014, ADC10K_POINTS=10150")'
+  echo '# adjusted ADC waveforms are below'
+  echo 'dbLoadRecords("db/Ch-WfIn-Coeff.db",  "INPUT=BR{PSC'${numpsc[$count]}'}ADC:00_Raw-I,  OUTPUT=BR{PSC'${numpsc[$count]}'}ADC:00-I, WF_LENGTH=1014")'
+  echo 'dbLoadRecords("db/Ch-WfIn-Coeff.db",  "INPUT=BR{PSC'${numpsc[$count]}'}ADC:01_Raw-I,  OUTPUT=BR{PSC'${numpsc[$count]}'}ADC:01-I, WF_LENGTH=1014")'
+  echo 'dbLoadRecords("db/Ch-WfIn-Coeff.db",  "INPUT=BR{PSC'${numpsc[$count]}'}ADC:02_Raw-I,  OUTPUT=BR{PSC'${numpsc[$count]}'}ADC:02-I, WF_LENGTH=1014")'
+  echo 'dbLoadRecords("db/Ch-WfIn-Coeff.db",  "INPUT=BR{PSC'${numpsc[$count]}'}ADC:03_Raw-I,  OUTPUT=BR{PSC'${numpsc[$count]}'}ADC:03-I, WF_LENGTH=1014")'
+  echo 'dbLoadRecords("db/Ch-WfIn-Coeff.db",  "INPUT=BR{PSC'${numpsc[$count]}'}ADC:04_Raw-I,  OUTPUT=BR{PSC'${numpsc[$count]}'}ADC:04-I, WF_LENGTH=1014")'
+  echo 'dbLoadRecords("db/Ch-WfIn-Coeff.db",  "INPUT=BR{PSC'${numpsc[$count]}'}ADC:05_Raw-I,  OUTPUT=BR{PSC'${numpsc[$count]}'}ADC:05-I, WF_LENGTH=1014")'
+  echo 'dbLoadRecords("db/Ch-WfIn-Coeff.db",  "INPUT=BR{PSC'${numpsc[$count]}'}ADC:06_Raw-I,  OUTPUT=BR{PSC'${numpsc[$count]}'}ADC:06-I, WF_LENGTH=1014")'
+  echo 'dbLoadRecords("db/Ch-WfIn-Coeff.db",  "INPUT=BR{PSC'${numpsc[$count]}'}ADC:07_Raw-I,  OUTPUT=BR{PSC'${numpsc[$count]}'}ADC:07-I, WF_LENGTH=1014")'
+  echo 'dbLoadRecords("db/Ch-WfIn-Coeff.db",  "INPUT=BR{PSC'${numpsc[$count]}'}ADC:08_Raw-I,  OUTPUT=BR{PSC'${numpsc[$count]}'}ADC:08-I, WF_LENGTH=1014")'
+  echo 'dbLoadRecords("db/Ch-WfIn-Coeff.db",  "INPUT=BR{PSC'${numpsc[$count]}'}ADC:09_Raw-I,  OUTPUT=BR{PSC'${numpsc[$count]}'}ADC:09-I, WF_LENGTH=1014")'
+  echo 'dbLoadRecords("db/Ch-WfIn-Coeff.db",  "INPUT=BR{PSC'${numpsc[$count]}'}ADC:10_Raw-I,  OUTPUT=BR{PSC'${numpsc[$count]}'}ADC:10-I, WF_LENGTH=1014")'
+  echo 'dbLoadRecords("db/Ch-WfIn-Coeff.db",  "INPUT=BR{PSC'${numpsc[$count]}'}ADC:11_Raw-I,  OUTPUT=BR{PSC'${numpsc[$count]}'}ADC:11-I, WF_LENGTH=1014")'
+  echo 'dbLoadRecords("db/Ch-WfIn-Coeff.db",  "INPUT=BR{PSC'${numpsc[$count]}'}ADC:12_Raw-I,  OUTPUT=BR{PSC'${numpsc[$count]}'}ADC:12-I, WF_LENGTH=1014")'
+  echo 'dbLoadRecords("db/Ch-WfIn-Coeff.db",  "INPUT=BR{PSC'${numpsc[$count]}'}ADC:13_Raw-I,  OUTPUT=BR{PSC'${numpsc[$count]}'}ADC:13-I, WF_LENGTH=1014")'
+  echo 'dbLoadRecords("db/Ch-WfIn-Coeff.db",  "INPUT=BR{PSC'${numpsc[$count]}'}ADC:14_Raw-I,  OUTPUT=BR{PSC'${numpsc[$count]}'}ADC:14-I, WF_LENGTH=1014")'
+  echo 'dbLoadRecords("db/Ch-WfIn-Coeff.db",  "INPUT=BR{PSC'${numpsc[$count]}'}ADC:15_Raw-I,  OUTPUT=BR{PSC'${numpsc[$count]}'}ADC:15-I, WF_LENGTH=1014")'
+  echo 'dbLoadRecords("db/Ch-WfIn-Coeff.db",  "INPUT=BR{PSC'${numpsc[$count]}'}ADC:16_Raw-I,  OUTPUT=BR{PSC'${numpsc[$count]}'}ADC:16-I, WF_LENGTH=1014")'
+  echo 'dbLoadRecords("db/Ch-WfIn-Coeff.db",  "INPUT=BR{PSC'${numpsc[$count]}'}ADC:17_Raw-I,  OUTPUT=BR{PSC'${numpsc[$count]}'}ADC:17-I, WF_LENGTH=1014")'
+  echo
+  echo 'dbLoadRecords("db/Average.db",        "INPUT=BR{PSC'${numpsc[$count]}'}ADC10k:0_Raw-I,  OUTPUT=BR{PSC'${numpsc[$count]}'}ADC10k:0-I, WF_LENGTH=10150")'
+  echo 'dbLoadRecords("db/Average.db",        "INPUT=BR{PSC'${numpsc[$count]}'}ADC10k:1_Raw-I,  OUTPUT=BR{PSC'${numpsc[$count]}'}ADC10k:1-I, WF_LENGTH=10150")'
+  echo 'dbLoadRecords("db/Subtract.db",       "INPUT1=BR{PSC'${numpsc[$count]}'}ADC10k:0-I, INPUT2=BR{PSC'${numpsc[$count]}'}ADC10k:1-I, OUTPUT=BR{PSC'${numpsc[$count]}'}ADC10k_Sub-I, WF_LENGTH=10150")'
+  echo 'dbLoadRecords("db/FFT.db",            "INPUT=BR{PSC'${numpsc[$count]}'}ADC10k:0_Raw-I,  OUTPUT=BR{PSC'${numpsc[$count]}'}ADC10k:0_Raw_I_FFT-I, WF_LENGTH=10150")'
+  echo 'dbLoadRecords("db/FFT.db",            "INPUT=BR{PSC'${numpsc[$count]}'}ADC10k:1_Raw-I,  OUTPUT=BR{PSC'${numpsc[$count]}'}ADC10k:1_Raw_I_FFT-I, WF_LENGTH=10150")'
+
+  echo
+  echo 'dbLoadRecords("db/RampingTable.db",   "PriSys=BR, PSC=PSC'${numpsc[$count]}', RAWDATA_LENGTH=43440, WF10K_LENGTH=10150, CHANNEL=0, MSGID=81, DELTA=BR-PS{}6A_Delta-SP, DELTA_STEPS=BR-PS{}6A_DeltaSteps-SP")'
+  echo 'dbLoadRecords("db/Ch-WfOut-Coeff.db", "INPUT=BR{PSC'${numpsc[$count]}'}DAC:0-SP,         OUTPUT=BR{PSC'${numpsc[$count]}'}DAC:0_Raw-SP,       WF_LENGTH=10150")'
+  echo 'dbLoadRecords("db/Subsampling.db",    "INPUT=BR{PSC'${numpsc[$count]}'}DAC:0_Raw-SP,     OUTPUT=BR{PSC'${numpsc[$count]}'}DAC:0_Raw-SP-1k,    WF_LENGTH=10150, WF_LENGTH2=1014, DIVIDER=10")'
+  echo 'dbLoadRecords("db/Subsampling.db",    "INPUT=BR{PSC'${numpsc[$count]}'}DAC:0_Raw_tr-SP,  OUTPUT=BR{PSC'${numpsc[$count]}'}DAC:0_Raw_tr-SP-1k, WF_LENGTH=10150, WF_LENGTH2=1014, DIVIDER=10")'
+  echo
+  echo 'dbLoadRecords("db/RampingTable.db",   "PriSys=BR, PSC=PSC'${numpsc[$count]}', RAWDATA_LENGTH=43440, WF10K_LENGTH=10150, CHANNEL=1, MSGID=82, DELTA=BR-PS{}6A_Delta-SP, DELTA_STEPS=BR-PS{}6A_DeltaSteps-SP")'
+  echo 'dbLoadRecords("db/Ch-WfOut-Coeff.db", "INPUT=BR{PSC'${numpsc[$count]}'}DAC:1-SP,         OUTPUT=BR{PSC'${numpsc[$count]}'}DAC:1_Raw-SP,       WF_LENGTH=10150")'
+  echo 'dbLoadRecords("db/Subsampling.db",    "INPUT=BR{PSC'${numpsc[$count]}'}DAC:1_Raw-SP,     OUTPUT=BR{PSC'${numpsc[$count]}'}DAC:1_Raw-SP-1k,    WF_LENGTH=10150, WF_LENGTH2=1014, DIVIDER=10")'
+  echo 'dbLoadRecords("db/Subsampling.db",    "INPUT=BR{PSC'${numpsc[$count]}'}DAC:1_Raw_tr-SP,  OUTPUT=BR{PSC'${numpsc[$count]}'}DAC:1_Raw_tr-SP-1k, WF_LENGTH=10150, WF_LENGTH2=1014, DIVIDER=10")'
+  count=$(( $count + 1 ))
+done
+
+count=-1  #should be -1 PSC counter
+counch=0  #channels counter
+chan=0
+for arg in $PSLIST
+do
+  counch=$(($counch+1))
+    if [ "$counch" -eq 14 ];
+    then
+      echo
+      echo '# PSC'${numpsc[$count]}' Channel: '$chan'  no PS'
+      chan=$(($chan-1))
+      counch=0
+    else
+     if [ "$chan" -eq 0 ];
+      then
+        count=$(($count+1))
+        echo
+        echo "# PSC"${numpsc[$count]} "Chan "$chan  
+        chan=$(($chan+1))
+        echo '# '$arg' Power Supply begins here'
+        echo 'dbLoadRecords("db/Ch-WfOut-Coeff.db", "INPUT='$arg'I-SP,              OUTPUT=BR{PSC'${numpsc[$count]}'}DAC:0-SP,    WF_LENGTH=10150")'
+        echo
+        echo 'dbLoadRecords("db/Ch-WfIn-Coeff.db",  "INPUT=BR{PSC'${numpsc[$count]}'}ADC:00-I,    OUTPUT='$arg'I_Raw-I,         WF_LENGTH=1014")'
+        echo 'dbLoadRecords("db/Ch-WfIn-Coeff.db",  "INPUT=BR{PSC'${numpsc[$count]}'}ADC:01-I,    OUTPUT='$arg'I:DAC_Raw-I,     WF_LENGTH=1014")'
+        echo
+        echo 'dbLoadRecords("db/Ch-WfIn-Coeff.db",  "INPUT=BR{PSC'${numpsc[$count]}'}ADC:02-I,    OUTPUT='$arg'E:PS_Raw-I,      WF_LENGTH=1014")'
+        echo
+        echo 'dbLoadRecords("db/Ch-DOut.db",        "INPUT='$arg'Cmd:PwrOn-Cmd,     OUTPUT=BR{PSC'${numpsc[$count]}'}DO:1-Cmd")'
+        echo
+        echo 'dbLoadRecords("db/Ch-DIn.db",         "INPUT=BR{PSC'${numpsc[$count]}'}DI:04-Sts,   OUTPUT='$arg'Sts:PSworks-Sts")'
+        echo
+      else
+       echo
+       echo "# PSC"${numpsc[$count]} "Chan "$chan 
+       chan=$(($chan-1)) 
+       echo '# '$arg' Power Supply begins here'
+       echo 'dbLoadRecords("db/Ch-WfOut-Coeff.db", "INPUT='$arg'I-SP,              OUTPUT=BR{PSC'${numpsc[$count]}'}DAC:1-SP,    WF_LENGTH=10150")'
+       echo
+       echo 'dbLoadRecords("db/Ch-WfIn-Coeff.db",  "INPUT=BR{PSC'${numpsc[$count]}'}ADC:08-I,    OUTPUT='$arg'I_Raw-I,         WF_LENGTH=1014")'
+       echo 'dbLoadRecords("db/Ch-WfIn-Coeff.db",  "INPUT=BR{PSC'${numpsc[$count]}'}ADC:09-I,    OUTPUT='$arg'I:DAC_Raw-I,     WF_LENGTH=1014")'
+       echo
+       echo 'dbLoadRecords("db/Ch-WfIn-Coeff.db",  "INPUT=BR{PSC'${numpsc[$count]}'}ADC:10-I,    OUTPUT='$arg'E:PS_Raw-I,      WF_LENGTH=1014")'
+       echo
+       echo 'dbLoadRecords("db/Ch-DOut.db",        "INPUT='$arg'Cmd:PwrOn-Cmd,     OUTPUT=BR{PSC'${numpsc[$count]}'}DO:0-Cmd")'
+       echo
+       echo 'dbLoadRecords("db/Ch-DIn.db",         "INPUT=BR{PSC'${numpsc[$count]}'}DI:00-Sts,   OUTPUT='$arg'Sts:PSworks-Sts")'
+       echo
+     fi 
+       echo 'dbLoadRecords("db/Subsampling.db",    "INPUT='$arg'I-SP, OUTPUT='$arg'I_Raw-SP-1k, WF_LENGTH=10150, WF_LENGTH2=1014, DIVIDER=10")'
+       echo
+       echo 'dbLoadRecords("db/Average.db",        "INPUT='$arg'I_Raw-SP-1k, OUTPUT='$arg'I-SP-1k, WF_LENGTH=1014")'
+       echo 'dbLoadRecords("db/Slicer2.db",        "INPUT='$arg'I-SP-1k,     INDEX='$arg'I-SP-1k-Slicer-Idx1, OUTPUT='$arg'I-SP-1k-Slicer-Val1, DOL=, OMSL=supervisory, WF_LENGTH=1014")'
+       echo 'dbLoadRecords("db/Slicer2.db",        "INPUT='$arg'I-SP-1k,     INDEX='$arg'I-SP-1k-Slicer-Idx2, OUTPUT='$arg'I-SP-1k-Slicer-Val2, DOL=, OMSL=supervisory, WF_LENGTH=1014")'
+       echo 'dbLoadRecords("db/Slicer2.db",        "INPUT='$arg'I-SP-1k,     INDEX='$arg'I-SP-1k-Slicer-Idx3, OUTPUT='$arg'I-SP-1k-Slicer-Val3, DOL=, OMSL=supervisory, WF_LENGTH=1014")'
+       echo
+       echo 'dbLoadRecords("db/Average.db",        "INPUT='$arg'I_Raw-I,   OUTPUT='$arg'I-I, WF_LENGTH=1014")'
+       echo 'dbLoadRecords("db/Slicer2.db",        "INPUT='$arg'I-I,       INDEX='$arg'I-I-Slicer-Idx1, OUTPUT='$arg'I-I-Slicer-Val1, DOL=, OMSL=supervisory, WF_LENGTH=1014")'
+       echo 'dbLoadRecords("db/Slicer2.db",        "INPUT='$arg'I-I,       INDEX='$arg'I-I-Slicer-Idx2, OUTPUT='$arg'I-I-Slicer-Val2, DOL=, OMSL=supervisory, WF_LENGTH=1014")'
+       echo 'dbLoadRecords("db/Slicer2.db",        "INPUT='$arg'I-I,       INDEX='$arg'I-I-Slicer-Idx3, OUTPUT='$arg'I-I-Slicer-Val3, DOL=, OMSL=supervisory, WF_LENGTH=1014")'
+       echo
+       echo 'dbLoadRecords("db/Average.db",        "INPUT='$arg'I:DAC_Raw-I,   OUTPUT='$arg'I:DAC-I, WF_LENGTH=1014")'
+       echo 'dbLoadRecords("db/Slicer2.db",        "INPUT='$arg'I:DAC-I,       INDEX='$arg'I:DAC-I-Slicer-Idx1, OUTPUT='$arg'I:DAC-I-Slicer-Val1, DOL=, OMSL=supervisory, WF_LENGTH=1014")'
+       echo 'dbLoadRecords("db/Slicer2.db",        "INPUT='$arg'I:DAC-I,       INDEX='$arg'I:DAC-I-Slicer-Idx2, OUTPUT='$arg'I:DAC-I-Slicer-Val2, DOL=, OMSL=supervisory, WF_LENGTH=1014")'
+       echo 'dbLoadRecords("db/Slicer2.db",        "INPUT='$arg'I:DAC-I,       INDEX='$arg'I:DAC-I-Slicer-Idx3, OUTPUT='$arg'I:DAC-I-Slicer-Val3, DOL=, OMSL=supervisory, WF_LENGTH=1014")'
+       echo
+       echo 'dbLoadRecords("db/Average.db",        "INPUT='$arg'E:PS_Raw-I,   OUTPUT='$arg'E:PS-I, WF_LENGTH=1014")'
+       echo 'dbLoadRecords("db/Slicer2.db",        "INPUT='$arg'E:PS-I,       INDEX='$arg'E:PS-I-Slicer-Idx1, OUTPUT='$arg'E:PS-I-Slicer-Val1, DOL=, OMSL=supervisory, WF_LENGTH=1014")'
+       echo 'dbLoadRecords("db/Slicer2.db",        "INPUT='$arg'E:PS-I,       INDEX='$arg'E:PS-I-Slicer-Idx2, OUTPUT='$arg'E:PS-I-Slicer-Val2, DOL=, OMSL=supervisory, WF_LENGTH=1014")'
+       echo 'dbLoadRecords("db/Slicer2.db",        "INPUT='$arg'E:PS-I,       INDEX='$arg'E:PS-I-Slicer-Idx3, OUTPUT='$arg'E:PS-I-Slicer-Val3, DOL=, OMSL=supervisory, WF_LENGTH=1014")'
+
+
+       echo
+       echo 'dbLoadRecords("db/MonitWfCommon.db", "CH='$arg'I-SP, CH_REF='$arg'I-SP_Ref, CH_TOL='$arg'I_SP_Tol-SP, CH_ARCH='$arg'I_SP_Arch-I, CH_DIFFREF='$arg'I_SP_DiffRef-I, CH_DIFFARCH='$arg'I_SP_DiffArch-I, CH_FLG='$arg'I_SP_MonitFlg-Sts, CH_FLGARCH='$arg'I_SP_ArchFlg-Sts, CH_COEFF='$arg'I_SP_MonitCoeff-SP, MODE_PV=BR{}MonitMode-Sel, DATA_TYPE=FLOAT, WF_LENGTH=10150")'
+       echo 'dbLoadRecords("db/MonitWf.db",  "CH='$arg'I-SP, CH_REF='$arg'I-SP_Ref, CH_DIFFREF='$arg'I_SP_DiffRef-I, MODE_PV=BR{}MonitMode-Sel, CH_FLG='$arg'I_SP_MonitFlg-Sts, MODE=2, ENABLED=1, DATA_TYPE=FLOAT, WF_LENGTH=10150")'
+       echo 'dbLoadRecords("db/MonitWf.db",  "CH='$arg'I-SP, CH_REF='$arg'I-SP_Ref, CH_DIFFREF='$arg'I_SP_DiffRef-I, MODE_PV=BR{}MonitMode-Sel, CH_FLG='$arg'I_SP_MonitFlg-Sts, MODE=1, ENABLED=0, DATA_TYPE=FLOAT, WF_LENGTH=10150")'
+       echo
+       echo 'dbLoadRecords("db/MonitWfCommon.db", "CH='$arg'I-I, CH_REF='$arg'I-I_Ref, CH_TOL='$arg'I_I_Tol-SP, CH_ARCH='$arg'I_I_Arch-I, CH_DIFFREF='$arg'I_I_DiffRef-I, CH_DIFFARCH='$arg'I_I_DiffArch-I, CH_FLG='$arg'I_I_MonitFlg-Sts, CH_FLGARCH='$arg'I_I_ArchFlg-Sts, CH_COEFF='$arg'I_I_MonitCoeff-SP, MODE_PV=BR{}MonitMode-Sel, DATA_TYPE=FLOAT, WF_LENGTH=1014")'
+       echo 'dbLoadRecords("db/MonitWf.db",  "CH='$arg'I-I, CH_REF='$arg'I-I_Ref, CH_DIFFREF='$arg'I_I_DiffRef-I, MODE_PV=BR{}MonitMode-Sel, CH_FLG='$arg'I_I_MonitFlg-Sts, MODE=2, ENABLED=1, DATA_TYPE=FLOAT, WF_LENGTH=1014")'
+       echo 'dbLoadRecords("db/MonitWf.db",  "CH='$arg'I-I, CH_REF='$arg'I-SP-1k, CH_DIFFREF='$arg'I_I_DiffRef-I, MODE_PV=BR{}MonitMode-Sel, CH_FLG='$arg'I_I_MonitFlg-Sts, MODE=1, ENABLED=1, DATA_TYPE=FLOAT, WF_LENGTH=1014")'
+       echo 
+       echo 'dbLoadRecords("db/MonitWfCommon.db", "CH='$arg'I:DAC-I, CH_REF='$arg'I:DAC-I_Ref, CH_TOL='$arg'I:DAC_I_Tol-SP,  CH_ARCH='$arg'I:DAC_I_Arch-I, CH_DIFFREF='$arg'I:DAC_I_DiffRef-I, CH_DIFFARCH='$arg'I:DAC_I_DiffArch-I, CH_FLG='$arg'I:DAC_I_MonitFlg-Sts, CH_FLGARCH='$arg'I:DAC_I_ArchFlg-Sts, CH_COEFF='$arg'I:DAC_I_MonitCoeff-SP, MODE_PV=BR{}MonitMode-Sel, DATA_TYPE=FLOAT, WF_LENGTH=1014")'
+       echo 'dbLoadRecords("db/MonitWf.db",  "CH='$arg'I:DAC-I, CH_REF='$arg'I:DAC-I_Ref, CH_DIFFREF='$arg'I:DAC_I_DiffRef-I, MODE_PV=BR{}MonitMode-Sel, CH_FLG='$arg'I:DAC_I_MonitFlg-Sts, MODE=2, ENABLED=1, DATA_TYPE=FLOAT, WF_LENGTH=1014")'
+       echo 'dbLoadRecords("db/MonitWf.db",  "CH='$arg'I:DAC-I, CH_REF='$arg'I-SP-1k, CH_DIFFREF='$arg'I:DAC_I_DiffRef-I, MODE_PV=BR{}MonitMode-Sel, CH_FLG='$arg'I:DAC_I_MonitFlg-Sts, MODE=1, ENABLED=1, DATA_TYPE=FLOAT, WF_LENGTH=1014")'
+       echo 
+       echo 'dbLoadRecords("db/MonitWfCommon.db", "CH='$arg'E:PS-I, CH_REF='$arg'E:PS-I_Ref, CH_TOL='$arg'E:PS_I_Tol-SP, CH_ARCH='$arg'E:PS_I_Arch-I, CH_DIFFREF='$arg'E:PS_I_DiffRef-I, CH_DIFFARCH='$arg'E:PS_I_DiffArch-I, CH_FLG='$arg'E:PS_I_MonitFlg-Sts, CH_FLGARCH='$arg'E:PS_I_ArchFlg-Sts, CH_COEFF='$arg'E:PS_I_MonitCoeff-SP, MODE_PV=BR{}MonitMode-Sel, DATA_TYPE=FLOAT, WF_LENGTH=1014")'
+       echo 'dbLoadRecords("db/MonitWf.db",  "CH='$arg'E:PS-I, CH_REF='$arg'E:PS-I_Ref, CH_DIFFREF='$arg'E:PS_I_DiffRef-I, MODE_PV=BR{}MonitMode-Sel, CH_FLG='$arg'E:PS_I_MonitFlg-Sts, MODE=2, ENABLED=1, DATA_TYPE=FLOAT, WF_LENGTH=1014")'
+       echo 'dbLoadRecords("db/MonitWf.db",  "CH='$arg'E:PS-I, CH_REF='$arg'E:PS-I_Ref, CH_DIFFREF='$arg'E:PS_I_DiffRef-I, MODE_PV=BR{}MonitMode-Sel, CH_FLG='$arg'E:PS_I_MonitFlg-Sts, MODE=1, ENABLED=0, DATA_TYPE=FLOAT, WF_LENGTH=1014")'
+       echo 
+       echo 'dbLoadRecords("db/MonitBinaryCommon.db", "CH='$arg'Cmd:PwrOn-Cmd, CH_REF='$arg'Cmd:PwrOn-Cmd_Ref, CH_ARCH='$arg'Cmd:PwrOn_Arch-Sts, CH_FLG='$arg'Cmd:PwrOn_MonitFlg-Sts, CH_FLGARCH='$arg'Cmd:PwrOn_ArchFlg-Sts, MODE_PV=BR{}MonitMode-Sel")'
+       echo 'dbLoadRecords("db/MonitBinary.db",       "CH='$arg'Cmd:PwrOn-Cmd, CH_REF='$arg'Cmd:PwrOn-Cmd_Ref, CH_FLG='$arg'Cmd:PwrOn_MonitFlg-Sts, MODE_PV=BR{}MonitMode-Sel, CH_FLG='$arg'Cmd:PwrOn_MonitFlg-Sts, MODE=2, ENABLED=1")'
+       echo 'dbLoadRecords("db/MonitBinary.db",       "CH='$arg'Cmd:PwrOn-Cmd, CH_REF='$arg'Cmd:PwrOn-Cmd_Ref, CH_FLG='$arg'Cmd:PwrOn_MonitFlg-Sts, MODE_PV=BR{}MonitMode-Sel, CH_FLG='$arg'Cmd:PwrOn_MonitFlg-Sts, MODE=1, ENABLED=0")'
+       echo 
+       echo 'dbLoadRecords("db/MonitBinaryCommon.db", "CH='$arg'Sts:PSworks-Sts, CH_REF='$arg'Sts:PSworks-Sts_Ref, CH_ARCH='$arg'Sts:PSworks_Arch-Sts, CH_FLG='$arg'Sts:PSworks_MonitFlg-Sts, CH_FLGARCH='$arg'Sts:PSworks_ArchFlg-Sts, MODE_PV=BR{}MonitMode-Sel")'
+       echo 'dbLoadRecords("db/MonitBinary.db",       "CH='$arg'Sts:PSworks-Sts, CH_REF='$arg'Sts:PSworks-Sts_Ref, CH_FLG='$arg'Sts:PSworks_MonitFlg-Sts, MODE_PV=BR{}MonitMode-Sel, CH_FLG='$arg'Sts:PSworks_MonitFlg-Sts, MODE=2, ENABLED=1")'
+       echo 'dbLoadRecords("db/MonitBinary.db",       "CH='$arg'Sts:PSworks-Sts, CH_REF='$arg'Sts:PSworks-Sts_Ref, CH_FLG='$arg'Sts:PSworks_MonitFlg-Sts, MODE_PV=BR{}MonitMode-Sel, CH_FLG='$arg'Sts:PSworks_MonitFlg-Sts, MODE=1, ENABLED=0")'
+       echo 
+    fi
+done 
+
+echo
+echo 'var(PSCDebug, 1)'
+echo '#with debug message: var(PSCDebug, 2)'
+
+count=0
+while [ $count -le 27 ]
+do
+  echo
+  echo '#Tx socket'
+  echo 'createPSC("TxPSC'${numpsc[$count]}'", "br-psc'${numpsc[$count]}'", 7, 0)'
+  echo 'epicsThreadSleep 0.1'
+  echo '#Tx sim socket'
+  echo '#createPSC("TxPSC'${numpsc[$count]}'", "localhost", 8765, 0)'
+  echo '#Rx socket'
+  echo 'createPSC("RxPSC'${numpsc[$count]}'", "br-psc'${numpsc[$count]}'", 20, 1)'
+  echo 'epicsThreadSleep 0.1'
+  echo 'setPSCSendBlockSize("TxPSC'${numpsc[$count]}'", 80, 128)'
+  count=$(( $count + 1 ))
+done
+
+echo
+echo '### Misc stuff ###'
+echo 'epicsEnvSet("LOCATION","740 ISB RGB 1")'
+echo 'dbLoadRecords("db/iocAdminSoft.db", "IOC=BR-CT{IOC:${IOCNAME}}")'
+echo 'asSetFilename("/cf-update/acf/default.acf")'
+
+echo
+echo '### Save/Restore ###'
+echo 'dbLoadRecords("db/save_restoreStatus.db", "P=BR-CT{IOC:${IOCNAME}}")'
+echo 'save_restoreSet_status_prefix("BR-CT{IOC:${IOCNAME}}")'
+echo 'set_savefile_path("${TOP}/../${IOCNAME}","/as/save")'
+echo 'set_requestfile_path("${TOP}/../${IOCNAME}","/as/req")'
+echo 'set_pass0_restoreFile("${IOCNAME}.sav")'
+echo 'set_pass1_restoreFile("${IOCNAME}_waveforms.sav")'
+
+echo
+echo '### Start IOC ###'
+echo 'cd ${TOP}/iocBoot/${IOC}'
+echo 'iocInit()'
+echo
+echo '### caPutLog ###'
+echo 'caPutLogInit("ioclog.cs.nsls2.local:7004", 1)'
+echo
+echo '### Channel Finder'
+echo 'dbl > ${TOP}/../${IOCNAME}/records.dbl'
+echo 'system "cp ${TOP}/../${IOCNAME}/records.dbl /cf-update/${HOSTNAME}.${IOCNAME}.dbl"'
+echo
+echo '### Save/Restore ###'
+echo 'makeAutosaveFileFromDbInfo("${TOP}/../${IOCNAME}/as/req/${IOCNAME}.req", "autosaveFields_pass0")'
+echo 'makeAutosaveFileFromDbInfo("${TOP}/../${IOCNAME}/as/req/${IOCNAME}_waveforms.req", "autosaveFields_pass1")'
+
+echo
+echo 'create_monitor_set("${IOCNAME}.req", 5 , "")'
+echo 'create_monitor_set("${IOCNAME}_waveforms.req", 30 , "")'
+echo
+

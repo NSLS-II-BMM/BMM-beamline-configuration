@@ -20,6 +20,14 @@ record(bi,"XF:06BM-EPS{PLC}Net-Sts") {
     field(OSV,"")
 }
 
+record(bo,"XF:06BM-EPS{Fan}On_Off") {
+    field(DESC, "B-hutch Fan")
+    field(DTYP, "EtherIP")
+    field(OUT, "@$(PLC,undefined) BM_EPS_Fan_On_Off S 1")
+    field(ZNAM,"Off")
+    field(ONAM,"On")
+}
+
 # GV signals
 record(bi, "FE:C06B-OP{Flag:1}Sw:OpnLim-Sts")
 {

@@ -19,6 +19,7 @@ file /usr/lib/epics/db/mks937b_ccg.db
  { XF:06BMA-VA	, "{Mir:2-CCG:1}"	, 3     , tsrvB1-P2	, 253   , "{VGC:2}"	}
 
  { XF:06BMA-VA	, "{Mir:3-CCG:1}"	, 1	, tsrvB1-P3	, 253	, "{VGC:3}"	}
+# { XF:06BMB-VA  , "{FltPth:1-CCG:1}"    , 3     , tsrvB1-P3     , 253   , "{VGC:3}"     }
 
  { XF:06BMB-VA	, "{BT:1-CCG:1}"	, 1	, tsrvB1-P4	, 253   , "{VGC:1}"	}
  { XF:06BMB-VA	, "{FS:3-CCG:1}"	, 3	, tsrvB1-P4	, 253	, "{VGC:1}"	}
@@ -53,6 +54,12 @@ file /usr/lib/epics/db/mks937b_relay_ccg.db
  { XF:06BMA-VA	, "{Mir:3-CCG:1}"      , 3     , tsrvB1-P3	, 253   , "{VGC:3}"	}
  { XF:06BMA-VA	, "{Mir:3-CCG:1}"      , 4     , tsrvB1-P3	, 253   , "{VGC:3}"	}
 
+# { XF:06BMB-VA  , "{FltPth:1-CCG:1}"   , 5     , tsrvB1-P3      , 253   , "{VGC:3}"     }
+# { XF:06BMB-VA  , "{FltPth:1-CCG:1}"   , 6     , tsrvB1-P3      , 253   , "{VGC:3}"     }
+# { XF:06BMB-VA  , "{FltPth:1-CCG:1}"   , 7     , tsrvB1-P3      , 253   , "{VGC:3}"     }
+# { XF:06BMB-VA  , "{FltPth:1-CCG:1}"   , 8     , tsrvB1-P3      , 253   , "{VGC:3}"     }
+ 
+
  { XF:06BMB-VA	, "{BT:1-CCG:1}"      , 1     , tsrvB1-P4	, 253   , "{VGC:1}"	}
  { XF:06BMB-VA	, "{BT:1-CCG:1}"      , 2     , tsrvB1-P4	, 253   , "{VGC:1}"	}
  { XF:06BMB-VA	, "{BT:1-CCG:1}"      , 3     , tsrvB1-P4	, 253   , "{VGC:1}"	}
@@ -69,16 +76,17 @@ file /usr/lib/epics/db/mks937b_pirg.db
 {
  pattern
  { Sys 		, Dev 			, CHAN 	, PORT 		, ADR   , Cntl		}
- { XF:06BMA-VA	, "{FS:1-TCG:1}"      , 5     , tsrvB1-P1	, 253   , "{VGC:1}"	}
- { XF:06BMA-VA	, "{Mono:DCM-TCG:1}"      , 6     , tsrvB1-P1	, 253   , "{VGC:1}"	}
+ { XF:06BMA-VA	, "{FS:1-TCG:1}"        , 5     , tsrvB1-P1	, 253   , "{VGC:1}"	}
+ { XF:06BMA-VA	, "{Mono:DCM-TCG:1}"    , 6     , tsrvB1-P1	, 253   , "{VGC:1}"	}
 
  { XF:06BMA-VA	, "{FS:2-TCG:1}"	, 5     , tsrvB1-P2		, 253   , "{VGC:2}"	}
- { XF:06BMA-VA	, "{Mir:2-TCG:1}"    , 6     , tsrvB1-P2	, 253   , "{VGC:2}"	}
+ { XF:06BMA-VA	, "{Mir:2-TCG:1}"       , 6     , tsrvB1-P2	, 253   , "{VGC:2}"	}
 
- { XF:06BMA-VA	, "{Mir:3-TCG:1}"      , 5     , tsrvB1-P3	, 253   , "{VGC:3}"	}
+ { XF:06BMA-VA	, "{Mir:3-TCG:1}"       , 5     , tsrvB1-P3	, 253   , "{VGC:3}"	}
+ { XF:06BMB-VA  , "{FltPth:1-TCG:1}"    , 6     , tsrvB1-P3     , 253   , "{VGC:3}"     }
 
- { XF:06BMB-VA	, "{BT:1-TCG:1}"      , 5     , tsrvB1-P4	, 253   , "{VGC:1}"	}
- { XF:06BMB-VA	, "{FS:3-TCG:1}"      , 6     , tsrvB1-P4	, 253   , "{VGC:1}"	}
+ { XF:06BMB-VA	, "{BT:1-TCG:1}"        , 5     , tsrvB1-P4	, 253   , "{VGC:1}"	}
+ { XF:06BMB-VA	, "{FS:3-TCG:1}"        , 6     , tsrvB1-P4	, 253   , "{VGC:1}"	}
 }
 
 file /usr/lib/epics/db/mks937b_relay_pirg.db
@@ -100,6 +108,9 @@ file /usr/lib/epics/db/mks937b_relay_pirg.db
  { XF:06BMA-VA	, "{Mir:3-TCG:1}"      , 9      , tsrvB1-P3	, 253   , "{VGC:3}"	}
  { XF:06BMA-VA	, "{Mir:3-TCG:1}"      , 10     , tsrvB1-P3	, 253   , "{VGC:3}"	}
 
+ { XF:06BMB-VA  , "{FltPth:1-TCG:1}"    , 11    , tsrvB1-P3     , 253   , "{VGC:3}"     }
+ { XF:06BMB-VA  , "{FltPth:1-TCG:1}"    , 12    , tsrvB1-P3     , 253   , "{VGC:3}"     }
+ 
  { XF:06BMB-VA	, "{BT:1-TCG:1}"	, 9      , tsrvB1-P4	, 253   , "{VGC:1}"	}
  { XF:06BMB-VA	, "{BT:1-TCG:1}"	, 10     , tsrvB1-P4	, 253   , "{VGC:1}"	}
 

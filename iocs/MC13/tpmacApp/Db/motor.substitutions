@@ -1,0 +1,13 @@
+file "db/motor.db"
+{
+pattern
+{P,             M,                      MOTOR,  PORT,  ADDR,  DESC,              DTYP,      MRES,           EGU,  PREC,  ALIAS              }
+{"XF:06BM-ES",  "{SixC-Ax:Tbl_YUO}Mtr", "M0",   "P0",  1,     "Table Y Up Out",  asynMotor, "3.96875e-05",  "mm", 4,     "6bm:sixc_tyuo"    }
+{"XF:06BM-ES",  "{SixC-Ax:Tbl_XU}Mtr",  "M0",   "P0",  2,     "Table X Up",      asynMotor, "0.00015625",   "mm", 4,     "6bm:sixc_txu"     }
+{"XF:06BM-ES",  "{SixC-Ax:Tbl_XD}Mtr",  "M0",   "P0",  3,     "Table X Dn",      asynMotor, "0.00015625",   "mm", 4,     "6bm:six_txd"      }
+{"XF:06BM-ES",  "{SixC-Ax:Tbl_Z}Mtr",   "M0",   "P0",  4,     "Table Z",         asynMotor, "0.00015625",   "mm", 4,     "6bm:sixc_tz"      }
+{"XF:06BM-ES",  "{SixC-Ax:Slt1_T}Mtr",  "M0",   "P0",  5,     "Slit_1 Top",      asynMotor, "0.0001",       "mm", 4,     "6bm:sixc_slt1_t"  }
+{"XF:06BM-ES",  "{SixC-Ax:Slt1_B}Mtr",  "M0",   "P0",  6,     "Slit_1 Bot",      asynMotor, "0.0001",       "mm", 4,     "6bm:sixc_slt1_b"  }
+{"XF:06BM-ES",  "{SixC-Ax:Slt1_I}Mtr",  "M0",   "P0",  7,     "Slit_1 inb",      asynMotor, "0.0001",       "mm", 4,     "6bm:sixc_slt1_i"  }
+{"XF:06BM-ES",  "{SixC-Ax:Slt1_O}Mtr",  "M0",   "P0",  8,     "Slit_1 Outb",     asynMotor, "0.0001",       "mm", 4,     "6bm:sixc_slt1_o"  }
+}

@@ -1,0 +1,741 @@
+#
+#
+#	AI-ID Enable or Disable Message ID 3
+#	10/29/15 : added ID 4 bpm
+#
+
+record(ao, "$(P)Aie$(ID):SAFECUR-I") {
+        field(DESC, "Safe Current for ID" )
+        field(DTYP, "Soft Channel")
+        field(PREC, "3")
+        field(EGU,  "mA")
+}
+
+record(bo, "$(P)Aie$(ID):USE-SP") {
+	field(DESC, "AI enable/disable control")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 3 $(U)")
+	field(ZNAM, "NOTUSE")
+	field(ONAM, "USE")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+record(mbbo, "$(P)Aie$(ID):Logic-SP") {
+	field(DESC, "Select calculation logic")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 2 $(A11)")
+	field( ZRST, "AIE_A")
+	field( ONST, "AIE_B")
+	field( TWST, "AIE_C")
+	field( THST, "AIE_D")
+	field( FRST, "AIE_ANG")
+#	field( FVST, "AIE_ANG")
+	field( ZRVL, "20")
+	field( ONVL, "21")
+	field( TWVL, "22")
+	field( THVL, "23")
+	field( FRVL, "24")
+#	field( FVVL, "24")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(longout, "$(P)Aie$(ID):LogicCode-SP") {
+	field(DESC, "Select calculation logic")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx 2 $(A11)") 
+	field(HOPR,"0xFF")
+	field(LOPR,"20")
+#        field(PINI, "YES")
+        field(VAL, "2")
+#        field(UDF, "0")
+#        field(TPRO, 1)
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+record(ao, "$(P)Aie$(ID):S1-SP") {
+	field(PINI, "YES")
+	field(VAL, "1")
+	field(OUT,"$(P)Aie$(ID):S-mm-cal PP")
+	field(FLNK, "$(P)Aie$(ID):S-mrad-cal")
+}
+record(ao, "$(P)Aie$(ID):S2-SP") {
+	field(PINI, "YES")
+	field(VAL, "2")
+	field(OUT,"$(P)Aie$(ID):S-mm-cal PP")
+	field(FLNK, "$(P)Aie$(ID):S-mrad-cal")
+}
+record(ao, "$(P)Aie$(ID):S3-SP") {
+	field(PINI, "YES")
+	field(VAL, "3")
+	field(OUT,"$(P)Aie$(ID):S-mm-cal PP")
+	field(FLNK, "$(P)Aie$(ID):S-mrad-cal")
+}
+
+
+#
+record(calcout , "$(P)Aie$(ID):S-mm-cal") {
+	field(DESC, "S calc for Offset mm")
+#	field(SCAN, "2 second")
+    field(INPA, "$(P)Aie$(ID):S1-SP.VAL")
+    field(INPB, "$(P)Aie$(ID):S2-SP.VAL")
+	field(INPC, "$(P)Aie$(ID):S3-SP.VAL")
+    field(CALC, "(C-A)/(B-A)")
+    field(EGU,  "mm")
+    field(HOPR, "15")
+    field(LOPR, "-15")
+    field(PREC, "3")
+	field(OUT,  "$(P)Aie$(ID):S-mm-SP.VAL")
+	field(FLNK, "$(P)Aie$(ID):S-mm-SP")
+}
+record(ao, "$(P)Aie$(ID):S-mm-SP") {
+	field(DESC, "Set S mm")
+	field(DTYP, "PSC Single F32")
+	field(OUT , "@aie_tx 2 $(A10)")
+	field(HOPR,"0.5")
+	field(LOPR,"-0.5")	
+	field(DRVH,"0.5")	
+	field(DRVL,"-0.5")	
+	field(PREC,"3")
+	field(LINR,"LINEAR")
+#	info(autosaveFields, "VAL")
+	field(EGU,  "mm")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+record(calcout , "$(P)Aie$(ID):S-mrad-cal") {
+	field(DESC, "S calc for Angle mrad")
+    field(INPA, "$(P)Aie$(ID):S1-SP")
+    field(INPB, "$(P)Aie$(ID):S2-SP")
+	field(INPC, "$(P)Aie$(ID):S3-SP")
+    field(CALC, "1.0/(B-A)")
+    field(EGU,  "mrad")
+    field(HOPR, "15")
+    field(LOPR, "-15")
+    field(PREC, "3")
+	field(OUT,  "$(P)Aie$(ID):S-mrad-SP.VAL")
+	field(FLNK, "$(P)Aie$(ID):S-mrad-SP")
+}
+record(ao, "$(P)Aie$(ID):S-mrad-SP") {
+	field(DESC, "Smm setting")
+	field(DTYP, "PSC Single F32")
+	field(OUT , "@aie_tx 2 $(A9)")
+	field(HOPR,"0.5")
+	field(LOPR,"-0.5")	
+	field(DRVH,"0.5")	
+	field(DRVL,"-0.5")	
+	field(EGU, "mm")
+	field(PREC,"3")
+	field(LINR,"LINEAR")
+#	info(autosaveFields, "VAL")
+	field(EGU,  "mm")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(ao, "$(P)Aie$(ID):AIOL-H1-SP") {
+	field(DESC, "Diamond x offset" )
+	field(DTYP, "PSC Single F32")
+	field(OUT , "@aie_tx 2 $(A1)")
+	field(PREC, "3")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+record(ao, "$(P)Aie$(ID):AIOL-V1-SP") {
+	field(DESC, "Diamond y offset" )
+	field(DTYP, "PSC Single F32")
+	field(OUT , "@aie_tx 2 $(A2)")
+	field(PREC, "3")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(ao, "$(P)Aie$(ID):AIOL-H2-SP") {
+	field(DESC, "Rec x offset" )
+	field(DTYP, "PSC Single F32")
+	field(OUT , "@aie_tx 2 $(A3)")
+	field(PREC, "3")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+record(ao, "$(P)Aie$(ID):AIOL-V2-SP") {
+	field(DESC, "Rec y offset" )
+	field(DTYP, "PSC Single F32")
+	field(OUT , "@aie_tx 2 $(A4)")
+	field(PREC, "3")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(ao, "$(P)Aie$(ID):AIOL-H3-SP") {
+	field(DESC, "Rec x offset" )
+	field(DTYP, "PSC Single F32")
+	field(OUT , "@aie_tx 2 $(A5)")
+	field(PREC, "3")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+record(ao, "$(P)Aie$(ID):AIOL-V3-SP") {
+	field(DESC, "Rec y offset" )
+	field(DTYP, "PSC Single F32")
+	field(OUT , "@aie_tx 2 $(A6)")
+	field(PREC, "3")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(ao, "$(P)Aie$(ID):AIAL_H-SP") {
+	field(DESC, "Rec x angle" )
+	field(DTYP, "PSC Single F32")
+	field(OUT , "@aie_tx 2 $(A7)")
+	field(PREC, "3")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(ao, "$(P)Aie$(ID):AIAL_V-SP") {
+	field(DESC, "Rect y angle" )
+	field(DTYP, "PSC Single F32")
+	field(OUT , "@aie_tx 2 $(A8)")
+	field(PREC, "3")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+#########################
+##### Original Offset
+#########################
+record(ao, "$(P)Aie$(ID):AIOR-H1-SP") {
+	field(DESC, "H1 Original x offset" )
+	field(DTYP, "PSC Single F32")
+	field(OUT , "@aie_tx 2 $(A12)")
+	field(PREC, "3")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+record(ao, "$(P)Aie$(ID):AIOR-H2-SP") {
+	field(DESC, "H2 Original offset" )
+	field(DTYP, "PSC Single F32")
+	field(OUT , "@aie_tx 2 $(A13)")
+	field(PREC, "3")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(ao, "$(P)Aie$(ID):AIOR-V1-SP") {
+	field(DESC, "V1 Original x offset" )
+	field(DTYP, "PSC Single F32")
+	field(OUT , "@aie_tx 2 $(A14)")
+	field(PREC, "3")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+record(ao, "$(P)Aie$(ID):AIOR-V2-SP") {
+	field(DESC, "V2 Original offset" )
+	field(DTYP, "PSC Single F32")
+	field(OUT , "@aie_tx 2 $(A15)")
+	field(PREC, "3")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+#################################################
+
+
+
+
+###
+record(subArray, "$(P)Aie$(ID):Pos-Arry-x1") {
+	field(FTVL, "LONG")
+	field(INP,  "$(P)Pos:AllXy-W NPP MS")
+	field(INDX, "$(INDX_X1)")
+	field(MALM, "780")
+	field(SCAN, "Passive")
+	field(PHAS, "2")
+	field(PINI, "NO")
+}
+
+record(subArray, "$(P)Aie$(ID):Pos-Arry-x2") {
+	field(FTVL, "LONG")
+	field(INP,  "$(P)Pos:AllXy-W NPP MS")
+	field(INDX, "$(INDX_X2)")
+	field(MALM, "780")
+	field(SCAN, "Passive")
+	field(PHAS, "2")
+	field(PINI, "NO")
+}
+
+record(subArray, "$(P)Aie$(ID):Pos-Arry-x3") {
+	field(FTVL, "LONG")
+	field(INP,  "$(P)Pos:AllXy-W NPP MS")
+	field(INDX, "$(INDX_X3)")
+	field(MALM, "780")
+	field(SCAN, "Passive")
+	field(PHAS, "2")
+	field(PINI, "NO")
+}
+
+# ID bpm-4
+record(subArray, "$(P)Aie$(ID):Pos-Arry-x4") {
+	field(FTVL, "LONG")
+	field(INP,  "$(P)Pos:AllXy-W NPP MS")
+	field(INDX, "$(I_X4)")
+	field(MALM, "780")
+	field(SCAN, "Passive")
+	field(PHAS, "2")
+	field(PINI, "NO")
+}
+
+
+
+record(subArray, "$(P)Aie$(ID):Pos-Arry-y1") {
+	field(FTVL, "LONG")
+	field(INP,  "$(P)Pos:AllXy-W NPP MS")
+	field(INDX, "$(INDX_Y1)")
+	field(MALM, "780")
+	field(SCAN, "Passive")
+	field(PHAS, "2")
+	field(PINI, "NO")
+}
+
+record(subArray, "$(P)Aie$(ID):Pos-Arry-y2") {
+	field(FTVL, "LONG")
+	field(INP,  "$(P)Pos:AllXy-W NPP MS")
+	field(INDX, "$(INDX_Y2)")
+	field(MALM, "780")
+	field(SCAN, "Passive")
+	field(PHAS, "2")
+	field(PINI, "NO")
+}
+record(subArray, "$(P)Aie$(ID):Pos-Arry-y3") {
+	field(FTVL, "LONG")
+	field(INP,  "$(P)Pos:AllXy-W NPP MS")
+	field(INDX, "$(INDX_Y3)")
+	field(MALM, "780")
+	field(SCAN, "Passive")
+	field(PHAS, "2")
+	field(PINI, "NO")
+}
+# ID-bpm 4
+record(subArray, "$(P)Aie$(ID):Pos-Arry-y4") {
+	field(FTVL, "LONG")
+	field(INP,  "$(P)Pos:AllXy-W NPP MS")
+	field(INDX, "$(I_Y4)")
+	field(MALM, "780")
+	field(SCAN, "Passive")
+	field(PHAS, "2")
+	field(PINI, "NO")
+}
+
+### SDI Data for each Cell controller
+record(subArray, "$(P)Aie$(ID):Pos-Arry-Cell-D0") {
+	field(FTVL, "LONG")
+	field(INP,  "$(P)Pos:AllXy-W NPP MS")
+	field(INDX, "$(INDX_CD0)")
+	field(MALM, "780")
+	field(SCAN, "Passive")
+	field(PHAS, "2")
+	field(PINI, "NO")
+}
+
+record(subArray, "$(P)Aie$(ID):Pos-Arry-Cell-D1") {
+	field(FTVL, "LONG")
+	field(INP,  "$(P)Pos:AllXy-W NPP MS")
+	field(INDX, "$(INDX_CD1)")
+	field(MALM, "780")
+	field(SCAN, "Passive")
+	field(PHAS, "2")
+	field(PINI, "NO")
+}
+
+###
+
+#record(ai, "$(P)Aie$(ID):Pos-x1") {
+#	field(DESC, "Cell $(ID)-x1 Local Data")
+#	field(DTYP, "PSC Reg")
+#	field(INP , "@aie_wfm_rx 40 $(INDX_X1)")
+#	field(LINR,"LINEAR")
+#	field(ESLO,"0.000001")
+#	field(PREC,"3")
+#	field(SCAN,"I/O Intr")
+#	field(EGU,  "mm")	
+#}
+#record(ai, "$(P)Aie$(ID):Pos-x2") {
+#	field(DESC, "Cell $(ID)-x2 Local Data")
+#	field(DTYP, "PSC Reg")
+#	field(INP , "@aie_wfm_rx 40 $(INDX_X2)")
+#	field(LINR,"LINEAR")
+#	field(ESLO,"0.000001")
+#	field(PREC,"3")
+#	field(SCAN,"I/O Intr")
+#	field(EGU,  "mm")	
+#}
+#record(ai, "$(P)Aie$(ID):Pos-x3") {
+#	field(DESC, "Cell $(ID)-x3 Local Data")
+#	field(DTYP, "PSC Reg")
+#	field(INP , "@aie_wfm_rx 40 $(INDX_X3)")
+#	field(LINR,"LINEAR")
+#	field(ESLO,"0.000001")
+#	field(PREC,"3")
+#	field(SCAN,"I/O Intr")
+#	field(EGU,  "mm")	
+#}
+
+#record(ai, "$(P)Aie$(ID):Pos-y1") {
+#	field(DESC, "Cell $(ID)-y1 Local Data")
+#	field(DTYP, "PSC Reg")
+#	field(INP , "@aie_wfm_rx 40 $(INDX_Y1)")
+#	field(LINR,"LINEAR")
+#	field(ESLO,"0.000001")
+#	field(PREC,"3")
+#	field(SCAN,"I/O Intr")
+#	field(EGU,  "mm")	
+#}
+#record(ai, "$(P)Aie$(ID):Pos-y2") {
+#	field(DESC, "Cell $(ID)-y2 Local Data")
+#	field(DTYP, "PSC Reg")
+#	field(INP , "@aie_wfm_rx 40 $(INDX_Y2)")
+#	field(LINR,"LINEAR")
+#	field(ESLO,"0.000001")
+#	field(PREC,"3")
+#	field(SCAN,"I/O Intr")
+#	field(EGU,  "mm")	
+#}
+#record(ai, "$(P)Aie$(ID):Pos-y3") {
+#	field(DESC, "Cell $(ID)-y3 Local Data")
+#	field(DTYP, "PSC Reg")
+#	field(INP , "@aie_wfm_rx 40 $(INDX_Y3)")
+#	field(LINR,"LINEAR")
+#	field(ESLO,"0.000001")
+#	field(PREC,"3")
+#	field(SCAN,"I/O Intr")
+#	field(EGU,  "mm")	
+#}
+
+##########################################
+
+record(calc, "$(P)Aie$(ID):Pos-x1") {
+	field(SCAN, ".2 second")
+	field(CALC, "A*B-C")
+	field(INPA, "$(P)Aie$(ID):Pos-Arry-x1.VAL PP")	
+	field(INPB, "0.000001")
+	field(INPC, "$(P)AI$(ID):BBA_Offset_X1-SP.VAL PP")
+	field(PREC, "3")
+	field(EGU,  "mm")
+}
+record(ai, "$(P)Aie$(ID):Pos-x1_") {
+    field(INP,"$(P)Aie$(ID):Pos-x1")
+}
+record(calc, "$(P)Aie$(ID):x1-Sts-I") {
+	field(SCAN, "1 second")
+	field(CALC, "(B-A)*(B-A)")
+	field(INPA, "$(P)Aie$(ID):Pos-x1_ NPP")
+	field(INPB, "$(P)Aie$(ID):Pos-x1_ PP")
+	field(LOLO , "0.0")
+	field(LOW , "0.0")
+	field(HIGH, "1.0")
+	field(PREC, "3")
+	field(HSV , "INVALID")
+	field(LSV , "INVALID")
+	field(LLSV, "INVALID")
+}
+###########
+
+record(calc, "$(P)Aie$(ID):Pos-x2") {
+	field(SCAN, ".2 second")
+	field(CALC, "A*B-C")
+	field(INPA, "$(P)Aie$(ID):Pos-Arry-x2.VAL PP")
+	field(INPB, "0.000001")
+	field(INPC, "$(P)AI$(ID):BBA_Offset_X2-SP.VAL PP")
+	field(PREC, "3")
+	field(EGU,  "mm")
+}
+record(ai, "$(P)Aie$(ID):Pos-x2_") {
+    field(INP,"$(P)Aie$(ID):Pos-x2")
+}
+record(calc, "$(P)Aie$(ID):x2-Sts-I") {
+        field(SCAN, "1 second")
+        field(CALC, "(B-A)*(B-A)")
+        field(INPA, "$(P)Aie$(ID):Pos-x2_ NPP")
+        field(INPB, "$(P)Aie$(ID):Pos-x2_ PP")
+        field(LOLO , "0.0")
+        field(LOW , "0.0")
+        field(HIGH, "1.0")
+        field(PREC, "3")
+        field(HSV , "INVALID")
+        field(LSV , "INVALID")
+        field(LLSV, "INVALID")
+}
+
+
+record(calc, "$(P)Aie$(ID):Pos-x3") {
+	field(SCAN, ".2 second")
+	field(CALC, "A*B")
+	field(INPA, "$(P)Aie$(ID):Pos-Arry-x3.VAL PP")
+	field(INPB, "0.000001")
+	field(PREC, "3")
+	field(EGU,  "mm")
+}
+record(ai, "$(P)Aie$(ID):Pos-x3_") {
+    field(INP,"$(P)Aie$(ID):Pos-x3")
+}
+record(calc, "$(P)Aie$(ID):x3-Sts-I") {
+        field(SCAN, "1 second")
+        field(CALC, "(B-A)*(B-A)")
+        field(INPA, "$(P)Aie$(ID):Pos-x3_ NPP")
+        field(INPB, "$(P)Aie$(ID):Pos-x3_ PP")
+        field(LOLO , "0.0")
+        field(LOW , "0.0")
+        field(HIGH, "1.0")
+        field(PREC, "3")
+        field(HSV , "INVALID")
+        field(LSV , "INVALID")
+        field(LLSV, "INVALID")
+}
+
+
+# for next beamline
+record(calc, "$(P)Aie$(ID):Pos-x4") {
+	field(SCAN, ".2 second")
+	field(CALC, "A*B")
+	field(INPA, "$(P)Aie$(ID):Pos-Arry-x4.VAL PP")
+	field(INPB, "0.000001")
+	field(PREC, "3")
+	field(EGU,  "mm")
+}
+record(ai, "$(P)Aie$(ID):Pos-x4_") {
+    field(INP,"$(P)Aie$(ID):Pos-x4")
+}
+record(calc, "$(P)Aie$(ID):x4-Sts-I") {
+	field(SCAN, "1 second")
+	field(CALC, "(B-A)*(B-A)")
+	field(INPA, "$(P)Aie$(ID):Pos-x4_ NPP")
+	field(INPB, "$(P)Aie$(ID):Pos-x4_ PP")
+	field(LOLO , "0.0")
+	field(LOW , "0.0")
+	field(HIGH, "1.0")
+	field(PREC, "3")
+	field(HSV , "INVALID")
+	field(LSV , "INVALID")
+	field(LLSV, "INVALID")
+}
+
+
+### y
+record(calc, "$(P)Aie$(ID):Pos-y1") {
+	field(SCAN, ".2 second")
+	field(CALC, "A*B-C")
+	field(INPA, "$(P)Aie$(ID):Pos-Arry-y1.VAL PP")	
+	field(INPB, "0.000001")
+	field(INPC, "$(P)AI$(ID):BBA_Offset_Y1-SP.VAL PP")
+	field(PREC, "3")
+	field(EGU,  "mm")
+}
+
+record(calc, "$(P)Aie$(ID):Pos-y2") {
+	field(SCAN, ".2 second")
+	field(CALC, "A*B-C")
+	field(INPA, "$(P)Aie$(ID):Pos-Arry-y2.VAL PP")
+	field(INPB, "0.000001")
+	field(INPC, "$(P)AI$(ID):BBA_Offset_Y2-SP.VAL PP")
+	field(PREC, "3")
+	field(EGU,  "mm")
+}
+record(calc, "$(P)Aie$(ID):Pos-y3") {
+	field(SCAN, ".2 second")
+	field(CALC, "A*B")
+	field(INPA, "$(P)Aie$(ID):Pos-Arry-y3.VAL PP")
+	field(INPB, "0.000001")
+	field(PREC, "3")
+	field(EGU,  "mm")
+}
+
+# ID bpm-4 for next beamline
+record(calc, "$(P)Aie$(ID):Pos-y4") {
+	field(SCAN, ".2 second")
+	field(CALC, "A*B")
+	field(INPA, "$(P)Aie$(ID):Pos-Arry-y4.VAL PP")
+	field(INPB, "0.000001")
+	field(PREC, "3")
+	field(EGU,  "mm")
+}
+
+
+##########
+record(longin, "$(P)Aie$(ID):cell-d0") {
+	field(SCAN, "1 second")
+	field(INP, "$(P)Aie$(ID):Pos-Arry-Cell-D0.VAL PP")
+}
+record(longin, "$(P)Aie$(ID):cell-d1") {
+	field(SCAN, "1 second")
+	field(INP, "$(P)Aie$(ID):Pos-Arry-Cell-D1.VAL PP")
+}
+
+
+##
+record(calcout , "$(P)Aie$(ID):Angle-x-Cal") {
+	field(DESC, "Angle X")
+	field(SCAN, ".2 second")
+    field(INPA, "$(P)Aie$(ID):S1-SP.VAL")
+    field(INPB, "$(P)Aie$(ID):S2-SP.VAL")
+	field(INPC, "$(P)Aie$(ID):Pos-x1")
+	field(INPD, "$(P)Aie$(ID):Pos-x2")
+#|(x2-x1)/(s2-s1)|
+    field(CALC, "(D-C)/(B-A)")
+    field(EGU,  "mrad")
+    field(HOPR, "10")
+    field(LOPR, "-10")
+    field(PREC, "3")
+#	field(OUT,  "$(P)Aie$(ID):S-mm-SP.VAL")
+#	field(FLNK, "$(P)Aie$(ID):S-mm-SP")
+}
+
+record(calcout , "$(P)Aie$(ID):Offset-x-Cal") {
+	field(DESC, "Offset X")
+	field(SCAN, ".2 second")
+    field(INPA, "$(P)Aie$(ID):S1-SP.VAL")
+    field(INPB, "$(P)Aie$(ID):S2-SP.VAL")
+	field(INPC, "$(P)Aie$(ID):S3-SP.VAL")
+	field(INPD, "$(P)Aie$(ID):Pos-x1")
+	field(INPE, "$(P)Aie$(ID):Pos-x2")
+#|(x2-x1)/(s2-s1)|
+    field(CALC, "D+(E-D)*(C-A)/(B-A)")
+    field(EGU,  "mm")
+    field(HOPR, "10")
+    field(LOPR, "-10")
+    field(PREC, "3")
+#	field(OUT,  "$(P)Aie$(ID):S-mm-SP.VAL")
+#	field(FLNK, "$(P)Aie$(ID):S-mm-SP")
+}
+
+##
+record(calcout , "$(P)Aie$(ID):Angle-y-Cal") {
+	field(DESC, "Angle Y")
+	field(SCAN, ".2 second")
+    field(INPA, "$(P)Aie$(ID):S1-SP.VAL")
+    field(INPB, "$(P)Aie$(ID):S2-SP.VAL")
+	field(INPC, "$(P)Aie$(ID):Pos-y1")
+	field(INPD, "$(P)Aie$(ID):Pos-y2")
+#|(x2-x1)/(s2-s1)|
+    field(CALC, "(D-C)/(B-A)")
+    field(EGU,  "mrad")
+    field(HOPR, "10")
+    field(LOPR, "-10")
+    field(PREC, "3")
+#	field(OUT,  "$(P)Aie$(ID):S-mm-SP.VAL")
+#	field(FLNK, "$(P)Aie$(ID):S-mm-SP")
+}
+
+record(calcout , "$(P)Aie$(ID):Offset-y-Cal") {
+	field(DESC, "Offset Y")
+	field(SCAN, ".2 second")
+    field(INPA, "$(P)Aie$(ID):S1-SP.VAL")
+    field(INPB, "$(P)Aie$(ID):S2-SP.VAL")
+	field(INPC, "$(P)Aie$(ID):S3-SP.VAL")
+	field(INPD, "$(P)Aie$(ID):Pos-y1")
+	field(INPE, "$(P)Aie$(ID):Pos-y2")
+#|(x2-x1)/(s2-s1)|
+    field(CALC, "D+(E-D)*(C-A)/(B-A)")
+    field(EGU,  "mm")
+    field(HOPR, "10")
+    field(LOPR, "-10")
+    field(PREC, "3")
+#	field(OUT,  "$(P)Aie$(ID):S-mm-SP.VAL")
+#	field(FLNK, "$(P)Aie$(ID):S-mm-SP")
+}
+
+
+
+###################
+### H3 Offset calculations
+###################
+
+
+## ((x1-AIORH1)*(s2-s3)+(x2-AIORH2)*(s3-s1))/(s2-s1)
+record(calcout , "$(P)Aie$(ID):AI-OR_H3-Cal") {
+	field(DESC, "Angle X")
+	field(SCAN, ".2 second")
+	field(INPA, "$(P)Aie$(ID):S1-SP.VAL")
+	field(INPB, "$(P)Aie$(ID):S2-SP.VAL")
+#	field(INPC, "$(P)Aie$(ID):Pos-x1")
+#	field(INPD, "$(P)Aie$(ID):Pos-x2")
+	field(INPE, "$(P)Aie$(ID):AIOR-H1-SP")
+	field(INPF, "$(P)Aie$(ID):AIOR-H2-SP")
+    field(CALC, "((0-E)*(B-0)+(0-F)*(0-A))/(B-A)")
+    field(EGU,  "mrad")
+    field(HOPR, "10")
+    field(LOPR, "-10")
+    field(PREC, "3")
+}
+
+
+##((x2-AIORH2)-(x1-AIORH1))/(s2-s1)
+record(calcout , "$(P)Aie$(ID):AI-AR_H3-Cal") {
+	field(DESC, "Offset X")
+	field(SCAN, ".2 second")
+	field(INPA, "$(P)Aie$(ID):S1-SP.VAL")
+	field(INPB, "$(P)Aie$(ID):S2-SP.VAL")
+	field(INPC, "$(P)Aie$(ID):S3-SP.VAL")
+#	field(INPD, "$(P)Aie$(ID):Pos-x1")
+#	field(INPE, "$(P)Aie$(ID):Pos-x2")
+	field(INPE, "$(P)Aie$(ID):AIOR-H1-SP")
+	field(INPF, "$(P)Aie$(ID):AIOR-H2-SP")	
+    field(CALC, "((0-F)-(0-E))/(B-A)")
+    field(EGU,  "mm")
+    field(HOPR, "10")
+    field(LOPR, "-10")
+    field(PREC, "3")
+}
+
+
+## ((x1-AIORH1)*(s2-s3)+(x2-AIORH2)*(s3-s1))/(s2-s1)
+record(calcout , "$(P)Aie$(ID):AI-OR_V3-Cal") {
+	field(DESC, "Angle Y")
+	field(SCAN, ".2 second")
+	field(INPA, "$(P)Aie$(ID):S1-SP.VAL")
+	field(INPB, "$(P)Aie$(ID):S2-SP.VAL")
+#	field(INPC, "$(P)Aie$(ID):Pos-y1")
+#	field(INPD, "$(P)Aie$(ID):Pos-y2")
+	field(INPE, "$(P)Aie$(ID):AIOR-V1-SP")
+	field(INPF, "$(P)Aie$(ID):AIOR-V2-SP")	
+    field(CALC, "((0-E)*(B-0)+(0-F)*(0-A))/(B-A)")
+    field(EGU,  "mrad")
+    field(HOPR, "10")
+    field(LOPR, "-10")
+    field(PREC, "3")
+}
+
+##((x2-AIORH2)-(x1-AIORH1))/(s2-s1)
+record(calcout , "$(P)Aie$(ID):AI-AR_H3-Cal") {
+	field(DESC, "Offset Y")
+	field(SCAN, ".2 second")
+	field(INPA, "$(P)Aie$(ID):S1-SP.VAL")
+	field(INPB, "$(P)Aie$(ID):S2-SP.VAL")
+	field(INPC, "$(P)Aie$(ID):S3-SP.VAL")
+#	field(INPD, "$(P)Aie$(ID):Pos-y1")
+#	field(INPE, "$(P)Aie$(ID):Pos-y2")
+	field(INPE, "$(P)Aie$(ID):AIOR-V1-SP")
+	field(INPF, "$(P)Aie$(ID):AIOR-V2-SP")		
+    field(CALC, "((0-F)-(0-E))/(B-A)")
+    field(EGU,  "mm")
+    field(HOPR, "10")
+    field(LOPR, "-10")
+    field(PREC, "3")
+}
+
+
+############################
+### 01/20/2015  BBA offset
+############################
+record(ao, "$(P)AI$(ID):BBA_Offset_X1-SP") {
+        field(DTYP, "Soft Channel")
+        field(PREC, "6")
+        field(EGU,  "mm")
+}
+record(ao, "$(P)AI$(ID):BBA_Offset_X2-SP") {
+        field(DTYP, "Soft Channel")
+        field(PREC, "6")
+        field(EGU,  "mm")
+}
+record(ao, "$(P)AI$(ID):BBA_Offset_Y1-SP") {
+        field(DTYP, "Soft Channel")
+        field(PREC, "6")
+        field(EGU,  "mm")
+}
+record(ao, "$(P)AI$(ID):BBA_Offset_Y2-SP") {
+        field(DTYP, "Soft Channel")
+        field(PREC, "6")
+        field(EGU,  "mm")
+}
+

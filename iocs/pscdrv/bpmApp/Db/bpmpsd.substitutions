@@ -1,0 +1,46 @@
+
+# Trigger with \$(SYS){BPM:\$(NO)-P:FAA}In-SP
+file psc-psd.db
+{
+ {P="\$(SYS){BPM:\$(NO)-P:FAA}",
+  NELM="100000",
+  SCALE="\$(SCALE)",
+  INP="\$(SYS){BPM:\$(NO)}FA-A",
+  IFLNK="\$(SYS){BPM:\$(NO)-P:FAB}In-SP",
+ }
+ {P="\$(SYS){BPM:\$(NO)-P:FAB}",
+  NELM="100000",
+  SCALE="\$(SCALE)",
+  INP="\$(SYS){BPM:\$(NO)}FA-B",
+  IFLNK="\$(SYS){BPM:\$(NO)-P:FAC}In-SP",
+ }
+ {P="\$(SYS){BPM:\$(NO)-P:FAC}",
+  NELM="100000",
+  SCALE="\$(SCALE)",
+  INP="\$(SYS){BPM:\$(NO)}FA-C",
+  IFLNK="\$(SYS){BPM:\$(NO)-P:FAD}In-SP",
+ }
+ {P="\$(SYS){BPM:\$(NO)-P:FAD}",
+  NELM="100000",
+  SCALE="\$(SCALE)",
+  INP="\$(SYS){BPM:\$(NO)}FA-D",
+  IFLNK="\$(SYS){BPM:\$(NO)-P:FAX}In-SP",
+ }
+ {P="\$(SYS){BPM:\$(NO)-P:FAX}",
+  NELM="100000",
+  SCALE="\$(SCALE)",
+  INP="\$(SYS){BPM:\$(NO)}FA-X",
+  IFLNK="\$(SYS){BPM:\$(NO)-P:FAY}In-SP",
+ }
+ {P="\$(SYS){BPM:\$(NO)-P:FAY}",
+  NELM="100000",
+  SCALE="\$(SCALE)",
+  INP="\$(SYS){BPM:\$(NO)}FA-Y",
+  IFLNK="\$(SYS){BPM:\$(NO)-P:FAS}In-SP",
+ }
+ {P="\$(SYS){BPM:\$(NO)-P:FAS}",
+  NELM="100000",
+  SCALE="\$(SCALE)",
+  INP="\$(SYS){BPM:\$(NO)}FA-S",
+ }
+}

@@ -1,0 +1,21 @@
+### Post Morterm
+### 480 x 4 = 1920  OFFSET
+### 480 x 8 = 3840
+### 480 x 16 = 7680
+record(waveform, "$(P):PM-BPM$(CNO)-$(N)X-I") {
+        field(DESC, "$(P){CC}-$(N) X position")
+        field(DTYP, "PSC Block I32 In")
+        field(INP , "@aie_wfm_rx_1 76 $(OFFSET_X) 3840")
+        field(SCAN, "I/O Intr")
+        field(FTVL, "DOUBLE")
+        field(NELM, "30000")
+}
+
+record(waveform, "$(P):PM-BPM$(CNO)-$(N)Y-I") {
+        field(DESC, "$(P)-$(CNO)-$(N) Y position")
+        field(DTYP, "PSC Block I32 In")
+        field(INP , "@aie_wfm_rx_1 76 $(OFFSET_Y) 3840")
+        field(SCAN, "I/O Intr")
+        field(FTVL, "DOUBLE")
+        field(NELM, "30000")
+}

@@ -1,0 +1,13 @@
+## edited BR 10/10/2017 to add ALIAS filed and correct several default values
+file /opt/epics/modules/SAI/db/SAI_MotorRecord.template {
+pattern {ASYNPORT,	PMACPORT,	TMOT,	PMAC_MTR,	P,		R,			AXIS,		DESC,		MRES,	        PREC,	EGU,	VEL,	TACC, 	        OFFS, 		HSLM, 	        LSLM,       ALIAS}
+	{ "pmac",	"PMAC",		1.0,	1,		"XF:06BMA-OP",	"{Mono:DCM1-Ax:",	"Bragg}Mtr",	"Bragg",	 0.000005,	6,	"deg",	0.5,	0.1,		16.722698,	42.957195,	-21.39561,  dcm-bragg}
+	{ "pmac",	"PMAC",		1.0,	2,		"XF:06BMA-OP",	"{Mono:DCM1-Ax:",	"Bragg2}Mtr",	"Bragg Sec Enc", 0.000005,	6,	"deg",	0.5,	0.1,		16.722698,	0,		0,	    dcm-bragg2}
+	{ "pmac",	"PMAC",		1.0,	3,		"XF:06BMA-OP",	"{Mono:DCM1-Ax:",	"P2}Mtr",	"2nd Xtal Pitch",0.00043,	4,	"mrad",	0.42,	0.1,		6.1362,		14.1351,	-26.4075,   dcm-pitch}
+	{ "pmac",	"PMAC",		1.0,	4,		"XF:06BMA-OP",	"{Mono:DCM1-Ax:",	"R2}Mtr",	"2nd Xtal Roll", 0.00042,	4,	"mrad",	0.42,	0.1,		9.94056,	11.9532,	-31.8339,   dcm-roll}
+	{ "pmac",	"PMAC",		1.0,	5,		"XF:06BMA-OP",	"{Mono:DCM1-Ax:",	"Per2}Mtr",	"2nd Xtal Perp", 0.0001,	4,	"mm",	0.625,	0.1,		20.6627,	26.5,		1.39,	    dcm-perp}
+	{ "pmac",	"PMAC",		1.0,	6,		"XF:06BMA-OP",	"{Mono:DCM1-Ax:",	"Par2}Mtr",	"2nd Xtal Para", 0.0001,	4,	"mm",	0.625,	0.1,		66.3658,	155.66,		12.3,	    dcm-para}
+	{ "pmac",	"PMAC",		1.0,	7,		"XF:06BMA-OP",	"{Mono:DCM1-Ax:",	"X}Mtr",	"Goni Lateral",  0.0001,	4,	"mm",	0.5,	0.1,		0,		35.826115,	-33.9244,   dcm-x}
+	{ "pmac",	"PMAC",		1.0,	8,		"XF:06BMA-OP",	"{Mono:DCM1-Ax:",	"Y}Mtr",	"Vertical",	 0.0001,	5,	"mm",	0.2,	0.015625,	0,		30.892195,	-27.18482,  dcm-y}
+}
+

@@ -1,0 +1,9 @@
+#
+file bpm.db
+{ pattern
+#{P,       NO, ADC_WFM_LEN, TBT_WFM_LEN, FA_WFM_LEN, SA_WFM_LEN, SAVG_NSAM, SAVG_N}
+#{ "\$(P)",  "\$(NO)", "\$(ADC_WFM_LEN)", "\$(TBT_WFM_LEN)", "\$(FA_WFM_LEN)", 500, 10, 10}
+{P,       NO, ADC_WFM_LEN, TBT_WFM_LEN, FA_WFM_LEN, SA_WFM_LEN, SAVG_NSAM, SAVG_N}
+{ "\$(P)",  "\$(NO)", "\$(ADC_WFM_LEN)", "\$(TBT_WFM_LEN)", "\$(FA_WFM_LEN)", 500, 10, 10}
+}
+

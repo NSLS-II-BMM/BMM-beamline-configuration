@@ -43,7 +43,8 @@ HAG(beamline_remote) {
   xf06bm-ioc2, xf06bm-ioc2.cs.nsls2.local,
   xf06bm-ws1, xf06bm-ws1.cs.nsls2.local,
   xf06bm-ws2, xf06bm-ws2.cs.nsls2.local,
-  xf06bm-ws3, xf06bm-ws3.cs.nsls2.local
+  xf06bm-ws3, xf06bm-ws3.cs.nsls2.local,
+  xf06bm-ws4, xf06bm-ws4.cs.nsls2.local
 }
 # Account for IOCs
 UAG(softioc) {softioc, rtems}

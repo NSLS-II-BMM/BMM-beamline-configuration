@@ -1,0 +1,19 @@
+#!/bin/sh
+: << DESCRIPTION
+db files generation 
+DESCRIPTION
+
+./stBend-generator > stBend.cmd
+chmod +x stBend.cmd
+./stQuad-generator > stQuad.cmd
+chmod +x stQuad.cmd
+./st6A-generator > st6A.cmd
+chmod +x st6A.cmd
+./stDCsept-generator > stDCsept.cmd
+chmod +x stDCsept.cmd
+./stSept-generator > stSept.cmd
+chmod +x stSept.cmd
+./stKicker-generator > stKicker.cmd
+chmod +x stKicker.cmd
+
+

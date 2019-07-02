@@ -1,0 +1,2918 @@
+############################################################################################
+#	Active Interlock System setting waveform
+#	Interface with Database
+#	
+#	NSLS-II Controls group
+#	kha@bnl.gov
+#	11/12/2014	firmware upgrade 5th times
+#	Beam dump status added with a NEW DCCT controller
+############################################################################################
+
+record(bi, "$(P)conn") {
+	field(DTYP, "PSC Ctrl Connected")
+#	field(INP , "@aie_tx")
+	field(INP , "@Rx1")
+	field(SCAN, "I/O Intr")
+	field(ZNAM, "Disconnected")
+	field(ONAM, "Connected")
+	field(ZSV , "MAJOR")
+}
+
+record(stringin, "$(P)msg") {
+	field(DTYP, "PSC Ctrl Message")
+	field(INP , "@aie_tx")
+	field(DESC, "Last message")
+	field(SCAN, "I/O Intr")
+}
+
+##flush reg to socket buffer, trigger send to send all socket buffer to PSC
+record(bo, "$(P)send") {
+	field(DTYP, "PSC Ctrl Send All")
+	field(OUT , "@aie_tx")
+	field(ZNAM, "Send")
+	field(ONAM, "Send")
+}
+
+record(longout, "$(P)GoRegSingleWrite") {
+	field(DTYP, "PSC Ctrl Send")
+	field(OUT , "@aie_tx")
+	field(VAL , "1")
+	field(FLNK, "$(P)send")
+}
+
+record(longout, "$(P)regsend2") {
+	field(DTYP, "PSC Ctrl Send")
+	field(OUT , "@aie_tx")
+	field(VAL , "2")
+	field(FLNK, "$(P)send")
+}
+
+
+
+###
+record(stringin, "$(P)eeprom:note") {
+	field(DTYP, "PSC Block")
+	field(INP , "@aie_wfm_rx 33")
+	field(SCAN, "I/O Intr")
+}
+record(stringin, "$(P)eeprom:ipaddress") {
+	field(DTYP, "PSC Block")
+	field(INP , "@aie_wfm_rx 34")
+	field(SCAN, "I/O Intr")
+}
+
+###########################################
+###
+### SDI
+###########################################
+
+
+
+record(bo, "$(P)CcSdi:Clear-SP") {
+    field(DESC, "CC SDI Reg Clear")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 0")
+    field(ZNAM, "Ready")
+    field(ONAM, "CcClear")
+    field(HIGH, ".1")	#100 ms after low
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(bo, "$(P)CcSdi:DataInputMode-SP") {
+    field(DESC, "CC SDI Data Input Select, BPM or Sim")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 4")
+    field(ZNAM,"Ramp Data")
+    field(ONAM,"BPM Data")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+record(bo, "$(P)CcSdi:DataInputType-SP") {
+    field(DESC, "CC SDI Data type Sin/Ramp")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 8")
+    field(ZNAM,"Ramp")
+    field(ONAM,"Sin")
+##	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(bo, "$(P)CcSdi:Trig-SP") {
+    field(DESC, "CC SDI NPI trigger")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 12")
+    field(ZNAM, "Ready")
+    field(ONAM, "CcTrigStart")
+    field(HIGH, ".1")	#100 ms after low
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+record(longout, "$(P)CcSdi:Mask-SP") {
+	field(DESC, "Cell SDI Mask")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx 1 124")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(longout, "$(P)CcSdi:ID-SP") {
+	field(DESC, "Cell Number for NPI DDR")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx 1 128")
+	field(VAL , "3")
+#	field(PINI, "YES")	
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(longout, "$(P)CcSdi:Mask-SP") {
+    field(DESC, "CC Link Mask setting")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx 1 132")
+	field(VAL , "0x7")
+	field(PINI, "YES")
+	field(FLNK, "$(P)GoRegSingleWrite")	
+}
+
+record(longout, "$(P)CcSdi:NpiWidth-SP") {
+    field(DESC, "NPI enveop width (sec)")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx 1 140")
+	field(VAL , "2")
+	field(HOPR,"20")
+	field(LOPR,"1")	
+	field(DRVH,"20")	
+	field(DRVL,"1")
+#	field(PINI, "YES")
+	field(FLNK, "$(P)GoRegSingleWrite")	
+}
+
+
+record(longout, "$(P)CcSdi:DdrCell-SP") {
+	field(DESC, "Cell Number for DDR")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx 1 136")
+}
+
+
+record(longout, "$(P)CcSdi:SelRpaketHead-SP") {
+	field(DESC, "Packet Head Monitoring")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx 1 12")
+}
+
+
+record(longin, "$(P)CcSdi:AllMasks-I") {
+    field(DESC, "Reg25: Local link Mask status*")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 100")
+	field(SCAN, "I/O Intr")
+}
+
+
+# bpm sfp
+record(bi, "$(P)CcSdi:FiberLink1-I") {
+    field(DESC, "Reg14: SFP2 CCW*")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 244")
+	field(SCAN, "I/O Intr")
+	field(MASK, "0x100000")
+    field(SCAN,"I/O Intr")
+    field(ZNAM,"Lonk Fail")
+    field(ONAM,"Link Good")
+    field(ZSV,"NO_ALARM")
+    field(OSV,"MAJOR")
+}
+record(bi, "$(P)CcSdi:FiberLink2-I") {
+    field(DESC, "Reg14: SFP3 CW*")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 244")
+	field(SCAN, "I/O Intr")
+	field(MASK, "0x400000")
+    field(SCAN,"I/O Intr")
+    field(ZNAM,"Link Fail")
+    field(ONAM,"Link Good")
+    field(ZSV,"NO_ALARM")
+    field(OSV,"MAJOR")
+}
+
+record(longin, "$(P)CcSdi:ID-I") {
+    field(DESC, "Reg 0: ID for Local BPM (120x4)*")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 0")
+    field(SCAN, "I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P)CcSdi:PktLen-I") {
+    field(DESC, "Reg1: ID for Local BPM*")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 4")
+    field(SCAN, "I/O Intr")
+    field(EGU,  "")
+}
+
+record(mbbi, "$(P)CcSdi:CwLinkFailCnt-I") {
+    field(DESC, "Reg4: CW Link error count(124x4)*")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 16")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P)CcSdi:CcwLinkFailCnt-I") {
+    field(DESC, "Reg32: CW Link error count(120+32)x4*")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 128")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "cnt")
+}
+
+
+record(longin, "$(P)CcSdi:Ver-I") {
+    field(DESC, "Reg10: SDI Version (130x4)*")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 40")
+    field(SCAN,"I/O Intr")
+}
+
+#
+record(longin, "$(P)CcSdi:WdTrig-I") {
+    field(DESC, "Reg11: EVR trigger timeout count*")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 44")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "cnt")
+}
+
+#
+record(longin, "$(P)CcSdi:CwCRC-I") {
+    field(DESC, "Reg12: Local Link CW CRC error*")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 48")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "cnt")
+}
+#
+record(longin, "$(P)CcSdi:CcwCRC-I") {
+    field(DESC, "Reg13: Local Link CCW CRC error*")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 52")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "cnt")
+}
+
+
+record(longin, "$(P)CcSdi:TrigCnt-I") {
+    field(DESC, "Reg15: Trigger Count 100 us rate*")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 60")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "cnt")
+}
+
+record(longin, "$(P)CcSdi:LocalCwLoopCnt-I") {
+    field(DESC, "Reg16: Local CW loopback time out*")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 64")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "cnt")
+}
+record(longin, "$(P)CcSdi:LocalCcwLoopCnt-I") {
+    field(DESC, "Reg17: Local CCW loopback time out*")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 68")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "cnt")
+}
+
+record(longin, "$(P)CcSdi:LocalCwRxErr-I") {
+    field(DESC, "Reg18: Local CW Rx loopback time out*")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 72")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "cnt")
+}
+record(longin, "$(P)CcSdi:LocalCcwRxErr-I") {
+    field(DESC, "Reg19: Local CCW Rx loopback time out*")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 76")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "cnt")
+}
+
+record(longin, "$(P)CcSdi:ReCwToErrCnt-I") {
+    field(DESC, "Reg20: CW Remote time out*")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 80")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "cnt")
+}
+record(longin, "$(P)CcSdi:ReCcwToErrCnt-I") {
+    field(DESC, "Reg21: Ccw Remote time out*")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 84")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "cnt")
+}
+
+record(longin, "$(P)CcSdi:CwReHeadToErr-I") {
+    field(DESC, "Reg22: CW Head time out*")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 88")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "cnt")
+}
+
+record(longin, "$(P)CcSdi:CcwReHeadToErr-I") {
+    field(DESC, "Reg23: CCW Head time out*")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 92")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "cnt")
+}
+
+
+
+#
+# Read Position Closeed Orbit waveform
+#
+record(waveform, "SR-BI{ORBIT}FA-X") {
+	field(DESC, "Closed Orbit FA X")
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx 35")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "180")
+	field(FLNK, "$(P)Pos:CO-WA-X")
+}
+
+record(waveform, "SR-BI{ORBIT}FA-Y") {
+	field(DESC, "Closed Orbit FA Y")
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx 36")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "180")
+	field(FLNK, "$(P)Pos:CO-WA-Y")
+}
+
+
+record(waveAnl,"$(P)Pos:CO-WA-X") {
+	field(DESC,"Closed Orbit X Waveform analysis")
+	field(SCAN,"Passive")
+	field(NELM,"180")
+	field(INP,"SR-BI{ORBIT}FA-X")
+	field(PREC,"0")
+	field(EGUX,"nm")
+	field(HORX,"50")
+	field(LORX,"0")
+	field(EGUY,"")
+	field(HORY,"25000000")
+	field(LORY,"-25000000")
+	field(INAM,"")	
+	field(SNAM,"")
+}
+record(waveAnl,"$(P)Pos:CO-WA-Y") {
+	field(DESC,"Closed Orbit Y Waveform analysis")
+	field(SCAN,"Passive")
+	field(NELM,"180")
+	field(INP,"SR-BI{ORBIT}FA-Y")
+	field(PREC,"0")
+	field(EGUX,"nm")
+	field(HORX,"50")
+	field(LORX,"0")
+	field(EGUY,"")
+	field(HORY,"25000000")
+	field(LORY,"-25000000")
+	field(INAM,"")	
+	field(SNAM,"")
+}
+
+record(calc, "$(P)Pos:CO-X-Mean")  {
+	field(DESC, "X Mean")
+	field(SCAN,".5 second")
+	field(CALC, "A*0.000001")
+	field(INPA, "$(P)Pos:CO-WA-X.MEAN NPP MS")
+	field(PREC,"5")
+	field(EGU,  "mm")
+}
+record(calc, "$(P)Pos:CO-X-Max")  {
+	field(DESC, "X Max")
+	field(SCAN,".5 second")
+	field(CALC, "A*0.000001")
+	field(INPA, "$(P)Pos:CO-WA-X.MAX NPP MS")
+	field(PREC,"3")
+	field(EGU,  "mm")
+}
+record(calc, "$(P)Pos:CO-X-Min")  {
+	field(DESC, "X Min")
+	field(SCAN,".5 second")
+	field(CALC, "A*0.000001")
+	field(INPA, "$(P)Pos:CO-WA-X.MIN NPP MS")
+	field(PREC,"3")
+	field(EGU,  "mm")
+}
+
+record(calc, "$(P)Pos:CO-Y-Mean")  {
+	field(DESC, "Y Mean")
+	field(SCAN,".5 second")
+	field(CALC, "A*0.000001")
+	field(INPA, "$(P)Pos:CO-WA-Y.MEAN NPP MS")
+	field(PREC,"5")
+	field(EGU,  "mm")
+}
+record(calc, "$(P)Pos:CO-Y-Max")  {
+	field(DESC, "Y Max")
+	field(SCAN,".5 second")
+	field(CALC, "A*0.000001")
+	field(INPA, "$(P)Pos:CO-WA-Y.MAX NPP MS")
+	field(PREC,"3")
+	field(EGU,  "mm")
+}
+record(calc, "$(P)Pos:CO-Y-Min")  {
+	field(DESC, "Y Min")
+	field(SCAN,".5 second")
+	field(CALC, "A*0.000001")
+	field(INPA, "$(P)Pos:CO-WA-Y.MIN NPP MS")
+	field(PREC,"3")
+	field(EGU,  "mm")
+}
+
+
+record(calc, "$(P)Pos:CO-X-PkPk")  {
+	field(DESC, "X Peak to Peak")
+	field(SCAN,".5 second")
+	field(CALC, "A*0.000001")
+	field(INPA, "$(P)Pos:CO-WA-X.PKPK NPP MS")
+	field(PREC,"3")
+	field(EGU,  "mm")
+}
+
+record(calc, "$(P)Pos:CO-Y-PkPk")  {
+	field(DESC, "Y Peak to Peak")
+	field(SCAN,".5 second")
+	field(CALC, "A*0.000001")
+	field(INPA, "$(P)Pos:CO-WA-Y.PKPK NPP MS")
+	field(PREC,"3")
+	field(EGU,  "mm")
+}
+
+record(calc, "$(P)Pos:CO-X-SDEV")  {
+	field(DESC, "X Standard deviation")
+	field(SCAN,".5 second")
+	field(CALC, "A*0.000001")
+	field(INPA, "$(P)Pos:CO-WA-X.SDEV NPP MS")
+	field(PREC,"3")
+	field(EGU,  "mm")
+}
+
+record(calc, "$(P)Pos:CO-Y-SDEV")  {
+	field(DESC, "Y Standard deviation")
+	field(SCAN,".5 second")
+	field(CALC, "A*0.000001")
+	field(INPA, "$(P)Pos:CO-WA-Y.SDEV NPP MS")
+	field(PREC,"3")
+	field(EGU,  "mm")
+}
+
+record(calc, "$(P)Pos:CO-X-MADV")  {
+	field(DESC, "X Mean absolute deviation")
+	field(SCAN,".5 second")
+	field(CALC, "A*0.000001")
+	field(INPA, "$(P)Pos:CO-WA-X.MADV NPP MS")
+	field(PREC,"3")
+	field(EGU,  "mm")
+}
+
+record(calc, "$(P)Pos:CO-Y-MADV")  {
+	field(DESC, "Y Mean absolute deviation")
+	field(SCAN,".5 second")
+	field(CALC, "A*0.000001")
+	field(INPA, "$(P)Pos:CO-WA-Y.MADV NPP MS")
+	field(PREC,"3")
+	field(EGU,  "mm")
+}
+
+
+record(calc, "$(P)Pos:CO-X-VAR")  {
+	field(DESC, "X Varience")
+	field(SCAN,".5 second")
+	field(CALC, "A*0.000001")
+	field(INPA, "$(P)Pos:CO-WA-X.VAR NPP MS")
+	field(PREC,"3")
+	field(EGU,  "mm")
+}
+
+record(calc, "$(P)Pos:CO-Y-VAR")  {
+	field(DESC, "Y Varience")
+	field(SCAN,".5 second")
+	field(CALC, "A*0.000001")
+	field(INPA, "$(P)Pos:CO-WA-Y.VAR NPP MS")
+	field(PREC,"3")
+	field(EGU,  "mm")
+}
+
+
+
+record(waveform, "$(P)SR-BPM:AIOLHV-I") {
+	field(DESC, "SR BPM AI Limit BRAM read")
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx 37")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "360")
+}
+record(waveform, "$(P)SR-BPM:AIORHV-I") {
+	field(DESC, "Sr bpm OFFSET read")
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx 38")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "360")
+}
+
+record(waveform, "$(P)SR-BPM:MASK-I") {
+	field(DESC, "Sr bpm OFFSET read")
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx 39")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "180")
+}
+
+record(waveform, "$(P)Pos:AllXy-W") {
+	field(DESC, "All position data")
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx 40")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "780")
+}
+
+record(waveform, "$(P)Aie:Set") {
+	field(DESC, "AIE Reference setting")
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx 41")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "660")
+}
+
+###############################################
+#	FPGA Calculatopn Output
+###############################################
+record(waveform, "$(P)FPGA:x-mm-Cal") {
+	field(DESC, "AIE X cal at S3")
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx 45")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "60")
+}
+record(waveform, "$(P)FPGA:y-mm-Cal") {
+	field(DESC, "AIE Y cal at S3")
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx 46")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "60")
+}
+record(waveform, "$(P)FPGA:x-mrad-Cal") {
+	field(DESC, "AIE X cal angle")
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx 47")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "60")
+}
+record(waveform, "$(P)FPGA:y-mrad-Cal") {
+	field(DESC, "AIE y cal angle")
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx 48")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "60")
+}
+record(waveform, "$(P)FPGA:ID-state") {
+	field(DESC, "AIE y cal angle")
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx 49")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "60")
+}
+record(waveform, "$(P)FPGA:BM-state") {
+	field(DESC, "AIE y cal angle")
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx 50")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "60")
+}
+#################################################
+
+
+### NPI Global BPM POSITION
+record(waveform, "$(P)Pos:Global") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx 53")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "4800000")
+}
+
+
+### 480 x 4 x 10000 = 19200000
+record(waveform, "$(P)Npi:Pm") {
+	field(DESC, "PM DDR memory reading 0xC200:0000")
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx 54")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+#	field(NELM, "9600000")
+        field(NELM, "19200000")
+}
+
+
+######## Masking bpms
+#record(waveform, "$(P)SR-BPM:Mask-SP") {
+#	field(DESC, "AIE Masking bpms")
+#	field(DTYP, "PSC Block I32 Out")
+#	field(INP , "@aie_tx 20")
+#	field(FTVL, "DOUBLE")
+#	field(NELM, "180")
+#	field(FLNK, "$(P)send")
+#}
+
+######## Cell or ID enable/disable
+record(waveform, "$(P)ID-BPM:Mask-SP") {
+	field(DESC, "AIE Masking number of IDs")
+	field(DTYP, "PSC Block I32 Out")
+	field(INP , "@aie_tx 1 21")
+	field(FTVL, "DOUBLE")
+	field(NELM, "128")
+	field(FLNK, "$(P)send")
+}
+
+
+
+###################
+### BO
+###################
+
+record(bo,"$(P)Dout:Bit0-SP")
+{
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 188")
+	field(DESC, "Digital Out bit0")
+	field(ZNAM, "LOW")
+	field(ONAM, "HIGH")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(bo,"$(P)Dout:Bit1-SP")
+{
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 192")
+	field(DESC, "Digital Out bit1")
+	field(ZNAM, "LOW")
+	field(ONAM, "HIGH")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(bo,"$(P)Dout:Bit2-SP")
+{
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 196")
+	field(DESC, "Digital Out bit2")
+	field(ZNAM, "LOW")
+	field(ONAM, "HIGH")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(bo,"$(P)Sim:ublaze-SP")
+{
+	field(DESC, "Reg7.28 ")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 16")
+	field(DESC, "Sim Data control by uBlaze")
+	field(ZNAM, "Logic Mode")
+	field(ONAM, "uBlaze Mode")
+#	field(PINI, "YES")		
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+record(bo,"$(P)Sim:Enable-SP")
+{
+	field(DESC, "Reg6.31")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 32")
+	field(DESC, "Position Data type for Simulation")
+	field(ZNAM, "Position Global SDI Mode")
+	field(ONAM, "Position Simulation Mode")
+#	field(PINI, "YES")		
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+record(bo,"$(P)Sim:DataMode-SP")
+{
+	field(DESC, "Reg6.31")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 36")
+	field(DESC, "Position Data type for Simulation")
+	field(ZNAM, "Count")
+	field(ONAM, "Single")
+#	field(PINI, "YES")		
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(bo,"$(P)Sim:BeamTest-SP")
+{
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 40")
+	field(DESC, "Beam current Simulation Mode? Reg12[31]")
+#	field(MASK, "0x400") 
+	field(ZNAM, "Beam Current DCCT")
+	field(ONAM, "Beam Current Simulation")
+#	field(VAL,  "0")
+#	field(PINI, "YES")		
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(bo,"$(P)Sim:2mA-SP_")
+{
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 44")
+	field(DESC, "Beam current Simulation Mode? Reg12[30]")
+	field(ZNAM, "Less_2mA")
+	field(ONAM, "Set2mA")
+#	field(VAL,  "0")
+#	field(PINI, "YES")		
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(bo,"$(P)Sim:2mA-SP")
+{
+	field(DESC, "Beam current Simulation Mode? Reg12[30]")
+	field(ZNAM, "Less_2mA")
+	field(ONAM, "Set2mA")
+}
+
+record(bo,"$(P)Sim:50mA-SP_")
+{
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 48")
+	field(DESC, "Beam current Simulation Mode?")
+	field(ZNAM, "Less_50mA")
+	field(ONAM, "Set50mA")
+#	field(VAL,  "0")
+#	field(PINI, "YES")		
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+record(bo,"$(P)Sim:50mA-SP")
+{
+#	field(DTYP, "PSC Single U32")
+	field(DESC, "Beam current Simulation Mode?")
+	field(ZNAM, "Less_50mA")
+	field(ONAM, "Set50mA")
+}
+
+#
+record(bo,"$(P)Sim:PmFault-SP")
+{
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 52")
+	field(DESC, "Beam fault generator Reg13[31]")
+	field(ZNAM, "Ready...")
+	field(ONAM, "Test Set fault")
+	field(HIGH,".8")
+#	field(PINI, "YES")		
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+record(bo,"$(P)Pm:Reset-SP")
+{
+	field(DTYP, "PSC Single U32")
+#	field(OUT , "@aie_tx 1 56")
+	field(DESC, "Post morterm reset Reg13[30]")
+#	field(MASK, "0x4000") 
+	field(ZNAM, "PM Ready...")
+	field(ONAM, "Clearing...")
+	field(HIGH,".8")
+#	field(PINI, "YES")		
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+record(bo,"$(P)Npi1:Enable-SP")
+{
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 64")
+	field(DESC, "Enable NPI 1 for DDR copy")
+#	field(MASK, "0x8000") 
+	field(ZNAM, "Disable")
+	field(ONAM, "Enabled")
+#	field(PINI, "YES")		
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+
+record(bo,"$(P)Npi0:PmNpi0-SP")
+{
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 60")
+	field(DESC, "NPI0 Post Morterm Enable/Disable")
+	field(ZNAM, "Disable")
+	field(ONAM, "Enabled")
+#	field(PINI, "YES")		
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+record(bo,"$(P)IL0:LatchClear-SP")
+{
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 68")
+	field(DESC, "Interlock latch output clear Reg13.28")
+	field(ZNAM, "Ready...")
+	field(ONAM, "Global Latch Clearing")
+	field(HIGH,".8")
+#	field(PINI, "YES")		
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(bo,"$(P)IdDumpEnable-SP")
+{
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 72")
+	field(DESC, "Interlock Output Enable/Disable")
+	field(ZNAM, "Disable")
+	field(ONAM, "Enable")	
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(bo,"$(P)BmDumpEnable-SP")
+{
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 76")
+	field(DESC, "Interlock Output Enable/Disable")
+	field(ZNAM, "Disable")
+	field(ONAM, "Enable")	
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(bo,"$(P)PlcBmDump-SP")
+{
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 80")
+	field(DESC, "PLC Bm Dump Output Enable/Disable")
+	field(ZNAM, "PLC BM Dump Disable")
+	field(ONAM, "PLC BM Dump Enable")	
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+record(bo,"$(P)PlcIdDump-SP")
+{
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 84")
+	field(DESC, "PLC ID Dump Output Enable/Disable")
+	field(ZNAM, "PLC ID Dump Disable")
+	field(ONAM, "PLC ID Dump Enable")	
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+
+record(bo,"$(P)Trig:Soft1-Cmd")
+{
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 120")
+	field(DESC, "Soft trigger 1")
+#	field(MASK, "0x80000000") 
+	field(ZNAM, "Rdy")
+	field(ONAM, "Trig")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(bo,"$(P)Trig:Soft2-Cmd")
+{
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 124")
+	field(DESC, "Soft trigger 2")
+	field(ZNAM, "Rdy")
+	field(ONAM, "Trig")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+#####################
+### LONGOUT
+#####################
+
+record(ao, "$(P)SR-BPM:Xoff-SP") {
+	field(DESC, "BM BRAM X setting Reg.8" )
+	field(DTYP, "PSC Single F32")
+	field(OUT , "@aie_tx 2 168")
+	field(HOPR,"25.0")
+	field(LOPR,"-25.0")	
+	field(DRVH,"25.0")	
+	field(DRVL,"-25.0")
+	field(PREC, "3")
+	field(EGU,  "mm")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(ao, "$(P)SR-BPM:Yoff-SP") {
+	field(DESC, "BM BRAM Y setting Reg11")
+	field(DTYP, "PSC Single F32")
+	field(OUT , "@aie_tx 2 172")
+	field(HOPR,"25.0")
+	field(LOPR,"-25.0")	
+	field(DRVH,"25.0")	
+	field(DRVL,"-25.0")
+	field(PREC, "3")
+	field(EGU,  "mm")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+# 
+record(longout, "$(P)Sim:BpmPosAddress-SP") {
+	field(DESC, "Select bpm position address")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx 1 176")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+#
+record(longout, "$(P)Sim:BpmPosSet-SP") {
+	field(DESC, "Select bpm position Data Setting")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx 1 180")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+record(longout, "SR-AI:BPM:WfmLen-SP") {
+	field(DESC, "NPI1 xy position waveform length")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx 1 240")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+record(longout, "$(P)Pm:StopTime-SP") {
+	field(DESC, "Cell Number for DDR")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx 1 56")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+#
+record(longout, "$(P)NPI:width-SP") {
+	field(DESC, "BM low ofset setting Reg11")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx 1 60")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+
+
+
+###############################
+### AI READBACK
+###############################
+
+## eeprom DATA
+record(longin, "$(P)ee:Ver-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 280")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(P)ee:CcID-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 288")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(P)ee:CcPacketLen-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 296")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(P)ee:CcMask-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 304")
+	field(SCAN, "I/O Intr")
+}
+
+
+
+
+# time stamp
+record(longin, "$(P)Sys:Ts_sec-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 132")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(P)Sys:Ts_offset-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 136")
+	field(SCAN, "I/O Intr")
+}
+#
+
+
+# Version  offset 38
+
+## pv offset = (38 + 20) * 4
+record(longin, "$(P)Sys:Bm_Il_Addr-I") {
+	field(DESC, "mps reg 20 BM IL address latched")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 232")
+	field(SCAN, "I/O Intr")
+}
+
+#
+record(longin, "$(P)Sys:FpgaVer-I") {
+	field(DESC, "mps reg 27 Version")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 260")
+	field(SCAN, "I/O Intr")
+}
+
+
+########### SYSTEM STATUS ####################
+record(longin, "$(P)Sys:Status-I") {
+	field(DESC, "mps status")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 244")
+	field(SCAN, "I/O Intr")
+}
+
+record(mbbiDirect, "$(P)Sys:Status_S0-I") {
+	field(DESC, "mps status {15:0]")
+  	field(DTYP, "PSC Reg")
+	field(SHFT, "0")
+	field(INP , "@Rx$(NO) 30 244")
+	field(SCAN, "I/O Intr")
+}
+
+record(mbbiDirect, "$(P)Sys:Status_S16-I") {
+	field(DESC, "mps status [31:16]")
+  	field(DTYP, "PSC Reg")
+	field(SHFT, "16")
+	field(INP , "@Rx$(NO) 30 244")
+	field(SCAN, "I/O Intr")
+}
+
+record(bi, "$(P)Sys:Status-SimMode-I") {
+	field(DESC, "Mask Status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 244")
+	field(MASK, "0x1")
+	field(SCAN,"I/O Intr")
+	field(ZNAM,"AI System Mode")
+	field(ONAM,"AI System Simulation Mode")
+}
+
+record(bi, "$(P)Sys:Status-Mask-I") {
+	field(DESC, "Mask Status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 244")
+	field(MASK, "0x4000")
+	field(SCAN,"I/O Intr")
+	field(ZNAM,"0")
+	field(ONAM,"1")
+}
+
+record(bi, "$(P)Sys:Bm_RfTrip_sts-I") {
+	field(DESC, "Reg23[19]")
+	field(DTYP, "PSC Reg")
+  	field(INP , "@Rx$(NO) 30 244")
+  	field(MASK, "0x20")
+  	field(SCAN, "I/O Intr")
+  	field(ZNAM, "RF NO Trip")
+  	field(ONAM, "RF TRIP!")
+}
+
+record(bi, "$(P)Sys:Status-BmIL-I") {
+	field(DESC, "Mask Status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 244")
+	field(MASK, "0x40")
+	field(SCAN,"I/O Intr")
+	field(ZNAM,"BPM-SR OK..")
+	field(ONAM,"BPM-SR Interlock")
+}
+
+record(bi, "$(P)Sys:Status-IdDump-I") {
+	field(DESC, "Mask Status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 244")
+	field(MASK, "0x80")
+	field(SCAN,"I/O Intr")
+	field(ZNAM,"BPM-ID OK..")
+	field(ONAM,"BPM-ID Interlock")
+}
+
+
+### 060915 added
+record(bi, "$(P)Sys:Status-PMReady-I") {
+        field(DESC, "PM Ready Status")
+        field(DTYP, "PSC Reg")
+        field(INP , "@Rx$(NO) 30 244")
+        field(MASK, "0x800")
+        field(SCAN,"I/O Intr")
+        field(ZNAM,"PM Not Ready")
+        field(ONAM,"PM Ready OK")
+}
+
+#############################################
+
+
+#record(longin, "$(P)IO:DIN-I") {
+#	field(DESC, "Digital Input Status")
+#  	field(DTYP, "PSC Reg")
+#	field(INP , "@Rx$(NO) 30 248")
+#	field(SCAN, "I/O Intr")
+#}
+
+
+record(longin, "$(P)reg24-I") {
+	field(DESC, "Digital Input Status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 248")
+	field(SCAN, "I/O Intr")
+}
+
+
+record(mbbiDirect, "$(P)IO:DIN-I") {
+	field(DESC, "reg24 din [15:0]")
+	field(DTYP, "PSC Reg")
+	field(SHFT, "0")
+	field(INP , "@Rx$(NO) 30 248")
+	field(SCAN, "I/O Intr")
+}
+
+
+record(mbbiDirect, "$(P)reg24:S16-I") {
+	field(DESC, "reg24 [31:16]")
+	field(DTYP, "PSC Reg")
+	field(SHFT, "0")
+	field(INP , "@Rx$(NO) 30 248")
+	field(SCAN, "I/O Intr")
+}
+
+record(bi, "$(P)reg24:BeamLoss-I") {
+	field(DESC, "Mask Status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 248")
+	field(MASK, "0x80000000")
+	field(SCAN,"I/O Intr")
+	field(ZNAM,"DCCT Ok")
+	field(ONAM,"DCCT beam loss")
+}
+
+record(bi, "$(P)reg24:DCCT-SysFault-I") {
+	field(DESC, "DCCT System fault")
+	field(DTYP, "PSC Reg")
+	field(INP, "$(P)reg24-I CP")
+	field(MASK, "0x00040000")	
+	field(ZNAM,"DCCT Fault")
+	field(ONAM,"DCCT OK")
+}
+
+record(mbbiDirect, "SR:C31-{AI}CM-Status_S1-I") {
+	field(DESC, "Canting status []31:16]")
+	field(SHFT, "16")
+	field(INP, "SR:C31-{AI}Aie:CM-Status-I CP")
+}
+
+
+record(bi, "$(P)Sys:evr_trig0_led-I") {
+	field(DESC, "Reg23, evr 1 Hz trig status")
+	field(DTYP, "PSC Reg")
+  	field(INP , "@Rx$(NO) 30 244")
+  	field(MASK, "0x80000000")
+  	field(SCAN, "I/O Intr")
+  	field(ZNAM, "0")
+  	field(ONAM, "1")
+}
+
+record(bi, "$(P)Sys:LinkValid-I") {
+	field(DESC, "Reg23, cc all link valid status")
+	field(DTYP, "PSC Reg")
+  	field(INP , "@Rx$(NO) 30 244")
+  	field(MASK, "0x4000")
+  	field(SCAN, "I/O Intr")
+  	field(ZNAM, "0")
+  	field(ONAM, "1")
+}
+
+record(bi, "$(P)Sys:2mA_sts-I") {
+	field(DTYP, "PSC Reg")
+  	field(INP , "@Rx$(NO) 30 244")
+  	field(MASK, "0x4")
+  	field(SCAN, "I/O Intr")
+  	field(ZNAM, "AI-ID Disable less 2mA")
+  	field(ONAM, "AI-ID Enable over 2mA")
+}
+
+record(bi, "$(P)Sys:50mA_sts-I") {
+	field(DTYP, "PSC Reg")
+  	field(INP , "@Rx$(NO) 30 244")
+  	field(MASK, "0x8")
+  	field(SCAN, "I/O Intr")
+  	field(ZNAM, "AI-BM Disable less 50mA")
+  	field(ONAM, "AI-BM ENABLE over 50mA")
+}
+
+
+
+record(bi, "$(P)Sys:Bm_Hi_sts-I") {
+	field(DESC, "Reg23[13]")
+	field(DTYP, "PSC Reg")
+  	field(INP , "@Rx$(NO) 30 244")
+  	field(MASK, "0x10000")
+  	field(SCAN, "I/O Intr")
+  	field(ZNAM, "Ready")
+  	field(ONAM, "Bm_Lo!")
+}
+
+record(bi, "$(P)Sys:Bm_Lo_sts-I") {
+	field(DESC, "Reg23[13]")
+	field(DTYP, "PSC Reg")
+  	field(INP , "@Rx$(NO) 30 244")
+  	field(MASK, "0x8000")
+  	field(SCAN, "I/O Intr")
+  	field(ZNAM, "Ready")
+  	field(ONAM, "Bm_Hi!")
+}
+
+
+
+##
+record(longin, "$(P)Pm:STs_sec-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 308")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(P)Pm:STs_offset-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 312")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(P)Pm:ETs_sec-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 316")
+	field(SCAN, "I/O Intr")
+}
+
+#reg 80
+record(longin, "$(P)Pm:ETs_offset-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 316")
+	field(SCAN, "I/O Intr")
+}
+
+
+
+
+record(ai, "$(P)Temp:FpgaDie-I") {
+	field(DESC, "FPGA Die temperature read")
+	field(DTYP, "PSC Reg F32")
+	field(INP , "@Rx$(NO) 30 320")
+    field(LINR,"LINEAR")
+    field(PREC,"3")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "C")	
+}
+
+record(ai, "$(P)Fpga:VccInt-I") {
+	field(DESC, "FPGA VccInt read")
+	field(DTYP, "PSC Reg F32")
+	field(INP , "@Rx$(NO) 30 324")
+    field(LINR,"LINEAR")
+    field(PREC,"3")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "V")	
+}
+
+record(ai, "$(P)Fpga:VccAux-I") {
+	field(DESC, "FPGA VccAux read")
+	field(DTYP, "PSC Reg F32")
+	field(INP , "@Rx$(NO) 30 328")
+    field(LINR,"LINEAR")
+    field(PREC,"3")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "V")	
+}
+
+
+record(ai, "$(P){BPM:$(NO)}Pos:Ky-I") {
+	field(DESC, "Ky read")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 148")
+    field(SCAN,"I/O Intr")
+	field(ASLO, "0.000001")
+	field(PREC, "3")
+	field(EGU,  "uW")	
+}
+
+#
+# SPI Data
+record(ai, "$(P)Sdi:Sfp0Pwr-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 196")
+	field(SCAN, "I/O Intr")
+	field(ASLO, "0.1")
+	field(PREC, "1")
+	field(EGU,  "uW")	
+}
+
+record(ai, "$(P)Sdi:Sfp1Pwr-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 200")
+	field(SCAN, "I/O Intr")
+	field(ASLO, "0.1")
+	field(PREC, "1")
+	field(EGU,  "uW")	
+}
+
+record(ai, "$(P)Sdi:Sfp2Pwr-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 204")
+	field(SCAN, "I/O Intr")
+	field(ASLO, "0.1")
+	field(PREC, "1")
+	field(EGU,  "uW")	
+}
+record(ai, "$(P)Sdi:Sfp3Pwr-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 208")
+	field(SCAN, "I/O Intr")
+	field(ASLO, "0.1")
+	field(PREC, "1")
+	field(EGU,  "uW")	
+}
+record(ai, "$(P)Sdi:Sfp4Pwr-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 212")
+	field(SCAN, "I/O Intr")
+	field(ASLO, "0.1")
+	field(PREC, "1")
+	field(EGU,  "uW")	
+}
+record(ai, "$(P)Sdi:Sfp5Pwr-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 216")
+	field(SCAN, "I/O Intr")
+	field(ASLO, "0.1")
+	field(PREC, "1")
+	field(EGU,  "uW")	
+}
+#
+
+
+record(mbbi, "$(P)Alam-Sts") {
+  field(DTYP, "PSC Reg")
+  field(INP , "@Rx$(NO) 30 348")
+  field(SCAN, "I/O Intr")
+  #field(NOBT, "2")
+  #field(SHFT, "3") # select bits 3 and 4
+  field(ZRST, "Zero")
+  field(ONST, "One")
+  field(TWST, "Two")
+  field(THST, "Three")
+  field(ZRVL, "0")
+  field(ONVL, "1")
+  field(TWVL, "2")
+  field(THVL, "3")
+}
+
+
+#########
+record(longin, "$(P)Evr:Trig1_Dly-I") {
+  field(DTYP, "PSC Reg")
+  field(INP , "@Rx$(NO) 30 648")
+  field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)Evr:Trig1_Width-I") {
+  field(DTYP, "PSC Reg")
+  field(INP , "@Rx$(NO) 30 652")
+  field(SCAN, "I/O Intr")
+}
+
+#### Interlock timestamp, when RF Triped
+record(longin, "$(P)RfTrip:Time-Sec-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 856")
+	field(SCAN, "I/O Intr")
+#epics DB timestamp	
+	field(TSE, "-2")	
+	info("TimeFromBlock", "856")
+	info("TimeNSScale", "8")
+	field(FLNK, "$(P)RfTrip:Time-SI")
+}
+
+
+record(stringin, "$(P)RfTrip:Time-SI") {
+    field(DTYP, "Soft Timestamp")
+    field(INP , "@ %m/%d/%Y,%H:%M:%S")
+    field(TSEL, "$(P)RfTrip:Time-Sec-I.TIME")
+}
+
+
+record(longin, "$(P)RfTrip:Time-Off-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 860")
+	field(SCAN, "I/O Intr")
+}
+
+
+###
+record(longout, "$(P)SDI:PosAddr-SP") {
+	field(DESC, "Position Address seclec for NPI")
+	field(DTYP, "PSC Single I32")
+	field(HOPR, "780")
+	field(LOPR, "0")	
+	field(DRVH, "780")	
+	field(DRVL, "0")	
+	field(OUT , "@aie_tx 1 100")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+record(bo, "$(P)ID:GapSim-SP") {
+	field(DESC, "Gap Simulation mode")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 104")
+    field(ZNAM, "GAP Operation")
+    field(ONAM, "GAP Simulation")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+record(bo, "$(P)ID:PsSim-SP") {
+	field(DESC, "ID PS Simulation mode")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 204")
+	field(ZNAM, "ID PS Operation")
+	field(ONAM, "ID PS Simulation")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(bo, "$(P)BM:PsSim-SP") {
+	field(DESC, "BM PS Simulation mode")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 208")
+	field(ZNAM, "BP PS Operation")
+	field(ONAM, "BM PS Simulation")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(bo, "$(P)ID:FaultEnable-SP") {
+	field(DESC, "ID bpm fault enable for Trip")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 212")
+	field(ZNAM, "ID BPM Fault Disable")
+	field(ONAM, "ID BPM Fault Enable")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(bo, "$(P)ID:FaultReset-SP") {
+	field(DESC, "ID bpm fault enable for Trip")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 216")
+	field(ZNAM, "ID BPM Fault Ready")
+	field(ONAM, "ID BPM Fault Reset")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+record(longout, "$(P)CW:PacketDly-SP") {
+	field(DESC, "CW packet delay")
+	field(DTYP, "PSC Single I32")
+	field(HOPR, "2000")
+	field(LOPR, "1")	
+	field(DRVH, "2000")	
+	field(DRVL, "1")	
+	field(OUT , "@aie_tx 1 20")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+record(longout, "$(P)CCW:PacketDly-SP") {
+	field(DESC, "CW packet delay")
+	field(DTYP, "PSC Single I32")
+	field(HOPR, "2000")
+	field(LOPR, "1")	
+	field(DRVH, "2000")	
+	field(DRVL, "1")	
+	field(OUT , "@aie_tx 1 24")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+record(longout, "$(P)ID:MaskEnable0-SP") {
+	field(DESC, "Enable ID Mask 1 - 30")
+	field(DTYP, "PSC Single I32")
+	field(HOPR, "0xFFFFFFFF")
+	field(LOPR, "0")	
+	field(DRVH, "0xFFFFFFFF")	
+	field(DRVL, "0")	
+	field(OUT , "@aie_tx 1 108")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+record(longout, "$(P)ID:MaskEnable1-SP") {
+	field(DESC, "Enable ID Mask 31-60")
+	field(DTYP, "PSC Single I32")
+	field(HOPR, "0xFFFFFFFF")
+	field(LOPR, "0")	
+	field(DRVH, "0xFFFFFFFF")	
+	field(DRVL, "0")	
+	field(OUT , "@aie_tx 1 112")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+record(longout, "$(P)Evr:Trig1_Dly-SP") {
+	field(DESC, "EVR trig1 delay")
+	field(DTYP, "PSC Single I32")
+	field(HOPR,"2000")
+	field(LOPR,"1")	
+	field(DRVH,"2000")	
+	field(DRVL,"1")	
+	field(OUT , "@aie_tx 1 144")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(longout, "$(P)Evr:PacketDly-SP") {
+	field(DESC, "EVR trig1 width for packet delay")
+	field(DTYP, "PSC Single I32")
+	field(HOPR, "2000")
+	field(LOPR, "1")	
+	field(DRVH, "2000")	
+	field(DRVL, "1")	
+	field(OUT , "@aie_tx 1 148")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(bo, "$(P)CcSdi:LinkDir-SP") {
+	field(DESC, "CW or Both to DPRAM?")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 152")
+    field(ZNAM, "CW ONLY")
+    field(ONAM, "CW/CCW BOTH")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+###
+record(longout, "$(P)Pos:SrBpmMaskAddr-SP") {
+	field(DESC, "SR-BPM enable/disable Mask Address")
+	field(DTYP, "PSC Single I32")
+	field(HOPR, "240")
+	field(LOPR, "0")	
+	field(DRVH, "240")	
+	field(DRVL, "0")	
+	field(OUT , "@aie_tx 1 156")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+record(bo, "$(P)Pso:SrBpmMaskCtrl-SP") {
+	field(DESC, "Sr-BPM enable Disable for COD")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 160")
+    field(ZNAM, "Disable")
+    field(ONAM, "Enable")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+record(longout, "$(P)Test:DAC_A-SP") {
+	field(DESC, "DAC Port test")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx 1 184")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+###  170 x 4 = 680
+record(longin, "$(P)c01:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 680")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c02:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 684")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c03:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 688")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c04:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 692")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c05:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 696")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c06:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 700")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c07:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 704")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c08:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 708")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c09:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 712")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c10:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 716")
+	field(SCAN, "I/O Intr")
+}
+
+
+
+### 11 -20
+record(longin, "$(P)c11:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 720")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c12:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 724")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c13:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 728")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c14:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 732")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c15:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 736")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c16:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 740")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c17:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 744")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c18:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 748")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c19:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 752")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c20:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 756")
+	field(SCAN, "I/O Intr")
+}
+
+
+### 21 - 30
+record(longin, "$(P)c21:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 760")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c22:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 764")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c23:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 768")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c24:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 772")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c25:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 776")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c26:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 780")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c27:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 784")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c28:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 788")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c29:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 792")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)c30:bm-il-I") {
+	field(DESC, "BM interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 796")
+	field(SCAN, "I/O Intr")
+}
+
+#######################################
+### 199 x 4 = 796
+### 800, 804, 808, 812, 816, 820
+###
+
+
+
+### 6, 7)
+record(longin, "$(P)Aie:il_0-I") {
+	field(DESC, "ID interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 824")
+	field(SCAN, "I/O Intr")
+}
+
+record(mbbiDirect, "$(P)Aie:il_0_S0-I") {
+	field(DESC, "ID Interlock status {15:0]")
+  #	field(DTYP, "PSC Reg")
+	field(SHFT, "0")
+	field(INP , "$(P)Aie:il_0-I CP")
+#	field(INP , "@Rx$(NO) 30 824")
+#	field(SCAN, "I/O Intr")
+}
+
+record(mbbiDirect, "$(P)Aie:il_0_S16-I") {
+	field(DESC, "ID Interlock status [31:16]")
+  #	field(DTYP, "PSC Reg")
+	field(SHFT, "16")
+	field(INP , "$(P)Aie:il_0-I CP")
+#	field(INP , "@Rx$(NO) 30 824")
+#	field(SCAN, "I/O Intr")
+}
+
+
+record(longin, "$(P)Aie:il_1-I") {
+	field(DESC, "ID interlock ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 828")
+	field(SCAN, "I/O Intr")
+}
+#8, 9
+record(longin, "$(P)Aie:Gs_0-I") {
+	field(DESC, "Gap ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 832")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)Aie:Gs_1-I") {
+	field(DESC, "Gap ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 836")
+	field(SCAN, "I/O Intr")
+}
+
+record(mbbiDirect, "$(P)Aie:Gs_0_S0-I") {
+	field(DESC, "ID IdRunStatus status [15:0]")
+	field(DTYP, "PSC Reg")
+	field(SHFT, "0")
+	field(INP , "@Rx$(NO) 30 832")
+	field(SCAN, "I/O Intr")
+}
+
+record(mbbiDirect, "$(P)Aie:Gs_0_S16-I") {
+	field(DESC, "ID IdRunStatus status [31:16]")
+	field(DTYP, "PSC Reg")
+	field(SHFT, "16")
+	field(INP , "@Rx$(NO) 30 832")
+	field(SCAN, "I/O Intr")
+}
+
+
+
+###10, 11 
+record(longin, "$(P)Ts:NpiRst-off-I") {
+	field(DESC, "Gap ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 840")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)Ts:NpiRst-sec-I") {
+	field(DESC, "Gap ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 844")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(P)Ts:NpiStop-off-I") {
+	field(DESC, "Gap ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 848")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)Ts:NpiStop-sec-I") {
+	field(DESC, "Gap ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 852")
+	field(SCAN, "I/O Intr")
+}
+
+### 14, 15 ( 786 + 56)
+record(longin, "$(P)Ts:Il-off-I") {
+	field(DESC, "Gap ststus")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 858")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)Ts:Il-sec-I") {
+	field(DESC, "Ts sec for IL")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 860")
+	field(SCAN, "I/O Intr")
+}
+
+### 170 + 47 = 217 * 4 = 868
+record(longin, "$(P)Aie:bm0-I") {
+	field(DESC, "Reg 47")
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 868")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)Aie:bm1-I") {
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 872")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(P)Aie:A0-I") {
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 876")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)Aie:A1-I") {
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 880")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)Aie:C0-I") {
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 884")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)Aie:C1-I") {
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 888")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)Aie:D0-I") {
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 892")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)Aie:D1-I") {
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 896")
+	field(SCAN, "I/O Intr")
+}
+
+
+#SysMonData[55]
+record(longin, "$(P)Aie:Dump-D0-I") {
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 900")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)Aie:Dump-D1-I") {
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 904")
+	field(SCAN, "I/O Intr")
+}
+
+#SysMonData[57]
+record(longin, "$(P)Aie:PhotonShutter-D0-I") {
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 908")
+	field(SCAN, "I/O Intr")
+}
+
+record(mbbiDirect, "$(P)Aie:PhotonShutter-D0_S0-I") {
+	field(DESC, "ID IdRunStatus status [15:0]")
+	field(DTYP, "PSC Reg")
+	field(SHFT, "0")
+	field(INP , "@Rx$(NO) 30 908")
+	field(SCAN, "I/O Intr")
+}
+
+record(mbbiDirect, "$(P)Aie:PhotonShutter-D0_S16-I") {
+	field(DESC, "ID IdRunStatus status [31:16]")
+	field(DTYP, "PSC Reg")
+	field(SHFT, "16")
+	field(INP , "@Rx$(NO) 30 908")
+	field(SCAN, "I/O Intr")
+}
+
+
+record(longin, "$(P)Aie:PhotonShutter-D1-I") {
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 912")
+	field(SCAN, "I/O Intr")
+}
+
+
+
+
+
+#SysMonData[59]
+record(longin, "$(P)Aie:IdRunStatus-D0-I") {
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 916")
+	field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)Aie:IdRunStatus-D1-I") {
+  	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 920")
+	field(SCAN, "I/O Intr")
+}
+
+record(mbbiDirect, "$(P)Aie:IdRunStatus-D0_S0-I") {
+	field(DESC, "ID IdRunStatus status {15:0]")
+  	field(DTYP, "PSC Reg")
+	field(SHFT, "0")
+	field(INP , "@Rx$(NO) 30 916")
+	field(SCAN, "I/O Intr")
+}
+
+record(mbbiDirect, "$(P)Aie:IdRunStatus-D0_S16-I") {
+	field(DESC, "ID IdRunStatus status [31:16]")
+  	field(DTYP, "PSC Reg")
+	field(SHFT, "16")
+	field(INP , "@Rx$(NO) 30 916")
+	field(SCAN, "I/O Intr")
+}
+
+
+
+#[61]
+record(longin, "$(P)Aie:BM-PhotonShutter-D0-I") {
+        field(DTYP, "PSC Reg")
+        field(INP , "@Rx$(NO) 30 924")
+        field(SCAN, "I/O Intr")
+}
+record(mbbiDirect, "$(P)Aie:BM-PhotonShutter-D0_S0-I") {
+        field(DESC, "ID IdRunStatus status [15:0]")
+        field(DTYP, "PSC Reg")
+        field(SHFT, "0")
+        field(INP , "@Rx$(NO) 30 924")
+        field(SCAN, "I/O Intr")
+}
+
+record(mbbiDirect, "$(P)Aie:BM-PhotonShutter-D0_S16-I") {
+	field(DESC, "ID IdRunStatus status [31:16]")
+	field(DTYP, "PSC Reg")
+	field(SHFT, "16")
+	field(INP , "@Rx$(NO) 30 924")
+	field(SCAN, "I/O Intr")
+}
+
+# [62]
+record(longin, "$(P)Aie:BM-PhotonShutter-D1-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 928")
+	field(SCAN, "I/O Intr")
+}
+
+#[63]  932
+#[64]  936 
+record(longin, "$(P)Aie:PmFaTrigCnt-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 932")
+	field(SCAN, "I/O Intr")
+}
+# CantedMagnets_Status
+record(longin, "$(P)Aie:CM-Status-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 936")
+	field(SCAN, "I/O Intr")
+}
+
+
+
+
+### [65] 
+record(longin, "$(P)Aie:CellPLC-WD-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 940")
+	field(SCAN, "I/O Intr")
+}
+
+# [66] PLC fast dump status
+record(longin, "$(P)Aie:CellPLC-ID-Dump-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 944")
+	field(SCAN, "I/O Intr")
+}
+
+# [67] PLC slow dump status
+record(longin, "$(P)Aie:CellPLC-BM-Dump-I") {
+        field(DTYP, "PSC Reg")
+        field(INP , "@Rx$(NO) 30 948")
+        field(SCAN, "I/O Intr")
+}
+
+# [68] ID bpm fault status 
+record(longin, "$(P)Aie:ID-bpm_fault-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 952")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(P)Aie:ID-bpm_fault2-I") {
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 956")
+	field(SCAN, "I/O Intr")
+}
+
+
+
+record(longin, "$(P)Evr:sec-I") {
+    field(DESC, "Timestamp sec")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 400")
+    field(SCAN,"I/O Intr")
+}
+record(longin, "$(P)Evr:off-I") {
+    field(DESC, "Timestamp offset")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 404")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P)Trig:sec-I") {
+    field(DESC, "Trig Timestamp sec")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 408")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "cnt")
+}
+
+record(longin, "$(P)Trig:off-I") {
+    field(DESC, "Trig Timestamp offset")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 412")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "cnt")
+}
+
+################
+#	Cell 3 DIN-0 address is 304
+record(bi, "$(P)C3D0:Beam-2ma-I") {
+	field(DESC, "Beam 2 mA Status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 304")
+	field(MASK, "0x1")
+	field(SCAN,"I/O Intr")
+	field(ZNAM,"Less 2mA")
+	field(ONAM,"Over 2mA")
+}
+
+record(bi, "$(P)C3D0:Beam-50ma-I") {
+	field(DESC, "Beam 2 mA Status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 304")
+	field(MASK, "0x2")
+	field(SCAN,"I/O Intr")
+	field(ZNAM,"Less 50mA")
+	field(ONAM,"Over 50mA")
+}
+
+record(bi, "$(P)C3D0:Hb-I") {
+	field(DESC, "PLC hertbert")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 304")
+	field(MASK, "0x8")
+	field(SCAN,"I/O Intr")
+	field(ZNAM,"Beam Mon PLC 0")
+	field(ONAM,"Beam Mon PLC 1")
+}
+#########
+
+
+##########################
+### WAVEFORM WRITE
+##########################
+record(longout, "$(P)send70") {
+	field(DTYP, "PSC Ctrl Send")
+	field(OUT , "@aie_tx")
+	field(VAL , "70")
+	field(FLNK, "$(P)send")
+}
+record(longout, "$(P)send71") {
+	field(DTYP, "PSC Ctrl Send")
+	field(OUT , "@aie_tx")
+	field(VAL , "71")
+	field(FLNK, "$(P)send")
+}
+record(longout, "$(P)send72") {
+	field(DTYP, "PSC Ctrl Send")
+	field(OUT , "@aie_tx")
+	field(VAL , "72")
+	field(FLNK, "$(P)send")
+}
+
+record(longout, "$(P)send73") {
+	field(DTYP, "PSC Ctrl Send")
+	field(OUT , "@aie_tx")
+	field(VAL , "73")
+	field(FLNK, "$(P)send")
+}
+record(longout, "$(P)send74") {
+	field(DTYP, "PSC Ctrl Send")
+	field(OUT , "@aie_tx")
+	field(VAL , "74")
+	field(FLNK, "$(P)send")
+}
+record(longout, "$(P)send75") {
+	field(DTYP, "PSC Ctrl Send")
+	field(OUT , "@aie_tx")
+	field(VAL , "75")
+	field(FLNK, "$(P)send")
+}
+
+# BBA X offset
+record(longout, "$(P)send76") {
+	field(DTYP, "PSC Ctrl Send")
+	field(OUT , "@aie_tx")
+	field(VAL , "76")
+	field(FLNK, "$(P)send")
+}
+# BBA Y offset
+record(longout, "$(P)send77") {
+	field(DTYP, "PSC Ctrl Send")
+	field(OUT , "@aie_tx")
+	field(VAL , "77")
+	field(FLNK, "$(P)send")
+}
+
+
+
+
+record(waveform,"$(P)SR-BPM:USE-SP") {
+	field(DESC, "SR-bpm Use or Nor Use")
+	field(DTYP, "PSC Block I32 Out")
+	field(INP , "@aie_tx 71")
+	field(FTVL, "DOUBLE")
+	field(NELM, "180")
+	field(FLNK, "$(P)send71")
+}
+
+record(waveform,"$(P)SR-BPM:AIOLHV-SP") {
+	field(DESC, "SR-BPM Offset X,y setting mm")
+	field(DTYP, "PSC Block I32 Out")
+	field(INP , "@aie_tx 70")
+	field(FTVL, "DOUBLE")
+	field(NELM, "360")
+	field(FLNK, "$(P)send70")
+}
+
+
+record(waveform,"$(P)SR-BPM:AIOLH-SP") {
+	field(DESC, "SR-bpm 0-179  X limit")
+	field(DTYP, "PSC Block I32 Out")
+	field(INP , "@aie_tx 72")
+	field(FTVL, "DOUBLE")
+	field(NELM, "180")
+	field(FLNK, "$(P)send72")
+}
+record(waveform,"$(P)SR-BPM:AIOLV-SP") {
+	field(DESC, "SR-bpm 0-179  Y limit")
+	field(DTYP, "PSC Block I32 Out")
+	field(INP , "@aie_tx 73")
+	field(FTVL, "DOUBLE")
+	field(NELM, "180")
+	field(FLNK, "$(P)send73")
+}
+
+record(waveform,"$(P)SR-BPM:AIORH-SP") {
+	field(DESC, "SR-bpm 0-179  X Offset")
+	field(DTYP, "PSC Block I32 Out")
+	field(INP , "@aie_tx 74")
+	field(FTVL, "DOUBLE")
+	field(NELM, "180")
+	field(FLNK, "$(P)send74")
+}
+record(waveform,"$(P)SR-BPM:AIORV-SP") {
+	field(DESC, "SR-bpm 0-179  Y Offset")
+	field(DTYP, "PSC Block I32 Out")
+	field(INP , "@aie_tx 75")
+	field(FTVL, "DOUBLE")
+	field(NELM, "180")
+	field(FLNK, "$(P)send75")
+}
+
+
+# BBA X offset
+record(waveform,"$(P)SR-BPM:BBA-X-SP") {
+	field(DESC, "SR-bpm 0-179  BBA X Offset")
+	field(DTYP, "PSC Block I32 Out")
+	field(INP , "@aie_tx 76")
+	field(FTVL, "DOUBLE")
+	field(NELM, "180")
+	field(FLNK, "$(P)send76")
+}
+record(waveform,"$(P)SR-BPM:BBA-Y-SP") {
+	field(DESC, "SR-bpm 0-179  BBA Y Offset")
+	field(DTYP, "PSC Block I32 Out")
+	field(INP , "@aie_tx 77")
+	field(FTVL, "DOUBLE")
+	field(NELM, "180")
+	field(FLNK, "$(P)send77")
+}
+
+
+
+
+
+##############################################
+#record(waveform,"$(P)Pos:S-X")  {
+#	field(DTYP,"Soft Channel")
+#	field(DESC,"S-coordinates for X")
+#	field(NELM,"180")
+#	field(FTVL,"DOUBLE")
+# }
+
+record(waveform,"$(P)Pos:S-Y")  {
+	field(DTYP,"Soft Channel")
+	field(DESC,"S-coordinates for X")
+	field(NELM,"180")
+	field(FTVL,"DOUBLE")
+ }
+
+record(waveform,"SR:BI{ORBIT}SA-X")  {
+	field(DTYP,"Soft Channel")
+	field(DESC,"Slow 10 Hz array for X")
+	field(NELM,"180")
+	field(FTVL,"DOUBLE")
+ }
+
+record(waveform,"SR:BI{ORBIT}SA-Y")  {
+	field(DTYP,"Soft Channel")
+	field(DESC,"Slow 10 Hz array for y")
+	field(NELM,"180")
+	field(FTVL,"DOUBLE")
+ }
+
+
+
+
+record(waveform,"SR:C31-{AI}SR-BPM:CELLS-I")  {
+	field(DTYP,"Soft Channel")
+	field(DESC,"CELL Number")
+	field(NELM,"180")
+	field(FTVL,"SHORT")
+ }
+
+record(waveform,"SR:C31-{AI}SR-BPM:SEQS-I")  {
+	field(DTYP,"Soft Channel")
+	field(DESC,"CELL Number")
+	field(NELM,"180")
+	field(FTVL,"SHORT")
+ }
+record(waveform,"SR:C31-{AI}SR-BPM:NAMES-I")  {
+	field(DTYP,"Soft Channel")
+	field(DESC,"CELL Number")
+	field(NELM,"180")
+	field(FTVL,"STRING")
+ }
+record(waveform,"SR:C31-{AI}SR-BPM:LOGICCODE-I")  {
+	field(DTYP,"Soft Channel")
+	field(DESC,"CELL Number")
+	field(NELM,"180")
+	field(FTVL,"SHORT")
+ }
+
+record(ao, "SR:C31-{AI}SR-BPM:SAFECUR-I") {
+	field(DESC, "Safe Current" )
+	field(DTYP, "Soft Channel")
+	field(PREC, "3")
+	field(EGU,  "mA")
+}
+
+record(bo, "SR:C31-{AI}LOADDATA-SP") {
+    field(DTYP, "Soft Channel")
+    field(ZNAM, "Ready")
+    field(ONAM, "DOWNLOAD")
+#    field(HIGH, ".1")   #100 ms after low
+}
+
+record(bo, "SR:C31-{AI}DATASOURCE-SP") {
+    field(DTYP, "Soft Channel")
+    field(ZNAM, "Active")
+    field(ONAM, "Approved")
+}
+
+record(stringin, "SR:C31-{AI}LOADDATA-Status") {
+	field(DTYP, "Soft Channel")
+    field(DESC, "Download status")
+}
+
+
+record(ao, "SR:C31-{AI}DCCT-SP") {
+	field(DESC, "Beam Current" )
+	field(DTYP, "Soft Channel")
+	field(PREC, "3")
+	field(EGU,  "mA")
+}
+
+################ PLC DUMP COMMAND
+record(bo, "$(P)PLC:BmDump-SP") {
+	field(DESC, "Cell PLC BM Dump Command")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 80")
+	field(ZNAM, "Disable")
+	field(ONAM, "Enable")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(bo, "$(P)PLC:IdDump-SP") {
+	field(DESC, "Cell PLC ID Dump Command")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 84")
+	field(ZNAM, "Disable")
+	field(ONAM, "Enable")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+record(waveform, "SR:C31-{AI}ID_MuxBuffer") {
+	field(DESC, "AI ID Mux buffer data")
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx 70")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "2000")
+}
+
+record(waveform, "SR:C31-{AI}BM:Y_Delta-I") {
+	field(DESC, "AI ID Mux buffer data")
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx 71")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "180")
+}
+
+
+# Alarm
+# SR:C31-{AI}Sys:Status_S0-I.B5  - RF DUMP
+# SR:C31-{AI}Aie:il_0-I
+################################
+#field(CALC, "A=-1?1:B=1?2:C>0?3:D=1?4:E>0?5:0")
+record(calc, "SR:C31-{AI}AlarmCal-Sts")  {
+	field(DESC, "AI Alarm Summery Cal")
+	field(CALC, "A=-1?1:B=1?2:C>0?3:D=1?4:E>0?5:F=1?6:0") 	
+        field(INPA, "SR:C31-{AI}conn.VAL CP")
+        field(INPB, "SR:C31-{AI}Sys:Status_S0-I.B5 CP")
+        field(INPC, "SR:C31-{AI}Aie:il_0-I.VAL CP")
+        field(INPD, "SR:C31-{AI}Sys:Status_S0-I.B6 CP")
+        field(INPE, "SR:C31-{AI}Aie:ID-bpm_fault-I CP")
+        field(INPF, "SR:C31-{AI}Sim:Enable-SP CP")
+}
+
+
+record(mbbi, "SR:C31-{AI}Alarm-Sts")
+{
+	field(INP, "SR:C31-{AI}AlarmCal-Sts NPP MS")
+	field(SCAN,"1 second")
+	field(ZRST, "OK")
+	field(ONST, "Comm_Fail")
+	field(TWST, "RF DUMP")
+	field(THST, "ID Interlock")
+	field(FRST, "BM Interlock")
+	field(FVST, "ID BPM FAULT")
+	field(SXST, "DATA SIM MODE")
+	#
+	field(ZRSV, "NO_ALARM")
+	field(ONSV, "MAJOR")
+	field(TWSV, "MAJOR")
+	field(THSV, "MAJOR")
+	field(FRSV, "MAJOR")
+	field(FVSV, "MAJOR")
+	field(SXSV, "MAJOR")
+}
+
+
+# 11/12/14
+# pSrvTxDdrOffAddr->data[250]
+record(longin, "SR:C31-{AI}BM:ZERO_CNT-I") {
+	field(DESC, "BM BPM Cod delta zero count")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 1000")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "SR:C31-{AI}BM:ZERO_N-I") {
+        field(DESC, "BM BPM Cod N of error")
+        field(DTYP, "PSC Reg")
+        field(INP , "@Rx$(NO) 30 1004")
+        field(SCAN, "I/O Intr")
+}
+
+
+
+
+
+# 11/17/14 DCCT monitoring with BPM
+#
+# bpm adc > 0  check DCCT > 0.2 mA ? Yes = 0(OK), No = 1(Fail)
+# bpm adc == 0    0  OK
+record(calc, "SR:C31-{AI}DCCT:FailMon-Cal") {
+	field(DESC, "DCCT fault Monitoring")
+	field(INPA, "SR:C18-BI{BPM:7}ADC:MAX_SUM-Cal.VAL CP")
+	field(INPB, "SR:C08-BI{BPM:7}ADC:MAX_SUM-Cal.VAL CP")
+	field(INPC, "SR:C23-BI{BPM:7}ADC:MAX_SUM-Cal.VAL CP")
+	field(INPD, "SR:C03-BI{DCCT:1}I:Total-I CP")
+	field(INPE, "SR:C03-BI{DCCT:1}I-I CP")
+	field(CALC, "(A>0&B>0&C>0)=0?0:(D>0.1&E>0.1)=1?0:1")
+}
+
+record(mbbi, "SR:C31-{AI}DCCT_Alarm-Sts")
+{
+	field(INP, "SR:C31-{AI}DCCT:FailMon-Cal NPP MS")
+	field(SCAN,"1 second")
+	field(ZRST, "OK")
+	field(ONST, "DCCT and BPM error")
+	#
+	field(ZRSV, "NO_ALARM")
+	field(ONSV, "MAJOR")
+}
+
+record(bo, "SR:C31-{AI}-IOC-RF_DUMP-SP") {
+	field(DESC, "RF KSU User dump cmd 55")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 220")
+	field(ZNAM, "Ok")
+	field(ONAM, "Dump")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+###
+###
+record(calc, "SR:C31-{AI}SDI:FailMon-Cal") {
+	field(DESC, "SDI fault Monitoring")
+	field(INPA, "SR:C31-{AI}CcSdi:WdTrig-I.VAL CP")
+	field(INPB, "SR:C31-{AI}CcSdi:CwLinkFailCnt-I.VAL CP")
+	field(INPC, "SR:C31-{AI}CcSdi:CcwLinkFailCnt-I.VAL CP")
+	field(INPD, "SR:C31-{AI}CcSdi:ReCwToErrCnt-I.VAL CP")
+	field(INPE, "SR:C31-{AI}CcSdi:ReCcwToErrCnt-I.VAL CP")
+	field(CALC, "A>80?1:(B>80|C>80)?2:(D>80|E>80)?3:0")
+}
+record(mbbi, "SR:C31-{AI}SDI:Alarm-Sts")
+{
+        field(INP, "SR:C31-{AI}SDI:FailMon-Cal NPP MS")
+        field(SCAN,"1 second")
+        field(ZRST, "OK")
+        field(ONST, "Trig err")
+        field(TWST, "Link Fail")
+        field(THST, "Time Out")
+#        field(FRST, "CW CRC err")
+#        field(FVST, "CCW CRC err")
+#       field(SXST, "DATA SIM MODE")
+        #
+        field(ZRSV, "NO_ALARM")
+        field(ONSV, "MAJOR")
+        field(TWSV, "MINOR")
+        field(THSV, "MINOR")
+#        field(FRSV, "MAJOR")
+#        field(FVSV, "MAJOR")
+#        field(SXSV, "MAJOR")
+}
+
+
+record(mbbiDirect, "SR:C31-{AI}CM-Status_S0-I") {
+	field(DESC, "Canting status []15:0]")
+	field(SHFT, "0")
+	field(INP, "SR:C31-{AI}Aie:CM-Status-I CP")
+}
+
+record(mbbiDirect, "SR:C31-{AI}CM-Status_S1-I") {
+	field(DESC, "Canting status []31:16]")
+	field(SHFT, "16")
+	field(INP, "SR:C31-{AI}Aie:CM-Status-I CP")
+}
+
+
+record(bi, "SR:C31-{AI}CM:ID4_0-I") {
+    field(INP , "SR:C31-{AI}CM-Status_S0-I.B1")
+#   field(MASK, "0x1")
+    field(ZNAM,"ON")
+    field(ONAM,"OFF")
+        field(SCAN,"1 second")
+}
+
+record(bi, "SR:C31-{AI}CM:ID4_1-I") {
+    field(INP , "SR:C31-{AI}CM-Status_S0-I.B2")
+#   field(MASK, "0x1")
+    field(ZNAM,"ON")
+    field(ONAM,"OFF")
+        field(SCAN,"1 second")
+}
+
+###
+record(mbbiDirect, "SR:C31-{AI}IO:DIN_S0-I") {
+	field(DESC, "Digital In [15:0]")
+	field(SHFT, "0")
+	field(INP, "$(P)IO:DIN-I CP")
+}
+record(mbbiDirect, "SR:C31-{AI}IO:DIN_S1-I") {
+	field(DESC, "Digital In [31:16]")
+	field(SHFT, "16")
+	field(INP, "$(P)IO:DIN-I CP")
+}
+
+### 11/22/14
+record(bo, "$(P):PLC-WD_RST-SP") {
+	field(DESC, "PLC Watch Dog reset")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 224")
+	field(ZNAM, "Ready")
+	field(ONAM, "RESET")
+	field(HIGH, ".1")   #100 ms after low
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+record(longin, "$(P)PLC-WD_Status-I") {
+	field(DESC, "SysMonData[72] WD Status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 968")
+	field(SCAN, "I/O Intr")
+}
+
+record(mbbiDirect, "$(P)PLC:WD_Timeout_S0-I") {
+	field(DESC, "SysMonData[73] WD timeout [15:0]")
+	field(DTYP, "PSC Reg")
+	field(SHFT, "0")
+	field(INP , "@Rx$(NO) 30 972")
+	field(SCAN, "I/O Intr")
+}
+
+record(mbbiDirect, "$(P)PLC:WD_Timeout_S16-I") {
+	field(DESC, "SysMonData[73] WD timeout [31:16]")
+	field(DTYP, "PSC Reg")
+	field(SHFT, "16")
+	field(INP , "@Rx$(NO) 30 972")
+	field(SCAN, "I/O Intr")
+}
+
+
+### 060915
+record(longin, "$(P)ExtOutput-I") {
+	field(DESC, "SysMonData[74] Ext output")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 976")
+	field(SCAN, "I/O Intr")
+}
+
+
+
+# 12/03/14
+record(mbbiDirect, "$(P)ID:MaskEnable1-S0-SP") {
+	field(DESC, "User Enable [15:0]")
+	field(SHFT, "0")
+	field(INP, "SR:C31-{AI}ID:MaskEnable1-SP CP")
+}
+
+record(mbbiDirect, "$(P)ID:MaskEnable1-S16-SP") {
+	field(DESC, "User Enable [31:16]")
+	field(SHFT, "16")
+	field(INP, "SR:C31-{AI}ID:MaskEnable1-SP CP")
+}
+
+
+
+### 12/06/2014
+record(longin, "SR:C31-{AI}ID:UBLAZE_ERR-I") {
+	field(DESC, "uBlaze error code, 48x4")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 192")
+	field(SCAN, "I/O Intr")
+}
+record(mbbi, "SR:C31-{AI}UBLAZE_ErrorSum-Sts")
+{
+        field(INP, "SR:C31-{AI}ID:UBLAZE_ERR-I NPP MS")
+        field(SCAN,"1 second")
+        field(ZRST, "OK")
+        field(ONST, "DCCT PLC WD timeout")
+        field(TWST, "EVR Timing error")
+        field(THST, "SFP Cable loss")
+        field(FRST, "CW/CCW Comm Error")
+        field(FVST, "Cell PLC WD timeout")
+#       field(SXST, "DATA SIM MODE")
+        #
+        field(ZRSV, "NO_ALARM")
+        field(ONSV, "MAJOR")
+        field(TWSV, "MAJOR")
+        field(THSV, "MAJOR")
+        field(FRSV, "MINOR")
+        field(FVSV, "MAJOR")
+#        field(SXSV, "MAJOR")
+}
+
+
+######################
+### 11/17/2014
+######################
+record(mbbiDirect, "$(P)Aie:ID-bpm_fault_S0-I") {
+	field(DESC, "ID BPM fault status [15:0]")
+	field(SHFT, "0")
+	field(INP , "$(P)Aie:ID-bpm_fault-I CP")
+}
+
+record(mbbiDirect, "$(P)Aie:ID-bpm_fault_S16-I") {
+	field(DESC, "ID BPM fault status [31:16]")
+	field(SHFT, "16")
+	field(INP , "$(P)Aie:ID-bpm_fault-I CP")
+}
+
+
+record(mbbiDirect, "$(P)Aie:CellPLC-ID-Dump_S0-I") {
+	field(DESC, "Cell PLC ID Dupm status[15:0]")
+	field(SHFT, "0")
+	field(INP , "$(P)Aie:CellPLC-ID-Dump-I CP")
+}
+record(mbbiDirect, "$(P)Aie:CellPLC-ID-Dump_S16-I") {
+	field(DESC, "Cell PLC ID Dupm status [31:16]")
+	field(SHFT, "16")
+	field(INP , "$(P)Aie:CellPLC-ID-Dump-I CP")
+}
+
+
+# 01/16/15 added for FIR filter enable/disable
+record(bo, "$(P):FIR_Kick-SP") {
+	field(DESC, "FIR Kick value enable/disable")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 760")
+	field(ZNAM, "FIR Disable")
+	field(ONAM, "FIR Enable")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+### 03/24/2015
+record(bo,"$(P)BM:FaultEnable-SP")
+{
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 260")
+	field(DESC, "BM bpm fault trip enable")
+	field(ZNAM, "BM fault Disable")
+	field(ONAM, "BM fault Enable")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(bo,"$(P)BM:ZeroFaultEnable-SP")
+{
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 268")
+	field(DESC, "BM bpm fault trip enable")
+	field(ZNAM, "BM Z fault Disable")
+	field(ONAM, "BM Z fault Enable")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(longout, "$(P)BM:FaultCount-SP") {
+	field(DESC, "BM fault error count set")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx 1 264")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(longin, "SR:C31-{AI}BM:FAULT_CNT-I") {
+	field(DESC, "BM BPM fault count")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 1008")
+	field(SCAN, "I/O Intr")
+}
+
+
+### 05/15/15 added
+record(longin, "$(P)BeamDump:off-I") {
+	field(DESC, "DCCT beam dump Timestamp offset, [70]")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 964")
+	field(SCAN,"I/O Intr")
+}
+
+
+record(longin, "$(P)BeamDump:sec-I") {
+	field(DESC, "DCCT beam dump Timestamp sec, [71]")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 960")
+	field(SCAN,"I/O Intr")
+#epics DB timestamp
+	field(TSE, "-2")
+	info("TimeFromBlock", "960")
+	info("TimeNSScale", "8")
+	field(FLNK, "$(P)BeamDump:Time-SI")		
+}
+
+record(stringin, "$(P)BeamDump:Time-SI") {
+    field(DTYP, "Soft Timestamp")
+    field(INP , "@ %m/%d/%Y,%H:%M:%S")
+    field(TSEL, "$(P)RfTrip:Time-Sec-I.TIME")
+}
+
+record(longout, "$(P):BM:MaxLimit-SP") {
+        field(DTYP, "PSC Single I32")
+        field(OUT , "@aie_tx 1 228")
+        field(VAL , "11000")
+        field(PINI, "YES")
+        field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+record(bo, "$(P)BM:GlitchCtrl-SP") {
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 272")
+	field(ZNAM, "GlitchFilterDisable")
+	field(ONAM, "GlitchFilterEnable")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+record(bo, "$(P)BM:CompModeSel-SP"){
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx 1 276")
+	field(ZNAM, "Pos disp 5CycleMode")
+	field(ONAM, "Pos disp 2FifoMode")
+	field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+record(mbbo, "$(P)BM:CompCalModeSel-SP") {
+        field(DESC, "ADC data type select")
+        field(DTYP, "PSC Single U32")
+        field(OUT , "@aie_tx 1 280")
+#       field( PINI, "YES")
+        field( ZRST, "BM One sample")
+        field( ONST, "BM Three Sample")
+        field( TWST, "BM 2 Comp One sample")
+        field( THST, "BM 2 Comp Three sample")
+        field( ZRVL, "0")
+        field( ONVL, "1")
+        field( TWVL, "2")
+        field( THVL, "3")
+#       field( IVOA, "Don't drive outputs")
+#       info(autosaveFields, "VAL")
+        field(FLNK, "$(P)GoRegSingleWrite")
+}
+
+
+record(longin, "$(P)reg22-I") {
+	field(DESC, "status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 240")
+	field(SCAN, "I/O Intr")
+}
+
+record(stringout, "SR:AI-PM:Status-S") {
+	field(DTYP,"Soft Channel")
+	field(DESC, "PM status display")
+}
+
+record(stringout, "SR:AI-PM:ArchiverStatus-S") {
+	field(DTYP,"Soft Channel")
+	field(DESC, "PM status display")
+}
+
+
+### orbit RMS
+record(sub, "$(P)ORBIT:X-RMS-sub") {
+	field(SNAM, "fbckSupRMSCalc")
+	field(INPA, "SR-BI{ORBIT}FA-X")
+	field(INAM, "fbckSupInit")
+	field(PREC, "0")
+	field(EGU,  "nm")
+field(SCAN,".5 second")
+	field(FLNK, "$(P)ORBIT:X-RMS")
+}
+record(calc, "$(P)ORBIT:X-RMS")  {
+        field(DESC, "X RMS")
+#        field(SCAN,".5 second")
+        field(CALC, "A*0.000001")
+        field(INPA, "$(P)ORBIT:X-RMS-sub.VAL NPP MS")
+        field(PREC,"5")
+        field(EGU,  "mm")
+}
+
+record(sub, "$(P)ORBIT:Y-RMS-sub") {
+	field(SNAM, "fbckSupRMSCalc")
+	field(INPA, "SR-BI{ORBIT}FA-Y")
+	field(INAM, "fbckSupInit")
+	field(PREC, "0")
+	field(EGU,  "nm")
+field(SCAN,".5 second")
+	field(FLNK, "$(P)ORBIT:Y-RMS")
+}
+record(calc, "$(P)ORBIT:Y-RMS")  {
+        field(DESC, "Y RMS")
+#        field(SCAN,".5 second")
+        field(CALC, "A*0.000001")
+        field(INPA, "$(P)ORBIT:Y-RMS-sub.VAL NPP MS")
+        field(PREC,"5")
+        field(EGU,  "mm")
+}
+
+
+record(longin, "$(P)BM:RMS-X-I") {
+        field(DESC, "SysMonData[75] ")
+        field(DTYP, "PSC Reg")
+        field(INP , "@Rx$(NO) 30 980")
+        field(SCAN, "I/O Intr")
+}
+record(longin, "$(P)BM:RMS-Y-I") {
+        field(DESC, "SysMonData[79] ")
+        field(DTYP, "PSC Reg")
+        field(INP , "@Rx$(NO) 30 996")
+        field(SCAN, "I/O Intr")
+}
+
+record(stringout,"PM-Data-Collection-St") {
+	field(DTYP,"Soft Channel")
+}
+
+
+record(longout, "$(P):ID:GlitchCycle-SP") {
+        field(DTYP, "PSC Single I32")
+        field(OUT , "@aie_tx 1 296")
+        field(FLNK, "$(P)GoRegSingleWrite")
+}

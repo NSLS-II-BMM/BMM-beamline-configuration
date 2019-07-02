@@ -1,0 +1,40 @@
+###
+### FA 10 kHz single PV
+###
+record(waveform, "SR-AI:C$(CNO):BPM_X$(N)-I") {
+	field(DESC, "BPM$(CNO)-$(N) X position")
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx 53 $(OFFSET_X) 1920")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "$(LEN)")
+}
+
+record(waveform, "SR-AI:C$(CNO):BPM_Y$(N)-I") {
+	field(DESC, "BPM$(CNO)-$(N) Y position")
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx 53 $(OFFSET_Y) 1920")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "$(LEN)")
+}
+
+### Post Morterm
+### 480 x 4 = 1920  OFFSET
+record(waveform, "SR-AI:C$(CNO):PM-BPM_X$(N)-I") {
+	field(DESC, "BPM$(CNO)-$(N) X position")
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx 54 $(OFFSET_X) 1920")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "20000")
+}
+
+record(waveform, "SR-AI:C$(CNO):PM-BPM_Y$(N)-I") {
+	field(DESC, "BPM$(CNO)-$(N) Y position")
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx 54 $(OFFSET_Y) 1920")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "20000")
+}

@@ -1,0 +1,13 @@
+file "${TOP}/db/pmac_physical_limit.db"
+{
+pattern
+{SYS,           DEV,                 }
+{"XF:06BM-ES",  "{SixC-Ax:VTTH}"     }
+{"XF:06BM-ES",  "{SixC-Ax:VTH}"      }
+{"XF:06BM-ES",  "{SixC-Ax:CHI}"      }
+{"XF:06BM-ES",  "{SixC-Ax:PHI}"      }
+{"XF:06BM-ES",  "{SixC-Ax:HTH}"      }
+{"XF:06BM-ES",  "{SixC-Ax:HTTH}"     }
+{"XF:06BM-ES",  "{SixC-Ax:ANAL}"     }
+{"XF:06BM-ES",  "{SixC-Ax:DET}"      }
+}

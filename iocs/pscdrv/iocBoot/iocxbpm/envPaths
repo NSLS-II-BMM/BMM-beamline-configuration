@@ -1,0 +1,6 @@
+epicsEnvSet("ARCH","linux-x86_64-debug")
+epicsEnvSet("IOC","iocxbpm")
+epicsEnvSet("TOP","/epics/iocs/pscdrv")
+epicsEnvSet("DEVIOCSTATS","/usr/lib/epics")
+epicsEnvSet("CAPUTLOG","/usr/lib/epics")
+epicsEnvSet("EPICS_BASE","/usr/lib/epics")

@@ -1,0 +1,280 @@
+#
+#
+record(longin, "$(P)C$(ID):D0-I") {
+	field(DESC, "Cell $(ID)-0 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(N0)")
+	field(SCAN,"I/O Intr")
+}
+
+
+record(mbbiDirect, "$(P)C$(ID):D0_S0-I") {
+	field(DTYP, "PSC Reg")
+	field(SHFT, "0")
+	field(INP , "@aie_wfm_rx 40 $(N0)")
+	field(SCAN, "I/O Intr")
+}
+record(mbbiDirect, "$(P)C$(ID):D0_S16-I") {
+	field(DTYP, "PSC Reg")
+	field(SHFT, "16")
+	field(INP , "@aie_wfm_rx 40 $(N0)")
+	field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(P)C$(ID):D1-I") {
+	field(DESC, "Cell $(ID)-1 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(N1)")
+	field(SCAN,"I/O Intr")
+}
+
+################# Position #######################
+record(ai, "$(P)C$(ID):Pos:x1-I") {
+	field(DESC, "Cell $(ID)-x1 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(X1)")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+record(ai, "$(P)C$(ID):Pos:y1-I") {
+	field(DESC, "Cell $(ID)-y1 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(Y1)")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+
+
+record(ai, "$(P)C$(ID):Pos:x2-I") {
+	field(DESC, "Cell $(ID)-x2 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(X2)")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+record(ai, "$(P)C$(ID):Pos:y2-I") {
+	field(DESC, "Cell $(ID)-y2 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(Y2)")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+record(ai, "$(P)C$(ID):Pos:x3-I") {
+	field(DESC, "Cell $(ID)-x3 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(X3)")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+record(ai, "$(P)C$(ID):Pos:y3-I") {
+	field(DESC, "Cell $(ID)-y3 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(Y3)")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+record(ai, "$(P)C$(ID):Pos:x4-I") {
+	field(DESC, "Cell $(ID)-x4 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(X4)")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+record(ai, "$(P)C$(ID):Pos:y4-I") {
+	field(DESC, "Cell $(ID)-y4 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(Y4)")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+record(ai, "$(P)C$(ID):Pos:x5-I") {
+	field(DESC, "Cell $(ID)-x5 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(X5)")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+record(ai, "$(P)C$(ID):Pos:y5-I") {
+	field(DESC, "Cell $(ID)-y5 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(Y5)")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+record(ai, "$(P)C$(ID):Pos:x6-I") {
+	field(DESC, "Cell $(ID)-x6 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(X6)")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+record(ai, "$(P)C$(ID):Pos:y6-I") {
+	field(DESC, "Cell $(ID)-y6 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(Y6)")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+
+
+record(ai, "$(P)C$(ID):Pos:x7-I") {
+	field(DESC, "Cell $(ID)-x7 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(X7)")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+record(ai, "$(P)C$(ID):Pos:y7-I") {
+	field(DESC, "Cell $(ID)-y7 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(Y7)")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+
+record(ai, "$(P)C$(ID):Pos:x8-I") {
+	field(DESC, "Cell $(ID)-x8 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(X8)")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+record(ai, "$(P)C$(ID):Pos:y8-I") {
+	field(DESC, "Cell $(ID)-y8 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(Y8)")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+
+record(ai, "$(P)C$(ID):Pos:x9-I") {
+	field(DESC, "Cell $(ID)-x9 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(X9)")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+record(ai, "$(P)C$(ID):Pos:y9-I") {
+	field(DESC, "Cell $(ID)-y9 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(Y9)")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+record(ai, "$(P)C$(ID):Pos:x10-I") {
+	field(DESC, "Cell $(ID)-x10 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(X10)")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+record(ai, "$(P)C$(ID):Pos:y10-I") {
+	field(DESC, "Cell $(ID)-y10 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(Y10)")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+record(ai, "$(P)C$(ID):Pos:x11-I") {
+	field(DESC, "Cell $(ID)-x11 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(X11)")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+record(ai, "$(P)C$(ID):Pos:y11-I") {
+	field(DESC, "Cell $(ID)-y11 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(Y11)")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+record(ai, "$(P)C$(ID):Pos:x12-I") {
+	field(DESC, "Cell $(ID)-x12 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(X12)")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+record(ai, "$(P)C$(ID):Pos:y12-I") {
+	field(DESC, "Cell $(ID)-y6 Local Data")
+	field(DTYP, "PSC Reg")
+	field(INP , "@aie_wfm_rx 40 $(Y12)")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+}
+
+
+

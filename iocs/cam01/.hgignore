@@ -1,5 +1,4 @@
-syntax: glob
-as
-op
-*.req
-*.dbl
+as$
+bin$
+db$
+envPaths$

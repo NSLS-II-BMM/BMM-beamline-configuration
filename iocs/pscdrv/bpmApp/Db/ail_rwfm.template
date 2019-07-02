@@ -1,0 +1,18 @@
+
+#
+# Waveform reading
+#	$(P)
+#	$(CELL)	- Cell No
+#	$(N)	- bpm no
+#	$(OFFSET)	- offset address
+#	$(MAX_BYTE)	-	max waveform length
+#
+record(waveform, "$(P)$(CELL)Wfm$(N)") {
+	field(DESC, "DDR memory reading 0xC200:0000")
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx 31 $(OFFSET) $(MAX_BYTE)")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(NELM, "8192")
+
+}

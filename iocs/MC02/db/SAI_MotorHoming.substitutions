@@ -5,7 +5,7 @@ pattern {	ASYNPORT,	TMOT,	SCAN,		PMAC_MTR,	P,		R,			AXIS,		EGU,	AXISSCALE,	HVEL}
         { 	"pmac",		1.0,	".2 second",	"3",		"XF:06BMA-OP",	"{Mono:DCM1-Ax:",	"P2}Mtr",	"mrad",	1,		0.36}
         { 	"pmac",		1.0,	".2 second",	"4",		"XF:06BMA-OP",	"{Mono:DCM1-Ax:",	"R2}Mtr",	"mrad",	1,		2.0}
         { 	"pmac",		1.0,	".2 second",	"5",		"XF:06BMA-OP",	"{Mono:DCM1-Ax:",	"Per2}Mtr",	"mm",	1,		0.42}
-        { 	"pmac",		1.0,	".2 second",	"6",		"XF:06BMA-OP",	"{Mono:DCM1-Ax:",	"Par2}Mtr",	"mm",	1,		0.625}
+        { 	"pmac",		1.0,	".2 second",	"6",		"XF:06BMA-OP",	"{Mono:DCM1-Ax:",	"Par2}Mtr",	"mm",	1,		1.0}
         { 	"pmac",		1.0,	".2 second",	"7",		"XF:06BMA-OP",	"{Mono:DCM1-Ax:",	"X}Mtr",	"mm",	1,		0.625}
         { 	"pmac",		1.0,	".2 second",	"8",		"XF:06BMA-OP",	"{Mono:DCM1-Ax:",	"Y}Mtr",	"mm",	1,		0.1}
 }
@@ -13,3 +13,6 @@ pattern {	ASYNPORT,	TMOT,	SCAN,		PMAC_MTR,	P,		R,			AXIS,		EGU,	AXISSCALE,	HVEL}
 ## 10 June, 2019: Changes HVEL for dcm_roll from 0.42 to 2.0. Currently, dcm_roll is not using its encoder
 ##                due to an encoder failure in 2018.  Instead, it simply counts steps.  For step-counting
 ##                the 0.42 speed is absurdly too slow.
+
+##  2 July, 2019: Changes HVEL for dcm_para from 0.625 to 1.0. 1.0 is about as fast as it can go without
+##                following error

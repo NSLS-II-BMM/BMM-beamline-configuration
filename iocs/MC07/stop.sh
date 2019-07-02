@@ -1,1 +1,1 @@
-/etc/init.d/softioc-MC06 stop
+/etc/init.d/softioc-MC07 stop

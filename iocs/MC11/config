@@ -1,0 +1,4 @@
+NAME=MC11
+USER=softioc
+PORT=6011
+HOST=xf06bm-ioc1

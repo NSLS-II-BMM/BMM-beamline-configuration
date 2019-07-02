@@ -1,0 +1,6 @@
+file ai_bpm_pos_erri_cal.template
+{ pattern
+	{CN,       N}
+	{ "\$(CN)",  "\$(N)" }
+}
+

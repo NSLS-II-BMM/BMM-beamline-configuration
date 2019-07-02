@@ -1,0 +1,12 @@
+record(waveform,"SR:C01-CC{}Orbit:X-I") {
+	field(DTYP,"Soft Channel")
+	field(NELM,"180")
+	field(FTVL,"DOUBLE")
+}
+
+
+record(waveform,"SR:C01-CC{}Orbit:Y-I") {
+        field(DTYP,"Soft Channel")
+        field(NELM,"180")
+        field(FTVL,"DOUBLE")
+}

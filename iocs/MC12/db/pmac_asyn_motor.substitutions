@@ -1,0 +1,13 @@
+file "db/pmac_asyn_motor.db"
+{
+pattern
+{SYS,           DEV,                    MOTOR,  SPORT,  ADDR,             DESC,                   DTYP        PREC,  EGU}
+{"XF:06BM-ES",  "{SixC-Ax:DETHOR}",     "M0",   "P0",   1,                "Detector Horizontal",  asynMotor,  4,     "deg"}
+{"XF:06BM-ES",  "{SixC-Ax:WHEEL1}",     "M0",   "P0",   2,                "Wheel1",               asynMotor,  4,     "mm"}
+{"XF:06BM-ES",  "{SixC-Ax:WHEEL2}",     "M0",   "P0",   3,                "Wheel2",               asynMotor,  4,     "mm"}
+{"XF:06BM-ES",  "{SixC-Ax:SAMX}",       "M0",   "P0",   4,                "Sample X",             asynMotor,  4,     "mm"}
+{"XF:06BM-ES",  "{SixC-Ax:SAMY}",       "M0",   "P0",   5,                "Sample Y",             asynMotor,  4,     "mm"}
+{"XF:06BM-ES",  "{SixC-Ax:SAMZ}",       "M0",   "P0",   6,                "Sample Z",             asynMotor,  4,     "mm"}
+{"XF:06BM-ES",  "{SixC-Ax:Tbl_YD}",     "M0",   "P0",   7,                "Table Y Dn",           asynMotor,  4,     "mm"}
+{"XF:06BM-ES",  "{SixC-Ax:Tbl_YUI}",    "M0",   "P0",   8,                "Table Y Up Inb",       asynMotor,  4,     "mm"}
+}

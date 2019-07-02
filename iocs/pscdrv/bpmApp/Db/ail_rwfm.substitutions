@@ -1,0 +1,14 @@
+#
+#
+file ail_rwfm.template
+{ pattern 
+{P,       		CELL, N,  OFFSET, MAX_BYTE}
+{ SR:C31-{AI}, 1, 0,      0, 	100000}
+#{ SR:C02-FOFB, 2, 104,       10000}
+#{ SR:C03-FOFB, 3, 104,       10000}
+#{ SR:C04-FOFB, 4, 104,       10000}
+#{ SR:C05-FOFB, 5, 104,       10000}
+
+}
+
+

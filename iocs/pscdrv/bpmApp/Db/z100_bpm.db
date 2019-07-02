@@ -1,0 +1,16 @@
+record(waveform,"$(P){}C$(CNO):B$(N)-X") {
+        field(DTYP, "PSC Block I32 In")
+        field(INP , "@aie_wfm_rx_1 32 $(OFFSET_X) 1920")
+        field(SCAN,"I/O Intr")
+        field(FTVL,"DOUBLE")
+        field(NELM,"$(LEN)")
+}
+	
+record(waveform,"$(P){}C$(CNO):B$(N)-Y") {
+        field(DTYP, "PSC Block I32 In")
+        field(INP , "@aie_wfm_rx_1 32 $(OFFSET_Y) 1920")
+        field(SCAN,"I/O Intr")
+        field(FTVL,"DOUBLE")
+        field(NELM,"$(LEN)")
+}
+

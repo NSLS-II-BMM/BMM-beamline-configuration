@@ -1,0 +1,828 @@
+#################################################################
+#	XBPM  database
+#
+#################################################################
+
+#################################################################
+#
+#  Connection Related Records
+#
+#
+#################################################################
+
+record(bo, "$(P,undefined){XBPM:$(NO,undefined)}wfm-RECONNECT") {
+   	field(DTYP, "PSC Ctrl Reconnect")
+  	field(OUT , "@aie_wfm_rx_$(NO,undefined)")
+  	field(ZNAM, "Reconnect")
+  	field(ONAM, "Reconnect")
+}
+
+record(bi, "$(P,undefined){XBPM:$(NO,undefined)}wfm-conn") {
+	field(DTYP, "PSC Ctrl Connected")
+	field(INP , "@aie_wfm_rx_$(NO,undefined)")
+	field(SCAN, "I/O Intr")
+	field(ZNAM, "Disconnected")
+	field(ONAM, "Connected")
+	field(ZSV , "MAJOR")
+}
+
+record(bi, "$(P,undefined){XBPM:$(NO,undefined)}Rx-conn") {
+	field(DTYP, "PSC Ctrl Connected")
+	field(INP , "@Rx$(NO,undefined)")
+	field(SCAN, "I/O Intr")
+	field(ZNAM, "Disconnected")
+	field(ONAM, "Connected")
+	field(ZSV , "MAJOR")
+}
+
+record(stringin, "$(P,undefined){XBPM:$(NO,undefined)}tx-msg") {
+	field(DTYP, "PSC Ctrl Message")
+	field(INP , "@aie_tx_$(NO,undefined)")
+	field(DESC, "Last message")
+	field(SCAN, "I/O Intr")
+}
+
+##flush reg to socket buffer, trigger send to send all socket buffer to PSC
+record(bo, "$(P,undefined){XBPM:$(NO,undefined)}send") {
+	field(DTYP, "PSC Ctrl Send All")
+	field(OUT , "@aie_tx_$(NO,undefined)")
+	field(ZNAM, "Send")
+	field(ONAM, "Send")
+}
+
+record(longout, "$(P,undefined){XBPM:$(NO,undefined)}GoRegSingleWrite") {
+	field(DTYP, "PSC Ctrl Send")
+	field(OUT , "@aie_tx_$(NO,undefined)")
+	field(VAL , "1")
+	field(FLNK, "$(P,undefined){XBPM:$(NO,undefined)}send")
+}
+
+record(longout, "$(P,undefined){XBPM:$(NO,undefined)}regsend2") {
+	field(DTYP, "PSC Ctrl Send")
+	field(OUT , "@aie_tx_$(NO,undefined)")
+	field(VAL , "2")
+	field(FLNK, "$(P,undefined){XBPM:$(NO,undefined)}send")
+}
+
+record(longout, "$(P,undefined){XBPM:$(NO,undefined)}regsend3") {
+	field(DESC, "FLOAT32 type write")
+	field(DTYP, "PSC Ctrl Send")
+	field(OUT , "@aie_tx_$(NO,undefined)")
+	field(VAL , "3")
+	field(FLNK, "$(P,undefined){XBPM:$(NO,undefined)}send")
+}
+
+
+################################################################
+# CONTROLS
+#     aie_tx (Msg ID, address)
+#
+################################################################
+
+#Soft trigger to DDR
+record(longout, "$(P){XBPM:$(NO)}FaSoftTrig-SP") {
+        field(DESC, "FA Trigger")
+        field(DTYP, "PSC Single I32")
+        field(OUT, "@aie_tx_$(NO) 1 130")
+        field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+
+
+#record(bo, "$(P,undefined){XBPM:$(NO,undefined)}FaSoftTrig-SP") {
+	#field(DESC, "Soft Trigger FA by user")
+	#field(DTYP, "PSC Single U32")
+	#field(OUT , "@aie_tx_$(NO,undefined) 1 128")
+        #field(ZNAM,"Rdy")
+        #field(ONAM,"Trig")
+	#field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+        #field(HIGH,".2")	#500 ms after low
+#}
+
+record(longout, "$(P,undefined){XBPM:$(NO,undefined)}Gain:RfAtte-SP") {
+	field(DESC, "RF Input Attenuator Control")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO,undefined) 1 132")
+	field(HOPR,"31")
+	field(LOPR,"0")	
+	field(DRVH,"31")	
+	field(DRVL,"0")		
+	field(EGU, "dB")
+#	field(PINI, "YES")
+#	field(VAL, "10")
+#	field(UDF, "0")
+#	field(TPRO, 1)
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P,undefined){XBPM:$(NO,undefined)}GoRegSingleWrite")
+}
+
+record(longout, "$(P){XBPM:$(NO)}Leds-SP") {
+        field(DESC, "Debug LEDS")
+        field(DTYP, "PSC Single I32")
+	field(OUT, "@aie_tx_$(NO) 1 5")
+        field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+record(longout, "$(P){XBPM:$(NO)}ClkSrc-SP") {
+        field(DESC, "Clock Source")
+        field(DTYP, "PSC Single I32")
+        field(OUT, "@aie_tx_$(NO) 1 11")
+        field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+
+#record(bo, "$(P){XBPM:$(NO)}ClkSrc-SP") {
+#	field(DESC, "Clk Source")
+#	field(DTYP, "PSC Single U32")
+#	field(OUT , "@aie_tx_$(NO) 1 11")
+#       field(ZNAM,"Ext")
+#        field(ONAM,"Int")
+#	field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+#}
+
+#POSITION
+record(longout, "$(P){XBPM:$(NO)}Pos:Kx-SP") {
+        field(DESC, "X Position Calibration Constant")
+        field(DTYP, "PSC Single I32")
+        field(OUT, "@aie_tx_$(NO) 1 17")
+        field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+record(longout, "$(P){XBPM:$(NO)}Pos:Ky-SP") {
+        field(DESC, "Y Position Calibration Constant")
+        field(DTYP, "PSC Single I32")
+        field(OUT, "@aie_tx_$(NO) 1 18")
+        field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+# Electronic Offfsets
+record(longout, "$(P){XBPM:$(NO)}Cal:AOffset-SP") {
+        field(DESC, "Channel A offset (adc counts)")
+        field(DTYP, "PSC Single I32")
+        field(OUT, "@aie_tx_$(NO) 1 20")
+        field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+record(longout, "$(P){XBPM:$(NO)}Cal:BOffset-SP") {
+        field(DESC, "Channel B offset (adc counts)")
+        field(DTYP, "PSC Single I32")
+        field(OUT, "@aie_tx_$(NO) 1 21")
+        field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+record(longout, "$(P){XBPM:$(NO)}Cal:COffset-SP") {
+        field(DESC, "Channel C offset (adc counts)")
+        field(DTYP, "PSC Single I32")
+        field(OUT, "@aie_tx_$(NO) 1 22")
+        field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+record(longout, "$(P){XBPM:$(NO)}Cal:DOffset-SP") {
+        field(DESC, "Channel D offset (adc counts)")
+        field(DTYP, "PSC Single I32")
+        field(OUT, "@aie_tx_$(NO) 1 23")
+        field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+# Bending Magnet Radiation Background Offsets
+record(longout, "$(P){XBPM:$(NO)}BMR:AOffset-SP") {
+        field(DESC, "Channel A BMR offset (adc counts)")
+        field(DTYP, "PSC Single I32")
+        field(OUT, "@aie_tx_$(NO) 1 48")
+        field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+record(longout, "$(P){XBPM:$(NO)}BMR:BOffset-SP") {
+        field(DESC, "Channel B BMR offset (adc counts)")
+        field(DTYP, "PSC Single I32")
+        field(OUT, "@aie_tx_$(NO) 1 49")
+        field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+record(longout, "$(P){XBPM:$(NO)}BMR:COffset-SP") {
+        field(DESC, "Channel C BMR offset (adc counts)")
+        field(DTYP, "PSC Single I32")
+        field(OUT, "@aie_tx_$(NO) 1 50")
+        field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+record(longout, "$(P){XBPM:$(NO)}BMR:DOffset-SP") {
+        field(DESC, "Channel D BMR offset (adc counts)")
+        field(DTYP, "PSC Single I32")
+        field(OUT, "@aie_tx_$(NO) 1 51")
+        field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+
+#GAINS
+record(longout, "$(P){XBPM:$(NO)}Cal:AGain-SP") {
+        field(DESC, "Channel A gain (pA/adc)")
+        field(DTYP, "PSC Single I32")
+        field(OUT, "@aie_tx_$(NO) 1 24")
+        field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+record(longout, "$(P){XBPM:$(NO)}Cal:BGain-SP") {
+        field(DESC, "Channel B gain (pA/adc)")
+        field(DTYP, "PSC Single I32")
+        field(OUT, "@aie_tx_$(NO) 1 25")
+        field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+record(longout, "$(P){XBPM:$(NO)}Cal:CGain-SP") {
+        field(DESC, "Channel C gain (pA/adc)")
+        field(DTYP, "PSC Single I32")
+        field(OUT, "@aie_tx_$(NO) 1 26")
+        field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+record(longout, "$(P){XBPM:$(NO)}Cal:DGain-SP") {
+        field(DESC, "Channel D gain (pA/adc)")
+        field(DTYP, "PSC Single I32")
+        field(OUT, "@aie_tx_$(NO) 1 27")
+        field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+#BIAS
+record(bo, "$(P){XBPM:$(NO)}Bias:Source-SP") {
+	field(DESC, "Bias source")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO,undefined) 1 38")
+        field(ZNAM,"Internal")
+        field(ONAM,"External")
+	field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+record(bo, "$(P){XBPM:$(NO)}Bias:Pol-SP") {
+	field(DESC, "Bias polarity")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO,undefined) 1 30")
+        field(ZNAM,"Posotive")
+        field(ONAM,"Negative")
+	field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+record(bo, "$(P){XBPM:$(NO)}Bias:State-SP") {
+	field(DESC, "Bias ON/OFF")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO,undefined) 1 5")
+        field(ZNAM,"OFF")
+        field(ONAM,"ON")
+	field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+record(longout, "$(P){XBPM:$(NO)}Bias:Level-SP") {
+	field(DESC, "Bias voltage level")
+	field(DTYP, "PSC Single I32")
+        field(OUT, "@aie_tx_$(NO) 1 36")
+        field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}       
+
+record(longout, "$(P){XBPM:$(NO)}Bias:Level-SP") {
+	field(DESC, "Bias voltage level")
+	field(DTYP, "PSC Single I32")
+        field(OUT, "@aie_tx_$(NO) 1 36")
+        field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}       
+
+#TODO: Check what is the default value for the inner shield
+record(bo, "$(P){XBPM:$(NO)}Bias:InnerShieldConnMode-SP") {
+	field(DESC, "Bias triax inner shield connection")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO,undefined) 1 29")
+        field(ZNAM,"BIASED")
+        field(ONAM,"GROUNDED")
+	field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+#ELECTRODE BIAS
+
+record(bo, "$(P){XBPM:$(NO)}BiasElecRef:Source-SP") {
+	field(DESC, "Bias source")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO,undefined) 1 41")
+        field(ZNAM,"Internal")
+        field(ONAM,"External")
+	field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+record(bo, "$(P){XBPM:$(NO)}BiasElecRef:Pol-SP") {
+	field(DESC, "Bias polarity")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO,undefined) 1 40")
+        field(ZNAM,"Positive")
+        field(ONAM,"Negative")
+	field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+#record(bo, "$(P){XBPM:$(NO)}BiasElecRef:State-SP") {
+#	field(DESC, "Bias ON/OFF")
+#	field(DTYP, "PSC Single U32")
+#	field(OUT , "@aie_tx_$(NO,undefined) 1 5")
+#        field(ZNAM,"OFF")
+#        field(ONAM,"ON")
+#	field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+#}       
+
+#TODO: Check what is the default value for the inner shield
+record(bo, "$(P){XBPM:$(NO)}BiasElecRef:InnerShieldConnMode-SP") {
+	field(DESC, "Bias triax inner shield connection")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO,undefined) 1 42")#43 42
+        field(ZNAM,"BIASED")
+        field(ONAM,"OPEN")
+	field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+#record(mbbo, "$(P){XBPM:$(NO)}BiasElecRef:InnerShieldConnMode-SP") {
+#	field(DTYP, "Raw Soft Channel")	
+#	field(FLNK,"$(P){XBPM:$(NO)}ElecInnerShield-SP.VAL PP NMS")
+#	field(ZRST, "Ground")
+#	field(ZRVL, "5")
+#	field(ONST, "Float")
+#	field(ONVL, "6")
+#}
+
+#record(seq,"$(P){XBPM:$(NO)}ElecInnerShield-SP") {
+#	field(SELM,"Mask")
+#	field(SELL,"$(P){XBPM:$(NO)}BiasElecRef:InnerShieldConnMode-SP.RVAL NPP NMS")		
+#	field(DOL1,"1")
+#	field(LNK1,"$(P){XBPM:$(NO)}ElecInnerShield:Ground-SP.VAL PP NMS")	
+#	field(DOL2,"1")
+#	field(LNK2,"$(P){XBPM:$(NO)}ElecInnerShield:Float-SP.VAL PP NMS")
+#}
+
+#record(bo, "$(P){XBPM:$(NO)}ElecInnerShield:Ground-SP") {
+#	field(DESC, "Bias polarity")
+#	field(DTYP, "PSC Single U32")
+#	field(OUT , "@aie_tx_$(NO,undefined) 1 42")
+#        field(ZNAM,"Positive")
+#        field(ONAM,"Negative")
+#	field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+#}
+
+#record(bo, "$(P){XBPM:$(NO)}ElecInnerShield:Float-SP") {
+#	field(DESC, "Bias polarity")
+#	field(DTYP, "PSC Single U32")
+#	field(OUT , "@aie_tx_$(NO,undefined) 1 43")
+#        field(ZNAM,"Positive")
+#        field(ONAM,"Negative")
+#	field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+#}
+
+record(mbbo, "$(P){XBPM:$(NO)}Gain-SP"){
+	field(DTYP, "PSC Single U32")
+	field(OUT, "@aie_tx_$(NO) 1 28")	
+	field(ZRST, "1uA")
+	field(ZRVL, "1")
+	field(ONST, "10uA")
+	field(ONVL, "2")
+	field(TWST, "100uA")
+	field(TWVL, "4")
+	field(THST, "1mA")
+	field(THVL, "8")
+	field(FRST, "250mA")
+	field(FRVL, "16")
+	field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")		
+}
+
+# Options for seq record(2^n + 2^(n-1))
+record(mbbo, "$(P){XBPM:$(NO)}Gain:Level-SP"){
+	field(DTYP, "Raw Soft Channel")	
+	field(FLNK,"$(P){XBPM:$(NO)}Scale-I.VAL PP NMS")
+	field(ZRST, "1uA")
+	field(ZRVL, "3")
+	field(ONST, "10uA")
+	field(ONVL, "12")
+	field(TWST, "100uA")
+	field(TWVL, "48")
+	field(THST, "1mA")
+	field(THVL, "192")
+	field(FRST, "250mA")
+	field(FRVL, "768")
+}
+
+record(seq,"$(P){XBPM:$(NO)}Scale-I") {
+	field(SELM,"Mask")
+	field(SELL,"$(P){XBPM:$(NO)}Gain:Level-SP.RVAL NPP NMS")	
+	
+	#1uA GAIN
+	field(DOL1,"1e-15")
+	field(LNK1,"$(P){XBPM:$(NO)}Ampl:dfanout-I.VAL PP NMS")	
+	field(DOL2,"0")
+	field(LNK2,"$(P){XBPM:$(NO)}Gain-SP PP NMS")
+	
+	#10uA GAIN
+	field(DOL3,"1e-14")
+	field(LNK3,"$(P){XBPM:$(NO)}Ampl:dfanout-I.VAL PP NMS")
+	field(DOL4,"1")
+	field(LNK4,"$(P){XBPM:$(NO)}Gain-SP PP NMS")
+	
+	#100uA GAIN
+	field(DOL5,"1e-13")
+	field(LNK5,"$(P){XBPM:$(NO)}Ampl:dfanout-I.VAL PP NMS")	
+	field(DOL6,"2")
+	field(LNK6,"$(P){XBPM:$(NO)}Gain-SP PP NMS")
+
+	#1mA GAIN
+	field(DOL7,"1e-12")
+	field(LNK7,"$(P){XBPM:$(NO)}Ampl:dfanout-I.VAL PP NMS")
+	field(DOL8,"3")
+	field(LNK8,"$(P){XBPM:$(NO)}Gain-SP PP NMS")
+
+	#250uA GAIN
+	field(DOL9,"1e-11")
+	field(LNK9,"$(P){XBPM:$(NO)}Ampl:dfanout-I.VAL PP NMS")
+	field(DOLA,"4")
+	field(LNKA,"$(P){XBPM:$(NO)}Gain-SP PP NMS")
+}
+
+record(calc,"$(P){XBPM:$(NO)}Ampl:CurrTotal-I") {
+	field(DESC,"Total Current")
+	field(SCAN,".1 second")
+	field(CALC,"A+B+C+D")
+	field(INPA,"$(P,undefined){XBPM:$(NO,undefined)}Ampl:ACurrAvg-I.VAL)")
+	field(INPB,"$(P,undefined){XBPM:$(NO,undefined)}Ampl:BCurrAvg-I.VAL)")
+	field(INPC,"$(P,undefined){XBPM:$(NO,undefined)}Ampl:CCurrAvg-I.VAL)")
+	field(INPD,"$(P,undefined){XBPM:$(NO,undefined)}Ampl:DCurrAvg-I.VAL)")
+	field(PREC,"3")
+	field(EGU, "A")
+}
+
+record(dfanout,"$(P){XBPM:$(NO)}Ampl:dfanout-I"){
+	field(DESC,"Current Scaling")
+	field(SCAN,".1 second")
+	field(OUTA,"$(P){XBPM:$(NO)}Ampl:ACurrAvg-I.ESLO PP NMS")
+	field(OUTB,"$(P){XBPM:$(NO)}Ampl:BCurrAvg-I.ESLO PP NMS")
+	field(OUTC,"$(P){XBPM:$(NO)}Ampl:CCurrAvg-I.ESLO PP NMS")
+	field(OUTD,"$(P){XBPM:$(NO)}Ampl:DCurrAvg-I.ESLO PP NMS")
+	field(OUTE,"$(P){XBPM:$(NO)}Ampl:CurrTotal-I.ESLO PP NMS")
+}
+
+################################################################
+# 10 Hz Readback/Status
+#    Rx (message id, address)
+#
+#################################################################
+
+#XXX This record has the same address as the 10Hz Heartbeat
+# Soft trigger status
+# record(bi, "$(P,undefined){XBPM:$(NO,undefined)}Trig:Strig-I") {
+#	field(DESC, "Readback Soft trig status")
+#	field(DTYP, "PSC Reg")
+#	field(INP , "@Rx$(NO,undefined) 30 0")
+# 	field(MASK, "0x1")
+#        field(SCAN,"I/O Intr")
+#        field(ZNAM,"Rdy")
+#        field(ONAM,"Trig")
+#        field(ZSV,"NO_ALARM")
+#        field(OSV,"MAJOR")
+#}
+
+record(longin, "$(P){XBPM:$(NO)}HeartBeat10Hz-I") {
+        field(DESC, "10 Hz Heartbeat - Comm. OK counter")
+        field(DTYP, "PSC Reg")
+        field(INP, "@Rx$(NO) 30 0")
+        field(SCAN, "I/O Intr")
+}
+
+record(longin, "$(P,undefined){XBPM:$(NO,undefined)}Leds-I") {
+	field(DESC, "Debug LEDS Readback")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 4")
+        field(SCAN,"I/O Intr")
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO,undefined)}Pos:Kx-I") {
+	field(DESC,"Horizontal position calibration constant")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 8")
+	field(SCAN,"I/O Intr")
+        field(ASLO, "0.000001")
+        field(PREC, "3")
+	field(EGU, "mm")
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO,undefined)}Pos:Ky-I") {
+	field(DESC,"Vertical position calibration constant")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 12")
+	field(SCAN,"I/O Intr")
+	field(EGU, "mm")
+        field(ASLO, "0.000001")
+	field(PREC,"3")
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO,undefined)}Ampl:AAvg-I") {
+	field(DESC,"Channel A ADC counts")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 16")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "adu")
+	
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO,undefined)}Ampl:BAvg-I") {
+	field(DESC,"Channel B ADC counts")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 20")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "adu")
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO,undefined)}Ampl:CAvg-I") {
+	field(DESC,"Channel C ADC counts")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 24")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "adu")
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO,undefined)}Ampl:DAvg-I") {
+	field(DESC,"Channel D ADC counts")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 28")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "adu")	
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO,undefined)}Pos:X-I") {
+	field(DESC,"10 Hz X position")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 32")  #temp switch with Pos:Y
+	field(LINR,"LINEAR")
+	field(ESLO,"0.001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "um")	
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO,undefined)}Pos:Y-I") {
+	field(DESC,"10 Hz Y position")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 36")  #temp switch with Pos:X
+        field(LINR,"LINEAR")	
+	field(ESLO,"0.001")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "um")
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO,undefined)}SockLivet1me-I") {
+	field(DESC,"TCP socket connection monitor")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 40")
+#	field(LINR,"LINEAR")
+#	field(ESLO,"0.000001")
+#	field(PREC,"4")
+	field(SCAN,"I/O Intr")
+#	field(EGU,  "nm")	
+#	field(FLNK, "$(P,undefined){XBPM:$(NO,undefined)}Pos:Y-Calc")
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO,undefined)}FWVersion-I") {
+	field(DESC,"Firmware version")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 44")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "Version")	
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO,undefined)}Ampl:ACurrAvg-I") {
+	field(DESC,"Channel A current")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 48")
+	field(LINR,"LINEAR")
+	field(ESLO,"1")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "A")	
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO,undefined)}Ampl:BCurrAvg-I") {
+	field(DESC,"Channel B current")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 52")
+	field(LINR,"LINEAR")
+	field(ESLO,"1")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "A")	
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO,undefined)}Ampl:CCurrAvg-I") {
+	field(DESC,"Channel C current")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 56")
+	field(LINR,"LINEAR")
+	field(ESLO,"1")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "A")	
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO,undefined)}Ampl:DCurrAvg-I") {
+	field(DESC,"Channel D current")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 60")
+	field(LINR,"LINEAR")
+	field(ESLO,"1")
+	field(PREC,"3")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "A")	
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO,undefined)}Cal:AOffset-I") {
+	field(DESC,"Channel A ADC count offset")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 64")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "adu")	
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO,undefined)}Cal:BOffset-I") {
+	field(DESC,"Channel B ADC count offset")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 68")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "adu")	
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO,undefined)}Cal:COffset-I") {
+	field(DESC,"Channel C ADC count offset")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 72")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "adu")
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO,undefined)}Cal:DOffset-I") {
+	field(DESC,"Channel D ADC count offset")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 76")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "adu")
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO,undefined)}Cal:AGain-I") {
+#TODO	field(DESC,"Channel A gain (fA/adc)")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 80")
+	field(SCAN,"I/O Intr")
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO,undefined)}Cal:BGain-I") {
+#TODO	field(DESC,"Channel B gain (fA/adc)")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 84")
+	field(SCAN,"I/O Intr")
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO,undefined)}Cal:CGain-I") {
+#TODO	field(DESC,"Channel C gain (fA/adc)")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 88")
+	field(SCAN,"I/O Intr")
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO,undefined)}Cal:DGain-I") {
+#TODO	field(DESC,"Channel D gain (fA/adc)")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 92")
+	field(SCAN,"I/O Intr")
+}
+
+
+record(ai, "$(P,undefined){XBPM:$(NO)}BMR:AOffset-I") {
+	field(DESC,"Channel A ADC count offset")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 96")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "adu")	
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO)}BMR:BOffset-I") {
+	field(DESC,"Channel B ADC count offset")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 100")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "adu")	
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO)}BMR:COffset-I") {
+	field(DESC,"Channel C ADC count offset")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 104")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "adu")
+}
+
+record(ai, "$(P,undefined){XBPM:$(NO)}BMR:DOffset-I") {
+	field(DESC,"Channel D ADC count offset")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO,undefined) 30 108")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "adu")
+}
+
+record(ai, "$(P){XBPM:$(NO)}FATrigActive-I") {
+	field(DESC,"FA Trigger Active")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 112")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "adu")
+}
+
+record(ai, "$(P){XBPM:$(NO)}FATrigPercDone-I") {
+	field(DESC,"FA Trigger Percent Complete")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 116")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "adu")
+}
+
+
+
+#####################################################################
+# Waveform Records 
+#    aie_wfm_rx (Msg ID, Address, Offset)
+#
+#
+# 
+#####################################################################
+
+
+##############################
+### FA 10 kHz
+##############################
+record(waveform,"$(P){XBPM:$(NO)}FA-A") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 53 0 28")
+	field(SCAN,"I/O Intr")
+	field(FTVL,"DOUBLE")
+	field(NELM,"$(FA_WFM_LEN)")
+        field(FLNK, "$(P){XBPM:$(NO)}FA1-Fout_")
+}
+
+record(fanout, "$(P){XBPM:$(NO)}FA1-Fout_") {
+        field(LNK1, "$(P){XBPM:$(NO)}FA-B")
+        field(LNK2, "$(P){XBPM:$(NO)}FA-C")
+        field(LNK3, "$(P){XBPM:$(NO)}FA-D")
+        field(LNK4, "$(P){XBPM:$(NO)}FA-X")
+        field(LNK5, "$(P){XBPM:$(NO)}FA-Y")
+        field(LNK6, "$(P){XBPM:$(NO)}FA-S")
+        #field(FLNK, "$(P){XBPM:$(NO)}FA2-Fout_")
+}
+
+
+record(waveform,"$(P){XBPM:$(NO)}FA-B") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 53 4 28")
+	field(FTVL,"DOUBLE")
+	field(NELM,"$(FA_WFM_LEN)")
+}
+
+record(waveform,"$(P){XBPM:$(NO)}FA-C") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 53 8 28")
+	field(FTVL,"DOUBLE")
+	field(NELM,"$(FA_WFM_LEN)")
+}
+
+record(waveform,"$(P){XBPM:$(NO)}FA-D") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 53 12 28")
+	field(FTVL,"DOUBLE")
+	field(NELM,"$(FA_WFM_LEN)")
+}
+record(waveform,"$(P){XBPM:$(NO)}FA-X") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 53 16 28")
+	field(FTVL,"DOUBLE")
+	field(NELM,"$(FA_WFM_LEN)")
+	#field(FLNK, "$(P){BPM:$(NO)}FA:WA-X")
+}
+record(waveform,"$(P){XBPM:$(NO)}FA-Y") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 53 20 28")
+	field(FTVL,"DOUBLE")
+	field(NELM,"$(FA_WFM_LEN)")
+	#field(FLNK, "$(P){BPM:$(NO)}FA:WA-Y")
+}
+record(waveform,"$(P){XBPM:$(NO)}FA-S") {
+	field(DTYP, "PSC Block I32 In")
+	field(INP , "@aie_wfm_rx_$(NO) 53 24 28")
+	field(FTVL,"DOUBLE")
+	field(NELM,"$(FA_WFM_LEN)")
+	#field(FLNK, "$(P){BPM:$(NO)}FA:WA-S")
+}
+
+
+
+
+
+
+
+
+
+

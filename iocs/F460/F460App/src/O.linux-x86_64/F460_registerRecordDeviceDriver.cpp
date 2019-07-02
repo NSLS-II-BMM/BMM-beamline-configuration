@@ -597,7 +597,7 @@ static struct iocshVarDef vardefs[] = {
 
 int F460_registerRecordDeviceDriver(DBBASE *pbase)
 {
-    const char *bldTop = "/epics/iocs/F460";
+    const char *bldTop = "/home/liji/ioc/F460-sp";
     const char *envTop = getenv("TOP");
 
     if (envTop && strcmp(envTop, bldTop)) {

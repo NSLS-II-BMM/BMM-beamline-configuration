@@ -1,0 +1,27 @@
+# I35 value for Estop (abort)
+# I35 = 1 abort is enabled
+# M7647 = 1 motor can run; = 0, stopped
+record(bi, "$(SYS){$(PMAC)}Estop:Enable") {
+  field(PINI, "YES")
+  field(DTYP, "stream")
+  field(ZNAM, "Disabled")
+  field(ONAM, "Enabled")
+  field(INP, "@pmac.proto getIntVar(I35) $(PORT)")
+}
+
+record(bi, "$(SYS){$(PMAC)}Estop:Switch") {
+  field(PINI, "YES")
+  field(DTYP, "stream")
+  field(ZNAM, "Pressed")
+  field(ONAM, "Released")
+  field(INP, "@pmac.proto getIntVar(M7647) $(PORT)")
+}
+
+record(calc, "$(SYS){$(PMAC)}Estop:Sts") {
+  field(SCAN, ".2 second")
+  field(CALC, "A&&B")	# 1="not activated, running"; 0="Estop Stopped"
+  field(INPA, "$(SYS){$(PMAC)}Estop:Enable PP") 
+  field(INPB, "$(SYS){$(PMAC)}Estop:Switch PP") 
+}
+
+

@@ -1,0 +1,27 @@
+file "db/motorstatus.db"
+{
+pattern
+{SYS,           DEV,                    PORT,  AXIS }
+{"XF:06BM-ES",  "{SixC-Ax:Tbl_YUO}",    "P0",  1    }
+{"XF:06BM-ES",  "{SixC-Ax:Tbl_XU}",     "P0",  2    }
+{"XF:06BM-ES",  "{SixC-Ax:Tbl_XD}",     "P0",  3    }
+{"XF:06BM-ES",  "{SixC-Ax:Tbl_Z}",      "P0",  4    }
+{"XF:06BM-ES",  "{SixC-Ax:Slt1_T}",     "P0",  5    }
+{"XF:06BM-ES",  "{SixC-Ax:Slt1_B}",     "P0",  6    }
+{"XF:06BM-ES",  "{SixC-Ax:Slt1_I}",     "P0",  7    }
+{"XF:06BM-ES",  "{SixC-Ax:Slt1_O}",     "P0",  8    }
+}
+
+file "db/pmacStatusAxis.db"
+{
+pattern
+{SYS,            DEV,            PORT,  AXIS }
+{"XF:06BM-CT",   "{MC:13-Ax:1}", "P0",  1    }
+{"XF:06BM-CT",   "{MC:13-Ax:2}", "P0",  2    }
+{"XF:06BM-CT",   "{MC:13-Ax:3}", "P0",  3    }
+{"XF:06BM-CT",   "{MC:13-Ax:4}", "P0",  4    }
+{"XF:06BM-CT",   "{MC:13-Ax:5}", "P0",  5    }
+{"XF:06BM-CT",   "{MC:13-Ax:6}", "P0",  6    }
+{"XF:06BM-CT",   "{MC:13-Ax:7}", "P0",  7    }
+{"XF:06BM-CT",   "{MC:13-Ax:8}", "P0",  8    }
+}

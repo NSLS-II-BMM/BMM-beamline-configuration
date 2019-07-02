@@ -6,6 +6,12 @@ pattern
 { XF:06BM-EPS, "PLC", 		Net-Sts,	"PLC Remote IO network status", 	"Misc_Sts_0[6]",  "Down", 	"OK", 		"MAJOR",   ""}
 }
 
+file "plc1-bo.template"
+{
+pattern
+{ Sys,          Dev,            Sig,            DESC,                                   Tag,              ZNAM          ONAM}
+{ XF:06BM-EPS, "Fan", 		On_Off, 	"B-hutch Fan",  	"BM_EPS_Fan_On_Off", "Off", "On"}
+}
 
 file           plc1-va-gv.template
 {

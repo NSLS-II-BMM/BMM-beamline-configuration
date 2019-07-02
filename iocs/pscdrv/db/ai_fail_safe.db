@@ -1,0 +1,93 @@
+
+
+########################
+##  0 : SDI, 1: Sim
+record(calcout,"SR:C31-{AI}Sim:Enable-Cal") {
+        field(INPA, "SR:C31-{AI}Sim:Enable-SP.VAL CP")
+        field(INPB, "SR:C03-BI{DCCT:1}I:Total-I CP")
+        field(CALC,"B>0.2 && A=1? 0:1")
+        field(OOPT,"When Zero")
+        field(OUT, "SR:C31-{AI}Sim:Enable-SP.VAL CA")
+        field(FLNK, "Sim:Enable-Cal2")
+}
+
+record(calcout,"SR:C31-{AI}Sim:Enable-Cal2") {
+        field(INPB, "SR:C03-BI{DCCT:1}I:Total-I CP")
+        field(CALC,"B>0.2?1:0")
+        field(OUT, "SR:C31-{AI}Sim:Enable-SP.DISP CA")
+}
+
+###########################
+### 0 : Beam, 1: Sim
+record(calcout,"SR:C31-{AI}Sim:BeamTest-Cal") {
+        field(INPA, "SR:C31-{AI}Sim:BeamTest-SP.VAL CP")
+        field(INPB, "SR:C03-BI{DCCT:1}I:Total-I CP")
+        field(CALC,"B>0.2 && A=1? 0:1")
+        field(OOPT,"When Zero")
+        field(OUT, "SR:C31-{AI}Sim:BeamTest-SP.VAL CA")
+        field(FLNK, "SR:C31-{AI}Sim:BeamTest-Cal2")
+}
+
+record(calcout,"SR:C31-{AI}Sim:BeamTest-Cal2") {
+        field(INPB, "SR:C03-BI{DCCT:1}I:Total-I CP")
+        field(CALC,"B>0.2?1:0")
+        field(OUT, "SR:C31-{AI}Sim:BeamTest-SP.DISP CA")
+}
+
+#####################
+### 0 : Op, 1: Sim
+record(calcout,"SR:C31-{AI}ID:GapSim-Cal") {
+        field(INPA, "SR:C31-{AI}ID:GapSim-SP.VAL CP")
+        field(INPB, "SR:C03-BI{DCCT:1}I:Total-I CP")
+        field(CALC,"B>0.2 && A=1? 0:1")
+        field(OOPT,"When Zero")
+        field(OUT, "SR:C31-{AI}ID:GapSim-SP.VAL CA")
+        field(FLNK, "SR:C31-{AI}ID:GapSim-Cal2")
+}
+
+record(calcout,"SR:C31-{AI}ID:GapSim-Cal2") {
+        field(INPB, "SR:C03-BI{DCCT:1}I:Total-I CP")
+        field(CALC,"B>0.2?1:0")
+        field(OUT, "SR:C31-{AI}ID:GapSim-SP.DISP CA")
+}
+
+#####################
+### ID PS sim 0 : Op, 1: Sim
+record(calcout,"SR:C31-{AI}ID:PsSim-Cal") {
+        field(INPA, "SR:C31-{AI}ID:PsSim-SP.VAL CP")
+        field(INPB, "SR:C03-BI{DCCT:1}I:Total-I CP")
+        field(CALC,"B>0.2 && A=1? 0:1")
+        field(OOPT,"When Zero")
+        field(OUT, "SR:C31-{AI}ID:PsSim-SP.VAL CA")
+        field(FLNK, "SR:C31-{AI}ID:PsSim-Cal2")
+}
+
+record(calcout,"SR:C31-{AI}ID:PsSim-Cal2") {
+        field(INPB, "SR:C03-BI{DCCT:1}I:Total-I CP")
+        field(CALC,"B>0.2?1:0")
+        field(OUT, "SR:C31-{AI}ID:PsSim-SP.DISP CA")
+}
+
+#####################
+### BM PS sim 0 : Op, 1: Sim
+record(calcout,"SR:C31-{AI}BM:PsSim-Cal") {
+        field(INPA, "SR:C31-{AI}BM:PsSim-SP.VAL CP")
+        field(INPB, "SR:C03-BI{DCCT:1}I:Total-I CP")
+        field(CALC,"B>0.2 && A=1? 0:1")
+        field(OOPT,"When Zero")
+        field(OUT, "SR:C31-{AI}BM:PsSim-SP.VAL CA")
+        field(FLNK, "SR:C31-{AI}BM:PsSim-Cal2")
+}
+
+record(calcout,"SR:C31-{AI}BM:PsSim-Cal2") {
+        field(INPB, "SR:C03-BI{DCCT:1}I:Total-I CP")
+        field(CALC,"B>0.2?1:0")
+        field(OUT, "SR:C31-{AI}BM:PsSim-SP.DISP CA")
+}
+
+
+
+
+#################
+### 1 : > 2
+

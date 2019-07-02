@@ -1,0 +1,35 @@
+record(calcout , "SR:C31{AI-$(ID,undefined)}SAngle-x-Cal") {
+        field(DESC, "SA Angle X")
+        #AI
+        field(INPA, "SR:C31-{AI}Aie$(ID,undefined):S1-SP.VAL CP")
+        field(INPB, "SR:C31-{AI}Aie$(ID,undefined):S2-SP.VAL CP")
+        #bpm
+        field(INPC, "SR:C$(CBPM,undefined)-BI{BPM:$(x1,undefined)}Pos:X-Calc.VAL CP")
+        field(INPD, "SR:C$(CBPM,undefined)-BI{BPM:$(x2,undefined)}Pos:X-Calc.VAL CP")
+        field(INPE, "SR:C$(CBPM,undefined)-BI{BPM:$(x1,undefined)}Pos:UsrXoffset-SP.VAL CP")
+        field(INPF, "SR:C$(CBPM,undefined)-BI{BPM:$(x2,undefined)}Pos:UsrXoffset-SP.VAL CP")
+        #|(x2-x1)/(s2-s1)|
+        field(CALC, "((D-F)-(C-E))/(B-A)")
+        field(EGU,  "mrad")
+        field(HOPR, "10")
+        field(LOPR, "-10")
+        field(PREC, "3")
+}
+
+record(calcout , "SR:C31{AI-$(ID,undefined)}SAngle-y-Cal") {
+        field(DESC, "SA Angle Y")
+        #AI
+        field(INPA, "SR:C31-{AI}Aie$(ID,undefined):S1-SP.VAL CP")
+        field(INPB, "SR:C31-{AI}Aie$(ID,undefined):S2-SP.VAL CP")
+        #bpm
+        field(INPC, "SR:C$(CBPM,undefined)-BI{BPM:$(x1,undefined)}Pos:Y-Calc.VAL CP")
+        field(INPD, "SR:C$(CBPM,undefined)-BI{BPM:$(x2,undefined)}Pos:Y-Calc.VAL CP")
+        field(INPE, "SR:C$(CBPM,undefined)-BI{BPM:$(x1,undefined)}Pos:UsrYoffset-SP.VAL CP")
+        field(INPF, "SR:C$(CBPM,undefined)-BI{BPM:$(x2,undefined)}Pos:UsrYoffset-SP.VAL CP")
+        #|(x2-x1)/(s2-s1)|
+        field(CALC, "((D-F)-(C-E))/(B-A)")
+        field(EGU,  "mrad")
+        field(HOPR, "10")
+        field(LOPR, "-10")
+        field(PREC, "3")
+}

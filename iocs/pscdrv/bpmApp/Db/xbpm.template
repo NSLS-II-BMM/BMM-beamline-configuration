@@ -1,0 +1,244 @@
+#
+#	XBPM test database
+#
+
+record(bo, "$(P){XBPM:$(NO)}wfm-RECONNECT") {
+  field(DTYP, "PSC Ctrl Reconnect")
+  field(OUT , "@aie_wfm_rx_$(NO)")
+  field(ZNAM, "Reconnect")
+  field(ONAM, "Reconnect")
+}
+
+###xbpm.
+record(bi, "$(P){XBPM:$(NO)}wfm-conn") {
+	field(DTYP, "PSC Ctrl Connected")
+	field(INP , "@aie_wfm_rx_$(NO)")
+	field(SCAN, "I/O Intr")
+	field(ZNAM, "Disconnected")
+	field(ONAM, "Connected")
+	field(ZSV , "MAJOR")
+}
+
+record(bi, "$(P){XBPM:$(NO)}Rx-conn") {
+	field(DTYP, "PSC Ctrl Connected")
+	field(INP , "@Rx$(NO)")
+	field(SCAN, "I/O Intr")
+	field(ZNAM, "Disconnected")
+	field(ONAM, "Connected")
+	field(ZSV , "MAJOR")
+}
+
+record(stringin, "$(P){XBPM:$(NO)}tx-msg") {
+	field(DTYP, "PSC Ctrl Message")
+	field(INP , "@aie_tx_$(NO)")
+	field(DESC, "Last message")
+	field(SCAN, "I/O Intr")
+}
+
+##flush reg to socket buffer, trigger send to send all socket buffer to PSC
+record(bo, "$(P){XBPM:$(NO)}send") {
+	field(DTYP, "PSC Ctrl Send All")
+	field(OUT , "@aie_tx_$(NO)")
+	field(ZNAM, "Send")
+	field(ONAM, "Send")
+}
+
+record(longout, "$(P){XBPM:$(NO)}GoRegSingleWrite") {
+	field(DTYP, "PSC Ctrl Send")
+	field(OUT , "@aie_tx_$(NO)")
+	field(VAL , "1")
+	field(FLNK, "$(P){XBPM:$(NO)}send")
+}
+
+
+record(longout, "$(P){XBPM:$(NO)}regsend2") {
+	field(DTYP, "PSC Ctrl Send")
+	field(OUT , "@aie_tx_$(NO)")
+	field(VAL , "2")
+	field(FLNK, "$(P){XBPM:$(NO)}send")
+}
+
+record(longout, "$(P){XBPM:$(NO)}regsend3") {
+	field(DESC, "FLOAT32 type write")
+	field(DTYP, "PSC Ctrl Send")
+	field(OUT , "@aie_tx_$(NO)")
+	field(VAL , "3")
+	field(FLNK, "$(P){XBPM:$(NO)}send")
+}
+
+
+
+
+
+
+#####################
+### CONTEROLS
+#####################
+#Soft trigger to DDR
+record(bo, "$(P){XBPM:$(NO)}Trig:Strig-SP") {
+	field(DESC, "Soft Trigger by user")
+	field(DTYP, "PSC Single U32")
+	field(OUT , "@aie_tx_$(NO) 1 0")
+    field(ZNAM,"Rdy")
+    field(ONAM,"Trig")
+	field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+    field(HIGH,".2")	#500 ms after low
+}
+
+
+#####################################################
+# 	longout record for Control
+#
+#   Rf Attenuator control 0..30 dB
+#####################################################
+record(longout, "$(P){XBPM:$(NO)}Gain:RfAtte-SP") {
+	field(DESC, "RF Input Attenuator Control")
+	field(DTYP, "PSC Single I32")
+	field(OUT , "@aie_tx_$(NO) 1 132")
+	field(HOPR,"31")
+	field(LOPR,"0")	
+	field(DRVH,"31")	
+	field(DRVL,"0")		
+	field(EGU, "dB")
+#	field(PINI, "YES")
+#	field(VAL, "10")
+#	field(UDF, "0")
+#	field(TPRO, 1)
+	info(autosaveFields, "VAL")
+	field(FLNK, "$(P){XBPM:$(NO)}GoRegSingleWrite")
+}
+
+
+
+
+######  STATUS
+# Soft trigger status
+record(bi, "$(P){XBPM:$(NO)}Trig:Strig-I") {
+	field(DESC, "Readback Soft trig status")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 0")
+	field(MASK, "0x1")
+    field(SCAN,"I/O Intr")
+    field(ZNAM,"Rdy")
+    field(ONAM,"Trig")
+    field(ZSV,"NO_ALARM")
+    field(OSV,"MAJOR")
+}
+
+
+##
+record(longin, "$(P){XBPM:$(NO)}Trig:Cnt-I") {
+	field(DESC, "10 Hz FPGA count values")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 30 0")
+    field(SCAN,"I/O Intr")
+	field(EGU,  "msec")	
+}
+
+
+
+################################
+# Slow 10 Hz X position 
+# Raw data format nm	Min/Max is +/-2,147,483,647  
+#		
+# for [um] conversion ".RVAL/1000"
+#     [mm] /100000
+#
+
+record(ai, "$(P){XBPM:$(NO)}Pos:X-I") {
+	field(DESC,"10 Hz X position")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 36")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"4")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+#	field(FLNK, "$(P){XBPM:$(NO)}Pos:X-Calc")
+}
+
+
+# Slow Y
+record(ai, "$(P){XBPM:$(NO)}Pos:Y-I") {
+	field(DESC,"10 Hz Y position")
+	field(DTYP, "PSC Reg")
+	field(INP , "@Rx$(NO) 31 40")
+	field(LINR,"LINEAR")
+	field(ESLO,"0.000001")
+	field(PREC,"4")
+	field(SCAN,"I/O Intr")
+	field(EGU,  "mm")	
+#	field(FLNK, "$(P){XBPM:$(NO)}Pos:Y-Calc")
+}
+
+
+###############
+### ADC RAW
+#    Msg ID, Address, Offset
+# 
+#############
+record(waveform,"$(P){XBPM:$(NO)}Ampl:ARaw-I") {
+	field(DESC, "117 MHz ADC0 raw waveform")
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@aie_wfm_rx_$(NO) 51 8 8")
+	field(SCAN, "I/O Intr")
+	field(FTVL, "DOUBLE")
+	field(HOPR, "32768")
+	field(LOPR, "-32767")
+    field(NELM,"$(ADC_WFM_LEN)")
+#	field(FLNK, "$(P){XBPM:$(NO)}FFT:ARaw-I")
+	#field(FLNK, "$(P){XBPM:$(NO)}ADC:WA-A")
+	field(TSE , "-2")
+	info("TimeFromBlock", "0")
+}
+
+record(waveform,"$(P){XBPM:$(NO)}Ampl:BRaw-I") {
+	field(DESC, "117 MHz ADC1 raw waveform")
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@aie_wfm_rx_$(NO) 51 10 8")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+	field(HOPR, "32768")
+	field(LOPR, "-32767")
+    field(NELM,"$(ADC_WFM_LEN)")
+#	field(FLNK, "$(P){XBPM:$(NO)}FFT:BRaw-I")
+	#field(FLNK, "$(P){XBPM:$(NO)}ADC:WA-B")
+	field(TSE , "-2")
+	info("TimeFromBlock", "0")
+}
+record(waveform,"$(P){XBPM:$(NO)}Ampl:CRaw-I") {
+	field(DESC, "117 MHz ADC2 raw waveform")
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@aie_wfm_rx_$(NO) 51 12 8")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+	field(HOPR, "32768")
+	field(LOPR, "-32767")
+    field(NELM,"$(ADC_WFM_LEN)")
+#	field(FLNK, "$(P){XBPM:$(NO)}FFT:CRaw-I")
+	#field(FLNK, "$(P){XBPM:$(NO)}ADC:WA-C")
+	field(TSE , "-2")
+	info("TimeFromBlock", "0")
+}
+record(waveform,"$(P){XBPM:$(NO)}Ampl:DRaw-I") {
+	field(DESC, "117 MHz ADC3 raw waveform")
+	field(DTYP, "PSC Block I16 In")
+	field(INP , "@aie_wfm_rx_$(NO) 51 14 8")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+	field(HOPR, "32768")
+	field(LOPR, "-32767")
+    field(NELM,"$(ADC_WFM_LEN)")
+	field(TSE , "-2")
+#    field(FLNK, "$(P){XBPM:$(NO)}TS:AdcTrigDate-I")
+	info("TimeFromBlock", "0")
+}
+
+
+
+
+
+
+
+
+

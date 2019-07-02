@@ -1,0 +1,33 @@
+#
+#	BPM Alarm Summery 
+#
+record(sub, "$(P){BPM}ID23-Alrm-Sub_")
+{
+	field(DESC, "Alarm Calc")
+	field(INPA, "SR:C$(CNO)-BI{BPM:7}Alarm-Sts.SEVR")
+	field(INPB, "SR:C$(CNO)-BI{BPM:8}Alarm-Sts.SEVR")
+	field(INPC, "SR:C$(CNO)-BI{BPM:9}Alarm-Sts.SEVR")
+#	field(INPD, "SR:C$(CNO)-BI{BPM:4}Alarm-Sts.SEVR")
+#	field(INPE, "SR:C$(CNO)-BI{BPM:5}Alarm-Sts.SEVR")
+#	field(INPF, "SR:C$(CNO)-BI{BPM:6}Alarm-Sts.SEVR")
+	field(INPK, "$(MAXBPM)")
+	field(INAM, "subCalcInit")
+	field(SNAM, "subCalcAlarm")
+}
+
+record(mbbi, "$(P){BPM}ID23-SumAlrm-Sts")
+{
+	field(DESC, "Severity")
+	field(SCAN, "1 second")
+	field(INP,  "$(P){BPM}ID23-Alrm-Sub_ PP MSS")
+	field(ZRST, "No Alarm")
+	field(ONST, "Minor Alarm")
+	field(TWST, "Major Alarm")
+	field(THST, "Invalid Alarm")
+#	field(FLNK, "$(P)DB:Trig-Calc_")
+	field(ZRSV, "NO_ALARM")
+	field(ONSV, "MINOR")
+	field(TWSV, "MAJOR")
+	field(THSV, "INVALID")
+}
+

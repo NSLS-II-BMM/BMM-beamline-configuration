@@ -1,0 +1,13 @@
+file "db/pmac_asyn_motor.db"
+{
+pattern
+{SYS,           DEV,                 MOTOR,  SPORT,  ADDR,             DESC,           DTYP        PREC,  EGU}
+{"XF:06BM-ES",  "{SixC-Ax:VTTH}",    "M0",   "P0",   1,                "V_two theta",  asynMotor,  4,     "deg"}
+{"XF:06BM-ES",  "{SixC-Ax:VTH}",     "M0",   "P0",   2,                "V_theta",      asynMotor,  4,     "deg"}
+{"XF:06BM-ES",  "{SixC-Ax:CHI}",     "M0",   "P0",   3,                "chi",          asynMotor,  4,     "deg"}
+{"XF:06BM-ES",  "{SixC-Ax:PHI}",     "M0",   "P0",   4,                "phi",          asynMotor,  4,     "deg"}
+{"XF:06BM-ES",  "{SixC-Ax:HTH}",     "M0",   "P0",   5,                "H_theta",      asynMotor,  4,     "deg"}
+{"XF:06BM-ES",  "{SixC-Ax:HTTH}",    "M0",   "P0",   6,                "H_two theta",  asynMotor,  4,     "deg"}
+{"XF:06BM-ES",  "{SixC-Ax:ANAL}",    "M0",   "P0",   7,                "Analyzer",     asynMotor,  4,     "deg"}
+{"XF:06BM-ES",  "{SixC-Ax:DET}",     "M0",   "P0",   8,                "Detector",     asynMotor,  4,     "deg"}
+}

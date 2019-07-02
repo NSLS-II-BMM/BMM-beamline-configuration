@@ -1,0 +1,7 @@
+#
+file aie.template
+{ pattern
+{P,       NO, A1, A2, A3,A4,A5,A6,A7,A8,A9, A10,A11, A12,A13,A14,A15 INDX_X1,INDX_X2,INDX_X3,INDX_Y1,INDX_Y2,INDX_Y3,INDX_CD0,INDX_CD1 }
+{ "\$(P)","\$(NO)","\$(A1)","\$(A2)","\$(A3)","\$(A4)","\$(A5)","\$(A6)","\$(A7)","\$(A8)","\$(A9)", "\$(A10)","\$(A11)","\$(A12)","\$(A13)","\$(A14)","\$(A15)","\$(INDX_X1)","\$(INDX_X2)","\$(INDX_X3)","\$(INDX_Y1)","\$(INDX_Y2)","\$(INDX_Y3)","\$(INDX_CD0)","\$(INDX_CD1)" }
+}
+

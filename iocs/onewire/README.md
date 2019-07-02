@@ -1,0 +1,8 @@
+# 6BM oneWire sensors mounted on FOE monochromator
+# K. Gofron
+# 2018/9/24
+
+60000058FD19428
+970000058EA91528
+B50000058FA38D28
+0D0000058F45B328

@@ -1,0 +1,39 @@
+# BEGIN ANSIBLE MANAGED BLOCK FOR APPLIED RECIPE ITEMS
+backup:
+    directory: /epics/deploy-backups
+    history: 5
+deploy_actions_enable: false
+deploy_backup_enable: true
+deploy_dir: /epics/iocs
+deploy_file_check_enable: true
+deploy_group: controls
+deploy_host_check_enable: true
+deploy_id_check_enable: true
+deploy_pkg_check_enable: true
+deploy_preserve_enable: false
+deploy_recipe_debug_enable: false
+deploy_recipe_merge_enable: true
+deploy_sources_enable: false
+deploy_sudo_check_enable: true
+deploy_user: softioc
+prereq_file_properties:
+-   directory: true
+    exists: true
+    group: controls
+    host: localhost
+    mode: '0755'
+    owner: softioc
+    path: /epics/iocs
+-   directory: true
+    exists: true
+    group: controls
+    host: localhost
+    mode: '0755'
+    owner: softioc
+    path: /epics/deploy-backups
+prereq_pkg_properties:
+-   host: localhost
+    name: acl
+-   host: localhost
+    name: python
+# END ANSIBLE MANAGED BLOCK FOR APPLIED RECIPE ITEMS

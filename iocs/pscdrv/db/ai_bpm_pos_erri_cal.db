@@ -1,0 +1,40 @@
+
+#####################################
+record(ai, "SR:C31-C$(CN):Pos:x$(N)_") {
+    field(INP,"SR:C31-{AI}C$(CN):Pos:x$(N)-I")
+}
+record(calc, "SR:C31-C$(CN):Pos:x$(N)_Sts-Cal") {
+	field(SCAN, "2 second")
+	field(CALC, "C>0.15?(B-A)*(B-A):0.1")
+	field(INPA, "SR:C31-C$(CN):Pos:x$(N)_ NPP")
+	field(INPB, "SR:C31-C$(CN):Pos:x$(N)_ PP")
+	field(INPC, "SR:C03-BI{DCCT:1}I:Total-I NPP NMS")
+	field(LOLO , "0.0")
+	field(LOW , "0.0")
+	field(HIGH, "1.0")
+	field(PREC, "3")
+	field(HSV , "MINOR")
+	field(LSV , "MINOR")
+	field(LLSV, "MAJOR")
+}
+
+record(ai, "SR:C31-C$(CN):Pos:y$(N)_") {
+    field(INP,"SR:C31-{AI}C$(CN):Pos:y$(N)-I")
+}
+record(calc, "SR:C31-C$(CN):Pos:y$(N)_Sts-Cal") {
+	field(SCAN, "2 second")
+#	field(CALC, "(B-A)*(B-A)")
+	field(CALC, "C>0.15?(B-A)*(B-A):0.1")
+	field(INPA, "SR:C31-C$(CN):Pos:y$(N)_ NPP")
+	field(INPB, "SR:C31-C$(CN):Pos:y$(N)_ PP")
+	field(INPC, "SR:C03-BI{DCCT:1}I:Total-I NPP NMS")
+	field(LOLO , "0.0")
+	field(LOW , "0.0")
+	field(HIGH, "1.0")
+	field(PREC, "3")
+	field(HSV , "MINOR")
+	field(LSV , "MINOR")
+	field(LLSV, "MAJOR")
+}
+
+

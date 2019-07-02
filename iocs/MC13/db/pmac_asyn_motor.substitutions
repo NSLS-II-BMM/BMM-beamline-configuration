@@ -1,0 +1,13 @@
+file "db/pmac_asyn_motor.db"
+{
+pattern
+{SYS,           DEV,                    MOTOR,  SPORT,  ADDR,             DESC,              DTYP        PREC,  EGU}
+{"XF:06BM-ES",  "{SixC-Ax:Tbl_YUO}",    "M0",   "P0",   1,                "Table Y Up Out",  asynMotor,  4,     "mm"}
+{"XF:06BM-ES",  "{SixC-Ax:Tbl_XU}",     "M0",   "P0",   2,                "Table X Up",      asynMotor,  4,     "mm"}
+{"XF:06BM-ES",  "{SixC-Ax:Tbl_XD}",     "M0",   "P0",   3,                "Table X Dn",      asynMotor,  4,     "mm"}
+{"XF:06BM-ES",  "{SixC-Ax:Tbl_Z}",      "M0",   "P0",   4,                "Table Z",         asynMotor,  4,     "mm"}
+{"XF:06BM-ES",  "{SixC-Ax:Slt1_T}",     "M0",   "P0",   5,                "Slit_1 Top",      asynMotor,  4,     "mm"}
+{"XF:06BM-ES",  "{SixC-Ax:Slt1_B}",     "M0",   "P0",   6,                "Slit_1 Bot",      asynMotor,  4,     "mm"}
+{"XF:06BM-ES",  "{SixC-Ax:Slt1_I}",     "M0",   "P0",   7,                "Slit_1 inb",      asynMotor,  4,     "mm"}
+{"XF:06BM-ES",  "{SixC-Ax:Slt1_O}",     "M0",   "P0",   8,                "Slit_1 Outb",     asynMotor,  4,     "mm"}
+}

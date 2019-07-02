@@ -1,0 +1,5 @@
+NAME=quadEM-1
+USER=softioc
+PORT=4200
+HOST=xf06bm-ioc1
+

@@ -1,0 +1,1239 @@
+# Power Spectrum calculation
+#
+# P - Name prefix (required)
+# NELM - Max number of array elements (required)
+# FNELM - Max elements in frequency plot (def. NELM, but only NELM/2 is needed)
+# INP - Input link for array data
+# IFLNK - Forward link when input in updated
+# FLNK - Forward link when output is updated
+
+record(longout, "$(SYS){BPM:$(NO)-P:FAA}N:FFT-SP") {
+    field(DTYP, "PSC PSD nfft")
+    field(DESC, "# of fft points")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAA}")
+    field(DRVH, "100000")
+    field(VAL , "100000")
+    field(UDF , "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(mbbo, "$(SYS){BPM:$(NO)-P:FAA}Wind-Sel") {
+    field(DTYP, "PSC PSD windtype")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAA}")
+    field(ZRST, "None")
+    field(ONST, "Hann")
+    field(ZRVL, "0")
+    field(ONVL, "1")
+    field(PINI, "YES")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAA}In-SP")
+    info(autosaveFields_pass1, "RVAL")
+}
+
+record(longout, "$(SYS){BPM:$(NO)-P:FAA}N:Start-SP") {
+    field(DTYP, "PSC PSD start")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAA}")
+    field(DRVH, "100000")
+    field(VAL , "0")
+    field(UDF , "0")
+    field(PINI, "YES")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAA}In-SP")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(longout, "$(SYS){BPM:$(NO)-P:FAA}N:Width-SP") {
+    field(DTYP, "PSC PSD width")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAA}")
+    field(DRVH, "100000")
+    field(VAL , "0")
+    field(UDF , "0")
+    field(PINI, "YES")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAA}In-SP")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ao, "$(SYS){BPM:$(NO)-P:FAA}F:Samp-SP") {
+    field(DTYP, "PSC PSD fsamp")
+    field(DESC, "Sampling frequency")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAA}")
+    field(EGU , "Hz")
+    field(PREC, "1")
+    field(VAL , "9961.72")
+    field(UDF , "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ao, "$(SYS){BPM:$(NO)-P:FAA}Scale-SP") {
+    field(DTYP, "PSC PSD scale")
+    field(DESC, "Input scaling factor")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAA}")
+    field(VAL , "$(SCALE)")
+    field(UDF , "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(bo, "$(SYS){BPM:$(NO)-P:FAA}Run-Sel") {
+    field(ZNAM, "Run")
+    field(ONAM, "Pause")
+    field(PINI, "YES")
+    field(MASK, "1")
+    field(UDF , "0")
+    field(OUT , "$(SYS){BPM:$(NO)-P:FAA}In-SP.DISV NPP")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAA}In-SP") {
+    field(DTYP, "PSC PSD input")
+    field(INP , "$(SYS){BPM:$(NO)}FA-A")
+    field(FTVL, "DOUBLE")
+    field(NELM, "100000")
+    field(TSE, "-2")
+    field(DISA, "1")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAA}N:Time-I")
+    info(CALCNAME, "$(SYS){BPM:$(NO)-P:FAA}")
+}
+
+record(longin, "$(SYS){BPM:$(NO)-P:FAA}N:Time-I") {
+    # Hack since monitors on NORD wan't posted by
+    # older Base
+    field(INP, "$(SYS){BPM:$(NO)-P:FAA}In-SP.NORD")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAB}In-SP")
+}
+
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAA}Freq-I") {
+    field(DTYP, "PSC PSD fscale")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAA}")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "DOUBLE")
+    field(PREC, "3")
+    field(NELM, "100000")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAA}N:FFT-I")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAA}Wind-I") {
+    field(DTYP, "PSC PSD window")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAA}")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "DOUBLE")
+    field(PREC, "3")
+    field(NELM, "100000")
+}
+
+record(longin, "$(SYS){BPM:$(NO)-P:FAA}N:FFT-I") {
+    # Hack since monitors on NORD wan't posted by
+    # older Base
+    field(INP, "$(SYS){BPM:$(NO)-P:FAA}Freq-I.NORD")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAA}Out-I") {
+    field(DTYP, "PSC PSD output")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAA}")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "DOUBLE")
+    field(NELM, "100000")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAA}OutInt-I")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAA}OutInt-I") {
+    field(DTYP, "PSC PSD out integral")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAA}")
+    field(FTVL, "DOUBLE")
+    field(NELM, "100000")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAA}Pwr:TotT-I")
+}
+
+record(ai, "$(SYS){BPM:$(NO)-P:FAA}Pwr:TotT-I") {
+    field(DTYP, "PSC PSD totpwrtime")
+    field(DESC, "Total power of input signal")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAA}")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAA}Pwr:TotF-I")
+}
+
+record(ai, "$(SYS){BPM:$(NO)-P:FAA}Pwr:TotF-I") {
+    field(DTYP, "PSC PSD totpwrfreq")
+    field(DESC, "Total power of output signal")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAA}")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAA}Time-I")
+}
+
+record(ai, "$(SYS){BPM:$(NO)-P:FAA}Time-I") {
+    field(DTYP, "PSC PSD runtime")
+    field(DESC, "Calculation time")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAA}")
+    field(PREC, "3")
+    field(ASLO, "1e-3")
+    field(EGU , "ms")
+    field(FLNK, "")
+}
+# Power Spectrum calculation
+#
+# P - Name prefix (required)
+# NELM - Max number of array elements (required)
+# FNELM - Max elements in frequency plot (def. NELM, but only NELM/2 is needed)
+# INP - Input link for array data
+# IFLNK - Forward link when input in updated
+# FLNK - Forward link when output is updated
+
+record(longout, "$(SYS){BPM:$(NO)-P:FAB}N:FFT-SP") {
+    field(DTYP, "PSC PSD nfft")
+    field(DESC, "# of fft points")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAB}")
+    field(DRVH, "100000")
+    field(VAL , "100000")
+    field(UDF , "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(mbbo, "$(SYS){BPM:$(NO)-P:FAB}Wind-Sel") {
+    field(DTYP, "PSC PSD windtype")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAB}")
+    field(ZRST, "None")
+    field(ONST, "Hann")
+    field(ZRVL, "0")
+    field(ONVL, "1")
+    field(PINI, "YES")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAB}In-SP")
+    info(autosaveFields_pass1, "RVAL")
+}
+
+record(longout, "$(SYS){BPM:$(NO)-P:FAB}N:Start-SP") {
+    field(DTYP, "PSC PSD start")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAB}")
+    field(DRVH, "100000")
+    field(VAL , "0")
+    field(UDF , "0")
+    field(PINI, "YES")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAB}In-SP")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(longout, "$(SYS){BPM:$(NO)-P:FAB}N:Width-SP") {
+    field(DTYP, "PSC PSD width")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAB}")
+    field(DRVH, "100000")
+    field(VAL , "0")
+    field(UDF , "0")
+    field(PINI, "YES")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAB}In-SP")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ao, "$(SYS){BPM:$(NO)-P:FAB}F:Samp-SP") {
+    field(DTYP, "PSC PSD fsamp")
+    field(DESC, "Sampling frequency")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAB}")
+    field(EGU , "Hz")
+    field(PREC, "1")
+    field(VAL , "9961.72")
+    field(UDF , "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ao, "$(SYS){BPM:$(NO)-P:FAB}Scale-SP") {
+    field(DTYP, "PSC PSD scale")
+    field(DESC, "Input scaling factor")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAB}")
+    field(VAL , "$(SCALE)")
+    field(UDF , "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(bo, "$(SYS){BPM:$(NO)-P:FAB}Run-Sel") {
+    field(ZNAM, "Run")
+    field(ONAM, "Pause")
+    field(PINI, "YES")
+    field(MASK, "1")
+    field(UDF , "0")
+    field(OUT , "$(SYS){BPM:$(NO)-P:FAB}In-SP.DISV NPP")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAB}In-SP") {
+    field(DTYP, "PSC PSD input")
+    field(INP , "$(SYS){BPM:$(NO)}FA-B")
+    field(FTVL, "DOUBLE")
+    field(NELM, "100000")
+    field(TSE, "-2")
+    field(DISA, "1")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAB}N:Time-I")
+    info(CALCNAME, "$(SYS){BPM:$(NO)-P:FAB}")
+}
+
+record(longin, "$(SYS){BPM:$(NO)-P:FAB}N:Time-I") {
+    # Hack since monitors on NORD wan't posted by
+    # older Base
+    field(INP, "$(SYS){BPM:$(NO)-P:FAB}In-SP.NORD")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAC}In-SP")
+}
+
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAB}Freq-I") {
+    field(DTYP, "PSC PSD fscale")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAB}")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "DOUBLE")
+    field(PREC, "3")
+    field(NELM, "100000")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAB}N:FFT-I")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAB}Wind-I") {
+    field(DTYP, "PSC PSD window")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAB}")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "DOUBLE")
+    field(PREC, "3")
+    field(NELM, "100000")
+}
+
+record(longin, "$(SYS){BPM:$(NO)-P:FAB}N:FFT-I") {
+    # Hack since monitors on NORD wan't posted by
+    # older Base
+    field(INP, "$(SYS){BPM:$(NO)-P:FAB}Freq-I.NORD")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAB}Out-I") {
+    field(DTYP, "PSC PSD output")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAB}")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "DOUBLE")
+    field(NELM, "100000")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAB}OutInt-I")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAB}OutInt-I") {
+    field(DTYP, "PSC PSD out integral")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAB}")
+    field(FTVL, "DOUBLE")
+    field(NELM, "100000")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAB}Pwr:TotT-I")
+}
+
+record(ai, "$(SYS){BPM:$(NO)-P:FAB}Pwr:TotT-I") {
+    field(DTYP, "PSC PSD totpwrtime")
+    field(DESC, "Total power of input signal")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAB}")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAB}Pwr:TotF-I")
+}
+
+record(ai, "$(SYS){BPM:$(NO)-P:FAB}Pwr:TotF-I") {
+    field(DTYP, "PSC PSD totpwrfreq")
+    field(DESC, "Total power of output signal")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAB}")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAB}Time-I")
+}
+
+record(ai, "$(SYS){BPM:$(NO)-P:FAB}Time-I") {
+    field(DTYP, "PSC PSD runtime")
+    field(DESC, "Calculation time")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAB}")
+    field(PREC, "3")
+    field(ASLO, "1e-3")
+    field(EGU , "ms")
+    field(FLNK, "")
+}
+# Power Spectrum calculation
+#
+# P - Name prefix (required)
+# NELM - Max number of array elements (required)
+# FNELM - Max elements in frequency plot (def. NELM, but only NELM/2 is needed)
+# INP - Input link for array data
+# IFLNK - Forward link when input in updated
+# FLNK - Forward link when output is updated
+
+record(longout, "$(SYS){BPM:$(NO)-P:FAC}N:FFT-SP") {
+    field(DTYP, "PSC PSD nfft")
+    field(DESC, "# of fft points")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAC}")
+    field(DRVH, "100000")
+    field(VAL , "100000")
+    field(UDF , "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(mbbo, "$(SYS){BPM:$(NO)-P:FAC}Wind-Sel") {
+    field(DTYP, "PSC PSD windtype")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAC}")
+    field(ZRST, "None")
+    field(ONST, "Hann")
+    field(ZRVL, "0")
+    field(ONVL, "1")
+    field(PINI, "YES")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAC}In-SP")
+    info(autosaveFields_pass1, "RVAL")
+}
+
+record(longout, "$(SYS){BPM:$(NO)-P:FAC}N:Start-SP") {
+    field(DTYP, "PSC PSD start")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAC}")
+    field(DRVH, "100000")
+    field(VAL , "0")
+    field(UDF , "0")
+    field(PINI, "YES")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAC}In-SP")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(longout, "$(SYS){BPM:$(NO)-P:FAC}N:Width-SP") {
+    field(DTYP, "PSC PSD width")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAC}")
+    field(DRVH, "100000")
+    field(VAL , "0")
+    field(UDF , "0")
+    field(PINI, "YES")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAC}In-SP")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ao, "$(SYS){BPM:$(NO)-P:FAC}F:Samp-SP") {
+    field(DTYP, "PSC PSD fsamp")
+    field(DESC, "Sampling frequency")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAC}")
+    field(EGU , "Hz")
+    field(PREC, "1")
+    field(VAL , "9961.72")
+    field(UDF , "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ao, "$(SYS){BPM:$(NO)-P:FAC}Scale-SP") {
+    field(DTYP, "PSC PSD scale")
+    field(DESC, "Input scaling factor")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAC}")
+    field(VAL , "$(SCALE)")
+    field(UDF , "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(bo, "$(SYS){BPM:$(NO)-P:FAC}Run-Sel") {
+    field(ZNAM, "Run")
+    field(ONAM, "Pause")
+    field(PINI, "YES")
+    field(MASK, "1")
+    field(UDF , "0")
+    field(OUT , "$(SYS){BPM:$(NO)-P:FAC}In-SP.DISV NPP")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAC}In-SP") {
+    field(DTYP, "PSC PSD input")
+    field(INP , "$(SYS){BPM:$(NO)}FA-C")
+    field(FTVL, "DOUBLE")
+    field(NELM, "100000")
+    field(TSE, "-2")
+    field(DISA, "1")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAC}N:Time-I")
+    info(CALCNAME, "$(SYS){BPM:$(NO)-P:FAC}")
+}
+
+record(longin, "$(SYS){BPM:$(NO)-P:FAC}N:Time-I") {
+    # Hack since monitors on NORD wan't posted by
+    # older Base
+    field(INP, "$(SYS){BPM:$(NO)-P:FAC}In-SP.NORD")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAD}In-SP")
+}
+
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAC}Freq-I") {
+    field(DTYP, "PSC PSD fscale")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAC}")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "DOUBLE")
+    field(PREC, "3")
+    field(NELM, "100000")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAC}N:FFT-I")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAC}Wind-I") {
+    field(DTYP, "PSC PSD window")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAC}")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "DOUBLE")
+    field(PREC, "3")
+    field(NELM, "100000")
+}
+
+record(longin, "$(SYS){BPM:$(NO)-P:FAC}N:FFT-I") {
+    # Hack since monitors on NORD wan't posted by
+    # older Base
+    field(INP, "$(SYS){BPM:$(NO)-P:FAC}Freq-I.NORD")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAC}Out-I") {
+    field(DTYP, "PSC PSD output")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAC}")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "DOUBLE")
+    field(NELM, "100000")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAC}OutInt-I")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAC}OutInt-I") {
+    field(DTYP, "PSC PSD out integral")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAC}")
+    field(FTVL, "DOUBLE")
+    field(NELM, "100000")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAC}Pwr:TotT-I")
+}
+
+record(ai, "$(SYS){BPM:$(NO)-P:FAC}Pwr:TotT-I") {
+    field(DTYP, "PSC PSD totpwrtime")
+    field(DESC, "Total power of input signal")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAC}")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAC}Pwr:TotF-I")
+}
+
+record(ai, "$(SYS){BPM:$(NO)-P:FAC}Pwr:TotF-I") {
+    field(DTYP, "PSC PSD totpwrfreq")
+    field(DESC, "Total power of output signal")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAC}")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAC}Time-I")
+}
+
+record(ai, "$(SYS){BPM:$(NO)-P:FAC}Time-I") {
+    field(DTYP, "PSC PSD runtime")
+    field(DESC, "Calculation time")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAC}")
+    field(PREC, "3")
+    field(ASLO, "1e-3")
+    field(EGU , "ms")
+    field(FLNK, "")
+}
+# Power Spectrum calculation
+#
+# P - Name prefix (required)
+# NELM - Max number of array elements (required)
+# FNELM - Max elements in frequency plot (def. NELM, but only NELM/2 is needed)
+# INP - Input link for array data
+# IFLNK - Forward link when input in updated
+# FLNK - Forward link when output is updated
+
+record(longout, "$(SYS){BPM:$(NO)-P:FAD}N:FFT-SP") {
+    field(DTYP, "PSC PSD nfft")
+    field(DESC, "# of fft points")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAD}")
+    field(DRVH, "100000")
+    field(VAL , "100000")
+    field(UDF , "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(mbbo, "$(SYS){BPM:$(NO)-P:FAD}Wind-Sel") {
+    field(DTYP, "PSC PSD windtype")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAD}")
+    field(ZRST, "None")
+    field(ONST, "Hann")
+    field(ZRVL, "0")
+    field(ONVL, "1")
+    field(PINI, "YES")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAD}In-SP")
+    info(autosaveFields_pass1, "RVAL")
+}
+
+record(longout, "$(SYS){BPM:$(NO)-P:FAD}N:Start-SP") {
+    field(DTYP, "PSC PSD start")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAD}")
+    field(DRVH, "100000")
+    field(VAL , "0")
+    field(UDF , "0")
+    field(PINI, "YES")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAD}In-SP")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(longout, "$(SYS){BPM:$(NO)-P:FAD}N:Width-SP") {
+    field(DTYP, "PSC PSD width")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAD}")
+    field(DRVH, "100000")
+    field(VAL , "0")
+    field(UDF , "0")
+    field(PINI, "YES")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAD}In-SP")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ao, "$(SYS){BPM:$(NO)-P:FAD}F:Samp-SP") {
+    field(DTYP, "PSC PSD fsamp")
+    field(DESC, "Sampling frequency")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAD}")
+    field(EGU , "Hz")
+    field(PREC, "1")
+    field(VAL , "9961.72")
+    field(UDF , "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ao, "$(SYS){BPM:$(NO)-P:FAD}Scale-SP") {
+    field(DTYP, "PSC PSD scale")
+    field(DESC, "Input scaling factor")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAD}")
+    field(VAL , "$(SCALE)")
+    field(UDF , "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(bo, "$(SYS){BPM:$(NO)-P:FAD}Run-Sel") {
+    field(ZNAM, "Run")
+    field(ONAM, "Pause")
+    field(PINI, "YES")
+    field(MASK, "1")
+    field(UDF , "0")
+    field(OUT , "$(SYS){BPM:$(NO)-P:FAD}In-SP.DISV NPP")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAD}In-SP") {
+    field(DTYP, "PSC PSD input")
+    field(INP , "$(SYS){BPM:$(NO)}FA-D")
+    field(FTVL, "DOUBLE")
+    field(NELM, "100000")
+    field(TSE, "-2")
+    field(DISA, "1")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAD}N:Time-I")
+    info(CALCNAME, "$(SYS){BPM:$(NO)-P:FAD}")
+}
+
+record(longin, "$(SYS){BPM:$(NO)-P:FAD}N:Time-I") {
+    # Hack since monitors on NORD wan't posted by
+    # older Base
+    field(INP, "$(SYS){BPM:$(NO)-P:FAD}In-SP.NORD")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAX}In-SP")
+}
+
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAD}Freq-I") {
+    field(DTYP, "PSC PSD fscale")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAD}")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "DOUBLE")
+    field(PREC, "3")
+    field(NELM, "100000")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAD}N:FFT-I")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAD}Wind-I") {
+    field(DTYP, "PSC PSD window")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAD}")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "DOUBLE")
+    field(PREC, "3")
+    field(NELM, "100000")
+}
+
+record(longin, "$(SYS){BPM:$(NO)-P:FAD}N:FFT-I") {
+    # Hack since monitors on NORD wan't posted by
+    # older Base
+    field(INP, "$(SYS){BPM:$(NO)-P:FAD}Freq-I.NORD")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAD}Out-I") {
+    field(DTYP, "PSC PSD output")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAD}")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "DOUBLE")
+    field(NELM, "100000")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAD}OutInt-I")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAD}OutInt-I") {
+    field(DTYP, "PSC PSD out integral")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAD}")
+    field(FTVL, "DOUBLE")
+    field(NELM, "100000")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAD}Pwr:TotT-I")
+}
+
+record(ai, "$(SYS){BPM:$(NO)-P:FAD}Pwr:TotT-I") {
+    field(DTYP, "PSC PSD totpwrtime")
+    field(DESC, "Total power of input signal")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAD}")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAD}Pwr:TotF-I")
+}
+
+record(ai, "$(SYS){BPM:$(NO)-P:FAD}Pwr:TotF-I") {
+    field(DTYP, "PSC PSD totpwrfreq")
+    field(DESC, "Total power of output signal")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAD}")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAD}Time-I")
+}
+
+record(ai, "$(SYS){BPM:$(NO)-P:FAD}Time-I") {
+    field(DTYP, "PSC PSD runtime")
+    field(DESC, "Calculation time")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAD}")
+    field(PREC, "3")
+    field(ASLO, "1e-3")
+    field(EGU , "ms")
+    field(FLNK, "")
+}
+# Power Spectrum calculation
+#
+# P - Name prefix (required)
+# NELM - Max number of array elements (required)
+# FNELM - Max elements in frequency plot (def. NELM, but only NELM/2 is needed)
+# INP - Input link for array data
+# IFLNK - Forward link when input in updated
+# FLNK - Forward link when output is updated
+
+record(longout, "$(SYS){BPM:$(NO)-P:FAX}N:FFT-SP") {
+    field(DTYP, "PSC PSD nfft")
+    field(DESC, "# of fft points")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAX}")
+    field(DRVH, "100000")
+    field(VAL , "100000")
+    field(UDF , "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(mbbo, "$(SYS){BPM:$(NO)-P:FAX}Wind-Sel") {
+    field(DTYP, "PSC PSD windtype")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAX}")
+    field(ZRST, "None")
+    field(ONST, "Hann")
+    field(ZRVL, "0")
+    field(ONVL, "1")
+    field(PINI, "YES")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAX}In-SP")
+    info(autosaveFields_pass1, "RVAL")
+}
+
+record(longout, "$(SYS){BPM:$(NO)-P:FAX}N:Start-SP") {
+    field(DTYP, "PSC PSD start")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAX}")
+    field(DRVH, "100000")
+    field(VAL , "0")
+    field(UDF , "0")
+    field(PINI, "YES")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAX}In-SP")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(longout, "$(SYS){BPM:$(NO)-P:FAX}N:Width-SP") {
+    field(DTYP, "PSC PSD width")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAX}")
+    field(DRVH, "100000")
+    field(VAL , "0")
+    field(UDF , "0")
+    field(PINI, "YES")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAX}In-SP")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ao, "$(SYS){BPM:$(NO)-P:FAX}F:Samp-SP") {
+    field(DTYP, "PSC PSD fsamp")
+    field(DESC, "Sampling frequency")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAX}")
+    field(EGU , "Hz")
+    field(PREC, "1")
+    field(VAL , "9961.72")
+    field(UDF , "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ao, "$(SYS){BPM:$(NO)-P:FAX}Scale-SP") {
+    field(DTYP, "PSC PSD scale")
+    field(DESC, "Input scaling factor")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAX}")
+    field(VAL , "$(SCALE)")
+    field(UDF , "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(bo, "$(SYS){BPM:$(NO)-P:FAX}Run-Sel") {
+    field(ZNAM, "Run")
+    field(ONAM, "Pause")
+    field(PINI, "YES")
+    field(MASK, "1")
+    field(UDF , "0")
+    field(OUT , "$(SYS){BPM:$(NO)-P:FAX}In-SP.DISV NPP")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAX}In-SP") {
+    field(DTYP, "PSC PSD input")
+    field(INP , "$(SYS){BPM:$(NO)}FA-X")
+    field(FTVL, "DOUBLE")
+    field(NELM, "100000")
+    field(TSE, "-2")
+    field(DISA, "1")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAX}N:Time-I")
+    info(CALCNAME, "$(SYS){BPM:$(NO)-P:FAX}")
+}
+
+record(longin, "$(SYS){BPM:$(NO)-P:FAX}N:Time-I") {
+    # Hack since monitors on NORD wan't posted by
+    # older Base
+    field(INP, "$(SYS){BPM:$(NO)-P:FAX}In-SP.NORD")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAY}In-SP")
+}
+
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAX}Freq-I") {
+    field(DTYP, "PSC PSD fscale")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAX}")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "DOUBLE")
+    field(PREC, "3")
+    field(NELM, "100000")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAX}N:FFT-I")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAX}Wind-I") {
+    field(DTYP, "PSC PSD window")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAX}")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "DOUBLE")
+    field(PREC, "3")
+    field(NELM, "100000")
+}
+
+record(longin, "$(SYS){BPM:$(NO)-P:FAX}N:FFT-I") {
+    # Hack since monitors on NORD wan't posted by
+    # older Base
+    field(INP, "$(SYS){BPM:$(NO)-P:FAX}Freq-I.NORD")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAX}Out-I") {
+    field(DTYP, "PSC PSD output")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAX}")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "DOUBLE")
+    field(NELM, "100000")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAX}OutInt-I")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAX}OutInt-I") {
+    field(DTYP, "PSC PSD out integral")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAX}")
+    field(FTVL, "DOUBLE")
+    field(NELM, "100000")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAX}Pwr:TotT-I")
+}
+
+record(ai, "$(SYS){BPM:$(NO)-P:FAX}Pwr:TotT-I") {
+    field(DTYP, "PSC PSD totpwrtime")
+    field(DESC, "Total power of input signal")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAX}")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAX}Pwr:TotF-I")
+}
+
+record(ai, "$(SYS){BPM:$(NO)-P:FAX}Pwr:TotF-I") {
+    field(DTYP, "PSC PSD totpwrfreq")
+    field(DESC, "Total power of output signal")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAX}")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAX}Time-I")
+}
+
+record(ai, "$(SYS){BPM:$(NO)-P:FAX}Time-I") {
+    field(DTYP, "PSC PSD runtime")
+    field(DESC, "Calculation time")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAX}")
+    field(PREC, "3")
+    field(ASLO, "1e-3")
+    field(EGU , "ms")
+    field(FLNK, "")
+}
+# Power Spectrum calculation
+#
+# P - Name prefix (required)
+# NELM - Max number of array elements (required)
+# FNELM - Max elements in frequency plot (def. NELM, but only NELM/2 is needed)
+# INP - Input link for array data
+# IFLNK - Forward link when input in updated
+# FLNK - Forward link when output is updated
+
+record(longout, "$(SYS){BPM:$(NO)-P:FAY}N:FFT-SP") {
+    field(DTYP, "PSC PSD nfft")
+    field(DESC, "# of fft points")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAY}")
+    field(DRVH, "100000")
+    field(VAL , "100000")
+    field(UDF , "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(mbbo, "$(SYS){BPM:$(NO)-P:FAY}Wind-Sel") {
+    field(DTYP, "PSC PSD windtype")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAY}")
+    field(ZRST, "None")
+    field(ONST, "Hann")
+    field(ZRVL, "0")
+    field(ONVL, "1")
+    field(PINI, "YES")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAY}In-SP")
+    info(autosaveFields_pass1, "RVAL")
+}
+
+record(longout, "$(SYS){BPM:$(NO)-P:FAY}N:Start-SP") {
+    field(DTYP, "PSC PSD start")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAY}")
+    field(DRVH, "100000")
+    field(VAL , "0")
+    field(UDF , "0")
+    field(PINI, "YES")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAY}In-SP")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(longout, "$(SYS){BPM:$(NO)-P:FAY}N:Width-SP") {
+    field(DTYP, "PSC PSD width")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAY}")
+    field(DRVH, "100000")
+    field(VAL , "0")
+    field(UDF , "0")
+    field(PINI, "YES")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAY}In-SP")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ao, "$(SYS){BPM:$(NO)-P:FAY}F:Samp-SP") {
+    field(DTYP, "PSC PSD fsamp")
+    field(DESC, "Sampling frequency")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAY}")
+    field(EGU , "Hz")
+    field(PREC, "1")
+    field(VAL , "9961.72")
+    field(UDF , "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ao, "$(SYS){BPM:$(NO)-P:FAY}Scale-SP") {
+    field(DTYP, "PSC PSD scale")
+    field(DESC, "Input scaling factor")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAY}")
+    field(VAL , "$(SCALE)")
+    field(UDF , "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(bo, "$(SYS){BPM:$(NO)-P:FAY}Run-Sel") {
+    field(ZNAM, "Run")
+    field(ONAM, "Pause")
+    field(PINI, "YES")
+    field(MASK, "1")
+    field(UDF , "0")
+    field(OUT , "$(SYS){BPM:$(NO)-P:FAY}In-SP.DISV NPP")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAY}In-SP") {
+    field(DTYP, "PSC PSD input")
+    field(INP , "$(SYS){BPM:$(NO)}FA-Y")
+    field(FTVL, "DOUBLE")
+    field(NELM, "100000")
+    field(TSE, "-2")
+    field(DISA, "1")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAY}N:Time-I")
+    info(CALCNAME, "$(SYS){BPM:$(NO)-P:FAY}")
+}
+
+record(longin, "$(SYS){BPM:$(NO)-P:FAY}N:Time-I") {
+    # Hack since monitors on NORD wan't posted by
+    # older Base
+    field(INP, "$(SYS){BPM:$(NO)-P:FAY}In-SP.NORD")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAS}In-SP")
+}
+
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAY}Freq-I") {
+    field(DTYP, "PSC PSD fscale")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAY}")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "DOUBLE")
+    field(PREC, "3")
+    field(NELM, "100000")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAY}N:FFT-I")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAY}Wind-I") {
+    field(DTYP, "PSC PSD window")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAY}")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "DOUBLE")
+    field(PREC, "3")
+    field(NELM, "100000")
+}
+
+record(longin, "$(SYS){BPM:$(NO)-P:FAY}N:FFT-I") {
+    # Hack since monitors on NORD wan't posted by
+    # older Base
+    field(INP, "$(SYS){BPM:$(NO)-P:FAY}Freq-I.NORD")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAY}Out-I") {
+    field(DTYP, "PSC PSD output")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAY}")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "DOUBLE")
+    field(NELM, "100000")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAY}OutInt-I")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAY}OutInt-I") {
+    field(DTYP, "PSC PSD out integral")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAY}")
+    field(FTVL, "DOUBLE")
+    field(NELM, "100000")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAY}Pwr:TotT-I")
+}
+
+record(ai, "$(SYS){BPM:$(NO)-P:FAY}Pwr:TotT-I") {
+    field(DTYP, "PSC PSD totpwrtime")
+    field(DESC, "Total power of input signal")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAY}")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAY}Pwr:TotF-I")
+}
+
+record(ai, "$(SYS){BPM:$(NO)-P:FAY}Pwr:TotF-I") {
+    field(DTYP, "PSC PSD totpwrfreq")
+    field(DESC, "Total power of output signal")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAY}")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAY}Time-I")
+}
+
+record(ai, "$(SYS){BPM:$(NO)-P:FAY}Time-I") {
+    field(DTYP, "PSC PSD runtime")
+    field(DESC, "Calculation time")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAY}")
+    field(PREC, "3")
+    field(ASLO, "1e-3")
+    field(EGU , "ms")
+    field(FLNK, "")
+}
+# Power Spectrum calculation
+#
+# P - Name prefix (required)
+# NELM - Max number of array elements (required)
+# FNELM - Max elements in frequency plot (def. NELM, but only NELM/2 is needed)
+# INP - Input link for array data
+# IFLNK - Forward link when input in updated
+# FLNK - Forward link when output is updated
+
+record(longout, "$(SYS){BPM:$(NO)-P:FAS}N:FFT-SP") {
+    field(DTYP, "PSC PSD nfft")
+    field(DESC, "# of fft points")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAS}")
+    field(DRVH, "100000")
+    field(VAL , "100000")
+    field(UDF , "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(mbbo, "$(SYS){BPM:$(NO)-P:FAS}Wind-Sel") {
+    field(DTYP, "PSC PSD windtype")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAS}")
+    field(ZRST, "None")
+    field(ONST, "Hann")
+    field(ZRVL, "0")
+    field(ONVL, "1")
+    field(PINI, "YES")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAS}In-SP")
+    info(autosaveFields_pass1, "RVAL")
+}
+
+record(longout, "$(SYS){BPM:$(NO)-P:FAS}N:Start-SP") {
+    field(DTYP, "PSC PSD start")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAS}")
+    field(DRVH, "100000")
+    field(VAL , "0")
+    field(UDF , "0")
+    field(PINI, "YES")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAS}In-SP")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(longout, "$(SYS){BPM:$(NO)-P:FAS}N:Width-SP") {
+    field(DTYP, "PSC PSD width")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAS}")
+    field(DRVH, "100000")
+    field(VAL , "0")
+    field(UDF , "0")
+    field(PINI, "YES")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAS}In-SP")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ao, "$(SYS){BPM:$(NO)-P:FAS}F:Samp-SP") {
+    field(DTYP, "PSC PSD fsamp")
+    field(DESC, "Sampling frequency")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAS}")
+    field(EGU , "Hz")
+    field(PREC, "1")
+    field(VAL , "9961.72")
+    field(UDF , "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(ao, "$(SYS){BPM:$(NO)-P:FAS}Scale-SP") {
+    field(DTYP, "PSC PSD scale")
+    field(DESC, "Input scaling factor")
+    field(OUT , "@$(SYS){BPM:$(NO)-P:FAS}")
+    field(VAL , "$(SCALE)")
+    field(UDF , "0")
+    field(PINI, "YES")
+    info(autosaveFields_pass1, "VAL")
+}
+
+record(bo, "$(SYS){BPM:$(NO)-P:FAS}Run-Sel") {
+    field(ZNAM, "Run")
+    field(ONAM, "Pause")
+    field(PINI, "YES")
+    field(MASK, "1")
+    field(UDF , "0")
+    field(OUT , "$(SYS){BPM:$(NO)-P:FAS}In-SP.DISV NPP")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAS}In-SP") {
+    field(DTYP, "PSC PSD input")
+    field(INP , "$(SYS){BPM:$(NO)}FA-S")
+    field(FTVL, "DOUBLE")
+    field(NELM, "100000")
+    field(TSE, "-2")
+    field(DISA, "1")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAS}N:Time-I")
+    info(CALCNAME, "$(SYS){BPM:$(NO)-P:FAS}")
+}
+
+record(longin, "$(SYS){BPM:$(NO)-P:FAS}N:Time-I") {
+    # Hack since monitors on NORD wan't posted by
+    # older Base
+    field(INP, "$(SYS){BPM:$(NO)-P:FAS}In-SP.NORD")
+    field(FLNK, "")
+}
+
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAS}Freq-I") {
+    field(DTYP, "PSC PSD fscale")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAS}")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "DOUBLE")
+    field(PREC, "3")
+    field(NELM, "100000")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAS}N:FFT-I")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAS}Wind-I") {
+    field(DTYP, "PSC PSD window")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAS}")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "DOUBLE")
+    field(PREC, "3")
+    field(NELM, "100000")
+}
+
+record(longin, "$(SYS){BPM:$(NO)-P:FAS}N:FFT-I") {
+    # Hack since monitors on NORD wan't posted by
+    # older Base
+    field(INP, "$(SYS){BPM:$(NO)-P:FAS}Freq-I.NORD")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAS}Out-I") {
+    field(DTYP, "PSC PSD output")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAS}")
+    field(SCAN, "I/O Intr")
+    field(FTVL, "DOUBLE")
+    field(NELM, "100000")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAS}OutInt-I")
+}
+
+record(waveform, "$(SYS){BPM:$(NO)-P:FAS}OutInt-I") {
+    field(DTYP, "PSC PSD out integral")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAS}")
+    field(FTVL, "DOUBLE")
+    field(NELM, "100000")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAS}Pwr:TotT-I")
+}
+
+record(ai, "$(SYS){BPM:$(NO)-P:FAS}Pwr:TotT-I") {
+    field(DTYP, "PSC PSD totpwrtime")
+    field(DESC, "Total power of input signal")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAS}")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAS}Pwr:TotF-I")
+}
+
+record(ai, "$(SYS){BPM:$(NO)-P:FAS}Pwr:TotF-I") {
+    field(DTYP, "PSC PSD totpwrfreq")
+    field(DESC, "Total power of output signal")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAS}")
+    field(PREC, "3")
+    field(TSE, "-2")
+    field(FLNK, "$(SYS){BPM:$(NO)-P:FAS}Time-I")
+}
+
+record(ai, "$(SYS){BPM:$(NO)-P:FAS}Time-I") {
+    field(DTYP, "PSC PSD runtime")
+    field(DESC, "Calculation time")
+    field(INP , "@$(SYS){BPM:$(NO)-P:FAS}")
+    field(PREC, "3")
+    field(ASLO, "1e-3")
+    field(EGU , "ms")
+    field(FLNK, "")
+}

@@ -1,0 +1,4 @@
+NAME=pilatus100k
+USER=softioc
+PORT=4152
+HOST=xf06bm-ioc1
