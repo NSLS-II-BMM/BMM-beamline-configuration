@@ -1,0 +1,8 @@
+#
+# Environment variables must be set from DHCP
+# RACK - Rack group letter and rack number (eg. RACK="D1")
+
+ld("bin/RTEMS-mvme3100/vme.obj")
+osdTimeRegister()
+
+iocshCmd("< st.cmd")
