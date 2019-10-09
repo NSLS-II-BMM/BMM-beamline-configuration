@@ -12,9 +12,18 @@ import datetime, time
 from numpy import pi, sin, cos, arcsin, deg2rad
 HBARC = 1973.27053324
 
+xrd = False
+try:
+    if sys.argv[1].lower() == 'xrd':
+        xrd = True
+except:
+    pass
+        
 def writeline(string):
-    sys.stdout.write('\r')
-    sys.stdout.flush()
+    #sys.stdout.write('\r')
+    #sys.stdout.flush()
+    #os.system('clear')
+    print('\n\n')
     sys.stdout.write(string)
     sys.stdout.flush()
 
@@ -28,26 +37,144 @@ i0           = epics.PV('XF:06BM-BI{EM:1}EM180:Current1:MeanValue_RBV')
 it           = epics.PV('XF:06BM-BI{EM:1}EM180:Current2:MeanValue_RBV')
 bicron       = epics.PV('XF:06BM-ES:1{Sclr:1}.S25')
 ring_current = epics.PV('SR:OPS-BI{DCCT:1}I:Real-I')
+
+bl           = epics.PV('SR:C06-EPS{PLC:1}Sts:BM_BE_Enbl-Sts')
+bmps         = epics.PV('SR:C06-EPS{PLC:1}Sts:BM_BMPS_Opn-Sts')
 sha          = epics.PV('XF:06BM-PPS{Sh:FE}Pos-Sts')
 shb          = epics.PV('XF:06BM-PPS{Sh:A}Pos-Sts')
-bragg        = epics.PV('XF:06BMA-OP{Mono:DCM1-Ax:Bragg}Mtr.RBV')
-dcmx         = epics.PV('XF:06BMA-OP{Mono:DCM1-Ax:X}Mtr.RBV')
-m2           = Mirror(2)
+
+bragg        = epics.Motor('XF:06BMA-OP{Mono:DCM1-Ax:Bragg}Mtr')
+dcmx         = epics.Motor('XF:06BMA-OP{Mono:DCM1-Ax:X}Mtr')
+#m2           = Mirror(2)
+sample       = {'x'     : epics.Motor('XF:06BMA-BI{XAFS-Ax:LinX}Mtr'),
+                'y'     : epics.Motor('XF:06BMA-BI{XAFS-Ax:LinY}Mtr'),
+                'wheel' : epics.Motor('XF:06BMA-BI{XAFS-Ax:RotB}Mtr'),
+                'pitch' : epics.Motor('XF:06BMA-BI{XAFS-Ax:Roll}Mtr'),
+                'ref'   : epics.Motor('XF:06BMA-BI{XAFS-Ax:LinXS}Mtr')}
+vac          = [epics.PV("XF:06BMA-VA{FS:1-CCG:1}P:Raw-I"),
+                epics.PV("XF:06BMA-VA{Mono:DCM-CCG:1}P:Raw-I"),
+                epics.PV("XF:06BMA-VA{FS:2-CCG:1}P:Raw-I"),
+                epics.PV("XF:06BMA-VA{Mir:2-CCG:1}P:Raw-I"),
+                epics.PV("XF:06BMA-VA{Mir:3-CCG:1}P:Raw-I"),
+                epics.PV("XF:06BMB-VA{BT:1-CCG:1}P:Raw-I"),
+                epics.PV("XF:06BMB-VA{FS:3-CCG:1}P:Raw-I")]
+
+temperatures = [epics.PV('XF:06BMA-OP{Mono:DCM-Crys:1}T-I-I'),
+                epics.PV('XF:06BMA-OP{Mono:DCM-Crys:2}T-I-I'),
+                epics.PV('XF:06BMA-OP{Mono:DCM-Crys:1-Ax:R}T-I-I'),
+                epics.PV('XF:06BMA-OP{Mono:DCM-Crys:2-Ax:P}T-I-I'),
+                epics.PV('XF:06BMA-OP{Mono:DCM-Crys:2-Ax:R}T-I-I'),
+                epics.PV('XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Perp}T-I-I'),
+                epics.PV('XF:06BMA-OP{Mono:DCM-Crys:2-Ax:Para}T-I-I'),
+                epics.PV('XF:06BMA-OP{Mir:2}T:1-I-I'),
+                epics.PV('XF:06BMA-OP{Mir:2}T:2-I-I'),
+                epics.PV('XF:06BMA-OP{Mir:3}T:1-I-I'),
+                epics.PV('XF:06BMA-OP{Mir:3}T:2-I-I'),]
+
+fe_valves    = [epics.PV('FE:C06B-VA{GV:1}DB:Pos-Sts'),
+                epics.PV('FE:C06B-VA{GV:2}DB:Pos-Sts'),
+                epics.PV('FE:C06B-VA{GV:3}DB:Pos-Sts'),]
+valves       = [epics.PV('XF:06BMA-VA{FS:1-GV:1}Pos-Sts'),
+                epics.PV('XF:06BMA-VA{BS:PB-GV:1}Pos-Sts'),
+                epics.PV('XF:06BMA-VA{FS:2-GV:1}Pos-Sts'),
+                epics.PV('XF:06BMA-VA{Mir:2-GV:1}Pos-Sts'),
+                epics.PV('XF:06BMA-VA{Mir:3-GV:1}Pos-Sts'),
+                epics.PV('XF:06BMB-VA{BT:1-GV:1}Pos-Sts'), ]
+
+delta         = epics.Motor('XF:06BM-ES{SixC-Ax:VTTH}Mtr')
+eta           = epics.Motor('XF:06BM-ES{SixC-Ax:VTH}Mtr')
+chi           = epics.Motor('XF:06BM-ES{SixC-Ax:CHI}Mtr')
+phi           = epics.Motor('XF:06BM-ES{SixC-Ax:PHI}Mtr')
+mu            = epics.Motor('XF:06BM-ES{SixC-Ax:HTH}Mtr')
+nu            = epics.Motor('XF:06BM-ES{SixC-Ax:HTTH}Mtr')
+
+slits         = [epics.Motor('XF:06BM-BI{Slt:02-Ax:O}Mtr'),
+                 epics.Motor('XF:06BM-BI{Slt:02-Ax:I}Mtr'),
+                 epics.Motor('XF:06BM-BI{Slt:02-Ax:T}Mtr'),
+                 epics.Motor('XF:06BM-BI{Slt:02-Ax:B}Mtr')]
+
+def vac_string():
+    string = ''
+    for count, pv in enumerate(vac):
+        if pv.get() == 'LO<E-11':
+            color = 'yellow'
+        elif float(pv.get()) > 9.0e-8:
+            color = 'red'
+        else:
+            color =  'green'
+        string += colored('%d' % (count+1), color, attrs=['bold'])
+    return string
+
+def temperature_string():
+    def talarm_state(index):
+        if index < 2:
+            return float(temperatures[index].get()) > float(temperatures[index].upper_warning_limit)
+        else:
+            return float(temperatures[index].get()) > 0.62*float(temperatures[index].upper_warning_limit)
+
+    string = '('
+    color = 'red' if talarm_state(0) else 'green'
+    string += colored('111 ', color, attrs=['bold'])
+    color = 'red' if talarm_state(1) else 'green'
+    string += colored('311 ', color, attrs=['bold'])
+    color = 'red' if talarm_state(2) else 'green'
+    string += colored('Co ',  color, attrs=['bold'])
+    color = 'red' if talarm_state(3) else 'green'
+    string += colored('P2 ',  color, attrs=['bold'])
+    color = 'red' if talarm_state(4) else 'green'
+    string += colored('R2 ',  color, attrs=['bold'])
+    color = 'red' if talarm_state(5) else 'green'
+    string += colored('Pe ',  color, attrs=['bold'])
+    color = 'red' if talarm_state(6) else 'green'
+    string += colored('Pa',   color, attrs=['bold'])
+    string += ') ('
+    color = 'red' if talarm_state(7) else 'green'
+    string += colored('U2 ',  color, attrs=['bold'])
+    color = 'red' if talarm_state(8) else 'green'
+    string += colored('D2',   color, attrs=['bold'])
+    string += ') ('
+    color = 'red' if talarm_state(9) else 'green'
+    string += colored('U3 ',  color, attrs=['bold'])
+    color = 'red' if talarm_state(10) else 'green'
+    string += colored('D3',   color, attrs=['bold']) + ')'
+    return string
+
+def valves_string():
+    string = 'FE:'
+    for count, pv in enumerate(fe_valves):
+        color = 'green' if fe_valves[count].get() == 1 else 'red'
+        string += colored('%d' % (count+1), color, attrs=['bold'])
+    string += ' BL:'
+    for count, pv in enumerate(valves):
+        color = 'green' if valves[count].get() == 1 else 'red'
+        string += colored('%d' % (count+1), color, attrs=['bold'])
+    return string
 
 execfile('/home/xf06bm/.ipython/profile_collection/startup/19-dcm-parameters.py')
 
-pattern = "%Y-%m-%dT%H-%M-%S"
-strut = u'\u25CF'  # u'\u2589'
+#pattern = "%Y-%m-%dT%H-%M-%S"
+strut = u'\u25CF'
+triangle = u'\u227b' # 5BA'
 
 print('\n')
 waiting = True
 while waiting:
 
-    xrd = False
-    if m2.vert < 0 and m2.pitch > 3:
-        xrd = True
+    #xrd = False
+    #if m2.vert < 0 and m2.pitch > 3:
+    #    xrd = True
     
     ## ----- shutters and ring current
+    if bl.get() == 0:
+        bl_show = colored('Dis', 'red', attrs=['bold'])
+    else:
+        bl_show = colored('Ena', 'green', attrs=['bold'])
+        
+    if bmps.get() == 0:
+        bmps_show = colored('BMPS', 'red', attrs=['bold'])
+    else:
+        bmps_show = colored('BMPS', 'green', attrs=['bold'])
+        
     if sha.get() == 1:
         sha_show = colored('A shutter', 'red', attrs=['bold'])
     else:
@@ -80,14 +207,14 @@ while waiting:
     
     ## ----- current time for time updates
     now  = datetime.datetime.now().strftime("%s")
-    left = '                            '
-    scan =     colored('  idle    ', 'grey', 'on_white')
+    left = colored('%28s' %  ' ', 'grey')
+    leftcolor = ('grey')
+    scan =     colored('  idle  ', 'grey', 'on_white')
     if xrd:
         scan = colored('not in use', 'grey', 'on_white')
     
     ## ----- this is an XAFS scan
     if os.path.isfile('/home/xf06bm/Data/.xafs.scan.running'):
-        #try:
         with open('/home/xf06bm/Data/.xafs.scan.running', "r") as f:
             start = float(f.readline())
             estimate = f.readline()
@@ -97,17 +224,16 @@ while waiting:
         hours = int(remaining/60./60.)
         minutes = round((remaining - hours*60*60) / 60)
         left = ' ~ %d h, %d m remaining  ' % (hours, minutes)
-        #except:
-        #    pass
-        scan = colored('xafs scan ', 'grey', 'on_magenta')
+        left = colored('%28s' % left, 'grey', 'on_magenta')
+        scan = colored('%-24s' % ' xafs scan ', 'grey', 'on_magenta')
 
     ## ----- this is a line scan
     elif os.path.isfile('/home/xf06bm/Data/.line.scan.running'):
-        scan = colored('line scan ', 'grey', 'on_cyan')
+        scan = colored('%-24s' % ' line scan ', 'grey', 'on_cyan')
+        left = colored('%-28s' % '  ', 'grey', 'on_cyan')
 
     ## ----- this is an area scan
     elif os.path.isfile('/home/xf06bm/Data/.area.scan.running'):
-        #try:
         with open('/home/xf06bm/Data/.area.scan.running', "r") as f:
             start = float(f.readline())
             estimate = f.readline()
@@ -117,9 +243,8 @@ while waiting:
         minutes = int(remaining/60.)
         seconds = round(remaining - minutes*60)
         left = ' ~ %d m, %d s remaining  ' % (minutes, seconds)
-        #except:
-        #    pass
-        scan = colored('area scan ', 'grey', 'on_yellow')
+        left = colored('%28s' % left, 'grey', 'on_yellow')
+        scan = colored('%-24s' % ' area scan ', 'grey', 'on_yellow')
         
     ## ----- this is a time scan
     elif os.path.isfile('/home/xf06bm/Data/.time.scan.running'):
@@ -129,18 +254,66 @@ while waiting:
         minutes = int(elapsed/60.)
         seconds = round(elapsed - minutes*60)
         left = ' ~ %d m, %d s elapsed' % (minutes, seconds)
-        scan = colored('time scan ', 'grey', 'on_blue', attrs=['bold'])
+        left = colored('%28s' % left, 'grey', 'on_blue')
+        scan = colored('%-24s' % ' time scan ', 'grey', 'on_blue', attrs=['bold'])
+
+    ## ----- update the energy
+    if dcmx.RBV < 10:
+        current_energy = (2*pi*HBARC) / (2*BMM_dcm.dspacing_111*sin(deg2rad(bragg.RBV)))
+    else:
+        current_energy = (2*pi*HBARC) / (2*BMM_dcm.dspacing_311*sin(deg2rad(bragg.RBV)))
 
     ## ----- update the display
-    if dcmx.get() < 10:
-        current_energy = (2*pi*HBARC) / (2*BMM_dcm.dspacing_111*sin(deg2rad(bragg.get())))
-    else:
-        current_energy = (2*pi*HBARC) / (2*BMM_dcm.dspacing_311*sin(deg2rad(bragg.get())))
     if xrd:
-        writeline("  [%s]  [%s] %s ring: %s %s APD: %6d counts %s mono: %.1f eV %s XAS station: %s %s" %
-                  (sha_show, shb_show, strut, ring_show, strut, int(bicron.get()), strut, current_energy, strut, scan, left))
+        #                 shutters        current       vacuum, temperatures, gate valves
+        template = " [%s] [%s] [%s] [%s]  ring: %s  %s  %s: %s %s %s: %s %s %s: %s" + \
+                   "\n %s: %s  %s  %s: %6d counts                                                                        %s: %s" + \
+                   "\n %s %s: %8.3f | %s: %8.3f | %s: %8.3f | %s: %8.3f | %s: %8.3f | %s: %8.3f            "
+        try:
+            writeline(template  %
+                      (bl_show, bmps_show, sha_show, shb_show, ring_show, strut,
+                       colored('Vac', 'white', attrs=['bold']), vac_string(), strut,
+                       colored('TC', 'white', attrs=['bold']), temperature_string(), strut,
+                       colored('GV', 'white', attrs=['bold']), valves_string(),
+
+                       colored('mono', 'white', attrs=['bold']), colored('%.1f eV' % current_energy, 'cyan', attrs=['bold']), strut,
+                       colored('Bicron', 'white', attrs=['bold']), int(bicron.get()),
+                       colored('XAS',  'white', attrs=['bold']), scan,
+                   
+                       colored('Goniometer '+triangle, 'yellow', attrs=['bold']),
+                       u'\u03B4', delta.RBV,
+                       u'\u03B7', eta.RBV,
+                       u'\u03C7', chi.RBV,
+                       u'\u03C6', phi.RBV,
+                       u'\u03BC', mu.RBV,
+                       u'\u03BD', nu.RBV,
+                   ))
+        except:
+            pass
         sleep(1.0)
     else:
-        writeline("  [%s]  [%s] %s ring: %s %s I0: %7.3f nA   It: %7.3f nA %s mono: %.1f eV %s XAS station: %s %s" %
-                  (sha_show, shb_show, strut, ring_show, strut, i0val, itval, strut, current_energy, strut, scan, left))
+        #                 shutters        current       vacuum, temperatures, gate valves
+        template = " [%s] [%s] [%s] [%s]  ring: %s  %s  %s: %s %s %s: %s %s %s: %s" + \
+                   "\n %s: %s  %s  %s: %7.3f nA   %s: %7.3f nA                                                            %s %s" + \
+                   "\n %s X: %8.3f  | Y: %7.3f  | wheel: %2d | pitch: %7.3f  | ref: %5.1f  | slits: %5.2f x %5.2f   %s"
+        #try:
+        slot = round((15+sample['wheel'].RBV) / (-15)) % 24
+        if slot == 0: slot = 24
+        writeline(template  %
+                      (bl_show, bmps_show, sha_show, shb_show, ring_show, strut,
+                       colored('Vac',  'white', attrs=['bold']), vac_string(), strut,
+                       colored('TC',   'white', attrs=['bold']), temperature_string(), strut,
+                       colored('GV',   'white', attrs=['bold']), valves_string(),
+                       
+                       colored('mono', 'white', attrs=['bold']), colored('%.1f eV' % current_energy, 'cyan', attrs=['bold']), strut,
+                       colored('I0',   'white', attrs=['bold']), i0val,
+                       colored('It',   'white', attrs=['bold']), itval,
+                       colored('XAS',  'white', attrs=['bold']), scan,
+                       
+                       colored('Sample '+triangle, 'yellow', attrs=['bold']), sample['x'].RBV, sample['y'].RBV,
+                       slot, sample['pitch'].RBV, sample['ref'].RBV,
+                       slits[0].RBV-slits[1].RBV, slits[2].RBV-slits[3].RBV, left,
+                   ))
+        #except:
+        #    pass
         sleep(1.0)
