@@ -1,0 +1,39 @@
+<s>Three</s> Two workstations -- xf06bm-ws1, xf06bm-ws2<span style="color:#D3D3D3">, and xf06bm-ws3</span> -- share a keyboard and mouse using [https://symless.com/synergy Synergy.]
+
+{| style="width: 700px" cellspacing="1" cellpadding="1" border="1"
+|+ Computers sharing keyboard and mouse
+|-
+| xf06bm-ws1<br/>
+| 10.6.128.201<br/>
+| main beamline computer (linux)<br/>
+|-
+| xf06bm-ws2<br/>
+| 10.6.128.202<br/>
+| secondary beamline computer (linux) (controls CSS display)<br/>
+|-
+| <span style="color:#D3D3D3">xf06bm-ws3</span><br/>
+| <span style="color:#D3D3D3">10.6.128.203</span><br/>
+| <span style="color:#D3D3D3">Windows computer (BioLogic, Synergy not yet in use)</span><br/>
+|}
+
+The Synergy server runs on xf06bm-ws1.&nbsp; To start the server type
+<pre>synergys -d WARNING &</pre>
+
+at the command line.&nbsp; This will read the Synergy configuration file at <tt>/etc/synergy.conf</tt>. The <code>-d</code> flag sets the logging level to filter out INFO level messages in <tt>/var/log/syslog</tt>.&nbsp; This helps the responsiveness on the client side.
+
+On xf06bm-ws2, start the client by typing this at the command line:
+<pre>synergyc xf06bm-ws1 &</pre>
+
+Both of those command have to be run as the user logged in.&nbsp; That is, the user running the synergy commands has to be the one with control of the respective X sessions.
+
+<span style="color:#A9A9A9">On xf06bm-ws3, do ''something something''</span>
+
+The screen layout looks something like this (ws3 not actually in use):
+<pre>             +----------+
++----------+ |  ws1-m2  |
+|    ws2   | +----------+
++----------+ |  ws1-m1  | 
+             +----------+ 
+</pre>
+
+To move the mouse between keyboards, simply run the mouse up or to the left or right.&nbsp; It will magically pass from machine to machine.&nbsp; The keyboard will respond to whatever window is under the mouse.

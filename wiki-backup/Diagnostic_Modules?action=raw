@@ -1,0 +1,151 @@
+This page tabulates the positions of various components in the three diagnostic modules.
+
+==  ==
+
+== Diagnostic Module 1 ==
+
+{| width="385" border="1" cellpadding="1" cellspacing="1"
+|-
+! scope="col" | <br/>
+! scope="col" | '''thickness of graphite'''<br/>
+! scope="col" | '''filter assembly 1'''<br/>
+! scope="col" | '''filter assembly 2'''<br/>
+|-
+| '''out of beam'''<br/>
+| style="text-align: right" | <br/>
+| style="text-align: right" | 55<br/>
+| style="text-align: right" | <br/>
+|-
+| '''thinnest'''<br/>
+| style="text-align: right" | 100 μm<br/>
+| style="text-align: right" | -46.5<br/>
+| style="text-align: right" | <br/>
+|-
+| '''#2'''<br/>
+| style="text-align: right" | 200 μm<br/>
+| style="text-align: right" | -20.5<br/>
+| style="text-align: right" | <br/>
+|-
+| '''#3'''<br/>
+| style="text-align: right" | 500 μm<br/>
+| style="text-align: right" | 5.5<br/>
+| style="text-align: right" | <br/>
+|-
+| '''thickest'''<br/>
+| style="text-align: right" | 1700 μm<br/>
+| style="text-align: right" | 31<br/>
+| style="text-align: right" | <br/>
+|-
+| '''neg limit'''<br/>
+| style="text-align: right" | <br/>
+| style="text-align: right" | -52.6<br/>
+| style="text-align: right" | <br/>
+|-
+| '''neg soft limit'''<br/>
+| style="text-align: right" | <br/>
+| style="text-align: right" | -52<br/>
+| style="text-align: right" | <br/>
+|}
+
+== Diagnostic Module 2 ==
+
+{| width="193" border="1" cellpadding="1" cellspacing="1"
+|-
+! scope="col" style="width: 124px" | '''position'''<br/>
+! scope="col" style="width: 93px" | '''value'''<br/>
+|-
+| style="width: 124px" | Out of beam<br/>
+| style="width: 93px;  text-align: right" | 67<br/>
+|-
+| style="width: 124px" | YAG<br/>
+| style="width: 93px;  text-align: right" | around 0<br/>
+|-
+| style="width: 124px" | Al foil<br/>
+| style="width: 93px;  text-align: right" | 33<br/>
+|-
+| style="width: 124px" | Ni foil<br/>
+| style="width: 93px;  text-align: right" | 53<br/>
+|}
+
+== Diagnostic Module 3 ==
+
+{| style="width: 531px" width="623" border="1" cellpadding="1" cellspacing="1"
+|-
+! scope="col" style="width: 193px" colspan="2" rowspan="1" | <span style="font-size:medium">'''Fluorescent screen'''</span><br/>
+! scope="col" style="width: 15px" | <br/>
+! scope="col" style="width: 127px" colspan="2" rowspan="1" | <span style="font-size:medium">'''BCT'''</span><br/>
+! scope="col" style="width: 13px" | <br/>
+! scope="col" style="width: 153px" colspan="2" rowspan="1" | <span style="font-size:medium">'''Foil assembly'''</span><br/>
+|-
+| style="width: 117px" | '''Mode'''<br/>
+| style="width: 71px;  text-align: right" | '''value'''<br/>
+| style="width: 15px" | <br/>
+| style="width: 63px" | '''Mode'''<br/>
+| style="width: 59px;  text-align: right" | '''value'''<br/>
+| style="width: 13px" | <br/>
+| style="width: 92px" | '''Foil'''<br/>
+| style="width: 56px;  text-align: right" | '''value'''<br/>
+|-
+| style="width: 117px" | A<br/>
+| style="width: 71px;  text-align: right" | 3.9<br/>
+| style="width: 15px" | <br/>
+| style="width: 63px" | A<br/>
+| style="width: 59px;  text-align: right" | 25.5<br/>
+| style="width: 13px" | <br/>
+| style="width: 92px" | out of beam<br/>
+| style="width: 56px;  text-align: right" | 40<br/>
+|-
+| style="width: 117px" | B<br/>
+| style="width: 71px;  text-align: right" | -59<br/>
+| style="width: 15px" | <br/>
+| style="width: 63px" | B<br/>
+| style="width: 59px;  text-align: right" | -42.6<br/>
+| style="width: 13px" | <br/>
+| style="width: 92px" | Al<br/>
+| style="width: 56px;  text-align: right" | -17.5<br/>
+|-
+| style="width: 117px" | C<br/>
+| style="width: 71px;  text-align: right" | -37<br/>
+| style="width: 15px" | <br/>
+| style="width: 63px" | C<br/>
+| style="width: 59px;  text-align: right" | -17.25<br/>
+| style="width: 13px" | <br/>
+| style="width: 92px" | Ni<br/>
+| style="width: 56px;  text-align: right" | 3<br/>
+|-
+| style="width: 117px" | D<br/>
+| style="width: 71px;  text-align: right" | 23.1<br/>
+| style="width: 15px" | <br/>
+| style="width: 63px" | D<br/>
+| style="width: 59px;  text-align: right" | 46.1<br/>
+| style="width: 13px" | <br/>
+| style="width: 92px" | <br/>
+| style="width: 56px" | <br/>
+|-
+| style="width: 117px" | E<br/>
+| style="width: 71px;  text-align: right" | 23.1<br/>
+| style="width: 15px" | <br/>
+| style="width: 63px" | E<br/>
+| style="width: 59px;  text-align: right" | 46.1<br/>
+| style="width: 13px" | <br/>
+| style="width: 92px" | <br/>
+| style="width: 56px" | <br/>
+|-
+| style="width: 117px" | F<br/>
+| style="width: 71px;  text-align: right" | -1.2<br/>
+| style="width: 15px" | <br/>
+| style="width: 63px" | F<br/>
+| style="width: 59px;  text-align: right" | 19.6<br/>
+| style="width: 13px" | <br/>
+| style="width: 92px" | <br/>
+| style="width: 56px" | <br/>
+|-
+| style="width: 117px" | Out of beam<br/>
+| style="width: 71px;  text-align: right" | 55<br/>
+| style="width: 15px" | <br/>
+| style="width: 63px" | <br/>
+| style="width: 59px" | <br/>
+| style="width: 13px" | <br/>
+| style="width: 92px" | <br/>
+| style="width: 56px" | <br/>
+|}

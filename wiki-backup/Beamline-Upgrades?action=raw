@@ -1,0 +1,88 @@
+= List of planned hareware and controls upgrades for BMM =
+
+{| style="width: 1000px" cellspacing="1" cellpadding="1" border="1"
+|-
+! scope="col" | Project<br/>
+! scope="col" | Purpose<br/>
+! scope="col" | Status<br/>
+! scope="col" | notes<br/>
+|-
+| Fiber communication network<br/>
+| Mono fast scanning<br/>
+| ongoing, October 7, 2019<br/>
+| <br/>
+|-
+| Controls for data collection with fast scanning<br/>
+| Mono fast scanning<br/>
+| not started, waiting for infrastructure<br/>
+| <br/>
+|-
+| Digital readout for silicon drift detector<br/>
+| Better fluorescence data collection<br/>
+| procuring Express 3 via University of Sheffield<br/>
+| stuck in lawyer land<br/>
+|-
+| Digital feedback<br/>
+| Feedback for 2nd xtal / M2 pitch / M3 pitch<br/>
+| waiting on split ion chamber from Pete Siddons<br/>
+| <br/>
+|-
+| Self-contained ion chambers<br/>
+| Better ion chamber readout<br/>
+| Waiting on new ion chambers + electronics from Pete Siddons<br/>
+| <br/>
+|-
+| IOC for controlling Linkam temperature controller<br/>
+| Integration of Linkam stage into data acquisition system<br/>
+| Linkham stage ordered, awaiting delivery<br/>
+| <br/>
+|-
+| IOC for controlling Lakeshore temperature controller<br/>
+| Integration of Displex into data acquisition system<br/>
+| not started<br/>
+| <br/>
+|-
+| IOC for controlling BioLogic battery cycler / potentiostat<br/>
+| Tight integration of battery research into data acquisition system<br/>
+| BioLogic in hand, need to form a controls plan<br/>
+| <br/>
+|-
+| <s>Rotation Ref stage<br/></s>
+| <s>Configure many more reference foils<br/></s>
+| <s>identified stage, need to install and configure motor. Controls infrastucture underway<br/></s>
+| DONE<br/>
+|-
+| He sample environment<br/>
+| better performance for Ti, push BL to measure Sc, Ca, 5d & L edges<br/>
+| not started<br/>
+| <br/>
+|-
+| Better user Exxact Workstation<br/>
+| Beefy workstation for computational chores<br/>
+| on LAN as xf06bm-ws5<br/>
+| run a larch server, connect to it from ws1 when running Athena&Artemis<br/>
+|-
+| <s>More hard drives and RAID array for ws5</s><br/>
+| <s>Initial data store for use at BMM</s><br/>
+| <s>Done, NFS mount between ws1 and ws5</s><br/>
+| DONE<br/>
+|-
+| Implement 2nd NAS server<br/>
+| Data storage for BMM and SST<br/>
+| not yet configured<br/>
+| <br/>
+|-
+| Second AGG switch<br/>
+| increase network capacity at end station<br/>
+| not started<br/>
+| <br/>
+|-
+| Commission nBPM<br/>
+| monochromatic beam diagnostic<br/>
+| not started<br/>
+| <br/>
+|}
+
+The hard drive in the first bay of the new xf06bm-ws5.
+
+[[File:Ws5-hard-drive.jpg|400px|Hard drive in bay 1 on the new xf06bm-ws5]]&nbsp;

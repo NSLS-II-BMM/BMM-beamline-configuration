@@ -1,0 +1,15 @@
+= Getting things done with conda =
+
+== Set up a testing environment substantively similar to the BlueSky working environment ==
+
+<tt>conda create -n pydm_testing -c lightsource2-tag -c conda-forge -c pydm-dev collection pydm</tt>
+
+then
+
+<tt>conda activate pydm_testing</tt>
+
+This sets up an environment in the home directory.
+
+== Installing into the current conda environment with sudo through the proxy ==
+
+<tt>sudo https_proxy=[http://proxy:8888 http://proxy:8888] /opt/conda/bin/conda install -p /opt/conda_envs/collection-2019-1.2-bmm</tt>

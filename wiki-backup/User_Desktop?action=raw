@@ -1,0 +1,16 @@
+Currently, all users use the <tt>xf06bm</tt> login.
+
+<span style="color:#A9A9A9">Panel launcher icons for Athena and Hephaestus are in <tt>.local/share/applications/</tt></span>
+
+== Start tmux ==
+
+<code>tmux -f ~/.tmux.conf</code>
+
+== Setting up panes ==
+
+Once tmux has started:
+
+*<kbd>Ctrl-b "</kbd> to split into two vertical panes
+*<kbd>Ctrl-b&nbsp;: resize-panes -U 17</kbd> to make the panes the right size
+*<code>cadashboard</code> in the short pane
+*<code>bsui</code> in the tall pane

@@ -1,0 +1,5 @@
+The DI water is controled by manual valves, which should only be operated by the utilities group, and by solenoid valves in the FOE.&nbsp; The solenoid valves are triggered by a water-sensing strip along the floor of the FOE. They are also actuated by switches on the CSS utilities screen. These toggles are the ones circled in pink inthe screenshot on the left.
+
+The valves themselves are the large yellow and black boxes mounted high on the back wall of the FOE.&nbsp; The valve indicators are the rods with orange markings.&nbsp; When the valves are open, the orange marks are facing downstream.&nbsp; When closed, the orange marks are rotated towards the wall.&nbsp; Opening and closing those valves is managed through CSS.&nbsp; They must be open for the utilities group to do their work on the DI delivery to the mono and the filter assemblies.
+
+[[File:Water flow CSS.png|300px|Water flow CSS.png]]&nbsp; [[File:Water flow valves 1.jpg|200px|Water flow valves 1.jpg]]&nbsp; [[File:Water flow valves 2.jpg|300px|Water flow valves 2.jpg]]

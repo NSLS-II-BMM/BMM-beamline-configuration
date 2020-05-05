@@ -1,0 +1,33 @@
+== Start/stop ion chamber electrometer ==
+
+stop: <tt>caput XF:06BM-BI{EM:1}EM180:Acquire 0</tt>
+
+start: <tt>caput XF:06BM-BI{EM:1}EM180:Acquire 1</tt>
+
+
+
+== Setting the measurement time on the electrometer ==
+
+Set a tenth of second: <code><tt>caput XF:06BM-BI{EM:1}EM180:AveragingTime 0.1</tt></code>
+
+With the sampling time set at 4 miliseconds, a 0.1 second averaging time accumulates and averages 25 measurements.&nbsp; Similarly, a 0.5 second averaging time accumulates 125 measurements.
+
+== Insert / retract the DM1 fluorescent screen ==
+
+<u>Insert</u>: <tt>caput XF:06BMA-OP{FS:1}Cmd:Opn-Cmd 1</tt>
+
+<u>Retract</u>: <tt>caput XF:06BMA-OP{FS:1}Cmd:Cls-Cmd 1</tt>
+
+== Open / Close Front End shutter ==
+
+<u>Open</u>: <tt>caput XF:06BM-PPS{Sh:FE}Cmd:Opn-Cmd 1</tt>
+
+<u>Close</u>: <tt>caput XF:06BM-PPS{Sh:FE}Cmd:Cls-Cmd 1</tt>
+
+== Open / Close photon shutter ==
+
+<u>Open</u>: <tt>caput XF:06BM-PPS{Sh:A}Cmd:Opn-Cmd 1</tt>
+
+<u>Close</u>: <tt>caput XF:06BM-PPS{Sh:A}Cmd:Cls-Cmd 1</tt>
+
+== Thing ==

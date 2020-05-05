@@ -1,0 +1,56 @@
+== Steps to bring the Pilatus 100K to life. ==
+
+#Boot the detector server computer (<tt>xf06bm-pilatus100k</tt>)
+#Be sure dry N2 (from the house supply) is flowing,&nbsp; (~0.5 lpm at ~3 psi, in back of rack)
+#Turn on the detector (switch on the back side)
+#From ws-1, <code>ssh det@xf06bm-pilatus100k</code> and login (Jean & Bruce know the password)
+#<code>cd p2_det</code>
+#<code>./runtvx</code>
+#Two windows will appear, one for the pilatus-specific <tt>camserver</tt>, one for <tt>tvx</tt>, the generic detector interface program.&nbsp; Once both have run their paces and ended with a * prompt, close the <tt>tvx</tt> window by typing <code>exit</code>
+#Minimize the camserver, one need not monitor that constantly.
+#On the 6BM Main CSS screen, click on <code>Detectors</code>, then on <code>Pilatus100K</code>
+#In the plugins menu of the AreaDetector CSS screen, select <code>Pilatus screen</code> to get the MEDM interface. You may need to refresh one or both OPIs, or even restart the IOC on <tt>xf06bm-ioc1</tt>
+#In BlueSky, <code>pilatus</code> is an instance of a Detector object (as described at [https://blueskyproject.io/ophyd/area-detector.html https://blueskyproject.io/ophyd/area-detector.html]) and <code>pil</code> is Bruce's monkey-patched thing to expose the functionality he couldn't figure out from the standard interface
+
+== Files: ==
+
+*[[Media:DP_Pilatus_UserGuide_v2.2.3.pdf|Pilatus User Guide (PDF)]]
+*[[Media:Technical_Specification_PILATUS_100K-S_V1_8.pdf|Pilatus 100K Technical Specifications (PDF)]]
+*[[Media:User_Manual-PILATUS2-V1_4.pdf|Pilatus User Manual (PDF)]]
+
+&nbsp;
+
+
+
+----
+
+Here are some hints about how to incorporate Pilatus images into BlueSky plans:
+<pre>BMM XRD.111 [45] ▶ PilatusGrabber?
+Docstring:     
+Crude tool for grabbing images from the Pilatus.  Largely following
+the standard BlueSky AreaDetector interface, but monkey patching
+functionality for the bits that I am too dim to figure out.
+
+Define the Pilatus Detector
+   pilatus = MyDetector('XF:06BMB-ES{Det:PIL100k}:', name='Pilatus')
+
+Make an PilatusGrabber opbject
+   pil = PilatusGrabber(pilatus)
+
+Take an exposure
+   pil.snap()
+
+Show the image (and maybe copy it elsewhere)
+   pil.fetch()
+
+Properties:
+   path:      AreaDetector's file path (cannot have spaces)
+   fname:     file name
+   template:  substitution template for constructing the resolved file name
+   fullname:  AreaDetector's fully resolved file name
+   number:    file extension (auto increments)
+   threshold: detector energy threshold in keV
+   time:      exposure time, sets the exposure time and acquire time
+   ready:     flag with a simple check to see if camera is ready to take a picture
+
+</pre>

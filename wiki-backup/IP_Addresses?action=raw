@@ -1,0 +1,575 @@
+*IP management web site: [https://controlsweb.nsls2.bnl.gov/IP https://controlsweb.nsls2.bnl.gov/IP] (only available on controls network)
+*[https://docs.google.com/spreadsheets/d/1zrw52yK6IjOSxvXjm8gO5wwgRtV07cCqNlJdUwrdAss/edit#gid=0 Switch port assignments spreadsheet on Google Drive]
+*Get MAC address with nmap: (example) <code>sudo nmap -sP -n 10.6.129.55</code> (only 128 subnet from wsN, need to ssh to ioc1 to see 129 and 130 subnets)
+
+== &nbsp;10.6.128 subnet (.cs.nsls2.local) – IOCs ==
+
+{| style="width: 900px" cellspacing="1" cellpadding="1" border="1"
+|-
+! scope="col" style="width: 222px" | purpose<br/>
+! scope="col" style="width: 127px" | IP address<br/>
+! scope="col" style="width: 127px" | Port<br/>
+! scope="col" style="width: 126px" | domain name<br/>
+! scope="col" style="width: 388px" | notes<br/>
+|-
+| style="width: 222px" | IOC #1 (Channel access)<br/>
+| style="width: 127px" | 10.6.128.1<br/>
+| style="width: 127px" | <br/>
+| style="width: 126px" | xf06bm-ioc1<br/>
+| style="width: 388px" | MAC: 94:57:A5:5B:CB:38<br/>
+|-
+| style="width: 222px" | IOC #2 (Channel access)<br/>
+| style="width: 127px" | 10.6.128.2<br/>
+| style="width: 127px" | <br/>
+| style="width: 126px" | xf06bm-ioc2<br/>
+| style="width: 388px" | MAC: 94:57:A5:5B:09:0C<br/>
+|-
+| style="width: 222px" | channel access server<br/>
+| style="width: 127px" | 10.6.128.3<br/>
+| style="width: 127px" | <br/>
+| style="width: 126px" | xf06bm-ca1<br/>
+| style="width: 388px" | MAC: 30:E1:71:55:35:58<br/>
+|-
+| style="width: 222px" | NanoBPM IOC server<br/>
+| style="width: 127px" | 10.6.128.4<br/>
+| style="width: 127px" | <br/>
+| style="width: 126px" | xf06bm-ioc4<br/>
+| style="width: 388px" | <br/>
+|-
+| style="width: 222px" | Mythen<br/>
+| style="width: 127px" | 10.6.128.6<br/>
+| style="width: 127px" | Agg / 6<br/>
+| style="width: 126px" | <br/>
+| style="width: 388px" | 
+nmap says: MAC Address: EC:9E:CD:1C:8D:B3 (Artesyn Embedded Technologies)
+
+|-
+| style="width: 222px" | VME crate<br/>
+| style="width: 127px" | 10.6.128.21<br/>
+| style="width: 127px" | <br/>
+| style="width: 126px" | <br/>
+| style="width: 388px" | MAC: EC:9E:CD:1C:8D:B3<br/>
+|-
+| style="width: 222px" | NAS 1<br/>
+| style="width: 127px" | [http://10.6.128.41 10.6.128.41]<br/>
+| style="width: 127px" | Agg / 32<br/>
+| style="width: 126px" | [http://10.6.128.41 xf06bm-nas1]<br/>
+| style="width: 388px" | MAC: 00:11:32:A8:24:FA<br/>
+|-
+| style="width: 222px" | NAS 2<br/>
+| style="width: 127px" | 10.6.128.42<br/>
+| style="width: 127px" | A / 4<br/>
+| style="width: 126px" | xf06bm-nas2<br/>
+| style="width: 388px" | MAC: 00:11:32:A0:01:95<br/>
+|-
+| style="width: 222px" | BioLogic VSP-300<br/>
+| style="width: 127px" | 10.6.128.51<br/>
+| style="width: 127px" | Agg / 33<br/>
+| style="width: 126px" | xf06bm-biologic<br/>
+| style="width: 388px" | MAC: 00:14:d8:01:27:ed<br/>
+|-
+| style="width: 222px" | I0 electrometer<br/>
+| style="width: 127px" | 10.6.128.185<br/>
+| style="width: 127px" | Agg / 37<br/>
+| style="width: 126px" | xf06bm-em3<br/>
+| style="width: 388px" | MAC: 02:00:C3:59:4B:0D<br/>
+|-
+| style="width: 222px" | Printer, HP Color LaserJet Pro M454dw<br/>
+| style="width: 127px" | 10.6.128.191<br/>
+| style="width: 127px" | Agg / 40<br/>
+| style="width: 126px" | <br/>
+| style="width: 388px" | MAC: 00:14:38:5A:E6:E8<br/>
+|-
+| style="width: 222px" | main beamline computer<br/>
+| style="width: 127px" | 10.6.128.201<br/>
+| style="width: 127px" | Agg / 45<br/>
+| style="width: 126px" | xf06bm-ws1<br/>
+| style="width: 388px" | MAC: 0c:c4:7a:cc:4b:1a<br/>
+|-
+| style="width: 222px" | secondary beamline computer<br/>
+| style="width: 127px" | 10.6.128.202<br/>
+| style="width: 127px" | Agg / 46<br/>
+| style="width: 126px" | xf06bm-ws2<br/>
+| style="width: 388px" | MAC: 00:1E:C9:68:A2:05<br/>
+|-
+| style="width: 222px" | Windows computer<br/>
+| style="width: 127px" | 10.6.128.203<br/>
+| style="width: 127px" | Agg / 43<br/>
+| style="width: 126px" | xf06bm-ws3<br/>
+| style="width: 388px" | <br/>
+|-
+| style="width: 222px" | XRD computer<br/>
+| style="width: 127px" | 10.6.128.204<br/>
+| style="width: 127px" | <br/>
+| style="width: 126px" | xf06bm-ws4<br/>
+| style="width: 388px" | MAC: 40:B0:34:3E:D7:40<br/>
+|-
+| style="width: 222px" | Exxact Workstation<br/>
+| style="width: 127px" | 10.6.128.205<br/>
+| style="width: 127px" | Agg / 31<br/>
+| style="width: 126px" | xf06bm-ws5<br/>
+| style="width: 388px" | MAC: 00:25:90:EB:8A:AE<br/>
+|-
+| style="width: 222px" | Bruce's laptop via DHCP<br/>
+| style="width: 127px" | 10.6.128.211<br/>
+| style="width: 127px" | <br/>
+| style="width: 126px" | xf06bm-ws11<br/>
+| style="width: 388px" | <br/>
+|-
+| style="width: 222px" | <br/>
+| style="width: 127px" | 10.6.128.212<br/>
+| style="width: 127px" | <br/>
+| style="width: 126px" | xf06bm-ws12<br/>
+| style="width: 388px" | <br/>
+|-
+| style="width: 222px" | FMBO Samsung Windows laptop via DHCP<br/>
+| style="width: 127px" | 10.6.128.213<br/>
+| style="width: 127px" | <br/>
+| style="width: 126px" | xf06bm-ws13<br/>
+| style="width: 388px" | <br/>
+|-
+| style="width: 222px" | Hutch laptop<br/>
+| style="width: 127px" | 10.6.128.214<br/>
+| style="width: 127px" | <br/>
+| style="width: 126px" | xf06bm-ws14<br/>
+| style="width: 388px" | <br/>
+|-
+| style="width: 222px" | <br/>
+| style="width: 127px" | 10.6.128.250<br/>
+| style="width: 127px" | <br/>
+| style="width: 126px" | cagw-650<br/>
+| style="width: 388px" | <br/>
+|-
+| style="width: 222px" | aggregator switch<br/>
+| style="width: 127px" | 10.6.128.251<br/>
+| style="width: 127px" | <br/>
+| style="width: 126px" | net-06bm-agg-650<br/>
+| style="width: 388px" | <br/>
+|-
+| style="width: 222px" | <br/>
+| style="width: 127px" | 10.6.128.252<br/>
+| style="width: 127px" | <br/>
+| style="width: 126px" | ellen650<br/>
+| style="width: 388px" | <br/>
+|-
+| style="width: 222px" | <br/>
+| style="width: 127px" | 10.6.128.253<br/>
+| style="width: 127px" | <br/>
+| style="width: 126px" | donald650<br/>
+| style="width: 388px" | <br/>
+|-
+| style="width: 222px" | <br/>
+| style="width: 127px" | 10.6.128.254<br/>
+| style="width: 127px" | <br/>
+| style="width: 126px" | vrrpe-s650<br/>
+| style="width: 388px" | <br/>
+|}
+
+== 10.6.129 subnet (.cs.nsls2.local) – cameras ==
+
+{| style="width: 600px" cellspacing="1" cellpadding="1" border="1"
+|-
+! scope="col" | purpose<br/>
+! scope="col" | IP address<br/>
+! scope="col" | Port<br/>
+! scope="col" | domain name<br/>
+! scope="col" | notes<br/>
+|-
+| IOC #1 (Cameras)<br/>
+| 10.6.129.1<br/>
+| <br/>
+| xf06bm-ioc1-651<br/>
+| <br/>
+|-
+| IOC #2 (Cameras)<br/>
+| 10.6.129.2<br/>
+| <br/>
+| xf06bm-ioc2-651<br/>
+| <br/>
+|-
+| Prosilica DM1<br/>
+| 10.6.129.51<br/>
+| <br/>
+| <br/>
+| <br/>
+|-
+| Prosilica DM2<br/>
+| 10.6.129.52<br/>
+| <br/>
+| <br/>
+| <br/>
+|-
+| Prosilica DM3<br/>
+| 10.6.129.53<br/>
+| <br/>
+| <br/>
+| <br/>
+|-
+| Webcam 1<br/>
+| 10.6.129.55<br/>
+| <br/>
+| <br/>
+| port 8<br/>
+|-
+| Webcam 2<br/>
+| 10.6.129.56<br/>
+| <br/>
+| <br/>
+| port 7<br/>
+|-
+| Prosilica end station<br/>
+| 10.6.129.57<br/>
+| <br/>
+| xf06bm-cam07<br/>
+| <br/>
+|-
+| aggregator switch<br/>
+| 10.6.129.251<br/>
+| <br/>
+| net-06bm-agg-651<br/>
+| <br/>
+|-
+| <br/>
+| 10.6.129.252<br/>
+| <br/>
+| ellen651<br/>
+| <br/>
+|-
+| <br/>
+| 10.6.129.253<br/>
+| <br/>
+| donald651<br/>
+| <br/>
+|-
+| <br/>
+| 10.6.129.254<br/>
+| <br/>
+| vrrpe-s651<br/>
+| <br/>
+|}
+
+== 10.6.130 subnet (.cs.nsls2.local) – instruments ==
+
+{| style="width: 750px" cellspacing="1" cellpadding="1" border="1"
+|-
+! scope="col" | purpose<br/>
+! scope="col" | IP address<br/>
+! scope="col" | Port<br/>
+! scope="col" | domain name<br/>
+! scope="col" | notes<br/>
+|-
+| IOC #1 (Instruments)<br/>
+| 10.6.130.1<br/>
+| <br/>
+| xf06bm-ioc1-652<br/>
+| <br/>
+|-
+| IOC #1<br/>
+| 10.6.130.2<br/>
+| <br/>
+| xf06bm-ioc1-rsc<br/>
+| <br/>
+|-
+| IOC #2 (Instruments)<br/>
+| 10.6.130.3<br/>
+| <br/>
+| xf06bm-ioc2-652<br/>
+| <br/>
+|-
+| IOC #2<br/>
+| 10.6.130.4<br/>
+| <br/>
+| xf06bm-ioc2-rsc<br/>
+| <br/>
+|-
+| Channel access server<br/>
+| 10.6.130.5<br/>
+| <br/>
+| xf06bm-ca1-rsc<br/>
+| <br/>
+|-
+| Motor controller (?)<br/>
+| 10.6.130.10<br/>
+| <br/>
+| xf06bm-mc10<br/>
+| <br/>
+|-
+| DM1 Moxa<br/>
+| 10.6.130.51<br/>
+| <br/>
+| xf06bm-tsrv01<br/>
+| <br/>
+|-
+| DM2 Moxa<br/>
+| 10.6.130.52<br/>
+| <br/>
+| xf06bm-tsrv02<br/>
+| <br/>
+|-
+| M2 Moxa<br/>
+| 10.6.130.53<br/>
+| <br/>
+| xf06bm-tsrv03<br/>
+| <br/>
+|-
+| M3 Moxa<br/>
+| 10.6.130.54<br/>
+| <br/>
+| xf06bm-tsrv04<br/>
+| <br/>
+|-
+| DM3 Moxa<br/>
+| 10.6.130.55<br/>
+| <br/>
+| xf06bm-tsrv05<br/>
+| MAC address: 02:00:C3:59:4B:0D<br/>
+|-
+| Rack B Moxa<br/>
+| 10.6.130.56<br/>
+| <br/>
+| xf06bm-tsrv06<br/>
+| <br/>
+|-
+| <span style="color:#A9A9A9">Rack C1 Moxa</span><br/>
+| <span style="color:#A9A9A9">10.6.130.57</span><br/>
+| <br/>
+| <span style="color:#A9A9A9">xf06bm-tsrv07</span><br/>
+| not in use<br/>
+|-
+| End station Moxa<br/>
+| 10.6.130.58<br/>
+| <br/>
+| xf06bm-tsrv08<br/>
+| rack under table, serves Linkam, BioLogic<br/>
+|-
+| Motor controller MCS01<br/>
+| 10.6.130.81<br/>
+| <br/>
+| xf06bm-mc01<br/>
+| PDS<br/>
+|-
+| Motor controller MCS02<br/>
+| 10.6.130.82<br/>
+| <br/>
+| xf06bm-mc02<br/>
+| PDS<br/>
+|-
+| Motor controller MCS03<br/>
+| 10.6.130.83<br/>
+| <br/>
+| xf06bm-mc03<br/>
+| PDS<br/>
+|-
+| Motor controller MCS04<br/>
+| 10.6.130.84<br/>
+| <br/>
+| xf06bm-mc04<br/>
+| PDS<br/>
+|-
+| Motor controller MCS05<br/>
+| 10.6.130.85<br/>
+| <br/>
+| xf06bm-mc05<br/>
+| PDS<br/>
+|-
+| Motor controller MCS06<br/>
+| 10.6.130.86<br/>
+| <br/>
+| xf06bm-mc06<br/>
+| PDS<br/>
+|-
+| Motor controller geobrick 7<br/>
+| 10.6.130.87<br/>
+| <br/>
+| xf06bm-mc07<br/>
+| XAS<br/>
+|-
+| Motor controller geobrick 8<br/>
+| 10.6.130.88<br/>
+| <br/>
+| xf06bm-mc08<br/>
+| XAS<br/>
+|-
+| Motor controller #9<br/>
+| 10.6.130.89<br/>
+| <br/>
+| xf06bm-mc09<br/>
+| not in use<br/>
+|-
+| Motor controller #10<br/>
+| 10.6.130.90<br/>
+| <br/>
+| xf06bm-mc10<br/>
+| not in use<br/>
+|-
+| Motor controller #11<br/>
+| 10.6.130.91<br/>
+| <br/>
+| xf06bm-mc11<br/>
+| XRD<br/>
+|-
+| Motor controller #12<br/>
+| 10.6.130.92<br/>
+| <br/>
+| xf06bm-mc12<br/>
+| XRD<br/>
+|-
+| Motor controller #13<br/>
+| 10.6.130.93<br/>
+| <br/>
+| xf06bm-mc13<br/>
+| XRD<br/>
+|-
+| Encoder interface<br/>
+| 10.6.130.101<br/>
+| <br/>
+| xf06bm-enpb1<br/>
+| encoder pizza box<br/>
+|-
+| Pilatus<br/>
+| 10.6.130.170<br/>
+| <br/>
+| xf06bm-dec00<br/>
+| XRD area detector<br/>
+|-
+| NanoBPM IOC to B100 connection<br/>
+| 10.6.130.181<br/>
+| <br/>
+| xf06bm-bpm00<br/>
+| <br/>
+|-
+| NanoBPM B100 module<br/>
+| 10.6.130.182<br/>
+| <br/>
+| xf06bm-bpm01server<br/>
+| <br/>
+|-
+| Electrometer controller 1 (XAS)<br/>
+| 10.6.130.183<br/>
+| <br/>
+| xf06bm-em1<br/>
+| MAC address: 00:1e:c0:ee:38:1b<br/>
+|-
+| Electrometer controller 2 (XRD)<br/>
+| 10.6.130.184<br/>
+| <br/>
+| xf06bm-em2<br/>
+| MAC address: 00:1e:c0:ee:fc:57<br/>
+|-
+| <br/>
+| 10.6.130.252<br/>
+| <br/>
+| ellen652<br/>
+| <br/>
+|-
+| <br/>
+| 10.6.130.253<br/>
+| <br/>
+| donald652<br/>
+| <br/>
+|-
+| <br/>
+| 10.6.130.254<br/>
+| <br/>
+| vrrpe-s652<br/>
+| <br/>
+|}
+
+----
+
+== Maps of Pylons ports in work area ==
+
+{| style="width:500px" cellspacing="1" cellpadding="1" border="1"
+|-
+| colspan="4" style="text-align: center" | '''Pylon 1'''<br/>
+|-
+| 1<br/>
+| WS4<br/>
+| 2<br/>
+| WS2<br/>
+|-
+| 3<br/>
+| <span style="color:#A9A9A9">&lt;unused&gt;</span><br/>
+| 4<br/>
+| <span style="color:#A9A9A9">&lt;unused&gt;</span><br/>
+|-
+| 5<br/>
+| <span style="color:#A9A9A9">&lt;unused&gt;</span><br/>
+| 6<br/>
+| DHCP<br/>
+|-
+| colspan="4" style="text-align: center" | '''Pylon 2'''<br/>
+|-
+| 1<br/>
+| <span style="color:#A9A9A9">&lt;650 subnet&gt;</span><br/>
+| 2<br/>
+| <span style="color:#A9A9A9">&lt;650 subnet&gt;</span><br/>
+|-
+| 3<br/>
+| Printer<br/>
+| 4<br/>
+| WS5<br/>
+|-
+| 5<br/>
+| <span style="color:#A9A9A9">&lt;unused&gt;</span><br/>
+| 6<br/>
+| <span style="color:#A9A9A9">&lt;unused&gt;</span><br/>
+|}
+
+----
+
+== Maps of patch panels in end station ==
+
+{| style="width:500px" cellspacing="1" cellpadding="1" border="1"
+|-
+| colspan="4" style="text-align: center" | '''Upstream'''<br/>
+|-
+| 1<br/>
+| BioLogic<br/>
+| 2<br/>
+| Moxa, DM3<br/>
+|-
+| 3<br/>
+| DM3 Prosilica<br/>
+| 4<br/>
+| XAS web camera<br/>
+|-
+| 5<br/>
+| Moxa, end station<br/>
+| 6<br/>
+| DHCP<br/>
+|-
+| colspan="4" style="text-align: center" | '''Midstream'''<br/>
+|-
+| 1<br/>
+| XAS QuadEM<br/>
+| 2<br/>
+| end station laptop<br/>
+|-
+| 3<br/>
+| <span style="color:#A9A9A9">&lt;empty&gt;</span><br/>
+| 4<br/>
+| IC EM (testing)<br/>
+|-
+| 5<br/>
+| Prosilica, cam07<br/>
+| 6<br/>
+| IC EM (permanent)<br/>
+|-
+| colspan="4" style="text-align: center" | '''Downstream'''<br/>
+|-
+| 1<br/>
+| Mythen<br/>
+| 2<br/>
+| XRD QuadEM<br/>
+|-
+| 3<br/>
+| Pilatus DATA<br/>
+| 4<br/>
+| Pilatus IOC<br/>
+|-
+| 5<br/>
+| XRD web camera<br/>
+| 6<br/>
+| DHCP<br/>
+|}

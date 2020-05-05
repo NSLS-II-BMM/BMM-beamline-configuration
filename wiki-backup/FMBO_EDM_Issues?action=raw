@@ -1,0 +1,19 @@
+EDM screen <code><tt>OP_MOD_STS</tt></code> is wrong in the following:
+
+*End Station FS
+*DM3 foils
+*DM3 Slits
+*DM3 vert (BCT)
+*NanoBPM
+
+also, <code>STOP_CMD.PROC</code>, <code>KILL_CMD.PROC</code>, <code>NAME</code>, <code>OP_MIODE_CMD.A</code>
+
+<code>{$P}{$T}_____</code>
+
+<code>CPU_PERC_MOD</code> <code>L</code> and all therein
+
+Look up how <code>HVEL</code> gets set in expert mode (some kind of <code>SP</code> misdirection...)
+
+----
+
+Also <code>HVEL.SP</code> is 10, which seems way too big, in MC06

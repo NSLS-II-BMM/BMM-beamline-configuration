@@ -1,0 +1,17 @@
+Here are the steps required to prep a puppet-controlled computer to properly use a USB stick.
+
+#<span style="background-color:#FFFFE0">For each user, make a directory in </span><tt><span style="background-color:#FFFFE0">/media/</span></tt><span style="background-color:#FFFFE0">, for instance, </span><tt><span style="background-color:#FFFFE0">/media/xf06bm</span></tt><span style="background-color:#FFFFE0">&nbsp;for the xf06bm user. Make sure the permissions are 755.&nbsp; If needed, do </span><tt><span style="background-color:#FFFFE0">chmod 755 /media/xf06bm</span></tt><span style="background-color:#FFFFE0">. This is probably the only important step in this whole process.</span>
+#Make sure that permissions for the first several entries in <tt>/usr/share/polkit-1/actions/org.freedesktop.UDisks2.policy</tt> are completely permissive.&nbsp; That is, the <code>allow_any</code>, <code>allow_inactive</code>, and <code>allow_active</code> parameters should all be set to <code>yes</code> for at least the first 4 actions listed in that file.&nbsp; Note that the filename might be all lowercase, i.e. "...udisks2..".
+#Puppet installs the usbmount package, which includes the file <tt>/lib/udev/rules.d/usbmount.rules</tt>. This is intended as a way of helping the udev system do the right thing with a stick insertion or removal.&nbsp; It is unnecessary.&nbsp; It will fail to do the right thing on these puppet-controlled machines. I chose to remove this functionality by commenting out each line in the <tt>/lib/udev/rules.d/usbmount.rules</tt> file. This does not remove the package, just disables its functionality.&nbsp; It doesn't seem to be necessary to disable usbmount, but it seems like a good idea.
+#If you monitor <tt>/var/log/syslog</tt>, you will see this error message:
+<pre>│Dec 27 15:15:54 xf06bm-ws1 dbus-daemon[624]: [system] Activating via systemd: service name='org.freedesktop.Avahi' unit='dbus-org.freedesktop.Avahi.service' requested by ':1.689' (uid=108 pid=4198 comm="/usr/lib/colord/colord-sane ")                       │
+│Dec 27 15:15:54 xf06bm-ws1 dbus-daemon[624]: [system] Activation via systemd failed for unit 'dbus-org.freedesktop.Avahi.service': Unit dbus-org.freedesktop.Avahi.service not found.                                                                           │
+│Dec 27 15:15:56 xf06bm-ws1 dbus-daemon[624]: [system] Activating via systemd: service name='org.freedesktop.Avahi' unit='dbus-org.freedesktop.Avahi.service' requested by ':1.690' (uid=108 pid=4198 comm="/usr/lib/colord/colord-sane ")                       │
+│Dec 27 15:15:56 xf06bm-ws1 dbus-daemon[624]: [system] Activation via systemd failed for unit 'dbus-org.freedesktop.Avahi.service': Unit dbus-org.freedesktop.Avahi.service not found.                                                                           │</pre>
+
+This message can be made to go away by doing <tt>sudo systemctl start avahi-daemon.service</tt>.&nbsp; This certainly makes the error message go away, but it doesn't last.&nbsp; Eventually, the avahi-daemon service will stop and the message will return.
+
+Finally, it was helpful to understand what usbmount was doing to slightly modify the <tt>/usr/share/usbmount/usbmount</tt> script by adding the line
+<pre>log info "DEVNAME is $DEVNAME"</pre>
+
+at line 90.&nbsp; This allowed me to understand how this script was probing the partition table of the stick being inserted.&nbsp; Of course, if you don't use usbmount, then this doesn't much help!
