@@ -1,0 +1,21 @@
+[[File:BMM conky.png|frame|right|200px|Conky running on xf06bm-ws5]]
+
+Simple [https://github.com/brndnmtthws/conky conky] configuration file for displaying essential beamline information. [https://github.com/NSLS-II-BMM/BMM-beamline-configuration/blob/master/tools/BMM_conky.conf (link to file at GitHub)]
+
+Run this as:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-family:courier new,courier,monospace">conky -c BMM_conky.conf &</span>
+
+
+
+----
+
+
+
+<span style="font-size:small"><code>conky.config = {<br/>&nbsp;&nbsp;&nbsp; alignment = 'top_right',<br/>&nbsp;&nbsp;&nbsp; background = yes,<br/>&nbsp;&nbsp;&nbsp; border_width = 1,<br/>&nbsp;&nbsp;&nbsp; cpu_avg_samples = 2,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; default_color = 'white',<br/>&nbsp;&nbsp;&nbsp; default_outline_color = 'white',<br/>&nbsp;&nbsp;&nbsp; default_shade_color = 'white',<br/>&nbsp;&nbsp;&nbsp; double_buffer = true,<br/>&nbsp;&nbsp;&nbsp; draw_borders = true,<br/>&nbsp;&nbsp;&nbsp; draw_graph_borders = true,<br/>&nbsp;&nbsp;&nbsp; draw_outline = false,<br/>&nbsp;&nbsp;&nbsp; draw_shades = false,<br/>&nbsp;&nbsp;&nbsp; use_xft = true,<br/>&nbsp;&nbsp;&nbsp; font = 'DejaVu Sans Mono:size=10',<br/>&nbsp;&nbsp;&nbsp; gap_x = 5,<br/>&nbsp;&nbsp;&nbsp; gap_y = 5,<br/>&nbsp;&nbsp;&nbsp; minimum_height = 5,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; minimum_width = 5,<br/>&nbsp;&nbsp;&nbsp; net_avg_samples = 2,<br/>&nbsp;&nbsp;&nbsp; no_buffers = true,<br/>&nbsp;&nbsp;&nbsp; out_to_console = false,<br/>&nbsp;&nbsp;&nbsp; out_to_stderr = false,<br/>&nbsp;&nbsp;&nbsp; extra_newline = false,</code></span>
+
+<span style="font-size:small"><code>&nbsp;&nbsp;&nbsp; own_window = true,<br/>&nbsp;&nbsp;&nbsp; own_window_class = 'Conky',<br/>&nbsp;&nbsp;&nbsp; own_window_type = 'desktop',<br/>&nbsp;&nbsp;&nbsp; own_window_transparent = true,<br/>&nbsp;&nbsp;&nbsp; own_window_argb_visual = true,<br/>&nbsp;&nbsp;&nbsp; own_window_argb_value = 1,<br/>&nbsp;&nbsp;&nbsp; own_window_hints = 'undecorated,sticky,skip_taskbar,skip_pager,below',<br/>&nbsp;&nbsp;&nbsp; stippled_borders = 0,<br/>&nbsp;&nbsp;&nbsp; update_interval = 2.0,<br/>&nbsp;&nbsp;&nbsp; uppercase = false,<br/>&nbsp;&nbsp;&nbsp; use_spacer = 'none',<br/>&nbsp;&nbsp;&nbsp; show_graph_scale = false,<br/>&nbsp;&nbsp;&nbsp; show_graph_range = false,</code></span>
+
+<span style="font-size:small"><code>&nbsp;&nbsp;&nbsp; color1 = 0xFCD862<br/>}</code></span>
+
+<span style="font-size:small"><code>conky.text = [[<br/>${alignc}${color d68501}$nodename<br/>${color grey}$hr<br/>${color1}BMM status<br/>&nbsp; ${color green}ShA: ${color grey}${exec caget -t -s XF:06BM-PPS{Sh:FE}Pos-Sts}<br/>&nbsp; ${color green}ShB: ${color grey}${exec caget -t -s XF:06BM-PPS{Sh:A}Pos-Sts}<br/>&nbsp; ${color cbc01b}Ring: ${color grey}${exec foo=`caget -t -f 1 SR:OPS-BI{DCCT:1}I:Real-I` && echo "scale=1; 1.0 * $foo / 1.0" | bc} mA<br/>&nbsp; ${color ffaaff}Energy: ${color grey}${exec python /home/bravel/git/BMM-beamline-configuration/tools/current_energy.py}<br/>&nbsp; ${color cyan}I0: ${color grey}${exec foo=`caget -t -f 12 XF:06BM-BI{EM:1}EM180:Current1:MeanValue_RBV` && echo "scale=3; 1000000000.0 * $foo / 1.0" | bc} nA<br/>&nbsp; ${color cyan}It: ${color grey}${exec foo=`caget -t -f 12 XF:06BM-BI{EM:1}EM180:Current2:MeanValue_RBV` && echo "scale=3; 1000000000.0 * $foo / 1.0" | bc} nA<br/>${color grey}$hr<br/>${color grey}CPU Usage: ${color1}$cpu%<br/>${color grey}RAM Usage: $color$memperc%<br/>&nbsp;&nbsp; $color $mem/$memmax<br/>${color grey}File system:<br/>&nbsp;&nbsp; $color${fs_used /}/${fs_size /}<br/>${color grey}Processes:$color $processes<br/>${color grey}Running:$color $running_processes<br/>${color grey}Freq:$color $freq_g Ghz<br/>${color grey}Uptime:<br/>&nbsp;&nbsp; $color $uptime<br/>]]</code></span>

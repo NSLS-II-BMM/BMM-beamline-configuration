@@ -1,0 +1,66 @@
+= Recovering from a Power Outage =
+
+== Computers, motor controllers ==
+
+#Verify that <tt>xf06bm-ws1</tt>, <tt>xf06bm-ws2</tt>, <tt>xf06bm-ws5</tt> have all rebooted
+#Verify that&nbsp;<tt>xf06bm-ioc1</tt> is on the network
+#Verify that the VME crate is powered up and on the network (try pinging 10.6.128.21)
+#Verify that the quad (Siddons, black-box) electrometers are powered up and on the network (try pinging <tt>xf06bm-em1</tt> and <tt>xf06bm-em2</tt>)
+#Verify that the motor controllers are powered up and on the network (try pinging <tt>xf06bm-mc01</tt>, <tt>xf06bm-mc02</tt>, and so on, through 8)
+#Log onto&nbsp;<tt>xf06bm-ws1</tt> as xf06bm and start up <code>bsui</code>, and the synergy server.
+#Log onto&nbsp;<tt>xf06bm-ws2</tt> and start up the synergy client and <code>run-css</code>.
+
+== Homing and recovering motor positions ==
+
+Note the confusing and inconsistent use of dots and underscores in the following commands!
+
+#Do <code>RE(dcm.recover())</code> -- home and recover positions of DCM motors (defined in <code>20-dcm.py</code>)
+#Do <code>RE(recover_slits2())</code> -- home and recover positions of slits in diagnostic module 2 (defined in <code>15-slits.py</code>)
+#Do <code>RE(recover_slits3())</code> -- home and recover positions of slits in diagnostic module 3 (defined in <code>15-slits.py</code>)
+#Do <code>RE(recover_mirrors())</code> -- home and recover positions of lateral and vertical motors in M2 and M3 (defined in <code>73-plans.py</code>)
+#Do <code>RE(recover_screens())</code> -- home and recover positions of <tt>dm2_fs</tt>, <tt>dm3_fs</tt>, and <tt>dm3_bct</tt> (defined in <code>73-plans.py</code>)
+
+At the end of all of this, you should be at 7148 eV and in photon delivery mode E.&nbsp; There should be light in the end station, although you will need to do a <code>RE(change_edge())</code> command to fully optimize the beamline.
+
+== No need to home ==
+
+The following motors are not normally used in operations at BMM:
+
+#dm3_bpm
+#dm3_foils
+#dm1_filters1
+#dm1_filters2
+
+== Do not home! ==
+
+Homing the M1 motors is a can of worms. I strongly recommend against doing so.&nbsp; The M2 bender does not really get homed.&nbsp; Simply return it to its lower limit and call that 0.
+
+#any motor on M1
+#m2_bender
+
+
+
+
+
+----
+
+== Old stuff ==
+
+#<span style="color:#A9A9A9">'''[ ]''' Home DM2, move to 34 (beam on Al foil)</span>
+#<span style="color:#A9A9A9">'''[ ] '''Home all motors in mirror 2 (move to Mode D nominal positions -- pitch=roll=0, vertical=6, lateral=0.5, yaw=0.1)</span>
+#<span style="color:#A9A9A9">'''[ ] '''Home all motors in mirror 3 (move to Mode D nominal positions -- vertical=roll=0, pitch=3.5, lateral=15, yaw=0)</span>
+#<span style="color:#A9A9A9">'''[ ] '''Home DM2 slits (move to nominal positions in Mode spreadsheet) (make sure <tt>XF:06BMA-OP{Slt:01-Ax:'''X'''}Mtr_HVEL_SP.A</tt> is 0.5, where <tt>'''X'''</tt> = <tt>T|B|I|O</tt>)</span>
+#<span style="color:#A9A9A9">'''[ ] '''Home DM3 slits (move to Mode D nominal positions) (make sure <tt>XF:06BM-BI{Slt:02-Ax:'''X'''}Mtr_HVEL_SP.A</tt> is 0.5)</span>
+#<span style="color:#A9A9A9">'''[ ]''' Home the two filter racks, move to +55 on each rack</span>
+#<span style="color:#A9A9A9">'''[ ]''' Home DM3: BCT, FS, filters, BPM (move to Mode D nominal positions)</span>
+#<span style="color:#A9A9A9">'''[ ]''' Stop and restart MC07 and MC08, verify positions of table and linx/y/xs</span>
+#<span style="color:#A9A9A9">'''[ ]'''</span>
+
+
+
+<span style="color:#A9A9A9">More:</span>
+
+*<span style="color:#A9A9A9">verify I400s, F460s, piezo controllers, Moxas</span>
+*<span style="color:#A9A9A9">verify AXISSCALE settings for M2 and M3 (M2 currently is 0.0001, M3 was changed to 1)</span>
+*<span style="color:#A9A9A9">home mono (wait for beam)</span>
+*<span style="color:#A9A9A9">M1 & MC01 are untouched after power outage</span>

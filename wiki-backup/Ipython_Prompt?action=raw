@@ -1,0 +1,38 @@
+I made a fancy-pants Ipython command prompt for BMM.&nbsp; It shows the mode of the photon delivery system, the crystal set in use, the state of the front-end and photon shutters, and the ring current in a very compact form.&nbsp; This page documents how I did this. 
+
+This works much less well in bsui as of January 2019. Most of the tokens below show up as normal[[File:Prompt.png|border|right|300px|Prompt.png]] white text.&nbsp; <tt>OutPromptNum</tt> and <tt>Tilde</tt> have been replaced by <tt>Prompt</tt> and <tt>OutPrompt</tt> (green and red).
+
+----
+
+Here is a [https://github.com/NSLS-II-BMM/profile_collection/blob/master/startup/98-user.py#L4-L28 snippet] from one of BMM's startup files that shows how the prompt is customized. (And here is [https://ipython.readthedocs.io/en/stable/config/details.html the documentation].)
+
+<tt>from IPython.terminal.prompts import Prompts, Token<br/>class MyPrompt(Prompts):<br/>&nbsp;&nbsp;&nbsp; def in_prompt_tokens(self, cli=None):<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if idps.state.value == 0:<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; shatoken = (Token.OutPromptNum, ' A')<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else:<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; shatoken = (Token.Tilde, ' A')</tt>
+
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if shb.state.value == 1:<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; shbtoken = (Token.OutPromptNum, 'B')<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else:<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; shbtoken = (Token.Tilde, 'B')</tt>
+
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return [(Token.CursorLine, 'BMM '),<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (Token.CursorLine, '%s.%s'&nbsp;% (BMM_config._mode, dcm._crystal)),<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; shatoken,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (Token.Prompt, u'\u2022'),<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; shbtoken,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (Token.Comment, '&nbsp;%.1f '&nbsp;% ring.current.value),<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (Token.Prompt, '['),<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (Token.PromptNum, str(self.shell.execution_count)),<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (Token.Prompt, '] ' + u"\u25B6"+' ')]</tt>
+
+<tt>ip = get_ipython()<br/>ip.prompts = MyPrompt(ip)</tt>
+
+The function <tt>in_prompt_tokens()</tt> is used to define the normal command line. The other prompts are set by customizing <tt>continuation_prompt_tokens()</tt>, <tt>rewrite_prompt_tokens()</tt>, and <tt>out_prompt_tokens()</tt>. The return value is a list of tuples. Each tuple contains the token and the string to be decorated with that token. <tt>BMM_config._mode</tt>, <tt>dcm._crystal</tt>, and <tt>ring.current.value</tt> are scalars defined elsewhere in BMM's startup. The unicode numbers make the circle and right-pointing triangle. <tt>str(self.shell.execution_count)</tt> makes the bright green number that indicates the number of commands entered in the Ipython session. The point of all this is to show that the prompt can have truly anything in it.
+
+----
+
+I had trouble finding documentation for the definitions of the tokens, so I wrote a little tool for exploring their values.&nbsp; Here is the code:
+
+<tt>def explore_tokens(i):<br/>&nbsp;&nbsp;&nbsp; tokens = ('Aborted', 'AutoSuggestion', 'ColorColumn', 'Comment',<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'CursorColumn', 'CursorLine', 'Digraph', 'Error',<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'Escape', 'Generic', 'Keyword', 'LeadingWhiteSpace',<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'LineNumber', 'Literal', 'MatchingBracket', 'Menu',<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'MultipleCursors', 'Name', 'Number', 'Operator',<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'Other', 'OutPrompt', 'OutPromptNum', 'Prompt',<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'PromptNum', 'Punctuation', 'Scrollbar', 'SearchMatch',<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'SelectedText', 'SetCursorPosition', 'String', 'Tab',<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'Text', 'Tilde', 'Token', 'Toolbar',<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'TrailingWhiteSpace', 'Transparent', 'WindowTooSmall',<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'ZeroWidthEscape')<br/>&nbsp;&nbsp;&nbsp; class MyPrompt(Prompts):<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; def in_prompt_tokens(self, cli=None):<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return [(getattr(Token, tokens[i]), 'BMM >'),]<br/>&nbsp;&nbsp;&nbsp; ip = get_ipython()<br/>&nbsp;&nbsp;&nbsp; ip.prompts = MyPrompt(ip)<br/>&nbsp;&nbsp;&nbsp; return 'Token.%s'&nbsp;% tokens[i]</tt>
+
+And here are screenshots of the colors and decorations generated by each token.&nbsp; As you can see, the color palette is somewhat limited and many of the tokens simply return normal, white text.
+
+
+
+
+
+
+
+{| style="width: 700px" border="0" cellspacing="1" cellpadding="1"
+|-
+| [[File:TokensA.png|RTENOTITLE]]<br/>
+| [[File:TokensB.png|RTENOTITLE]]<br/>
+| [[File:TokensC.png|RTENOTITLE]]<br/>
+|}

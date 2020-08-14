@@ -1,0 +1,187 @@
+Mono calibration is performed by measuring the angular positions of a bunch of metal foils over a broad energy range. Values for d-spacing and an angular offset of the Bragg axis are fitted by comparing the measured angles of the edge positions to the energy values tabulated in ''High resolution x‐ray absorption spectroscopy with absolute energy calibration for the determination of absorption edge energies'', <span class="contrib-author">S. Kraft, J. Stümpel, P. Becker, and U. Kuetgens, </span>Review of Scientific Instruments '''67''', 681 (1998); [https://doi.org/10.1063/1.1146657 DOI: 10.1063/1.1146657].
+
+The angular values for the edges are measured by hand. (This is hard to automate as the angular offset can be quite wrong, leading to increasingly large discrepancies between reported and actual energies.)
+
+The angular positions of the edges are taken as the first peak of the first derivative of the measured μ(E) spectra.
+
+The values are recorded in a text file in <tt>/home/xf06bm/Data/Staff/mono_calibration</tt>/. There is one file for the Si(111) calibration (<tt>edges111.ini</tt>) and another for the Si(311) calibration (<tt>edges311.ini</tt>).
+
+Once the <tt>edgesHKL.ini</tt> file is made, the calibration is done in BlueSky with the <tt>calibrate_mono()</tt> command.
+
+In the plots below, the blue line – representing the tabulated edge energies – is plotted with cubic interpolation between the tabulated values.
+
+Updated Jan 30-31, 2019.
+
+
+
+
+
+
+
+= Si (111) =
+
+From the <tt>edges111.ini</tt> file and <tt>calibrate_mono('111')</tt> command:
+
+'''Results:'''
+
+*d-spacing = 3.13536646 +/- 1.3731e-04
+*angular offset:&nbsp; 0.00242489 +/- 3.1917e-04
+*dcm.bragg.user_offset.value is 16.05684
+
+
+
+
+
+[[File:Calibration 111.png|thumb|right|500px|Si(111) calibration curve]]
+
+{| style="width: 400px" cellspacing="1" cellpadding="1" border="1"
+|-
+! scope="col" | Element<br/>
+! scope="col" style="text-align: right" | Tabulated<br/>
+! scope="col" style="text-align: right" | Measured<br/>
+! scope="col" style="text-align: right" | Difference<br/>
+|-
+| Fe<br/>
+| style="text-align: right" | <tt>7111.383</tt><br/>
+| style="text-align: right" | <tt>7111.222</tt><br/>
+| style="text-align: right" | <tt>0.633</tt><br/>
+|-
+| Co<br/>
+| style="text-align: right" | <tt>7709.391</tt><br/>
+| style="text-align: right" | <tt>7709.366</tt><br/>
+| style="text-align: right" | <tt>0.611</tt><br/>
+|-
+| Ni<br/>
+| style="text-align: right" | <tt>8331.834</tt><br/>
+| style="text-align: right" | <tt>8331.704</tt><br/>
+| style="text-align: right" | <tt>0.344</tt><br/>
+|-
+| Cu<br/>
+| style="text-align: right" | <tt>8980.645</tt><br/>
+| style="text-align: right" | <tt>8980.522</tt><br/>
+| style="text-align: right" | <tt>0.165</tt><br/>
+|-
+| Zn<br/>
+| style="text-align: right" | <tt>9660.817</tt><br/>
+| style="text-align: right" | <tt>9660.996</tt><br/>
+| style="text-align: right" | <tt>0.057</tt><br/>
+|-
+| Pt<br/>
+| style="text-align: right" | <tt>11562.503</tt><br/>
+| style="text-align: right" | <tt>11562.673</tt><br/>
+| style="text-align: right" | <tt>-0.257</tt><br/>
+|-
+| Au<br/>
+| style="text-align: right" | <tt>11919.290</tt><br/>
+| style="text-align: right" | <tt>11919.251</tt><br/>
+| style="text-align: right" | <tt>-0.410</tt><br/>
+|-
+| Pb<br/>
+| style="text-align: right" | <tt>13033.994</tt><br/>
+| style="text-align: right" | <tt>13034.046</tt><br/>
+| style="text-align: right" | <tt>-1.076</tt><br/>
+|-
+| Nb<br/>
+| style="text-align: right" | <tt>18982.453</tt><br/>
+| style="text-align: right" | <tt>18982.808</tt><br/>
+| style="text-align: right" | <tt>-0.517</tt><br/>
+|-
+| Mo<br/>
+| style="text-align: right" | <tt>20001.239</tt><br/>
+| style="text-align: right" | <tt>20000.884</tt><br/>
+| style="text-align: right" | <tt>0.879</tt><br/>
+|}
+
+= Si (311) =
+
+From the <tt>edges311.ini</tt> file and&nbsp; <tt>calibrate_mono('311')</tt> command:
+
+'''Results:'''
+
+*d-spacing = 1.63758053 +/- 2.8726e-05
+*angular offset: -0.00203830 +/- 2.5022e-04
+*dcm.bragg.user_offset.value is 15.99235495
+
+
+
+[[File:Si311 2019-01-31.png|thumb|right|500px|Si(311) calibration curve]]
+
+{| style="width: 400px" cellspacing="1" cellpadding="1" border="1"
+|-
+! scope="col" | Element<br/>
+! scope="col" style="text-align: right" | Tabulated<br/>
+! scope="col" style="text-align: right" | Measured<br/>
+! scope="col" style="text-align: right" | Difference<br/>
+|-
+| Fe<br/>
+| style="text-align: right" | <tt>7110.750</tt><br/>
+| style="text-align: right" | <tt>7111.073</tt><br/>
+| style="text-align: right" | <tt>0.323</tt><br/>
+|-
+| Co<br/>
+| style="text-align: right" | <tt>7708.780</tt><br/>
+| style="text-align: right" | <tt>7709.139</tt><br/>
+| style="text-align: right" | <tt>0.358</tt><br/>
+|-
+| Ni<br/>
+| style="text-align: right" | <tt>8331.490</tt><br/>
+| style="text-align: right" | <tt>8331.448</tt><br/>
+| style="text-align: right" | <tt>-0.042</tt><br/>
+|-
+| Cu<br/>
+| style="text-align: right" | <tt>8980.480</tt><br/>
+| style="text-align: right" | <tt>8980.297</tt><br/>
+| style="text-align: right" | <tt>-0.183</tt><br/>
+|-
+| Zn<br/>
+| style="text-align: right" | <tt>9660.760</tt><br/>
+| style="text-align: right" | <tt>9660.561</tt><br/>
+| style="text-align: right" | <tt>-0.199</tt><br/>
+|-
+| Pt<br/>
+| style="text-align: right" | <tt>11562.760</tt><br/>
+| style="text-align: right" | <tt>11562.875</tt><br/>
+| style="text-align: right" | <tt>0.115</tt><br/>
+|-
+| Au<br/>
+| style="text-align: right" | <tt>11919.700</tt><br/>
+| style="text-align: right" | <tt>11919.523</tt><br/>
+| style="text-align: right" | <tt>-0.177</tt><br/>
+|-
+| Pb<br/>
+| style="text-align: right" | <tt>13035.070</tt><br/>
+| style="text-align: right" | <tt>13034.872</tt><br/>
+| style="text-align: right" | <tt>-0.198</tt><br/>
+|-
+| Nb<br/>
+| style="text-align: right" | <tt>18982.970</tt><br/>
+| style="text-align: right" | <tt>18983.044</tt><br/>
+| style="text-align: right" | <tt>0.074</tt><br/>
+|-
+| Mo<br/>
+| style="text-align: right" | <tt>20000.360</tt><br/>
+| style="text-align: right" | <tt>20000.401</tt><br/>
+| style="text-align: right" | <tt>0.041</tt><br/>
+|}
+
+&nbsp;
+
+= Calibration Procedure =
+
+(Updated May 29, 2019) These are the steps for calibrating the Si(111) mono. The procedure for the Si(311) mono is exactly the same, substituting <tt>311</tt> for <tt>111</tt> throughout.
+
+#Load the reference holder with (top to bottom) Fe, Co, Ni, Cu, Zn.
+#In BlueSky, run <tt>RE(calibrate_low_end('111'))</tt>
+#For each of the five elements, Fe, Co, Ni, Cu, Zn, use Athena to determine the energy position of the inflection point.
+#When the low-end macro finishes, edit the <tt>edges111.ini</tt> file to include the energy positions of the inflection points in the first column.
+#Using <tt>dcm.e2a(energy_value)</tt>, compute the angular positions of the inflection points and add those to the third column of <tt>edges111.ini</tt>
+#Load the reference holder with (top to bottom) Pt, Au, Pb, Nb, Mo.
+#In BlueSky, run <tt>RE(calibrate_high_end('111'))</tt>
+#Repeat steps 4 and 5, editing the <tt>edges111.ini</tt> file in the same way for Pt, Au, Pb, Nb, Mo.
+#In BlueSky, run <tt>calibrate_mono('111')</tt>
+#Edit <tt>19-dcm-parameters.py</tt> with the new d-spacing value
+#'''Add''' the fitted angular offset to the current value found in the <tt>19-dcm-parameters.py</tt> file
+#Move the DCM to the found energy value of the inflection point for the Mo foil, something like <tt>RE(mv(dcm.energy, 20009.4))</tt>
+#Do <tt>%run -i '/home/xf06bm/.ipython/profile_collection/startup/19-dcm-parameters.py'</tt>
+#Do <tt>dcm.set_crystal('111')</tt>
+#Run a Mo XANES scan to verify your handiwork.

@@ -1,0 +1,19 @@
+The various energy and mirror configurations of the beamline lead to a distribution of heights and inclinations as the beam approaches the XAFS table. To meet all these various operating modes, the hieght of the DCM must match the beam height.&nbsp; Also, the height and pitch of the XAFS table must match the beam.&nbsp; This allows the ionization chambers to be set at fixed heights (relative to the table surface).
+
+Here we show the positions of DM3 at the two extreme orientations.
+
+== Mode B ==
+
+[[File:DM3 ModeB.jpg|thumb|right|220px|DM3 position in Mode B]]
+
+*Energy below 8 keV
+*Toroidal focusing mirror around 3.5 mRad
+*Flat harmonic rejection mirror at 5 mRad
+
+== Mode D/E ==
+
+[[File:DM3-ModeCE.jpg|thumb|right|220px|DM3 position in Mode D/E]]
+
+*Energy above 8 keV
+*Focusing mirror removed
+*Flat harmonic rejection mirror at 3.5 mRad

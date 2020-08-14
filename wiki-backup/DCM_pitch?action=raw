@@ -1,0 +1,17 @@
+During the calibration of the Si(111) monochromator, the position of the DCM pitch motor refined from the rocking_curve() scan was recorded:
+
+<code>7110.62 3.915<br/>7708.59 3.918<br/>8330.97 3.911<br/>8979.97 3.911<br/>9659.87 3.907<br/>11561.40 3.900<br/>11918.10 3.895<br/>13032.8 3.894<br/>18981.0 3.868<br/>19999.6 3.858</code>
+
+This was fit with a line (this is a gnuplot script):
+
+<code>set xlabel '{/*1.2 energy (eV)}'<br/>set ylabel '{/*1.2 DCM pitch}'<br/>set title '{/*1.6 DCM pitch v. energy for Si(111)}'</code>
+
+<code>a(x) = m*x + b<br/>plot 'pitch.dat' using 1:2 title 'refined from rocking curve'<br/>fit a(x) 'pitch.dat' using 1:2 via m, b<br/>replot a(x) title 'linear fit'</code>
+
+
+
+Resulting in
+
+[[File:Pitch.png|RTENOTITLE]]
+
+The fitted values of slope and offset (<tt>m = -4.42156e-06 +/- 1.769e-07, b=3.94956 +/- 0.002209</tt>) are then used in the <tt>approximate_pitch()</tt> function in <q>76-edges.py</q> to move to the approximately correct value before doing the rocking curve scan.

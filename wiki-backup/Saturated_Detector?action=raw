@@ -1,0 +1,25 @@
+= Dealing with an oversaturated detector element =
+
+It can happen, usually by putting A LOT of flux onto the fluorescence detector, that your fluorescence data starts looking simply awful.&nbsp; Here is an example:
+
+[[File:Detector awful.png|700px|Detector awful.png]]
+
+In this case, the problem is that detector element #3 has begun responding extremely non-linearly.&nbsp; This is probably the result of having been exposed to more than a million counts per second, perhaps by being exposed to a diffraction peak coming from the sample. You might be able to recover your data simply by excluding the problematic element when importing the data into Athena.&nbsp; Note that, above, all four DTC channels are being included in the sum.&nbsp; In the picture below, DTC3 has been unticked in the column selection dialog. Doing so results in profoundly more sensible data.
+
+[[File:Detector ok.png|700px|Detector ok.png]]
+
+== FIxing the oversaturation problem by power cycling the detector ==
+
+Even better than excluding a problematic channel is to have all the channels working correctly in the first place.&nbsp; Here are instructions for power cyclilng the detector.
+
+Underneath the optical table, partically obscured by one of the supports of the blue frame, you will find this box:
+
+[[File:Detector electronics.jpg|500px|Detector electronics.jpg]]
+
+#Reach around to the back side and toggle the power switch to the off position.
+#Wait at least 5 minutes.
+#Toggle the power switch back to the on position.
+#When you first turn on the detector, the light with the "TEC" label will be red.&nbsp; This indicates the the thermoelectric coooler on the back sides of the detector chips is still cooling down.
+#Wait until the TEC light has turned green.&nbsp; This will take about 2 minutes.
+
+Once the TEC light is green, you are ready to resume using the fluorescence detector.&nbsp; Fingers crossed -- the problematic channel will be responding normally again!

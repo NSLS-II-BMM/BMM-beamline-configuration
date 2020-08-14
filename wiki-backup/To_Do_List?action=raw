@@ -1,0 +1,61 @@
+== End of March, 2019-1 ==
+
+#'''[ ]''' Clean, reorganize AGG switch & patch panels, verify all port usage, move NAS to RGA1
+#'''[ ]''' Test around Ru edge 22117
+#'''[ ]''' Re-open plot window if closed curing a scan sequence
+#'''[ ]''' dcm_pitch and rocking_curve() scan, C-c C-c & stop, how to kill motor?
+#'''[ ]''' Mode f table hight
+#'''[ ]''' fix toprj
+#'''[ ]''' plot title, plot legends
+
+== Beginning of 2019-1 ==
+
+#'''[x]''' Refresh master log
+#'''[x]''' Do-nothing SAF
+#'''[ ]''' Better ways of determining Modes table
+#*dm3 slits should be quite small ... 500 microns or so
+#*make sure that beam comes out the center of the flange -- this will be needed for feedback detector
+#*need slits of some sort on XAS table, certainly on sample stage, also at end of table.
+#*improve trig in move_m2()
+#'''[ ]''' Make a table/plot of flux on I0 as a function of energy with N2 in ion chamber
+#'''[ ]''' Mode B, M2 hight
+#'''[ ]''' Adjust pitch of m1, test resolution/calibration with narrow slits
+#'''[ ]''' verify/update table height / beam v. ion chambers for the modes
+#'''[x] '''Ti edge of BTOF, maybe some Ti standards
+
+== December Shutdown ==
+
+#'''[x]''' Backup MC0X configurations to github
+#'''[ ]''' Set dm3_bct to autokill after movement
+#'''[ ]''' Are slits3 autokilling correctly?
+#'''[ ]''' Even less noisy <tt>%xmode</tt> setting
+#'''[ ]''' Rotation stage, continuous motion during scan.&nbsp; Need to expose a velocity PV in the MC0[78] IOC.&nbsp; Then ophyd can start and stop a velocity.
+#'''[ ]''' Play with introspection: [http://nsls-ii.github.io/bluesky/simulation.html http://nsls-ii.github.io/bluesky/simulation.html]
+#'''[ ]''' Cryostat on ESR
+
+== Long term and lingering items ==
+
+#'''[ ]''' compute reflectivity properties of current state of beamline mirrors
+#'''[ ]''' Do a Mo/Mn harmonics test
+#'''[ ]''' Stability above 20 keV, see Chris' Mo data similarity at high k
+#'''[ ]''' <span class="marker">can a pitch look-up table be made?</span>
+#'''[ ]''' Test energy calibration by measuring Cu (or whatever) and moving narrow slits vertically through beam
+#'''[ ]''' Feedback!!!
+#'''[ ]''' Does a big step really mean signal instability, see Jenny's Mn data pre-edge
+#'''[ ]''' Commission single element Si-drift detector
+
+== Old list ==
+
+#'''[ ]''' Speed and tuning of dcm-bragg and dcm-para.&nbsp; Might be deadband of dcm-bragg....
+#'''[ ]''' Some thought on a low energy flight path....
+#'''[ ]''' continue conditioning the filters + decide what filters are needed for 311 crystals (or 111, for that matter)
+
+
+
+== Notes on DCM servicing ==
+
+*<code>#6j-</code> to drive perp to negative limit. Encoder counts: -541449
+*<code>#6j+</code> to drive perp to positive limit. Encoder counts: +896747
+*<code>#4j-</code> to drive roll to negative limit. Encoder counts: -610853
+*<code>#4j+</code> to drive roll to positive limit. Encoder counts: +609478
+*Bragg is level at -3386979

@@ -1,0 +1,17 @@
+This is a quick tutorial in capturing a full XRF spectrum from our analogue readout system. This is a cumbersome process that cannot be automated.
+
+*After measuring an XRF spectrum on the Windows XP machine, select <tt>Save As</tt> from the <tt>File</tt> menu. In the dialog that comes up, choose <tt>Toolkit File (*.TKA)</tt> from the "Save as type" menu, then navigate to some appropriate folder.
+*The XP machine is NOT on the network, so you will need to use a USB stick to move the data onto another computer.&nbsp; There should be a few USB sticks for use lying around the control station.
+*The <tt>*.tka</tt> file is ridiculous.&nbsp; It is single column of numbers with no header.&nbsp; Here is how to interpret that file:
+**The display on the XP machine is a histogram.&nbsp; Each bin of the histogram is a line in the <tt>*.tka</tt> file.
+**The number in the <tt>*.tka</tt> file is the number of counts in that bin of the histogram.
+**To convert histogram bin into an energy, you need to know the calibration coefficients.
+**You can find the current calibration coefficients for each detector channel by digging in the <tt>Calibrate</tt> menu, as seen in the figure below.
+**Select <tt>Energy Coefficients</tt>, this will tell you something like "<code>Energy = 3.354e+001 eV + 4.065e+000 * Ch</code>"
+**Thus, the energy of each bin of the histogram is 33.54 + 4.065*N eV, where N is the line number of the <tt>*.tka</tt> file.
+**Example: line 1000 of the <tt>*.tka</tt> file represents 33.54 + 4.065*1000 eV = 4098.54 eV.
+**An example of a python script that converts a <tt>*.tka</tt> file to something not crack-addled can be found at <code>/home/xf06bm/Data/Staff/Bruce Ravel/2020-01-03/Eli/convert.py</code>
+
+
+
+[[File:Encal.png|center|500px|Encal.png]]&nbsp;

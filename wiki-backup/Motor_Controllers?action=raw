@@ -1,0 +1,618 @@
+The alias is an alternate, easier-to-type name for the axis.&nbsp; These are equivalent:
+
+<tt>&nbsp;&nbsp; caget XF:06BMA-OP{Mono:DCM1-Ax:Bragg}Mtr<br/>&nbsp;&nbsp; caget xafs_bragg</tt>
+
+The following are also equivalent:
+
+<tt>&nbsp;&nbsp; caget XF:06BMA-OP{Mono:DCM1-Ax:Bragg}Mtr.VELO<br/>&nbsp;&nbsp; caget xafs_bragg.VELO</tt>
+
+The aliases are used consistently in the EPICS IOCs and in BlueSky.
+
+----
+
+{| border="1"
+|-
+! scope="row" | Instrument<br/>
+! scope="col" | PV<br/>
+! scope="col" | alias<br/>
+! scope="col" | Motor Description
+! scope="col" | controller
+! scope="col" | motor number<br/>
+|-
+! colspan="1" rowspan="12" scope="row" | F.E. slits<br/>
+| <tt>FE:C06B-OP{Slt:12-Ax:X}size</tt><br/>
+| <br/>
+| horizontal size
+| geobrick (mezzanine)
+| style="text-align: center" | virtual<br/>
+|-
+| <tt>FE:C06B-OP{Slt:12-Ax:X}center</tt><br/>
+| <br/>
+| horizontal center
+| geobrick (mezzanine)
+| style="text-align: center" | virtual<br/>
+|-
+| <tt>FE:C06B-OP{Slt:12-Ax:Y}size</tt><br/>
+| <br/>
+| vertical size
+| geobrick (mezzanine)
+| style="text-align: center" | virtual
+|-
+| <tt>FE:C06B-OP{Slt:12-Ax:Y}center</tt>
+| <br/>
+| vertical center
+| geobrick (mezzanine)
+| style="text-align: center" | virtual<br/>
+|-
+| <tt>FE:C06B-OP{Slt:1-Ax:Hrz}Mtr.VAL</tt>
+| <br/>
+| Slit 1 horizontal
+| geobrick (mezzanine)
+| style="text-align: center" | 
+|-
+| <tt>FE:C06B-OP{Slt:1-Ax:Inc}Mtr.VAL</tt>
+| <br/>
+| Slit 1 incline
+| geobrick (mezzanine)
+| style="text-align: center" | 
+|-
+| <tt>FE:C06B-OP{Slt:1-Ax:O}Mtr.VAL</tt>
+| <br/>
+| Slit 1 X outboard
+| geobrick (mezzanine)
+| style="text-align: center" | 
+|-
+| <tt>FE:C06B-OP{Slt:1-Ax:T}Mtr.VAL</tt>
+| <br/>
+| Slit 1 Y top
+| geobrick (mezzanine)
+| style="text-align: center" | 
+|-
+| <tt>FE:C06B-OP{Slt:2-Ax:Hrz}Mtr.VAL</tt>
+| <br/>
+| Slit 2 horizontal
+| geobrick (mezzanine)
+| style="text-align: center" | 
+|-
+| <tt>FE:C06B-OP{Slt:2-Ax:Inc}Mtr.VAL</tt>
+| <br/>
+| Slit 2 incline
+| geobrick (mezzanine)
+| style="text-align: center" | 
+|-
+| <tt>FE:C06B-OP{Slt:2-Ax:I}Mtr.VAL</tt>
+| <br/>
+| Slit 2 X inboard
+| geobrick (mezzanine)
+| style="text-align: center" | 
+|-
+| <tt>FE:C06B-OP{Slt:2-Ax:B}Mtr.VAL</tt>
+| <br/>
+| Slit 2 Y bottom
+| geobrick (mezzanine)
+| style="text-align: center" | 
+|-
+! style="background-color: rgb(221, 221, 221)" colspan="1" rowspan="5" scope="row" | Mirror 1<br/>
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BM-OP{Mir:M1-Ax:YU}Mtr</tt>
+| style="background-color: rgb(221, 221, 221)" | m1_yu<br/>
+| style="background-color: rgb(221, 221, 221)" | upstream jack
+| style="background-color: rgb(221, 221, 221)" | MC01 (mezzanine)
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 1
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BM-OP{Mir:M1-Ax:YDO}Mtr</tt>
+| style="background-color: rgb(221, 221, 221)" | m1_ydo<br/>
+| style="background-color: rgb(221, 221, 221)" | downstream, outboard jack
+| style="background-color: rgb(221, 221, 221)" | MC01 (mezzanine)
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 2
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BM-OP{Mir:M1-Ax:YDI}Mtr</tt>
+| style="background-color: rgb(221, 221, 221)" | m1_ydi<br/>
+| style="background-color: rgb(221, 221, 221)" | downstream, inboard jack
+| style="background-color: rgb(221, 221, 221)" | MC01 (mezzanine)
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 3
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BM-OP{Mir:M1-Ax:XU}Mtr</tt>
+| style="background-color: rgb(221, 221, 221)" | m1_xu<br/>
+| style="background-color: rgb(221, 221, 221)" | upstream lateral
+| style="background-color: rgb(221, 221, 221)" | MC01 (mezzanine)
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 4
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BM-OP{Mir:M1-Ax:XD}Mtr</tt>
+| style="background-color: rgb(221, 221, 221)" | m1_xd<br/>
+| style="background-color: rgb(221, 221, 221)" | downstream lateral
+| style="background-color: rgb(221, 221, 221)" | MC01 (mezzanine)
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 5
+|-
+! colspan="1" rowspan="2" scope="row" | Filters<br/>
+| <tt>XF:06BMA-BI{Fltr:01-Ax:Y1}Mtr</tt>
+| dm1_filters1<br/>
+| assembly #1
+| MC05 (RGA)
+| style="text-align: center" | 6
+|-
+| <tt>XF:06BMA-BI{Fltr:01-Ax:Y2}Mtr</tt><br/>
+| dm1_filters2<br/>
+| assembly #2
+| MC05 (RGA)
+| style="text-align: center" | 7
+|-
+! style="background-color: rgb(221, 221, 221)" colspan="1" rowspan="8" scope="row" | DCM<br/>
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BMA-OP{Mono:DCM1-Ax:Bragg}Mtr</tt><br/>
+| style="background-color: rgb(221, 221, 221)" | dcm_bragg<br/>
+| style="background-color: rgb(221, 221, 221)" | DCM Bragg
+| style="background-color: rgb(221, 221, 221)" | MC02 (RGA)
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 1
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BMA-OP{Mono:DCM1-Ax:Bragg2}Mtr</tt>
+| style="background-color: rgb(221, 221, 221)" | dcm_bragg2<br/>
+| style="background-color: rgb(221, 221, 221)" | Bragg second encoder
+| style="background-color: rgb(221, 221, 221)" | MC02 (RGA)<br/>
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BMA-OP{Mono:DCM1-Ax:P2}Mtr</tt>
+| style="background-color: rgb(221, 221, 221)" | dcm_pitch<br/>
+| style="background-color: rgb(221, 221, 221)" | 2nd crystal pitch
+| style="background-color: rgb(221, 221, 221)" | MC02 (RGA)
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 3
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BMA-OP{Mono:DCM1-Ax:R2}Mtr</tt>
+| style="background-color: rgb(221, 221, 221)" | dcm_roll<br/>
+| style="background-color: rgb(221, 221, 221)" | 2nd crystal roll
+| style="background-color: rgb(221, 221, 221)" | MC02 (RGA)
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 4
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BMA-OP{Mono:DCM1-Ax:Per2}Mtr</tt>
+| style="background-color: rgb(221, 221, 221)" | dcm_para<br/>
+| style="background-color: rgb(221, 221, 221)" | 2nd crystal perpendicular
+| style="background-color: rgb(221, 221, 221)" | MC02 (RGA)
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 5
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BMA-OP{Mono:DCM1-Ax:Par2}Mtr</tt>
+| style="background-color: rgb(221, 221, 221)" | dcm_perp<br/>
+| style="background-color: rgb(221, 221, 221)" | 2nd crystal parallel
+| style="background-color: rgb(221, 221, 221)" | MC02 (RGA)
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 6
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BMA-OP{Mono:DCM1-Ax:X}Mtr</tt>
+| style="background-color: rgb(221, 221, 221)" | dcm_x<br/>
+| style="background-color: rgb(221, 221, 221)" | lateral translation
+| style="background-color: rgb(221, 221, 221)" | MC02 (RGA)
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 7
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BMA-OP{Mono:DCM1-Ax:Y}Mtr</tt>
+| style="background-color: rgb(221, 221, 221)" | dcm_y<br/>
+| style="background-color: rgb(221, 221, 221)" | vertical translation
+| style="background-color: rgb(221, 221, 221)" | MC02 (RGA)
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 8
+|-
+! colspan="1" rowspan="4" scope="row" | DM2 slits<br/>
+| <tt>XF:06BMA-OP{Slt:01-Ax:O}Mtr</tt>
+| dm2_slits_o<br/>
+| outboard
+| MC03 (RGA)
+| style="text-align: center" | 1
+|-
+| <tt>XF:06BMA-OP{Slt:01-Ax:I}Mtr</tt>
+| dm2_slits_i<br/>
+| inboard
+| MC03 (RGA)
+| style="text-align: center" | 2
+|-
+| <tt>XF:06BMA-OP{Slt:01-Ax:T}Mtr</tt>
+| dm2_slits_t<br/>
+| top
+| MC03 (RGA)
+| style="text-align: center" | 3
+|-
+| <tt>XF:06BMA-OP{Slt:01-Ax:B}Mtr</tt>
+| dm2_slits_b<br/>
+| bottom
+| MC03 (RGA)
+| style="text-align: center" | 4
+|-
+! style="background-color: rgb(221, 221, 221)" scope="row" | DM2 screen<br/>
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BMA-BI{Diag:02-Ax:Y}Mtr</tt>
+| style="background-color: rgb(221, 221, 221)" | dm2_fs<br/>
+| style="background-color: rgb(221, 221, 221)" | vertical actuator
+| style="background-color: rgb(221, 221, 221)" | MC04 (RGA)
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 7
+|-
+! colspan="1" rowspan="6" scope="row" | Mirror 2<br/>
+| <tt>XF:06BMA-OP{Mir:M2-Ax:YU}Mtr</tt>
+| m2_yu<br/>
+| upstream jack
+| MC04 (RGA)
+| style="text-align: center" | 1
+|-
+| <tt>XF:06BMA-OP{Mir:M2-Ax:YDO}Mtr</tt>
+| m2_ydo<br/>
+| downstream, outboard jack
+| MC04 (RGA)
+| style="text-align: center" | 2
+|-
+| <tt>XF:06BMA-OP{Mir:M2-Ax:YDI}Mtr</tt>
+| m2_ydi<br/>
+| downstream, inboard jack
+| MC04 (RGA)
+| style="text-align: center" | 3
+|-
+| <tt>XF:06BMA-OP{Mir:M2-Ax:XU}Mtr</tt>
+| m2_xu<br/>
+| upstream lateral
+| MC04 (RGA)
+| style="text-align: center" | 4
+|-
+| <tt>XF:06BMA-OP{Mir:M2-Ax:XD}Mtr</tt>
+| m2_xd<br/>
+| downstream lateral
+| MC04 (RGA)
+| style="text-align: center" | 5
+|-
+| <tt>XF:06BMA-OP{Mir:M2-Ax:Bend}Mtr</tt>
+| m2_bender<br/>
+| bender
+| MC04 (RGA)
+| style="text-align: center" | 6
+|-
+! style="background-color: rgb(221, 221, 221)" colspan="1" rowspan="5" scope="row" | Mirror 3<br/>
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BMA-OP{Mir:M3-Ax:YU}Mtr</tt><br/>
+| style="background-color: rgb(221, 221, 221)" | m3_yu<br/>
+| style="background-color: rgb(221, 221, 221)" | upstream jack
+| style="background-color: rgb(221, 221, 221)" | MC05 (RGA)
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 1
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BMA-OP{Mir:M3-Ax:YDO}Mtr</tt>
+| style="background-color: rgb(221, 221, 221)" | m3_ydo<br/>
+| style="background-color: rgb(221, 221, 221)" | downstream, outboard jack
+| style="background-color: rgb(221, 221, 221)" | MC05 (RGA)
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 2
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BMA-OP{Mir:M3-Ax:YDI}Mtr</tt>
+| style="background-color: rgb(221, 221, 221)" | m3_ydi<br/>
+| style="background-color: rgb(221, 221, 221)" | downstream, inboard jack
+| style="background-color: rgb(221, 221, 221)" | MC05 (RGA)
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 3
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BMA-OP{Mir:M3-Ax:XU}Mtr</tt>
+| style="background-color: rgb(221, 221, 221)" | m3_xu<br/>
+| style="background-color: rgb(221, 221, 221)" | upstream lateral
+| style="background-color: rgb(221, 221, 221)" | MC05 (RGA)
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 4
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BMA-OP{Mir:M3-Ax:XD}Mtr</tt>
+| style="background-color: rgb(221, 221, 221)" | m3_xd<br/>
+| style="background-color: rgb(221, 221, 221)" | downstream lateral
+| style="background-color: rgb(221, 221, 221)" | MC05 (RGA)
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 5
+|-
+! scope="row" | E.S. FS
+| <tt>XF:06BM-BI{FS:03-Ax:Y}Mtr</tt>
+| dm3_fs<br/>
+| fluorescent screen
+| MC06 (RGC1)
+| style="text-align: center" | 1
+|-
+! style="background-color: rgb(221, 221, 221)" colspan="1" rowspan="4" scope="row" | DM3 slits<br/>
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BM-BI{Slt:02-Ax:O}Mtr</tt>
+| style="background-color: rgb(221, 221, 221)" | dm3_slits_o<br/>
+| style="background-color: rgb(221, 221, 221)" | outboard
+| style="background-color: rgb(221, 221, 221)" | MC06 (RGC1)
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 5<br/>
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BM-BI{Slt:02-Ax:I}Mtr</tt>
+| style="background-color: rgb(221, 221, 221)" | dm3_slits_i<br/>
+| style="background-color: rgb(221, 221, 221)" | inboard
+| style="background-color: rgb(221, 221, 221)" | MC06 (RGC1)
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 6
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BM-BI{Slt:02-Ax:T}Mtr</tt>
+| style="background-color: rgb(221, 221, 221)" | dm3_slits_t<br/>
+| style="background-color: rgb(221, 221, 221)" | top
+| style="background-color: rgb(221, 221, 221)" | MC06 (RGC1)
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 7
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BM-BI{Slt:02-Ax:B}Mtr</tt>
+| style="background-color: rgb(221, 221, 221)" | dm3_slits_b<br/>
+| style="background-color: rgb(221, 221, 221)" | bottom
+| style="background-color: rgb(221, 221, 221)" | MC06 (RGC1)
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 8<br/>
+|-
+! colspan="1" rowspan="3" scope="row" | DM3<br/>
+| <tt>XF:06BM-BI{Fltr:01-Ax:Y}Mtr</tt>
+| dm3_foils<br/>
+| foils actuator
+| MC06 (RGC1)
+| style="text-align: center" | 4
+|-
+| <tt>XF:06BM-BI{BCT-Ax:Y}Mtr</tt>
+| dm3_bct<br/>
+| vertical stage
+| MC06 (RGC1)
+| style="text-align: center" | 3
+|-
+| <tt>XF:06BM-BI{BPM:1-Ax:Y}Mtr</tt><br/>
+| dm3_bpm<br/>
+| NanoBPM
+| MC06 (RGC1)<br/>
+| style="text-align: center" | 2
+|-
+! style="background-color: rgb(221, 221, 221)" rowspan="8" colspan="1" scope="row" | XAFS Table<br/>
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BMA-BI{XAFS-Ax:Tbl_YU}Mtr</tt><br/>
+| style="background-color: rgb(221, 221, 221)" | xafs_yu<br/>
+| style="background-color: rgb(221, 221, 221)" | xafs table y up<br/>
+| style="background-color: rgb(221, 221, 221)" | MC07 (RGC1)<br/>
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 1<br/>
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BMA-BI{XAFS-Ax:Tbl_YDO}Mtr</tt><br/>
+| style="background-color: rgb(221, 221, 221)" | xafs_ydo<br/>
+| style="background-color: rgb(221, 221, 221)" | xafs table y down out<br/>
+| style="background-color: rgb(221, 221, 221)" | MC07 (RGC1)<br/>
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 2<br/>
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BMA-BI{XAFS-Ax:Tbl_YDI}Mtr</tt><br/>
+| style="background-color: rgb(221, 221, 221)" | xafs_ydi<br/>
+| style="background-color: rgb(221, 221, 221)" | xafs table y down in<br/>
+| style="background-color: rgb(221, 221, 221)" | MC07 (RGC1)<br/>
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 3<br/>
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BMA-BI{XAFS-Ax:Tbl_XU}Mtr</tt><br/>
+| style="background-color: rgb(221, 221, 221)" | xafs_xu<br/>
+| style="background-color: rgb(221, 221, 221)" | xafs table x up<br/>
+| style="background-color: rgb(221, 221, 221)" | MC07 (RGC1)<br/>
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 4<br/>
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BMA-BI{XAFS-Ax:Tbl_XD}Mtr</tt><br/>
+| style="background-color: rgb(221, 221, 221)" | xafs_xd<br/>
+| style="background-color: rgb(221, 221, 221)" | xafs table x down<br/>
+| style="background-color: rgb(221, 221, 221)" | MC07 (RGC1)<br/>
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 5<br/>
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BMA-BI{XAFS-Ax:Tbl_RotH}Mtr</tt><br/>
+| style="background-color: rgb(221, 221, 221)" | xafs_roth<br/>
+| style="background-color: rgb(221, 221, 221)" | xafs Huber<br/>
+| style="background-color: rgb(221, 221, 221)" | MC07 (RGC1)<br/>
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 6<br/>
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BMA-BI{XAFS-Ax:Tbl_RotB}Mtr</tt><br/>
+| style="background-color: rgb(221, 221, 221)" | xafs_rotb<br/>
+| style="background-color: rgb(221, 221, 221)" | xafs black rotation statge<br/>
+| style="background-color: rgb(221, 221, 221)" | MC07 (RGC1)<br/>
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 7<br/>
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BMA-BI{XAFS-Ax:Tbl_RotS}Mtr</tt><br/>
+| style="background-color: rgb(221, 221, 221)" | xafs_rots<br/>
+| style="background-color: rgb(221, 221, 221)" | xafs small rotation statge<br/>
+| style="background-color: rgb(221, 221, 221)" | MC07 (RGC1)<br/>
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 8<br/>
+|-
+! rowspan="7" colspan="1" scope="row" | XAFS Stages<br/>
+| <tt>XF:06BMA-BI{XAFS-Ax:LinY}Mtr</tt><br/>
+| xafs_liny<br/>
+| xafs sample y<br/>
+| MC08 (RGC1)<br/>
+| style="text-align: center" | 1<br/>
+|-
+| <tt>XF:06BMA-BI{XAFS-Ax:LinX}Mtr</tt><br/>
+| xafs_linx<br/>
+| xafs sample x<br/>
+| MC08 (RGC1)<br/>
+| style="text-align: center" | 2<br/>
+|-
+| <tt>XF:06BMA-BI{XAFS-Ax:LinS}Mtr</tt><br/>
+| xafs_lins<br/>
+| xafs sample small<br/>
+| MC08 (RGC1)<br/>
+| style="text-align: center" | 3<br/>
+|-
+| <tt>XF:06BMA-BI{XAFS-Ax:LinXS}Mtr</tt><br/>
+| xafs_linxs<br/>
+| xafs reference<br/>
+| MC08 (RGC1)<br/>
+| style="text-align: center" | 4<br/>
+|-
+| <tt>XF:06BMA-BI{XAFS-Ax:Pitch}Mtr</tt><br/>
+| xafs_pitch<br/>
+| xafs pitch stage<br/>
+| MC08 (RGC1)<br/>
+| style="text-align: center" | 5<br/>
+|-
+| <tt>XF:06BMA-BI{XAFS-Ax:Roll}Mtr</tt><br/>
+| xafs_roll<br/>
+| xafs tilt stage<br/>
+| MC08 (RGC1)<br/>
+| style="text-align: center" | 6<br/>
+|-
+| <br/>
+| <br/>
+| xafs reference wheel<br/>
+| MC08 (RGC1)<br/>
+| style="text-align: center" | 7<br/>
+|-
+! style="background-color: rgb(221, 221, 221)" colspan="1" rowspan="3" scope="row" | shutters & screens<br/>
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BM-PPS{Sh:FE}Pos-Sts</tt>
+| style="background-color: rgb(221, 221, 221)" | <br/>
+| style="background-color: rgb(221, 221, 221)" | front end shutter
+| style="background-color: rgb(221, 221, 221)" | PPS
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BM-PPS{Sh:A}Pos-Sts</tt>
+| style="background-color: rgb(221, 221, 221)" | <br/>
+| style="background-color: rgb(221, 221, 221)" | A hutch shutter
+| style="background-color: rgb(221, 221, 221)" | PPS
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BMA-OP{FS:1}Pos-Sts</tt><br/>
+| style="background-color: rgb(221, 221, 221)" | <br/>
+| style="background-color: rgb(221, 221, 221)" | fluorescent screen
+| style="background-color: rgb(221, 221, 221)" | EPS
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 
+|-
+! rowspan="8" colspan="1" scope="row" | Goniometer circles<br/>
+| <tt>XF:06BM-ES{SixC-Ax:VTTH}Mtr</tt><br/>
+| 6bm:sixc_vtth<br/>
+| Vertical two theta<br/>
+| MC11 (RGC2)<br/>
+| style="text-align: center" | 1<br/>
+|-
+| <tt>XF:06BM-ES{SixC-Ax:VTH}Mtr</tt><br/>
+| 6bm:sixc_vth<br/>
+| Vertical theta<br/>
+| MC11 (RGC2)<br/>
+| style="text-align: center" | 2<br/>
+|-
+| <tt>XF:06BM-ES{SixC-Ax:CHI}Mtr</tt><br/>
+| 6bm:sixc_chi<br/>
+| Chi<br/>
+| MC11 (RGC2)<br/>
+| style="text-align: center" | 3<br/>
+|-
+| <tt>XF:06BM-ES{SixC-Ax:PHI}Mtr</tt><br/>
+| 6bm:sixc_phi<br/>
+| Phi<br/>
+| MC11 (RGC2)<br/>
+| style="text-align: center" | 4<br/>
+|-
+| <tt>XF:06BM-ES{SixC-Ax:HTH}Mtr</tt><br/>
+| 6bm:sixc_hth<br/>
+| Horizontal theta<br/>
+| MC11 (RGC2)<br/>
+| style="text-align: center" | 5<br/>
+|-
+| <tt>XF:06BM-ES{SixC-Ax:HTTH}Mtr</tt><br/>
+| 6bm:sixc_htth<br/>
+| Horizontal two theta<br/>
+| MC11 (RGC2)<br/>
+| style="text-align: center" | 6<br/>
+|-
+| <tt>XF:06BM-ES{SixC-Ax:ANAL}Mtr</tt><br/>
+| 6bm:sixc_anal<br/>
+| Analyzer<br/>
+| MC11 (RGC2)<br/>
+| style="text-align: center" | 7<br/>
+|-
+| <tt>XF:06BM-ES{SixC-Ax:DET}Mtr</tt><br/>
+| 6bm:sixc_det<br/>
+| Detector<br/>
+| MC11 (RGC2)<br/>
+| style="text-align: center" | 8<br/>
+|-
+! style="background-color: rgb(221, 221, 221)" rowspan="8" colspan="1" scope="row" | Goniometer motors<br/>
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BM-ES{SixC-Ax:DETHOR}Mtr</tt><br/>
+| style="background-color: rgb(221, 221, 221)" | 6bm:sixc_det_h<br/>
+| style="background-color: rgb(221, 221, 221)" | Detector horizontal<br/>
+| style="background-color: rgb(221, 221, 221)" | MC12 (RGC2)<br/>
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 1<br/>
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BM-ES{SixC-Ax:WHEEL1}Mtr</tt><br/>
+| style="background-color: rgb(221, 221, 221)" | 6bm:sixc_wh1<br/>
+| style="background-color: rgb(221, 221, 221)" | wheel 1<br/>
+| style="background-color: rgb(221, 221, 221)" | MC12 (RGC2)<br/>
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 2<br/>
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BM-ES{SixC-Ax:WHEEL2}Mtr</tt><br/>
+| style="background-color: rgb(221, 221, 221)" | 6bm:sixc_wh2<br/>
+| style="background-color: rgb(221, 221, 221)" | wheel 2<br/>
+| style="background-color: rgb(221, 221, 221)" | MC12 (RGC2)<br/>
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 3<br/>
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BM-ES{SixC-Ax:SAMX}Mtr</tt><br/>
+| style="background-color: rgb(221, 221, 221)" | 6bm:sixc_samx<br/>
+| style="background-color: rgb(221, 221, 221)" | sample X<br/>
+| style="background-color: rgb(221, 221, 221)" | MC12 (RGC2)<br/>
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 4<br/>
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BM-ES{SixC-Ax:SAMY}Mtr</tt><br/>
+| style="background-color: rgb(221, 221, 221)" | 6bm:sixc_samy<br/>
+| style="background-color: rgb(221, 221, 221)" | sample Y<br/>
+| style="background-color: rgb(221, 221, 221)" | MC12 (RGC2)<br/>
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 5<br/>
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BM-ES{SixC-Ax:SAMZ}Mtr</tt><br/>
+| style="background-color: rgb(221, 221, 221)" | 6bm:sixc_samz<br/>
+| style="background-color: rgb(221, 221, 221)" | sample Z<br/>
+| style="background-color: rgb(221, 221, 221)" | MC12 (RGC2)<br/>
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 6<br/>
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BM-ES{SixC-Ax:Tbl_YD}Mtr</tt><br/>
+| style="background-color: rgb(221, 221, 221)" | 6bm:sixc_tyd<br/>
+| style="background-color: rgb(221, 221, 221)" | table Y downstream<br/>
+| style="background-color: rgb(221, 221, 221)" | MC12 (RGC2)<br/>
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 7<br/>
+|-
+| style="background-color: rgb(221, 221, 221)" | <tt>XF:06BM-ES{SixC-Ax:Tbl_YUI}Mtr</tt><br/>
+| style="background-color: rgb(221, 221, 221)" | 6bm:sixc_tyui<br/>
+| style="background-color: rgb(221, 221, 221)" | table Y upstream inboard<br/>
+| style="background-color: rgb(221, 221, 221)" | MC12 (RGC2)<br/>
+| style="text-align: center;  background-color: rgb(221, 221, 221)" | 8<br/>
+|-
+! rowspan="8" colspan="1" scope="row" | 
+Goniometer table
+
+and slits
+
+| <tt>XF:06BM-ES{SixC-Ax:Tbl_YUO}Mtr</tt><br/>
+| 6bm:sixc_tyuo<br/>
+| table Y upstream outboard<br/>
+| MC13 (RGC2)<br/>
+| style="text-align: center" | 1<br/>
+|-
+| <tt>XF:06BM-ES{SixC-Ax:Tbl_XU}Mtr</tt><br/>
+| 6bm:sixc_txu<br/>
+| table X upstream<br/>
+| MC13 (RGC2)<br/>
+| style="text-align: center" | 2<br/>
+|-
+| <tt>XF:06BM-ES{SixC-Ax:Tbl_XD}Mtr</tt><br/>
+| 6bm:sixc_txd<br/>
+| table X downstream<br/>
+| MC13 (RGC2)<br/>
+| style="text-align: center" | 3<br/>
+|-
+| <tt>XF:06BM-ES{SixC-Ax:Tbl_Z}Mtr</tt><br/>
+| 6bm:sixc_tz<br/>
+| table Z<br/>
+| MC13 (RGC2)<br/>
+| style="text-align: center" | 4<br/>
+|-
+| <tt>XF:06BM-ES{SixC-Ax:Slt1_T}Mtr</tt><br/>
+| 6bm:sixc_slt1_t<br/>
+| top slit<br/>
+| MC13 (RGC2)<br/>
+| style="text-align: center" | 5<br/>
+|-
+| <tt>XF:06BM-ES{SixC-Ax:Slt1_B}Mtr</tt><br/>
+| 6bm:sixc_slt1_b<br/>
+| bottom slit<br/>
+| MC13 (RGC2)<br/>
+| style="text-align: center" | 6<br/>
+|-
+| <tt>XF:06BM-ES{SixC-Ax:Slt1_I}Mtr</tt><br/>
+| 6bm:sixc_slt1_i<br/>
+| inboard slit<br/>
+| MC13 (RGC2)<br/>
+| style="text-align: center" | 7<br/>
+|-
+| <tt>XF:06BM-ES{SixC-Ax:Slt1_O}Mtr</tt><br/>
+| 6bm:sixc_slt1_o<br/>
+| outboard slit<br/>
+| MC13 (RGC2)<br/>
+| style="text-align: center" | 8<br/>
+|}
+
+
+
+== Configure a motor to kill the amplifier after each movement ==
+
+(From Adam Young at FMB-Oxford)
+
+The motors can be disabled after a movement and this can be set at the Delta Tau level.
+
+First you will need to connect to each MCS8+ with the beamline laptop and start PEWin.
+
+Then do the following:
+
+#Click on the 'View' menu at the top of the window. Then click 'Program/PLC Status (and upload)'.
+#Select PLC1 and click 'Upload'. An editor showing PLC1 will appear.
+#Scroll down to find the variables P105 to P805. The '1' to '8' part of these variables represent axis 1 to 8 on the MCS8+. The value of these variables determines whether or not the motors will be disabled after a move. They are likely all set to '0' meaning power stays on. The lateral motors are on axis 4 and 5 so P405 and P505 should be set to '1'.
+#Click on the yellow downwards pointing arrow on the toolbar in the editor. This downloads the modified PLC1 from the editor to the Delta Tau. Close the editor.
+#In the terminal window issue a 'save' to save the modified configuration to the Delta Tau non-volatile memory and issue '$$$' to refresh the controller.

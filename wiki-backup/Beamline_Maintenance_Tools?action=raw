@@ -1,0 +1,31 @@
+== Motor Controllers ==
+
+[[File:USB.png|right|USB.png]]On the Windows Laptop, use PEWIN.&nbsp; [http://www.deltatau.com/manuals/pdfs/PMAC%20Users.pdf PMAC User's Manual]
+
+The motor controllers are 10.6.130.81, .82, etc.&nbsp; You can communicate using PEWIN with the laptop on the 10.6.130.X network, with the laptop plugged into a DHCP port (it's address will be 10.6.128.213), or using a USB cable.&nbsp; Unplug the network adapter from the Delta Tau ''before'' plugging in the USB cable. The USB cable is the sort with an A-type plug on one end and a B-type on the other end.
+
+== MOXA Configuration ==
+
+On the Windows Laptop, use the NPort Admin Suite.&nbsp; It is pretty self-explanatory.&nbsp; Put the computer on the 10.6.130.X network, then ask the suite to do a search.&nbsp; When it finds a MOXA device (they should be 10.6.130.51, .52, etc), click on the configure button.&nbsp; It will query the device, then give a fairly self-explanatory set of tabs for configuring things on the device.
+
+[https://www.moxa.com/doc/manual/nport/5200/NPort5200_v1.pdf NPort5200 User Manual] -- The small Moxa devices supplied by FMBO are in this series.
+
+== Camera Configuration ==
+
+On the Windows Laptop, Vimba is the tool for the Allied Vision cameras supplied by FMBO (also the Prosilica GC in use at the XRD end station) for looking at the fluorescence screens in DM1, DM2, and end station FS.
+
+Vimba can also be installed on a Linux machine. From the Quick Start document:
+<pre>Installing Vimba SDK on Linux Necessary runtime libraries for executing Vimba Viewer are available with the Vimba download. 
+
+• Vimba ships as a tarball. Uncompress the archive with the command tar -xf ./AVTVimba.tgz to a directory you have 
+  writing privileges for. This creates a directory named AVTVimba. 
+
+• Navigate to AVTVimba/AVTGigETL and execute the shell script Install.sh with root privileges (for example 
+  sudo ./Install.sh). 
+
+• Vimba Viewer is now ready to use, and it can be found in Vimba/Viewer/Bin.</pre>
+
+The second step is essential or the viewer will be unable to find the cameras on the network.
+
+*[https://www.alliedvision.com/en/products/software.html Allied Vision homepage]
+*[https://www.alliedvision.com/en/support/technical-documentation/prosilica-gc-documentation.html Prosilica GC technical documentation]

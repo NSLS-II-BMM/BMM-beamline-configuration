@@ -1,0 +1,192 @@
+== Sample XY Stage ==
+
+[[File:SampleXY.jpg|right|100px|SampleXY.jpg]]Vertical stage is xafs_liny (alias for <tt>XF:06BMA-BI{XAFS-Ax:LinY}Mtr</tt>). Limits are [-1:485].
+
+Horizontal stage is xafs_linx (alias for <tt>XF:06BMA-BI{XAFS-Ax:LinX}Mtr</tt>).&nbsp; Limits are [140:-150]
+
+== Ion Chambers and electrometer ==
+
+<big><u>Voltage on ion chambers is 800 V</u>.</big> The 500 to 600 range seems to be in the tail end of the ohmic response.&nbsp; 700 V to 900 V seems pretty constant with constant flux.
+
+[[File:Electrometer.jpg|right|200px|Electrometer from Pete Siddons' group, used to read ion chambers.]]read signal from channel 1: <tt>caget XF:06BM-BI{EM:1}EM180:Current1:MeanValue_RBV</tt>
+
+stop: <tt>caput XF:06BM-BI{EM:1}EM180:Acquire 0</tt>
+
+start: <tt>caput XF:06BM-BI{EM:1}EM180:Acquire 1</tt>
+
+Set a tenth of second: <code><tt>caput XF:06BM-BI{EM:1}EM180:AveragingTime 0.1</tt></code>
+
+<tt>With the sampling time set at 4 miliseconds, a 0.1 second averaging time accumulates and averages 25 measurements.&nbsp; Similarly, a 0.5 second averaging time accumulates 125 measurements.</tt>
+
+== Reference foils ==
+
+[[File:Linxs.jpg|right|200px|Linxs.jpg]]
+
+Reference foils are mounted on stage xafs_linxs (alias for <tt>XF:06BMA-BI{XAFS-Ax:LinXS}Mtr</tt>) , thus can be programmed into a measurement macro.&nbsp; The top-most foil is at position xafs_linxs = -90, the bottom-most foil is at +90.
+
+== Motor parameters ==
+
+{| style="width: 700px" cellspacing="1" cellpadding="1" border="1"
+|-
+! scope="row" | <br/>
+! scope="col" | VMAX<br/>
+! scope="col" | VELO<br/>
+! scope="col" | MRES<br/>
+! scope="col" | DIR<br/>
+! scope="col" | OFF<br/>
+! scope="col" | HLM<br/>
+! scope="col" | LLM<br/>
+! scope="col" | aka<br/>
+|-
+! scope="row" | linx<br/>
+| 4<br/>
+| 4<br/>
+| 0.0003175<br/>
+| Neg<br/>
+| -60<br/>
+| <br/>
+| <br/>
+| <br/>
+|-
+! scope="row" | liny<br/>
+| 4<br/>
+| 4<br/>
+| 0.0003175<br/>
+| Pos<br/>
+| -25<br/>
+| <br/>
+| <br/>
+| <br/>
+|-
+! scope="row" | lins<br/>
+| 4<br/>
+| 4<br/>
+| 0.0003175<br/>
+| Pos<br/>
+| 0<br/>
+| <br/>
+| <br/>
+| <br/>
+|-
+! scope="row" | linxs<br/>
+| 4<br/>
+| 4<br/>
+| 0.000125<br/>
+| Neg<br/>
+| 18<br/>
+| <br/>
+| <br/>
+| <br/>
+|-
+! scope="row" | pitch<br/>
+| 0.25<br/>
+| 0.25<br/>
+| 0.000078125<br/>
+| Pos<br/>
+| 0.03<br/>
+| 10<br/>
+| -10<br/>
+| <br/>
+|-
+! scope="row" | roll<br/>
+| 0.25<br/>
+| 0.25<br/>
+| 0.000078125<br/>
+| Pos<br/>
+| -0.14<br/>
+| 10<br/>
+| -10<br/>
+| <br/>
+|-
+! scope="row" | roth<sup>1</sup><br/>
+| 1<br/>
+| 0.5<br/>
+| 3.90625e-06<br/>
+| Pos<br/>
+| -4.6<br/>
+| 65.4<br/>
+| -64.6<br/>
+| <br/>
+|-
+! scope="row" | rotb<sup>2</sup><br/>
+| 5<br/>
+| 5<br/>
+| 0.000390625<br/>
+| Neg<br/>
+| 46.532<br/>
+| 7200<br/>
+| -7200<br/>
+| wheel<br/>
+|-
+! scope="row" | ref<br/>
+| 15<br/>
+| 15<br/>
+| 0.0003901<br/>
+| Neg
+| 296.4993435<br/>
+| 7200<br/>
+| -7200<br/>
+| <br/>
+|-
+! scope="row" | rots<sup>3</sup><br/>
+| 5<br/>
+| 4<br/>
+| 0.000351748<br/>
+| Neg<br/>
+| 15.9325<br/>
+| 3600<br/>
+| -3600<br/>
+| <br/>
+|-
+! scope="row" | tbl_yu<br/>
+| 2<br/>
+| 2<br/>
+| 1.921875E-5<br/>
+| Pos<br/>
+| -64<br/>
+| <br/>
+| <br/>
+| <br/>
+|-
+! scope="row" | tbl_ydi<br/>
+| 2<br/>
+| 2<br/>
+| 1.921875E-5<br/>
+| Pos<br/>
+| 6<br/>
+| <br/>
+| <br/>
+| <br/>
+|-
+! scope="row" | tbl_ydo<br/>
+| 2<br/>
+| 2<br/>
+| 1.921875E-5<br/>
+| Pos<br/>
+| -17<br/>
+| <br/>
+| <br/>
+| <br/>
+|-
+! scope="row" | tbl_xu<br/>
+| 1<br/>
+| 1<br/>
+| 5E-5<br/>
+| Neg<br/>
+| -21.2<br/>
+| <br/>
+| <br/>
+| <br/>
+|-
+! scope="row" | tbl_xd<br/>
+| 1<br/>
+| 1<br/>
+| 5E-5<br/>
+| Neg<br/>
+| 23.4<br/>
+| <br/>
+| <br/>
+| <br/>
+|}
+
+<sup>1</sup> roth is the huber circle&nbsp;&nbsp;&nbsp; <sup>2</sup> rotb is the large Newmark rotary stage&nbsp;&nbsp; <sup>3</sup> rots is the small Newmark rotary stage

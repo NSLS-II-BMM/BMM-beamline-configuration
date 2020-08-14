@@ -1,0 +1,54 @@
+There is a row of switches on rack D, the rack next to the control station, that are used to disable the amplifiers for the MCS8 motor controllers.
+
+[[File:Kill switches.jpg|500px|Kill switches.jpg]]
+
+This is useful in the situation where an amlpifier fault is preventing motion on one or more axes. The most common culprits of this situation are the jacks on the M2 and M3 mirrors (m2_yu, m2_ydo, m2_ydi, m3_yu, m3_ydo, m3_ydi).
+
+When you suspect that a motor has an amplifier fault, toggle the appropriate switch to the off position.&nbsp; Wait 10 seconds (to be very safe...).&nbsp; Then toggle the switch back to the on position. The motor should be ready to go. These switches replace the shorted plugs that came attached to the "disable" port on the back side of the MCS8s.
+
+{| width="700" cellspacing="1" cellpadding="1" border="1"
+|-
+! scope="col" | MCS8<br/>
+! scope="col" | RGA label<br/>
+! scope="col" | RGD label<br/>
+! scope="col" | motors<br/>
+|-
+| MC02<br/>
+| 6BM-100149-RG:A1-PT1B3-A<br/>
+| 6BM-100149-RG:A1-PT1B3-B<br/>
+| DCM<br/>
+|-
+| MC03<br/>
+| 6BM-100150-RG:A1-PT1B3-A<br/>
+| 6BM-100150-RG:A1-PT1B3-B<br/>
+| slits2<br/>
+|-
+| MC04<br/>
+| 6BM-100151-RG:A1-PT1B3-A<br/>
+| 6BM-100151-RG:A1-PT1B3-B<br/>
+| M2 + DM2 FS<br/>
+|-
+| MC05<br/>
+| 6BM-100152-RG:A1-PT1B3-A<br/>
+| 6BM-100152-RG:A1-PT1B3-B<br/>
+| M3 + Filters<br/>
+|-
+| MC06<br/>
+| ''&lt;installed, not yet labeled&gt;''<br/>
+| <br/>
+| DM3 (bct,bpm,fs,foils)+ Slits3<br/>
+|}
+
+In the situation where toggling the switch does not clear the amplifier fault, the next troubleshooting step is to power cycle the MCS8.&nbsp; This is done by toggling the red, illuminated switch on the front of the MCS8.&nbsp; Wait for the red amplifier lights to stop flickering after turning off the MCS8, then turn the MCS8 back on.
+
+After power cycling the MCS8, it is '''necessary''' to re-home all the motors controlled by the MCS8.
+
+
+
+== MCS8 Connector ==
+
+The disable plug on the back of the MCS8 controllers is a Binder RS connector, part number 468-885. [https://uk.rs-online.com/web/p/industrial-automation-circular-connectors/0468885/?sra=pstk Here's an example].
+
+And here is the wiring diagram.&nbsp; Short the prongs on the opposite side of the alignment groove.
+
+[[File:Kill switch connector.png|RTENOTITLE]]

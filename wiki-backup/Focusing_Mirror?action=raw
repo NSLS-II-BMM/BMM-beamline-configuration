@@ -1,0 +1,45 @@
+= Bender =
+
+The homing sequence on the bender (MC04, channel 6) seems to have the wrong parity.&nbsp; Instead of moving to the negative limit, it moves to the positive limit.
+
+Rather than running the homing procedure, step to the negative limit.&nbsp; This can be done via EPICS or by issuing the <tt>#6j-</tt> command in the Pewin terminal.&nbsp; Adam Young tells me that the home marker is about +6000 steps from the negative limit, so move there and zero out the display -- <tt>#6HMZ</tt>.&nbsp; This will leave the bender reporting to EPICS that it is not homed, but it can be moved sensibly to a bend value.
+
+190,000 steps seems to be about right for the XAFS table.
+
+
+
+= End of Table =
+
+<code>In [563]: RE(move_m2(4.2))</code>
+
+<code>The M2 target is 4.20 mRad relative to the beam incident on M2</code>
+
+<code>Move M2 pitch to 2.80 mRad<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BCT:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 36.05<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xafs_yu:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 119.84<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xafs_yd:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 118.22<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (correction): 0.00</code>
+
+<code>q to quit -- any other key to begin moving motors ><br/>Out[563]: ()</code>
+
+<code>In [588]: m2.wh()<br/>M2:<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vertical =&nbsp; -4.349 mm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; YU&nbsp; =&nbsp; -6.152<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lateral&nbsp; =&nbsp;&nbsp; 0.000 mm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; YDO =&nbsp; -2.546<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pitch&nbsp;&nbsp;&nbsp; =&nbsp;&nbsp; 2.800 mrad&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; YDI =&nbsp; -2.546<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; roll&nbsp;&nbsp;&nbsp;&nbsp; =&nbsp;&nbsp; 0.000 mrad&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; XU&nbsp; =&nbsp; -0.129<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; yaw&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&nbsp;&nbsp; 0.200 mrad&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; XD&nbsp; =&nbsp;&nbsp; 0.129</code>
+
+
+
+<code>In [589]: dm3_bct.user_readback.value<br/>Out[589]: 34.6407</code>
+
++ bender at 200,000
+
+
+
+= XAFS position =
+
+[[File:Focused beam profile.png|frame|right|300px|Beam profile, focused at XAFS position (rotated by +90), each unit is 50 microns]]<code>In [703]: RE(move_m2(4.7))</code>
+
+<code>The M2 target is 4.70 mRad relative to the beam incident on M2</code>
+
+<code>Move M2 pitch to 2.30 mRad<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BCT:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 25.14<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xafs_yu:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 108.30<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xafs_yd:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 105.53<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (correction): 0.00</code>
+
+<code>q to quit -- any other key to begin moving motors ><br/>Out[703]: ()</code>
+
+<code>In [702]: m2.wh()<br/>M2:<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vertical =&nbsp; -4.349 mm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; YU&nbsp; =&nbsp; -5.830<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lateral&nbsp; =&nbsp;&nbsp; 0.000 mm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; YDO =&nbsp; -2.868<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pitch&nbsp;&nbsp;&nbsp; =&nbsp;&nbsp; 2.300 mrad&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; YDI =&nbsp; -2.868<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; roll&nbsp;&nbsp;&nbsp;&nbsp; =&nbsp;&nbsp; 0.000 mrad&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; XU&nbsp; =&nbsp; -0.129<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; yaw&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =&nbsp;&nbsp; 0.200 mrad&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; XD&nbsp; =&nbsp;&nbsp; 0.129</code>
+
+<code>In [704]: dm3_bct.user_readback.value<br/>Out[704]: 23.7383</code>
+
+bender at 210,000

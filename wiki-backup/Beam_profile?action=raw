@@ -1,0 +1,25 @@
+== Unfocused beam ==
+
+Here is the beam profile measured at the XAS station and at 11 keV. This was measured by rastering a 0.125 pinhole through the beam.&nbsp; The plot shows <code>1000*It/I0</code>.&nbsp; Note the computed horizontal structure of the beam shows through -- the instensity distribution is bimodal with peaks at about +/- 4.5 mm from the center.[[File:Pinhole.jpg|thumb|right|150px|125 &mu;m pinhole, rastered in front of beam]]
+
+[[File:Beam profile.png|RTENOTITLE]]
+
+== Focused beam ==
+
+Here is the beam profile measured at the XAS station and at 10 keV. This was measured by rastering a 0.125 pinhole through the beam. The plot shows <code>It/I0</code>.&nbsp;
+
+
+<pre>In [121]: m2.where()
+M2:
+        vertical =  -4.149 mm           YU  =  -6.226
+        lateral  =  -0.400 mm           YDO =  -2.072
+        pitch    =   3.225 mrad         YDI =  -2.072
+        roll     =  -0.000 mrad         XU  =  -0.416
+        yaw      =   0.024 mrad         XD  =  -0.385
+</pre>
+
+And the bender is at 190,000 counts.
+
+
+
+[[File:Quadem1 iti0 vs xafs linx xafs liny 3.png|RTENOTITLE]]

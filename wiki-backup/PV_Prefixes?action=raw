@@ -1,0 +1,160 @@
+==  ==
+
+= IOCs for Delta Tau Controllers =
+
+== <br/>MC01 (FMB MCS8) ==
+
+*XF:06BM-OP{Mir:M1-Ax:YU}Mtr
+*XF:06BM-OP{Mir:M1-Ax:YDO}Mtr
+*XF:06BM-OP{Mir:M1-Ax:YDI}Mtr
+*XF:06BM-OP{Mir:M1-Ax:XU}Mtr
+*XF:06BM-OP{Mir:M1-Ax:XD}Mtr
+
+
+
+== MCO2 (FMB MCS8) ==
+
+*XF:06BMA-OP{Mono:DCM1-Ax:Bragg}Mtr
+*XF:06BMA-OP{Mono:DCM1-Ax:Bragg2}Mtr
+*XF:06BMA-OP{Mono:DCM1-Ax:P2}Mtr
+*XF:06BMA-OP{Mono:DCM1-Ax:R2}Mtr
+*XF:06BMA-OP{Mono:DCM1-Ax:Per2}Mtr
+*XF:06BMA-OP{Mono:DCM1-Ax:Par2}Mtr
+*XF:06BMA-OP{Mono:DCM1-Ax:X}Mtr
+*XF:06BMA-OP{Mono:DCM1-Ax:Y}Mtr
+
+== <br/>MC03 (FMB MCS8) ==
+
+*XF:06BMA-OP{Slt:01-Ax:O}Mtr
+*XF:06BMA-OP{Slt:01-Ax:I}Mtr
+*XF:06BMA-OP{Slt:01-Ax:T}Mtr
+*XF:06BMA-OP{Slt:01-Ax:B}Mtr
+
+== MC04 (FMB MCS8) ==
+
+*XF:06BMA-OP{Mir:M2-Ax:YU}Mtr
+*XF:06BMA-OP{Mir:M2-Ax:YDO}Mtr
+*XF:06BMA-OP{Mir:M2-Ax:YDI}Mtr
+*XF:06BMA-OP{Mir:M2-Ax:XU}Mtr
+*XF:06BMA-OP{Mir:M2-Ax:XD}Mtr
+*XF:06BMA-OP{Mir:M2-Ax:Bend}Mtr
+*XF:06BMA-BI{Diag:02-Ax:Y}Mtr
+
+== MC05 (FMB MCS8) ==
+
+*XF:06BMA-OP{Mir:M3-Ax:YU}Mtr
+*XF:06BMA-OP{Mir:M3-Ax:YDO}Mtr
+*XF:06BMA-OP{Mir:M3-Ax:YDI}Mtr
+*XF:06BMA-OP{Mir:M3-Ax:XU}Mtr
+*XF:06BMA-OP{Mir:M3-Ax:XD}Mtr
+*XF:06BMA-BI{Fltr:01-Ax:Y1}Mtr
+*XF:06BMA-BI{Fltr:01-Ax:Y2}Mtr
+
+== MC06 (FMB MCS8) ==
+
+*XF:06BM-BI{FS:03-Ax:Y}Mtr
+*XF:06BM-BI{BPM:1-Ax:Y}Mtr
+*XF:06BM-BI{BCT-Ax:Y}Mtr
+*XF:06BM-BI{Fltr:01-Ax:Y}Mtr
+*XF:06BM-BI{Slt:02-Ax:O}Mtr
+*XF:06BM-BI{Slt:02-Ax:I}Mtr
+*XF:06BM-BI{Slt:02-Ax:T}Mtr
+*XF:06BM-BI{Slt:02-Ax:B}Mtr
+
+== MC07 (standard geobrick) ==
+
+*XF:06BMA-BI{XAFS-Ax:Tbl_YU}Mtr
+*XF:06BMA-BI{XAFS-Ax:Tbl_YDO}Mtr
+*XF:06BMA-BI{XAFS-Ax:Tbl_YDI}Mtr
+*XF:06BMA-BI{XAFS-Ax:Tbl_XU}Mtr
+*XF:06BMA-BI{XAFS-Ax:Tbl_XD}Mtr
+*XF:06BMA-BI{XAFS-Ax:RotH}Mtr
+*XF:06BMA-BI{XAFS-Ax:RotB}Mtr
+*XF:06BMA-BI{XAFS-Ax:RotS}Mtr
+
+== MC08 (standard geobrick) ==
+
+*XF:06BMA-BI{XAFS-Ax:LinY}Mtr
+*XF:06BMA-BI{XAFS-Ax:LinX}Mtr
+*XF:06BMA-BI{XAFS-Ax:LinS}Mtr
+*XF:06BMA-BI{XAFS-Ax:LinXS}Mtr
+*XF:06BMA-BI{XAFS-Ax:Pitch}Mtr
+*XF:06BMA-BI{XAFS-Ax:Roll}Mtr
+*XF:06BMA-BI{XAFS-Ax:Mtr7}Mtr
+*XF:06BMA-BI{XAFS-Ax:Mtr8}Mtr
+
+== <br/>MC11 (standard geobrick) ==
+
+*XF:06BM-ES{SixC-Ax:VTTH}Mtr
+*XF:06BM-ES{SixC-Ax:VTH}Mtr
+*XF:06BM-ES{SixC-Ax:CHI}Mtr
+*XF:06BM-ES{SixC-Ax:PHI}Mtr
+*XF:06BM-ES{SixC-Ax:HTH}Mtr
+*XF:06BM-ES{SixC-Ax:HTTH}Mtr
+*XF:06BM-ES{SixC-Ax:ANAL}Mtr
+*XF:06BM-ES{SixC-Ax:DET}Mtr
+
+== <br/>MC12 (standard geobrick) ==
+
+*XF:06BM-ES{SixC-Ax:DETHOR}Mtr
+*XF:06BM-ES{SixC-Ax:WHEEL1}Mtr
+*XF:06BM-ES{SixC-Ax:WHEEL2}Mtr
+*XF:06BM-ES{SixC-Ax:SAMX}Mtr
+*XF:06BM-ES{SixC-Ax:SAMY}Mtr
+*XF:06BM-ES{SixC-Ax:SAMZ}Mtr
+*XF:06BM-ES{SixC-Ax:Tbl_YD}Mtr
+*XF:06BM-ES{SixC-Ax:Tbl_YUI}Mtr
+
+== <br/>MC13 (standard geobrick) ==
+
+*XF:06BM-ES{SixC-Ax:Tbl_YUO}Mtr
+*XF:06BM-ES{SixC-Ax:Tbl_XU}Mtr
+*XF:06BM-ES{SixC-Ax:Tbl_XD}Mtr
+*XF:06BM-ES{SixC-Ax:Tbl_Z}Mtr
+*XF:06BM-ES{SixC-Ax:Slt1_T}Mtr
+*XF:06BM-ES{SixC-Ax:Slt1_B}Mtr
+*XF:06BM-ES{SixC-Ax:Slt1_I}Mtr
+*XF:06BM-ES{SixC-Ax:Slt1_O}Mtr
+
+== <br/>piE625-M2 (piezo controller) ==
+
+*XF:06BM-OP{M2:1-Ax:FPit}Mtr
+
+== <br/>piE625-M3 (piezo controller) ==
+
+*XF:06BM-OP{M3:1-Ax:FPit}Mtr
+
+== <br/>piE625-mono (piezo controller) ==
+
+*XF:06BM-OP{Mono:1-Ax:FPit}Mtr
+*XF:06BM-OP{Mono:1-Ax:FRoll}Mtr
+
+== <br/>quadEM-1 (standard Siddons quadEM) ==
+
+*XF:06BM-BI{EM:1}EM180
+
+== <br/>quadEM-2 (standard Siddons quadEM) ==
+
+*XF:06BM-BI{EM:2}EM180
+
+== <br/>I400 (FMBO I400 electrometer) ==
+
+*XF:06BM-BI{IM:1}
+
+
+
+== Prosilica Cameras (standard AreaDetector interface) ==
+
+*XF:06BM-BI{Scr:1}cam1
+*XF:06BM-BI{Scr:2}cam1
+*XF:06BM-BI{Scr:3}cam1
+
+
+
+== VME crate / Struck scaler ==
+
+*XF:06BM-ES:1{Sclr:1}
+
+== Pilatus / AreaDetector ==
+
+*XF:06BM-ES{Det:PIL100k}
