@@ -12,10 +12,11 @@ import json
 HBARC = 1973.27053324
 
 ## this is the source of the BMM_dcm numbers
-execfile('/home/xf06bm/.ipython/profile_collection/startup/19-dcm-parameters.py')
+exec(open('/home/xf06bm/.ipython/profile_collection/startup/BMM/dcm_parameters.py').read())
+BMM_dcm = dcm_parameters()
 ## this keeps those essential parameters in a single location for BlueSky and non-BlueSky applications
 
-GITREPO = '/home/bravel/git/BMM-beamline-configuration/'
+GITREPO = '/home/xf06bm/git/BMM-beamline-configuration/'
 MOTORDATA = json.load(open(os.path.join(GITREPO, 'Modes.json')))
 
 KTOE = 3.8099819442818976
