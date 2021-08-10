@@ -14,6 +14,11 @@ import datetime, time
 from numpy import pi, sin, cos, arcsin, deg2rad
 HBARC = 1973.27053324
 
+import redis
+redis_host = 'xf06bm-ioc2'
+rkvs = redis.Redis(host=redis_host, port=6379, db=0)
+
+
 xrd = False
 try:
     if sys.argv[1].lower() == 'xrd':
@@ -52,8 +57,10 @@ dcmx         = epics.Motor('XF:06BMA-OP{Mono:DCM1-Ax:X}Mtr')
 sample       = {'x'     : epics.Motor('XF:06BMA-BI{XAFS-Ax:LinX}Mtr'),
                 'y'     : epics.Motor('XF:06BMA-BI{XAFS-Ax:LinY}Mtr'),
                 'wheel' : epics.Motor('XF:06BMA-BI{XAFS-Ax:RotB}Mtr'),
+                'garot' : epics.Motor('XF:06BMA-BI{XAFS-Ax:Mtr8}Mtr'),
                 'pitch' : epics.Motor('XF:06BMA-BI{XAFS-Ax:Roll}Mtr'),
-                'ref'   : epics.Motor('XF:06BMA-BI{XAFS-Ax:Ref}Mtr')}
+                'ref'   : epics.Motor('XF:06BMA-BI{XAFS-Ax:Ref}Mtr'),
+                'det'   : epics.Motor('XF:06BMA-BI{XAFS-Ax:LinS}Mtr')}
 vac          = [epics.PV("XF:06BMA-VA{FS:1-CCG:1}P:Raw-I"),
                 epics.PV("XF:06BMA-VA{Mono:DCM-CCG:1}P:Raw-I"),
                 epics.PV("XF:06BMA-VA{FS:2-CCG:1}P:Raw-I"),
@@ -303,9 +310,15 @@ while waiting:
         #                 shutters        current       vacuum, temperatures, gate valves
         template = " [%s] [%s] [%s] [%s]  ring: %s  %s  %s: %s %s %s: %s %s %s: %s" + \
                    "\n %s: %s  %s  %s: %7.3f nA   %s: %7.3f nA   %s: %7.3f nA                                             %s %s" + \
-                   "\n %s X: %8.3f  | Y: %7.3f  | wheel: %2d | pitch: %7.3f  | ref: %2d  | slits: %5.2f x %5.2f   %s"
+                   "\n %s X: %8.3f  | Y: %7.3f  | %s: %2d | pitch: %7.3f  | ref: %2d  | det: %5.1f | slits: %5.2f x %5.2f   %s"
         #try:
-        slot = round((15+sample['wheel'].RBV) / (-15)) % 24
+        if rkvs.get('BMM:automation:type').decode('utf-8') == 'glancing_angle':
+            instrument = 'spnnr'
+            cur = sample['garot'].RBV % 360
+            slot = (9-round(cur/45)) % 8
+        else:
+            instrument = 'wheel'
+            slot = round((15+sample['wheel'].RBV) / (-15)) % 24
         ref  = round((-15+sample['ref'].RBV) / (-15)) % 24
         if slot == 0: slot = 24
         writeline(template  %
@@ -321,8 +334,8 @@ while waiting:
                        colored('XAS',  'white', attrs=['bold']), scan,
                        
                        colored('Sample '+triangle, 'yellow', attrs=['bold']), sample['x'].RBV, sample['y'].RBV,
-                       slot, sample['pitch'].RBV, ref,
-                       slits[0].RBV-slits[1].RBV, slits[2].RBV-slits[3].RBV, left,
+                       instrument, slot, sample['pitch'].RBV, ref, sample['det'].RBV,
+                       slits[0].RBV-slits[1].RBV, slits[2].RBV-slits[3].RBV, '', # left
                    ))
         #except:
         #    pass
