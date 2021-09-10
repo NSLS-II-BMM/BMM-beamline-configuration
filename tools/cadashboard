@@ -18,7 +18,6 @@ import redis
 redis_host = 'xf06bm-ioc2'
 rkvs = redis.Redis(host=redis_host, port=6379, db=0)
 
-
 xrd = False
 try:
     if sys.argv[1].lower() == 'xrd':
@@ -309,8 +308,8 @@ while waiting:
     else:
         #                 shutters        current       vacuum, temperatures, gate valves
         template = " [%s] [%s] [%s] [%s]  ring: %s  %s  %s: %s %s %s: %s %s %s: %s" + \
-                   "\n %s: %s  %s  %s: %7.3f nA   %s: %7.3f nA   %s: %7.3f nA                                             %s %s" + \
-                   "\n %s X: %8.3f  | Y: %7.3f  | %s: %2d | pitch: %7.3f  | ref: %2d  | det: %5.1f | slits: %5.2f x %5.2f   %s"
+                   "\n %s: %s  %s %s %2s %2s  %s: %7.3f nA   %s: %7.3f nA   %s: %7.3f nA                                   %s %s" + \
+                   "\n %s X: %8.3f  | Y: %7.3f  | %s: %2d | pitch: %7.3f  | ref: %4s  | det: %5.1f | slits: %5.2f x %5.2f   %s"
         #try:
         if rkvs.get('BMM:automation:type').decode('utf-8') == 'glancing_angle':
             instrument = 'spnnr'
@@ -320,6 +319,7 @@ while waiting:
             instrument = 'wheel'
             slot = round((15+sample['wheel'].RBV) / (-15)) % 24
         ref  = round((-15+sample['ref'].RBV) / (-15)) % 24
+        ref = rkvs.lindex('BMM:reference:list', ref-1).decode('utf-8')
         if slot == 0: slot = 24
         writeline(template  %
                       (bl_show, bmps_show, sha_show, shb_show, ring_show, strut,
@@ -328,13 +328,15 @@ while waiting:
                        colored('GV',   'white', attrs=['bold']), valves_string(),
                        
                        colored('mono', 'white', attrs=['bold']), colored('%.1f eV' % current_energy, 'cyan', attrs=['bold']), strut,
+                       colored(rkvs.get('BMM:pds:element').decode('utf-8'), 'yellow', attrs=['bold']),
+                       colored(rkvs.get('BMM:pds:edge').decode('utf-8'), 'yellow', attrs=['bold']), strut, 
                        colored('I0',   'white', attrs=['bold']), i0val,
                        colored('It',   'white', attrs=['bold']), itval,
                        colored('Ir',   'white', attrs=['bold']), irval,
                        colored('XAS',  'white', attrs=['bold']), scan,
                        
                        colored('Sample '+triangle, 'yellow', attrs=['bold']), sample['x'].RBV, sample['y'].RBV,
-                       instrument, slot, sample['pitch'].RBV, ref, sample['det'].RBV,
+                       instrument, slot, sample['pitch'].RBV, str(ref), sample['det'].RBV,
                        slits[0].RBV-slits[1].RBV, slits[2].RBV-slits[3].RBV, '', # left
                    ))
         #except:
