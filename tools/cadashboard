@@ -39,9 +39,9 @@ def signal_handler(sig, frame):
 signal.signal(signal.SIGINT, signal_handler)
 
 ## ----- various PVs and other scalars
-i0           = epics.PV('XF:06BM-BI{EM:1}EM180:Current1:MeanValue_RBV')
-it           = epics.PV('XF:06BM-BI{EM:1}EM180:Current2:MeanValue_RBV')
-ir           = epics.PV('XF:06BM-BI{EM:1}EM180:Current3:MeanValue_RBV')
+i0           = epics.PV('XF:06BM-BI{EM:2}EM180:Current1:MeanValue_RBV')
+it           = epics.PV('XF:06BM-BI{EM:2}EM180:Current2:MeanValue_RBV')
+ir           = epics.PV('XF:06BM-BI{EM:2}EM180:Current3:MeanValue_RBV')
 bicron       = epics.PV('XF:06BM-ES:1{Sclr:1}.S25')
 ring_current = epics.PV('SR:OPS-BI{DCCT:1}I:Real-I')
 
@@ -90,12 +90,12 @@ valves       = [epics.PV('XF:06BMA-VA{FS:1-GV:1}Pos-Sts'),
                 epics.PV('XF:06BMA-VA{Mir:3-GV:1}Pos-Sts'),
                 epics.PV('XF:06BMB-VA{BT:1-GV:1}Pos-Sts'), ]
 
-delta         = epics.Motor('XF:06BM-ES{SixC-Ax:VTTH}Mtr')
-eta           = epics.Motor('XF:06BM-ES{SixC-Ax:VTH}Mtr')
-chi           = epics.Motor('XF:06BM-ES{SixC-Ax:CHI}Mtr')
-phi           = epics.Motor('XF:06BM-ES{SixC-Ax:PHI}Mtr')
-mu            = epics.Motor('XF:06BM-ES{SixC-Ax:HTH}Mtr')
-nu            = epics.Motor('XF:06BM-ES{SixC-Ax:HTTH}Mtr')
+# delta         = epics.Motor('XF:06BM-ES{SixC-Ax:VTTH}Mtr')
+# eta           = epics.Motor('XF:06BM-ES{SixC-Ax:VTH}Mtr')
+# chi           = epics.Motor('XF:06BM-ES{SixC-Ax:CHI}Mtr')
+# phi           = epics.Motor('XF:06BM-ES{SixC-Ax:PHI}Mtr')
+# mu            = epics.Motor('XF:06BM-ES{SixC-Ax:HTH}Mtr')
+# nu            = epics.Motor('XF:06BM-ES{SixC-Ax:HTTH}Mtr')
 
 slits         = [epics.Motor('XF:06BM-BI{Slt:02-Ax:O}Mtr'),
                  epics.Motor('XF:06BM-BI{Slt:02-Ax:I}Mtr'),
@@ -311,7 +311,7 @@ while waiting:
                    "\n %s: %s  %s %s %2s %2s  %s: %7.3f nA   %s: %7.3f nA   %s: %7.3f nA                                   %s %s" + \
                    "\n %s X: %8.3f  | Y: %7.3f  | %s: %2d | pitch: %7.3f  | ref: %4s  | det: %5.1f | slits: %5.2f x %5.2f   %s"
         #try:
-        if rkvs.get('BMM:automation:type').decode('utf-8') == 'glancing_angle':
+        if 'glancing' in rkvs.get('BMM:automation:type').decode('utf-8'):
             instrument = 'spnnr'
             cur = sample['garot'].RBV % 360
             slot = (9-round(cur/45)) % 8
