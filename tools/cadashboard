@@ -24,7 +24,17 @@ try:
         xrd = True
 except:
     pass
-        
+
+maintenance = False
+try:
+    if 'main' in sys.argv[1].lower():
+        maintenance = True
+except:
+    pass
+
+
+
+
 def writeline(string):
     #sys.stdout.write('\r')
     #sys.stdout.flush()
@@ -38,17 +48,33 @@ def signal_handler(sig, frame):
     sys.exit(0)  
 signal.signal(signal.SIGINT, signal_handler)
 
+
+#heartbeat = '.o0o' # '-\|/'
+heartbeat = ['|.     |',
+             '| .    |',
+             '|  .   |', 
+             '|   .  |', 
+             '|    . |', 
+             '|     .|', 
+             '|    . |', 
+             '|   .  |', 
+             '|  .   |', 
+             '| .    |',
+             ]
+count = 0;
+
 ## ----- various PVs and other scalars
 i0           = epics.PV('XF:06BM-BI{EM:2}EM180:Current1:MeanValue_RBV')
 it           = epics.PV('XF:06BM-BI{EM:2}EM180:Current2:MeanValue_RBV')
 ir           = epics.PV('XF:06BM-BI{EM:2}EM180:Current3:MeanValue_RBV')
-bicron       = epics.PV('XF:06BM-ES:1{Sclr:1}.S25')
+#bicron       = epics.PV('XF:06BM-ES:1{Sclr:1}.S25')
 ring_current = epics.PV('SR:OPS-BI{DCCT:1}I:Real-I')
 
-bl           = epics.PV('SR:C06-EPS{PLC:1}Sts:BM_BE_Enbl-Sts')
-bmps         = epics.PV('SR:C06-EPS{PLC:1}Sts:BM_BMPS_Opn-Sts')
-sha          = epics.PV('XF:06BM-PPS{Sh:FE}Pos-Sts')
-shb          = epics.PV('XF:06BM-PPS{Sh:A}Pos-Sts')
+if maintenance is False:
+    bl           = epics.PV('SR:C06-EPS{PLC:1}Sts:BM_BE_Enbl-Sts')
+    bmps         = epics.PV('SR:C06-EPS{PLC:1}Sts:BM_BMPS_Opn-Sts')
+    sha          = epics.PV('XF:06BM-PPS{Sh:FE}Pos-Sts')
+    shb          = epics.PV('XF:06BM-PPS{Sh:A}Pos-Sts')
 
 bragg        = epics.Motor('XF:06BMA-OP{Mono:DCM1-Ax:Bragg}Mtr')
 dcmx         = epics.Motor('XF:06BMA-OP{Mono:DCM1-Ax:X}Mtr')
@@ -80,9 +106,10 @@ temperatures = [epics.PV('XF:06BMA-OP{Mono:DCM-Crys:1}T-I-I'),
                 epics.PV('XF:06BMA-OP{Mir:3}T:1-I-I'),
                 epics.PV('XF:06BMA-OP{Mir:3}T:2-I-I'),]
 
-fe_valves    = [epics.PV('FE:C06B-VA{GV:1}DB:Pos-Sts'),
-                epics.PV('FE:C06B-VA{GV:2}DB:Pos-Sts'),
-                epics.PV('FE:C06B-VA{GV:3}DB:Pos-Sts'),]
+if maintenance is False:
+    fe_valves    = [epics.PV('FE:C06B-VA{GV:1}DB:Pos-Sts'),
+                    epics.PV('FE:C06B-VA{GV:2}DB:Pos-Sts'),
+                    epics.PV('FE:C06B-VA{GV:3}DB:Pos-Sts'),]
 valves       = [epics.PV('XF:06BMA-VA{FS:1-GV:1}Pos-Sts'),
                 epics.PV('XF:06BMA-VA{BS:PB-GV:1}Pos-Sts'),
                 epics.PV('XF:06BMA-VA{FS:2-GV:1}Pos-Sts'),
@@ -107,6 +134,8 @@ def vac_string():
     for count, pv in enumerate(vac):
         if pv.get() == 'LO<E-11':
             color = 'yellow'
+        elif pv.get() == 'OFF':
+            color = 'blue'
         elif float(pv.get()) > 9.0e-8:
             color = 'red'
         else:
@@ -149,10 +178,16 @@ def temperature_string():
     return string
 
 def valves_string():
+    global maintenance
     string = 'FE:'
-    for count, pv in enumerate(fe_valves):
-        color = 'green' if fe_valves[count].get() == 1 else 'red'
-        string += colored('%d' % (count+1), color, attrs=['bold'])
+    #if maintenance is False:
+    #    string += colored('123', 'red', attrs=['bold'])
+    try:
+        for count, pv in enumerate(fe_valves):
+            color = 'green' if fe_valves[count].get() == 1 else 'red'
+            string += colored('%d' % (count+1), color, attrs=['bold'])
+    except:
+        string += colored('123', 'red', attrs=['bold'])
     string += ' BL:'
     for count, pv in enumerate(valves):
         color = 'green' if valves[count].get() == 1 else 'red'
@@ -169,38 +204,49 @@ print('\n')
 waiting = True
 while waiting:
 
+    count += 1
+    count = count % len(heartbeat)
     #xrd = False
     #if m2.vert < 0 and m2.pitch > 3:
     #    xrd = True
     
     ## ----- shutters and ring current
-    if bl.get() == 0:
+    if maintenance is True:
         bl_show = colored('Dis', 'red', attrs=['bold'])
-    else:
-        bl_show = colored('Ena', 'green', attrs=['bold'])
-        
-    if bmps.get() == 0:
         bmps_show = colored('BMPS', 'red', attrs=['bold'])
-    else:
-        bmps_show = colored('BMPS', 'green', attrs=['bold'])
-        
-    if sha.get() == 1:
         sha_show = colored('A shutter', 'red', attrs=['bold'])
-    else:
-        sha_show = colored('A shutter', 'green', attrs=['bold'])
-        
-    if shb.get() == 1:
         shb_show = colored('B shutter', 'red', attrs=['bold'])
     else:
-        shb_show = colored('B shutter', 'green', attrs=['bold'])
-
-    try:
-        if ring_current.get() > 100:
-            ring_show = colored('%5.1f mA' % ring_current.get(), 'cyan', attrs=None)
+        if bl.get() == 0:
+            bl_show = colored('Dis', 'red', attrs=['bold'])
         else:
-            ring_show = colored('%5.1f mA' % ring_current.get(), 'red', attrs=None)
-    except:
-            ring_show = colored('--------', 'red', attrs=None)
+            bl_show = colored('Ena', 'green', attrs=['bold'])
+
+        if bmps.get() == 0:
+            bmps_show = colored('BMPS', 'red', attrs=['bold'])
+        else:
+            bmps_show = colored('BMPS', 'green', attrs=['bold'])
+
+        if sha.get() == 1:
+            sha_show = colored('A shutter', 'red', attrs=['bold'])
+        else:
+            sha_show = colored('A shutter', 'green', attrs=['bold'])
+
+        if shb.get() == 1:
+            shb_show = colored('B shutter', 'red', attrs=['bold'])
+        else:
+            shb_show = colored('B shutter', 'green', attrs=['bold'])
+
+    if maintenance is True:
+        ring_show = colored('maint', 'red', attrs=None)
+    else:
+        try:
+            if ring_current.get() > 100:
+                ring_show = colored('%5.1f mA' % ring_current.get(), 'cyan', attrs=None)
+            else:
+                ring_show = colored('%5.1f mA' % ring_current.get(), 'cyan', attrs=None)
+        except:
+                ring_show = colored(' ??? ', 'red', attrs=None)
 
     ## ----- ion chamber signals
     i0val = 0
@@ -276,13 +322,15 @@ while waiting:
         current_energy = (2*pi*HBARC) / (2*BMM_dcm.dspacing_111*sin(deg2rad(bragg.RBV)))
     else:
         current_energy = (2*pi*HBARC) / (2*BMM_dcm.dspacing_311*sin(deg2rad(bragg.RBV)))
+    current_energy = (2*pi*HBARC) / (2*BMM_dcm.dspacing_111*sin(deg2rad(bragg.RBV)))
 
+    
     ## ----- update the display
     if xrd:
         #                 shutters        current       vacuum, temperatures, gate valves
         template = " [%s] [%s] [%s] [%s]  ring: %s  %s  %s: %s %s %s: %s %s %s: %s" + \
                    "\n %s: %s  %s  %s: %6d counts                                                                        %s: %s" + \
-                   "\n %s %s: %8.3f | %s: %8.3f | %s: %8.3f | %s: %8.3f | %s: %8.3f | %s: %8.3f            "
+                   "\n %s %s: %8.3f | %s: %8.3f | %s: %8.3f | %s: %8.3f | %s: %8.3f | %s: %8.3f            %s"
         try:
             writeline(template  %
                       (bl_show, bmps_show, sha_show, shb_show, ring_show, strut,
@@ -301,6 +349,8 @@ while waiting:
                        u'\u03C6', phi.RBV,
                        u'\u03BC', mu.RBV,
                        u'\u03BD', nu.RBV,
+
+                       heartbeat[count]
                    ))
         except:
             pass
@@ -311,10 +361,15 @@ while waiting:
                    "\n %s: %s  %s %s %2s %2s  %s: %7.3f nA   %s: %7.3f nA   %s: %7.3f nA                                   %s %s" + \
                    "\n %s X: %8.3f  | Y: %7.3f  | %s: %2d | pitch: %7.3f  | ref: %4s  | det: %5.1f | slits: %5.2f x %5.2f   %s"
         #try:
-        if 'glancing' in rkvs.get('BMM:automation:type').decode('utf-8'):
+        thisinst = rkvs.get('BMM:automation:type').decode('utf-8')
+        if 'glancing' in thisinst:
             instrument = 'spnnr'
             cur = sample['garot'].RBV % 360
             slot = (9-round(cur/45)) % 8
+        # elif 'wheel' in thisinst:
+        #    instrument = 'wheel'
+        #    slot = round((15+sample['wheel'].RBV) / (-15)) % 24
+        #    
         else:
             instrument = 'wheel'
             slot = round((15+sample['wheel'].RBV) / (-15)) % 24
@@ -337,7 +392,7 @@ while waiting:
                        
                        colored('Sample '+triangle, 'yellow', attrs=['bold']), sample['x'].RBV, sample['y'].RBV,
                        instrument, slot, sample['pitch'].RBV, str(ref), sample['det'].RBV,
-                       slits[0].RBV-slits[1].RBV, slits[2].RBV-slits[3].RBV, '', # left
+                       slits[0].RBV-slits[1].RBV, slits[2].RBV-slits[3].RBV, heartbeat[count], # left
                    ))
         #except:
         #    pass
