@@ -49,17 +49,17 @@ def signal_handler(sig, frame):
 signal.signal(signal.SIGINT, signal_handler)
 
 
-#heartbeat = '.o0o' # '-\|/'
-heartbeat = ['|.     |',
-             '| .    |',
-             '|  .   |', 
-             '|   .  |', 
-             '|    . |', 
-             '|     .|', 
-             '|    . |', 
-             '|   .  |', 
-             '|  .   |', 
-             '| .    |',
+# heartbeat = '<^>v'  # '.o0o' # '-\|/'
+heartbeat = ['|-     |',
+             '| -    |',
+             '|  -   |', 
+             '|   -  |', 
+             '|    - |', 
+             '|     -|', 
+             '|    - |', 
+             '|   -  |', 
+             '|  -   |', 
+             '| -    |',
              ]
 count = 0;
 
@@ -117,12 +117,13 @@ valves       = [epics.PV('XF:06BMA-VA{FS:1-GV:1}Pos-Sts'),
                 epics.PV('XF:06BMA-VA{Mir:3-GV:1}Pos-Sts'),
                 epics.PV('XF:06BMB-VA{BT:1-GV:1}Pos-Sts'), ]
 
-# delta         = epics.Motor('XF:06BM-ES{SixC-Ax:VTTH}Mtr')
-# eta           = epics.Motor('XF:06BM-ES{SixC-Ax:VTH}Mtr')
-# chi           = epics.Motor('XF:06BM-ES{SixC-Ax:CHI}Mtr')
-# phi           = epics.Motor('XF:06BM-ES{SixC-Ax:PHI}Mtr')
-# mu            = epics.Motor('XF:06BM-ES{SixC-Ax:HTH}Mtr')
-# nu            = epics.Motor('XF:06BM-ES{SixC-Ax:HTTH}Mtr')
+if xrd is True:
+    delta         = epics.Motor('XF:06BM-ES{SixC-Ax:VTTH}Mtr')
+    eta           = epics.Motor('XF:06BM-ES{SixC-Ax:VTH}Mtr')
+    chi           = epics.Motor('XF:06BM-ES{SixC-Ax:CHI}Mtr')
+    phi           = epics.Motor('XF:06BM-ES{SixC-Ax:PHI}Mtr')
+    mu            = epics.Motor('XF:06BM-ES{SixC-Ax:HTH}Mtr')
+    nu            = epics.Motor('XF:06BM-ES{SixC-Ax:HTTH}Mtr')
 
 slits         = [epics.Motor('XF:06BM-BI{Slt:02-Ax:O}Mtr'),
                  epics.Motor('XF:06BM-BI{Slt:02-Ax:I}Mtr'),
@@ -193,6 +194,22 @@ def valves_string():
         color = 'green' if valves[count].get() == 1 else 'red'
         string += colored('%d' % (count+1), color, attrs=['bold'])
     return string
+
+
+def remaining():
+    elapsed = (datetime.datetime.timestamp(datetime.datetime.now()) - float(rkvs.get('BMM:scan:starttime').decode('utf8')))
+    try:
+        estimate = float(rkvs.get('BMM:scan:estimated'))
+    except:
+        return ''
+    if estimate == 0:
+        return ''
+    remaining = estimate - elapsed
+    if remaining < 0:
+        return '(almost done)'
+    minutes = int(remaining/60.)
+    seconds = round(remaining - minutes*60)
+    return f'({minutes} min, {seconds} sec)'
 
 exec(open('/home/xf06bm/.ipython/profile_collection/startup/BMM/dcm_parameters.py').read())
 
@@ -266,56 +283,23 @@ while waiting:
         pass
     
     ## ----- current time for time updates
-    now  = datetime.datetime.now().strftime("%s")
-    left = colored('%28s' %  ' ', 'grey')
-    leftcolor = ('grey')
-    scan =     colored('  idle  ', 'grey', 'on_white')
+    scan =     colored('   idle   ', 'grey', 'on_white')
+    scantype = rkvs.get('BMM:scan:type').decode('utf-8')
     if xrd:
         scan = colored('not in use', 'grey', 'on_white')
-    
-    ## ----- this is an XAFS scan
-    if os.path.isfile('/home/xf06bm/Data/.xafs.scan.running'):
-        with open('/home/xf06bm/Data/.xafs.scan.running', "r") as f:
-            start = float(f.readline())
-            estimate = f.readline()
-        elapsed = float(now) - start
-        remaining = float(estimate[:-1]) - elapsed   # seconds
-        if remaining < 0: remaining = 0
-        hours = int(remaining/60./60.)
-        minutes = round((remaining - hours*60*60) / 60)
-        left = ' ~ %d h, %d m remaining  ' % (hours, minutes)
-        left = colored('%28s' % left, 'grey', 'on_magenta')
-        scan = colored('%-24s' % ' xafs scan ', 'grey', 'on_magenta')
-
-    ## ----- this is a line scan
-    elif os.path.isfile('/home/xf06bm/Data/.line.scan.running'):
-        scan = colored('%-24s' % ' line scan ', 'grey', 'on_cyan')
-        left = colored('%-28s' % '  ', 'grey', 'on_cyan')
-
-    ## ----- this is an area scan
-    elif os.path.isfile('/home/xf06bm/Data/.area.scan.running'):
-        with open('/home/xf06bm/Data/.area.scan.running', "r") as f:
-            start = float(f.readline())
-            estimate = f.readline()
-        elapsed = float(now) - start
-        remaining = int(estimate[:-1]) - elapsed # seconds
-        if remaining < 0: remaining = 0
-        minutes = int(remaining/60.)
-        seconds = round(remaining - minutes*60)
-        left = ' ~ %d m, %d s remaining  ' % (minutes, seconds)
-        left = colored('%28s' % left, 'grey', 'on_yellow')
-        scan = colored('%-24s' % ' area scan ', 'grey', 'on_yellow')
-        
-    ## ----- this is a time scan
-    elif os.path.isfile('/home/xf06bm/Data/.time.scan.running'):
-        with open('/home/xf06bm/Data/.time.scan.running', "r") as f:
-            start = float(f.readline())
-        elapsed = float(now) - start
-        minutes = int(elapsed/60.)
-        seconds = round(elapsed - minutes*60)
-        left = ' ~ %d m, %d s elapsed' % (minutes, seconds)
-        left = colored('%28s' % left, 'grey', 'on_blue')
-        scan = colored('%-24s' % ' time scan ', 'grey', 'on_blue', attrs=['bold'])
+        scantype = 'idle'
+    else
+        ## ----- type of scan (xafs | line | area | time)
+        if scantype == 'xafs':
+            backdrop = 'on_magenta'
+        elif scantype == 'line':
+            backdrop = 'on_cyan'
+        elif scantype == 'area':
+            backdrop = 'on_yellow'
+        elif scantype == 'time':
+            backdrop = 'on_blue'
+        if scantype != 'idle':
+            scan = colored(f'{scantype} scan {remaining()}', 'white', backdrop)
 
     ## ----- update the energy
     if dcmx.RBV < 10:
@@ -358,8 +342,8 @@ while waiting:
     else:
         #                 shutters        current       vacuum, temperatures, gate valves
         template = " [%s] [%s] [%s] [%s]  ring: %s  %s  %s: %s %s %s: %s %s %s: %s" + \
-                   "\n %s: %s  %s %s %2s %2s  %s: %7.3f nA   %s: %7.3f nA   %s: %7.3f nA                                   %s %s" + \
-                   "\n %s X: %8.3f  | Y: %7.3f  | %s: %2d | pitch: %7.3f  | ref: %4s  | det: %5.1f | slits: %5.2f x %5.2f   %s"
+                   "\n %s: %s  %s %s %2s %2s  %s: %7.3f nA   %s: %7.3f nA   %s: %7.3f nA                         %s %s" + \
+                   "\n %s X: %8.3f  | Y: %7.3f  | %s: %2d | pitch: %7.3f  | ref: %4s  | det: %5.1f | slits: %5.2f x %5.2f  %s"
         #try:
         thisinst = rkvs.get('BMM:automation:type').decode('utf-8')
         if 'glancing' in thisinst:
@@ -392,7 +376,7 @@ while waiting:
                        
                        colored('Sample '+triangle, 'yellow', attrs=['bold']), sample['x'].RBV, sample['y'].RBV,
                        instrument, slot, sample['pitch'].RBV, str(ref), sample['det'].RBV,
-                       slits[0].RBV-slits[1].RBV, slits[2].RBV-slits[3].RBV, heartbeat[count], # left
+                       slits[0].RBV-slits[1].RBV, slits[2].RBV-slits[3].RBV, heartbeat[count],
                    ))
         #except:
         #    pass
