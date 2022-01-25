@@ -134,11 +134,13 @@ def vac_string():
     string = ''
     for count, pv in enumerate(vac):
         if pv.get() == 'LO<E-11':
-            color = 'yellow'
-        elif pv.get() == 'OFF':
             color = 'blue'
-        elif float(pv.get()) > 9.0e-8:
+        elif pv.get() in ('OFF', 'WAIT', 'PROT_OFF'):
+            color = 'blue'
+        elif float(pv.get()) > 5.0e-7:
             color = 'red'
+        elif float(pv.get()) > 9.0e-8:
+            color = 'yellow'
         else:
             color =  'green'
         string += colored('%d' % (count+1), color, attrs=['bold'])
@@ -288,7 +290,7 @@ while waiting:
     if xrd:
         scan = colored('not in use', 'grey', 'on_white')
         scantype = 'idle'
-    else
+    else:
         ## ----- type of scan (xafs | line | area | time)
         if scantype == 'xafs':
             backdrop = 'on_magenta'
