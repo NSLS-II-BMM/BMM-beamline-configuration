@@ -2,7 +2,11 @@
 
 import sys
 from openpyxl import load_workbook
-wb = load_workbook(sys.argv[1], read_only=True);
+infile = 'Modes.xlsx'
+if len(sys.argv) > 1:
+    infile = sys.argv[1]
+print(f'Reading from {infile}')
+wb = load_workbook(infile, read_only=True);
 import json
 
 ws = wb['Modes A-F']
@@ -35,4 +39,6 @@ for row in ws.rows:
     axis['XRD_REP'] = row[20].value
     bl[alias] = axis
 
-print(json.dumps(bl, sort_keys=True, indent=4, separators=(',', ': ')))
+print('Writing to Modes.json')
+with open('Modes.json', 'w') as outfile:
+    outfile.write(json.dumps(bl, sort_keys=True, indent=4, separators=(',', ': ')))
