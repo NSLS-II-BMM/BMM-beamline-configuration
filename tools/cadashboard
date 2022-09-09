@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 
-import sys
-import os
-import signal
-import epics
+import sys, os, signal, epics, json
 from time import sleep
 from termcolor import colored
 sys.path.append('/home/xf06bm/git/BMM-beamline-configuration/tools/python')
@@ -67,6 +64,7 @@ count = 0;
 i0           = epics.PV('XF:06BM-BI{EM:2}EM180:Current1:MeanValue_RBV')
 it           = epics.PV('XF:06BM-BI{EM:2}EM180:Current2:MeanValue_RBV')
 ir           = epics.PV('XF:06BM-BI{EM:2}EM180:Current3:MeanValue_RBV')
+iy           = epics.PV('XF:06BM-BI{EM:2}EM180:Current4:MeanValue_RBV')
 #bicron       = epics.PV('XF:06BM-ES:1{Sclr:1}.S25')
 ring_current = epics.PV('SR:OPS-BI{DCCT:1}I:Real-I')
 
@@ -85,6 +83,7 @@ sample       = {'x'     : epics.Motor('XF:06BMA-BI{XAFS-Ax:LinX}Mtr'),
                 'garot' : epics.Motor('XF:06BMA-BI{XAFS-Ax:Mtr8}Mtr'),
                 'pitch' : epics.Motor('XF:06BMA-BI{XAFS-Ax:Roll}Mtr'),
                 'ref'   : epics.Motor('XF:06BMA-BI{XAFS-Ax:Ref}Mtr'),
+                'refx'  : epics.Motor('XF:06BMA-BI{XAFS-Ax:RefX}Mtr'),
                 'det'   : epics.Motor('XF:06BMA-BI{XAFS-Ax:LinS}Mtr')}
 vac          = [epics.PV("XF:06BMA-VA{FS:1-CCG:1}P:Raw-I"),
                 epics.PV("XF:06BMA-VA{Mono:DCM-CCG:1}P:Raw-I"),
@@ -197,6 +196,18 @@ def valves_string():
         string += colored('%d' % (count+1), color, attrs=['bold'])
     return string
 
+def determine_reference():
+    mapping = json.loads(rkvs.get('BMM:reference:mapping').decode('utf-8'))
+    slot  = round((-15+sample['ref'].RBV) / (-15)) % 24
+    refx = sample['refx'].RBV
+    if refx < -10:
+        ring = 0
+    else:
+        ring = 1
+    for k in mapping.keys():
+        if mapping[k][0] == ring and mapping[k][1] == slot and 'empty' not in k:
+            return k
+    return 'None'
 
 def remaining():
     elapsed = (datetime.datetime.timestamp(datetime.datetime.now()) - float(rkvs.get('BMM:scan:starttime').decode('utf8')))
@@ -283,6 +294,11 @@ while waiting:
         irval = ir.get()*10**9
     except:
         pass
+    iyval = 0
+    try:
+        iyval = iy.get()*10**9
+    except:
+        pass
     
     ## ----- current time for time updates
     scan =     colored('   idle   ', 'grey', 'on_white')
@@ -344,7 +360,7 @@ while waiting:
     else:
         #                 shutters        current       vacuum, temperatures, gate valves
         template = " [%s] [%s] [%s] [%s]  ring: %s  %s  %s: %s %s %s: %s %s %s: %s" + \
-                   "\n %s: %s  %s %s %2s %2s  %s: %7.3f nA   %s: %7.3f nA   %s: %7.3f nA                         %s %s" + \
+                   "\n %s: %s  %s %s %2s %2s  %s: %7.3f nA   %s: %7.3f nA   %s: %7.3f nA                           %s %s" + \
                    "\n %s X: %8.3f  | Y: %7.3f  | %s: %2d | pitch: %7.3f  | ref: %4s  | det: %5.1f | slits: %5.2f x %5.2f  %s"
         #try:
         thisinst = rkvs.get('BMM:automation:type').decode('utf-8')
@@ -359,8 +375,9 @@ while waiting:
         else:
             instrument = 'wheel'
             slot = round((15+sample['wheel'].RBV) / (-15)) % 24
-        ref  = round((-15+sample['ref'].RBV) / (-15)) % 24
-        ref = rkvs.lindex('BMM:reference:list', ref-1).decode('utf-8')
+        #ref  = round((-15+sample['ref'].RBV) / (-15)) % 24
+        #ref = rkvs.lindex('BMM:reference:list', ref-1).decode('utf-8')
+        ref = determine_reference()
         if slot == 0: slot = 24
         writeline(template  %
                       (bl_show, bmps_show, sha_show, shb_show, ring_show, strut,
@@ -374,6 +391,7 @@ while waiting:
                        colored('I0',   'white', attrs=['bold']), i0val,
                        colored('It',   'white', attrs=['bold']), itval,
                        colored('Ir',   'white', attrs=['bold']), irval,
+                       #colored('Iy',   'white', attrs=['bold']), iyval,
                        colored('XAS',  'white', attrs=['bold']), scan,
                        
                        colored('Sample '+triangle, 'yellow', attrs=['bold']), sample['x'].RBV, sample['y'].RBV,
