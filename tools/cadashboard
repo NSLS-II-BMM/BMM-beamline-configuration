@@ -105,6 +105,12 @@ temperatures = [epics.PV('XF:06BMA-OP{Mono:DCM-Crys:1}T-I-I'),
                 epics.PV('XF:06BMA-OP{Mir:3}T:1-I-I'),
                 epics.PV('XF:06BMA-OP{Mir:3}T:2-I-I'),]
 
+rackA1 = epics.PV('XF:06BM-CT{RG:A1}T-I')
+rackB1 = epics.PV('XF:06BM-CT{RG:B1}T-I')
+rackC1 = epics.PV('XF:06BM-CT{RG:C1}T-I')
+rackC2 = epics.PV('XF:06BM-CT{RG:C2}T-I')
+rackC3 = epics.PV('XF:06BM-CT{RG:C3}T-I')
+
 if maintenance is False:
     fe_valves    = [epics.PV('FE:C06B-VA{GV:1}DB:Pos-Sts'),
                     epics.PV('FE:C06B-VA{GV:2}DB:Pos-Sts'),
@@ -128,6 +134,22 @@ slits         = [epics.Motor('XF:06BM-BI{Slt:02-Ax:O}Mtr'),
                  epics.Motor('XF:06BM-BI{Slt:02-Ax:I}Mtr'),
                  epics.Motor('XF:06BM-BI{Slt:02-Ax:T}Mtr'),
                  epics.Motor('XF:06BM-BI{Slt:02-Ax:B}Mtr')]
+
+def rack_string():
+    trigger = 24
+    string = ''
+    color = 'red' if rackA1.get() > trigger else 'green'
+    string += colored('A', color, attrs=['bold'])
+    color = 'red' if rackB1.get() > trigger else 'green'
+    string += colored('B', color, attrs=['bold'])
+    color = 'red' if rackC1.get() > trigger else 'green'
+    string += colored('1', color, attrs=['bold'])
+    color = 'red' if rackC2.get() > trigger else 'green'
+    string += colored('2', color, attrs=['bold'])
+    color = 'red' if rackC3.get() > trigger else 'green'
+    string += colored('3', color, attrs=['bold'])
+    return string
+    
 
 def vac_string():
     string = ''
@@ -200,7 +222,7 @@ def determine_reference():
     mapping = json.loads(rkvs.get('BMM:reference:mapping').decode('utf-8'))
     slot  = round((-15+sample['ref'].RBV) / (-15)) % 24
     refx = sample['refx'].RBV
-    if refx < -10:
+    if refx < 0:
         ring = 0
     else:
         ring = 1
@@ -248,22 +270,22 @@ while waiting:
         shb_show = colored('B shutter', 'red', attrs=['bold'])
     else:
         if bl.get() == 0:
-            bl_show = colored('Dis', 'red', attrs=['bold'])
+            bl_show = colored('Dis', 'white', attrs=['dark'])
         else:
             bl_show = colored('Ena', 'green', attrs=['bold'])
 
         if bmps.get() == 0:
-            bmps_show = colored('BMPS', 'red', attrs=['bold'])
+            bmps_show = colored('BMPS', 'white', attrs=['dark'])
         else:
             bmps_show = colored('BMPS', 'green', attrs=['bold'])
 
         if sha.get() == 1:
-            sha_show = colored('A shutter', 'red', attrs=['bold'])
+            sha_show = colored('A shutter', 'white', attrs=['dark'])
         else:
             sha_show = colored('A shutter', 'green', attrs=['bold'])
 
         if shb.get() == 1:
-            shb_show = colored('B shutter', 'red', attrs=['bold'])
+            shb_show = colored('B shutter', 'white', attrs=['dark'])
         else:
             shb_show = colored('B shutter', 'green', attrs=['bold'])
 
@@ -359,8 +381,8 @@ while waiting:
         sleep(1.0)
     else:
         #                 shutters        current       vacuum, temperatures, gate valves
-        template = " [%s] [%s] [%s] [%s]  ring: %s  %s  %s: %s %s %s: %s %s %s: %s" + \
-                   "\n %s: %s  %s %s %2s %2s  %s: %7.3f nA   %s: %7.3f nA   %s: %7.3f nA                           %s %s" + \
+        template = " [%s] [%s] [%s] [%s]  %s: %s %s %s: %s %s %s: %s %s %s: %s" + \
+                   "\n %s: %s  %s %s %2s %2s  ring: %s  %s %s: %7.3f nA   %s: %7.3f nA   %s: %7.3f nA     %s %s" + \
                    "\n %s X: %8.3f  | Y: %7.3f  | %s: %2d | pitch: %7.3f  | ref: %4s  | det: %5.1f | slits: %5.2f x %5.2f  %s"
         #try:
         thisinst = rkvs.get('BMM:automation:type').decode('utf-8')
@@ -380,14 +402,16 @@ while waiting:
         ref = determine_reference()
         if slot == 0: slot = 24
         writeline(template  %
-                      (bl_show, bmps_show, sha_show, shb_show, ring_show, strut,
+                      (bl_show, bmps_show, sha_show, shb_show,
+                       colored('Racks','white', attrs=['bold']), rack_string(), strut,
                        colored('Vac',  'white', attrs=['bold']), vac_string(), strut,
                        colored('TC',   'white', attrs=['bold']), temperature_string(), strut,
                        colored('GV',   'white', attrs=['bold']), valves_string(),
                        
                        colored('mono', 'white', attrs=['bold']), colored('%.1f eV' % current_energy, 'cyan', attrs=['bold']), strut,
                        colored(rkvs.get('BMM:pds:element').decode('utf-8'), 'yellow', attrs=['bold']),
-                       colored(rkvs.get('BMM:pds:edge').decode('utf-8'), 'yellow', attrs=['bold']), strut, 
+                       colored(rkvs.get('BMM:pds:edge').decode('utf-8'), 'yellow', attrs=['bold']), strut,
+                       ring_show, strut,
                        colored('I0',   'white', attrs=['bold']), i0val,
                        colored('It',   'white', attrs=['bold']), itval,
                        colored('Ir',   'white', attrs=['bold']), irval,
