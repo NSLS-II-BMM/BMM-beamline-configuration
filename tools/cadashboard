@@ -47,16 +47,25 @@ signal.signal(signal.SIGINT, signal_handler)
 
 
 # heartbeat = '<^>v'  # '.o0o' # '-\|/'
-heartbeat = ['|-     |',
-             '| -    |',
-             '|  -   |', 
-             '|   -  |', 
-             '|    - |', 
-             '|     -|', 
-             '|    - |', 
-             '|   -  |', 
-             '|  -   |', 
-             '| -    |',
+# heartbeat = ['|=     |',
+#              '| =    |',
+#              '|  =   |', 
+#              '|   =  |', 
+#              '|    = |', 
+#              '|     =|', 
+#              '|    = |', 
+#              '|   =  |', 
+#              '|  =   |', 
+#              '| =    |',
+#              ]
+heartbeat = ['|.    |',
+             '| o   |',
+             '|  0  |', 
+             '|   o |', 
+             '|    .|', 
+             '|   o |', 
+             '|  0  |', 
+             '| o   |',
              ]
 count = 0;
 
@@ -67,6 +76,7 @@ ir           = epics.PV('XF:06BM-BI{EM:2}EM180:Current3:MeanValue_RBV')
 iy           = epics.PV('XF:06BM-BI{EM:2}EM180:Current4:MeanValue_RBV')
 #bicron       = epics.PV('XF:06BM-ES:1{Sclr:1}.S25')
 ring_current = epics.PV('SR:OPS-BI{DCCT:1}I:Real-I')
+ring_connected = ring_current.connect()
 
 if maintenance is False:
     bl           = epics.PV('SR:C06-EPS{PLC:1}Sts:BM_BE_Enbl-Sts')
@@ -134,6 +144,15 @@ slits         = [epics.Motor('XF:06BM-BI{Slt:02-Ax:O}Mtr'),
                  epics.Motor('XF:06BM-BI{Slt:02-Ax:I}Mtr'),
                  epics.Motor('XF:06BM-BI{Slt:02-Ax:T}Mtr'),
                  epics.Motor('XF:06BM-BI{Slt:02-Ax:B}Mtr')]
+
+try:
+    linkam = epics.PV('XF:06BM-ES:{LINKAM}:TEMP')
+except:
+    linkam = None
+try:
+    lakeshore = epics.PV('XF:06BM-BI{LS:331-1}:SAMPLE_A')
+except:
+    lakeshore = None
 
 def rack_string():
     trigger = 24
@@ -257,7 +276,7 @@ waiting = True
 while waiting:
 
     count += 1
-    count = count % len(heartbeat)
+    hcount = count % len(heartbeat)
     #xrd = False
     #if m2.vert < 0 and m2.pitch > 3:
     #    xrd = True
@@ -290,15 +309,18 @@ while waiting:
             shb_show = colored('B shutter', 'green', attrs=['bold'])
 
     if maintenance is True:
-        ring_show = colored('maint', 'red', attrs=None)
+        ring_show = colored('maint', 'magenta', attrs=None)
     else:
-        try:
-            if ring_current.get() > 100:
-                ring_show = colored('%5.1f mA' % ring_current.get(), 'cyan', attrs=None)
-            else:
-                ring_show = colored('%5.1f mA' % ring_current.get(), 'cyan', attrs=None)
-        except:
-                ring_show = colored(' ??? ', 'red', attrs=None)
+        if ring_connected is False:
+            ring_show = colored(' ??? ', 'magenta', attrs=None)
+        else:
+            try:
+                if ring_current.get() > 100:
+                    ring_show = colored('%5.1f mA' % ring_current.get(), 'cyan', attrs=None)
+                else:
+                    ring_show = colored('%5.1f mA' % ring_current.get(), 'cyan', attrs=None)
+            except:
+                    ring_show = colored(' ??? ', 'red', attrs=None)
 
     ## ----- ion chamber signals
     i0val = 0
@@ -374,7 +396,7 @@ while waiting:
                        u'\u03BC', mu.RBV,
                        u'\u03BD', nu.RBV,
 
-                       heartbeat[count]
+                       heartbeat[hcount]
                    ))
         except:
             pass
@@ -386,10 +408,22 @@ while waiting:
                    "\n %s X: %8.3f  | Y: %7.3f  | %s: %2d | pitch: %7.3f  | ref: %4s  | det: %5.1f | slits: %5.2f x %5.2f  %s"
         #try:
         thisinst = rkvs.get('BMM:automation:type').decode('utf-8')
-        if 'glancing' in thisinst:
+        if 'glancing' in thisinst.lower():
             instrument = 'spnnr'
             cur = sample['garot'].RBV % 360
             slot = (9-round(cur/45)) % 8
+        elif 'linkam' in thisinst.lower():
+            instrument = 'lnkam'
+            if linkam is None:
+                slot = 0
+            else:
+                slot = linkam.get()
+        elif 'lakeshore' in thisinst.lower():
+            instrument = 'dsplx'
+            if lakeshore is None:
+                slot = 0
+            else:
+                slot = lakeshore.get()
         # elif 'wheel' in thisinst:
         #    instrument = 'wheel'
         #    slot = round((15+sample['wheel'].RBV) / (-15)) % 24
@@ -420,8 +454,14 @@ while waiting:
                        
                        colored('Sample '+triangle, 'yellow', attrs=['bold']), sample['x'].RBV, sample['y'].RBV,
                        instrument, slot, sample['pitch'].RBV, str(ref), sample['det'].RBV,
-                       slits[0].RBV-slits[1].RBV, slits[2].RBV-slits[3].RBV, heartbeat[count],
+                       slits[0].RBV-slits[1].RBV, slits[2].RBV-slits[3].RBV,
+                       colored(heartbeat[hcount], 'white', attrs=['dark']),
                    ))
         #except:
         #    pass
         sleep(1.0)
+
+        ## check connection to ring current every 5-ish minutes. 
+        if count % 300 == 0:
+            count = 0
+            ring_connected = ring_current.connect()
