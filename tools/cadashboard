@@ -241,7 +241,7 @@ def determine_reference():
     mapping = json.loads(rkvs.get('BMM:reference:mapping').decode('utf-8'))
     slot  = round((-15+sample['ref'].RBV) / (-15)) % 24
     refx = sample['refx'].RBV
-    if refx < 0:
+    if refx < -60:
         ring = 0
     else:
         ring = 1
