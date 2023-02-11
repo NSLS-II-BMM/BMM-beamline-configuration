@@ -265,8 +265,6 @@ def remaining():
     seconds = round(remaining - minutes*60)
     return f'({minutes} min, {seconds} sec)'
 
-exec(open('/home/xf06bm/.ipython/profile_collection/startup/BMM/dcm_parameters.py').read())
-
 #pattern = "%Y-%m-%dT%H-%M-%S"
 strut = u'\u25CF'
 triangle = u'\u227b' # 5BA'
@@ -417,7 +415,10 @@ while waiting:
             if linkam is None:
                 slot = 0
             else:
-                slot = linkam.get()
+                try:
+                    slot = linkam.get()
+                except:
+                    slot = 0
         elif 'lakeshore' in thisinst.lower():
             instrument = 'dsplx'
             if lakeshore is None:
