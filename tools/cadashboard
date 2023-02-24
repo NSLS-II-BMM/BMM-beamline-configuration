@@ -1,19 +1,22 @@
 #!/usr/bin/env python3
 
-import sys, os, signal, epics, json
+import sys, os, signal, epics
 from time import sleep
 from termcolor import colored
 sys.path.append('/home/xf06bm/git/BMM-beamline-configuration/tools/python')
-from BMMcontrols import Mirror
 exec(open('/home/xf06bm/.ipython/profile_collection/startup/BMM/dcm_parameters.py').read())
 BMM_dcm = dcm_parameters()
-import datetime, time
+
 from numpy import pi, sin, cos, arcsin, deg2rad
-HBARC = 1973.27053324
 
 import redis
 redis_host = 'xf06bm-ioc2'
 rkvs = redis.Redis(host=redis_host, port=6379, db=0)
+
+from dashboard_tools import heartbeat, strut, triangle, HBARC
+from dashboard_tools import writeline, determine_reference, remaining
+from dashboard_tools import rack_string, vac_string, temperature_string, valves_string
+
 
 xrd = False
 try:
@@ -32,13 +35,6 @@ except:
 
 
 
-def writeline(string):
-    #sys.stdout.write('\r')
-    #sys.stdout.flush()
-    #os.system('clear')
-    print('\n\n')
-    sys.stdout.write(string)
-    sys.stdout.flush()
 
 def signal_handler(sig, frame):
     print('\nQuitting cadashboard. Bye.')
@@ -46,28 +42,7 @@ def signal_handler(sig, frame):
 signal.signal(signal.SIGINT, signal_handler)
 
 
-# heartbeat = '<^>v'  # '.o0o' # '-\|/'
-# heartbeat = ['|=     |',
-#              '| =    |',
-#              '|  =   |', 
-#              '|   =  |', 
-#              '|    = |', 
-#              '|     =|', 
-#              '|    = |', 
-#              '|   =  |', 
-#              '|  =   |', 
-#              '| =    |',
-#              ]
-heartbeat = ['|.    |',
-             '| o   |',
-             '|  0  |', 
-             '|   o |', 
-             '|    .|', 
-             '|   o |', 
-             '|  0  |', 
-             '| o   |',
-             ]
-count = 0;
+count = 0
 
 ## ----- various PVs and other scalars
 i0           = epics.PV('XF:06BM-BI{EM:2}EM180:Current1:MeanValue_RBV')
@@ -86,7 +61,6 @@ if maintenance is False:
 
 bragg        = epics.Motor('XF:06BMA-OP{Mono:DCM1-Ax:Bragg}Mtr')
 dcmx         = epics.Motor('XF:06BMA-OP{Mono:DCM1-Ax:X}Mtr')
-#m2           = Mirror(2)
 sample       = {'x'     : epics.Motor('XF:06BMA-BI{XAFS-Ax:LinX}Mtr'),
                 'y'     : epics.Motor('XF:06BMA-BI{XAFS-Ax:LinY}Mtr'),
                 'wheel' : epics.Motor('XF:06BMA-BI{XAFS-Ax:RotB}Mtr'),
@@ -154,120 +128,9 @@ try:
 except:
     lakeshore = None
 
-def rack_string():
-    trigger = 24
-    string = ''
-    color = 'red' if rackA1.get() > trigger else 'green'
-    string += colored('A', color, attrs=['bold'])
-    color = 'red' if rackB1.get() > trigger else 'green'
-    string += colored('B', color, attrs=['bold'])
-    color = 'red' if rackC1.get() > trigger else 'green'
-    string += colored('1', color, attrs=['bold'])
-    color = 'red' if rackC2.get() > trigger else 'green'
-    string += colored('2', color, attrs=['bold'])
-    color = 'red' if rackC3.get() > trigger else 'green'
-    string += colored('3', color, attrs=['bold'])
-    return string
     
 
-def vac_string():
-    string = ''
-    for count, pv in enumerate(vac):
-        if pv.get() == 'LO<E-11':
-            color = 'blue'
-        elif pv.get() in ('OFF', 'WAIT', 'PROT_OFF'):
-            color = 'blue'
-        elif float(pv.get()) > 5.0e-7:
-            color = 'red'
-        elif float(pv.get()) > 9.0e-8:
-            color = 'yellow'
-        else:
-            color =  'green'
-        string += colored('%d' % (count+1), color, attrs=['bold'])
-    return string
 
-def temperature_string():
-    def talarm_state(index):
-        if index < 2:
-            return float(temperatures[index].get()) > float(temperatures[index].upper_warning_limit)
-        else:
-            return float(temperatures[index].get()) > 0.62*float(temperatures[index].upper_warning_limit)
-
-    string = '('
-    color = 'red' if talarm_state(0) else 'green'
-    string += colored('111 ', color, attrs=['bold'])
-    color = 'red' if talarm_state(1) else 'green'
-    string += colored('311 ', color, attrs=['bold'])
-    color = 'red' if talarm_state(2) else 'green'
-    string += colored('Co ',  color, attrs=['bold'])
-    color = 'red' if talarm_state(3) else 'green'
-    string += colored('P2 ',  color, attrs=['bold'])
-    color = 'red' if talarm_state(4) else 'green'
-    string += colored('R2 ',  color, attrs=['bold'])
-    color = 'red' if talarm_state(5) else 'green'
-    string += colored('Pe ',  color, attrs=['bold'])
-    color = 'red' if talarm_state(6) else 'green'
-    string += colored('Pa',   color, attrs=['bold'])
-    string += ') ('
-    color = 'red' if talarm_state(7) else 'green'
-    string += colored('U2 ',  color, attrs=['bold'])
-    color = 'red' if talarm_state(8) else 'green'
-    string += colored('D2',   color, attrs=['bold'])
-    string += ') ('
-    color = 'red' if talarm_state(9) else 'green'
-    string += colored('U3 ',  color, attrs=['bold'])
-    color = 'red' if talarm_state(10) else 'green'
-    string += colored('D3',   color, attrs=['bold']) + ')'
-    return string
-
-def valves_string():
-    global maintenance
-    string = 'FE:'
-    #if maintenance is False:
-    #    string += colored('123', 'red', attrs=['bold'])
-    try:
-        for count, pv in enumerate(fe_valves):
-            color = 'green' if fe_valves[count].get() == 1 else 'red'
-            string += colored('%d' % (count+1), color, attrs=['bold'])
-    except:
-        string += colored('123', 'red', attrs=['bold'])
-    string += ' BL:'
-    for count, pv in enumerate(valves):
-        color = 'green' if valves[count].get() == 1 else 'red'
-        string += colored('%d' % (count+1), color, attrs=['bold'])
-    return string
-
-def determine_reference():
-    mapping = json.loads(rkvs.get('BMM:reference:mapping').decode('utf-8'))
-    slot  = round((-15+sample['ref'].RBV) / (-15)) % 24
-    refx = sample['refx'].RBV
-    if refx < -60:
-        ring = 0
-    else:
-        ring = 1
-    for k in mapping.keys():
-        if mapping[k][0] == ring and mapping[k][1] == slot and 'empty' not in k:
-            return k
-    return 'None'
-
-def remaining():
-    elapsed = (datetime.datetime.timestamp(datetime.datetime.now()) - float(rkvs.get('BMM:scan:starttime').decode('utf8')))
-    try:
-        estimate = float(rkvs.get('BMM:scan:estimated'))
-    except:
-        return ''
-    if estimate == 0:
-        return ''
-    remaining = estimate - elapsed
-    if remaining < 0:
-        return '(almost done)'
-    minutes = int(remaining/60.)
-    seconds = round(remaining - minutes*60)
-    return f'({minutes} min, {seconds} sec)'
-
-#pattern = "%Y-%m-%dT%H-%M-%S"
-strut = u'\u25CF'
-triangle = u'\u227b' # 5BA'
 
 print('\n')
 waiting = True
@@ -307,10 +170,10 @@ while waiting:
             shb_show = colored('B shutter', 'green', attrs=['bold'])
 
     if maintenance is True:
-        ring_show = colored('maint', 'magenta', attrs=None)
+        ring_show = colored(' maint ', 'magenta', attrs=None)
     else:
         if ring_connected is False:
-            ring_show = colored(' ??? ', 'magenta', attrs=None)
+            ring_show = colored('  ???   ', 'magenta', attrs=None)
         else:
             try:
                 if ring_current.get() > 100:
@@ -318,29 +181,19 @@ while waiting:
                 else:
                     ring_show = colored('%5.1f mA' % ring_current.get(), 'cyan', attrs=None)
             except:
-                    ring_show = colored(' ??? ', 'red', attrs=None)
+                    ring_show = colored('  ???   ', 'red', attrs=None)
 
     ## ----- ion chamber signals
-    i0val = 0
-    try:
-        i0val = i0.get()*10**9
-    except:
-        pass
-    itval = 0
-    try:
-        itval = it.get()*10**9
-    except:
-        pass
-    irval = 0
-    try:
-        irval = ir.get()*10**9
-    except:
-        pass
-    iyval = 0
-    try:
-        iyval = iy.get()*10**9
-    except:
-        pass
+    def icsig(sig):
+        try:
+            val = sig.get()*10**9
+        except:
+            val = 0
+        return val
+    i0val = icsig(i0)
+    itval = icsig(it)
+    irval = icsig(ir)
+    iyval = icsig(iy)
     
     ## ----- current time for time updates
     scan =     colored('   idle   ', 'grey', 'on_white')
@@ -358,19 +211,90 @@ while waiting:
             backdrop = 'on_yellow'
         elif scantype == 'time':
             backdrop = 'on_blue'
-        if scantype != 'idle':
-            scan = colored(f'{scantype} scan {remaining()}', 'white', backdrop)
-
+    if scantype != 'idle':
+        scan = colored(f'{scantype} scan {remaining():<27}', 'white', backdrop)
+            
     ## ----- update the energy
     if dcmx.RBV < 10:
         current_energy = (2*pi*HBARC) / (2*BMM_dcm.dspacing_111*sin(deg2rad(bragg.RBV)))
     else:
         current_energy = (2*pi*HBARC) / (2*BMM_dcm.dspacing_311*sin(deg2rad(bragg.RBV)))
-    #current_energy = (2*pi*HBARC) / (2*BMM_dcm.dspacing_111*sin(deg2rad(bragg.RBV)))
-
     
     ## ----- update the display
-    if xrd:
+    if xrd is False:
+        thisinst = rkvs.get('BMM:automation:type').decode('utf-8')
+        if 'glancing' in thisinst.lower():
+            instrument = 'spnnr'
+            cur = sample['garot'].RBV % 360
+            slot = (9-round(cur/45)) % 8
+            if slot == 0: slot = 8
+        elif 'linkam' in thisinst.lower():
+            instrument = 'lnkam'
+            if linkam is None:
+                slot = 0
+            else:
+                try:
+                    slot = linkam.get()
+                except:
+                    slot = 0
+        elif 'lakeshore' in thisinst.lower():
+            instrument = 'dsplx'
+            if lakeshore is None:
+                slot = 0
+            else:
+                slot = lakeshore.get()
+        else:
+            instrument = 'wheel'
+            slot = round((15+sample['wheel'].RBV) / (-15)) % 24
+            if slot == 0: slot = 24
+        ref = determine_reference(sample)
+        
+        def bright(txt):
+            return colored(txt, 'white', attrs=['bold'])
+        def cyan(txt):
+            return colored(txt, 'cyan', attrs=['bold'])
+
+        ## --- top line: shutters, indicators for racks, temps, valves, vacuum
+        rs  = rack_string((rackA1, rackB1,rackC1, rackC2, rackC3))
+        vs  = vac_string(vac)
+        ts  = temperature_string(temperatures)
+        vas = valves_string(fe_valves, valves, maintenance)
+        shutters = f'[{bl_show}] [{bmps_show}] [{sha_show}] [{shb_show}]'
+        line1 = f"{shutters} {bright('Racks')}: {rs} {strut} {bright('Vac')}: {vs} {strut} {bright('TC')}: {ts} {strut} {bright('GV')}: {vas}\n"
+
+        ## --- middle line: mono, element/edge, ion chambers, scan timer
+        el  = colored(rkvs.get('BMM:pds:element').decode('utf-8'), 'yellow', attrs=['bold'])
+        ed  = colored(rkvs.get('BMM:pds:edge').decode('utf-8'), 'yellow', attrs=['bold'])
+        i0s = colored('I0', 'white', attrs=['bold']) + f':{i0val:8.3f} nA '
+        its = colored('It', 'white', attrs=['bold']) + f':{itval:8.3f} nA '
+        irs = colored('Ir', 'white', attrs=['bold']) + f':{irval:8.3f} nA '
+        #iys = colored('Iy', 'white', attrs=['bold']) + f':{iyval:8.3f} nA  '
+        line2 = f"{bright('mono')}: {cyan('%7.1f eV' % current_energy)} {strut} {el} {ed} {strut} Ring: {ring_show} {strut} {i0s} {its} {irs} {strut} {bright('XAS')} {scan}\n"
+
+        ## --- bottom line: sample stages, heartbeat
+        posX  = f" X: {sample['x'].RBV:7.3f}  |"
+        posY  = f" Y: {sample['y'].RBV:7.3f}  |"
+        posP  = f" pitch: {sample['pitch'].RBV:7.3f}  |"
+        posD  = f" det: {sample['det'].RBV:5.1f}  |"
+        slH   = slits[0].RBV-slits[1].RBV
+        slV   = slits[2].RBV-slits[3].RBV
+        hb    = colored(heartbeat[hcount], 'white', attrs=['dark'])
+        line3 = colored('Sample '+triangle, 'yellow', attrs=['bold']) + f'{posX}{posY} {instrument} {slot}  | {posP} Ref: {ref}  | {posD} slits: {slH:5.2f} x{slV:5.2f}       {hb}'
+
+        writeline(line1+line2+line3)
+
+        sleep(1.0)
+
+        ## check connection to ring current every 5-ish minutes. 
+        if count % 300 == 0:
+            count = 0
+            ring_connected = ring_current.connect()
+
+
+
+    
+    ### XRD ###        
+    else:
         #                 shutters        current       vacuum, temperatures, gate valves
         template = " [%s] [%s] [%s] [%s]  ring: %s  %s  %s: %s %s %s: %s %s %s: %s" + \
                    "\n %s: %s  %s  %s: %6d counts                                                                        %s: %s" + \
@@ -399,70 +323,4 @@ while waiting:
         except:
             pass
         sleep(1.0)
-    else:
-        #                 shutters        current       vacuum, temperatures, gate valves
-        template = " [%s] [%s] [%s] [%s]  %s: %s %s %s: %s %s %s: %s %s %s: %s" + \
-                   "\n %s: %s  %s %s %2s %2s  ring: %s  %s %s: %7.3f nA   %s: %7.3f nA   %s: %7.3f nA     %s %s" + \
-                   "\n %s X: %8.3f  | Y: %7.3f  | %s: %2d | pitch: %7.3f  | ref: %4s  | det: %5.1f | slits: %5.2f x %5.2f  %s"
-        #try:
-        thisinst = rkvs.get('BMM:automation:type').decode('utf-8')
-        if 'glancing' in thisinst.lower():
-            instrument = 'spnnr'
-            cur = sample['garot'].RBV % 360
-            slot = (9-round(cur/45)) % 8
-        elif 'linkam' in thisinst.lower():
-            instrument = 'lnkam'
-            if linkam is None:
-                slot = 0
-            else:
-                try:
-                    slot = linkam.get()
-                except:
-                    slot = 0
-        elif 'lakeshore' in thisinst.lower():
-            instrument = 'dsplx'
-            if lakeshore is None:
-                slot = 0
-            else:
-                slot = lakeshore.get()
-        # elif 'wheel' in thisinst:
-        #    instrument = 'wheel'
-        #    slot = round((15+sample['wheel'].RBV) / (-15)) % 24
-        #    
-        else:
-            instrument = 'wheel'
-            slot = round((15+sample['wheel'].RBV) / (-15)) % 24
-        #ref  = round((-15+sample['ref'].RBV) / (-15)) % 24
-        #ref = rkvs.lindex('BMM:reference:list', ref-1).decode('utf-8')
-        ref = determine_reference()
-        if slot == 0: slot = 24
-        writeline(template  %
-                      (bl_show, bmps_show, sha_show, shb_show,
-                       colored('Racks','white', attrs=['bold']), rack_string(), strut,
-                       colored('Vac',  'white', attrs=['bold']), vac_string(), strut,
-                       colored('TC',   'white', attrs=['bold']), temperature_string(), strut,
-                       colored('GV',   'white', attrs=['bold']), valves_string(),
-                       
-                       colored('mono', 'white', attrs=['bold']), colored('%.1f eV' % current_energy, 'cyan', attrs=['bold']), strut,
-                       colored(rkvs.get('BMM:pds:element').decode('utf-8'), 'yellow', attrs=['bold']),
-                       colored(rkvs.get('BMM:pds:edge').decode('utf-8'), 'yellow', attrs=['bold']), strut,
-                       ring_show, strut,
-                       colored('I0',   'white', attrs=['bold']), i0val,
-                       colored('It',   'white', attrs=['bold']), itval,
-                       colored('Ir',   'white', attrs=['bold']), irval,
-                       #colored('Iy',   'white', attrs=['bold']), iyval,
-                       colored('XAS',  'white', attrs=['bold']), scan,
-                       
-                       colored('Sample '+triangle, 'yellow', attrs=['bold']), sample['x'].RBV, sample['y'].RBV,
-                       instrument, slot, sample['pitch'].RBV, str(ref), sample['det'].RBV,
-                       slits[0].RBV-slits[1].RBV, slits[2].RBV-slits[3].RBV,
-                       colored(heartbeat[hcount], 'white', attrs=['dark']),
-                   ))
-        #except:
-        #    pass
-        sleep(1.0)
-
-        ## check connection to ring current every 5-ish minutes. 
-        if count % 300 == 0:
-            count = 0
-            ring_connected = ring_current.connect()
+ 
