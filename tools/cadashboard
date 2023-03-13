@@ -237,6 +237,7 @@ while waiting:
                     slot = linkam.get()
                 except:
                     slot = 0
+            slot = f'{slot:.1f}'
         elif 'lakeshore' in thisinst.lower():
             instrument = 'dsplx'
             if lakeshore is None:
@@ -272,14 +273,14 @@ while waiting:
         line2 = f"{bright('mono')}: {cyan('%7.1f eV' % current_energy)} {strut} {el} {ed} {strut} Ring: {ring_show} {strut} {i0s} {its} {irs} {strut} {bright('XAS')} {scan}\n"
 
         ## --- bottom line: sample stages, heartbeat
-        posX  = f" X: {sample['x'].RBV:7.3f}  |"
-        posY  = f" Y: {sample['y'].RBV:7.3f}  |"
-        posP  = f" pitch: {sample['pitch'].RBV:7.3f}  |"
-        posD  = f" det: {sample['det'].RBV:5.1f}  |"
+        posX  = f" X: {sample['x'].RBV:7.3f} |"
+        posY  = f" Y: {sample['y'].RBV:7.3f} |"
+        posP  = f"pitch: {sample['pitch'].RBV:7.3f} |"
+        posD  = f"det: {sample['det'].RBV:5.1f} |"
         slH   = slits[0].RBV-slits[1].RBV
         slV   = slits[2].RBV-slits[3].RBV
-        hb    = colored(heartbeat[hcount], 'white', attrs=['dark'])
-        line3 = colored('Sample '+triangle, 'yellow', attrs=['bold']) + f'{posX}{posY} {instrument} {slot}  | {posP} Ref: {ref}  | {posD} slits: {slH:5.2f} x{slV:5.2f}       {hb}'
+        hb    = colored(heartbeat[hcount], 'yellow')
+        line3 = colored('Sample '+triangle, 'yellow', attrs=['bold']) + f'{posX}{posY} {posP} Ref: {ref}  | {posD} slits: {slH:5.2f} x{slV:5.2f} | {instrument} {slot:<6}                     {hb} '
 
         writeline(line1+line2+line3)
 
