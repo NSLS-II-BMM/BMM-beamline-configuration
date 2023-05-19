@@ -129,7 +129,12 @@ def valves_string(fe_valves, valves, maintenance):
         string += colored('%d' % (count+1), color, attrs=['bold'])
     return string
 
-
+def ln2_string(ln2):
+    if ln2.get() == 1:
+        return colored('LN', 'blue', attrs=['bold'])
+    else:
+        return colored('LN', 'white', attrs=['dark'])
+    
 def determine_reference(sample):
     mapping = json.loads(rkvs.get('BMM:reference:mapping').decode('utf-8'))
     slot  = round((-15+sample['ref'].RBV) / (-15)) % 24

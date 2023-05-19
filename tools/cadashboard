@@ -15,7 +15,7 @@ rkvs = redis.Redis(host=redis_host, port=6379, db=0)
 
 from dashboard_tools import heartbeat, strut, triangle, HBARC
 from dashboard_tools import writeline, determine_reference, remaining
-from dashboard_tools import rack_string, vac_string, temperature_string, valves_string
+from dashboard_tools import rack_string, vac_string, temperature_string, valves_string, ln2_string
 
 
 xrd = False
@@ -51,6 +51,7 @@ ir           = epics.PV('XF:06BM-BI{EM:2}EM180:Current3:MeanValue_RBV')
 iy           = epics.PV('XF:06BM-BI{EM:2}EM180:Current4:MeanValue_RBV')
 #bicron       = epics.PV('XF:06BM-ES:1{Sclr:1}.S25')
 ring_current = epics.PV('SR:OPS-BI{DCCT:1}I:Real-I')
+sleep(0.25)
 ring_connected = ring_current.connect()
 
 if maintenance is False:
@@ -105,6 +106,7 @@ valves       = [epics.PV('XF:06BMA-VA{FS:1-GV:1}Pos-Sts'),
                 epics.PV('XF:06BMA-VA{Mir:2-GV:1}Pos-Sts'),
                 epics.PV('XF:06BMA-VA{Mir:3-GV:1}Pos-Sts'),
                 epics.PV('XF:06BMB-VA{BT:1-GV:1}Pos-Sts'), ]
+ln2 = epics.PV('XF:06BM-PU{LN2-Main:IV}Pos-Sts')
 
 if xrd is True:
     delta         = epics.Motor('XF:06BM-ES{SixC-Ax:VTTH}Mtr')
@@ -160,14 +162,14 @@ while waiting:
             bmps_show = colored('BMPS', 'green', attrs=['bold'])
 
         if sha.get() == 1:
-            sha_show = colored('A shutter', 'white', attrs=['dark'])
+            sha_show = colored('A shtr', 'white', attrs=['dark'])
         else:
-            sha_show = colored('A shutter', 'green', attrs=['bold'])
+            sha_show = colored('A shtr', 'green', attrs=['bold'])
 
         if shb.get() == 1:
-            shb_show = colored('B shutter', 'white', attrs=['dark'])
+            shb_show = colored('B shtr', 'white', attrs=['dark'])
         else:
-            shb_show = colored('B shutter', 'green', attrs=['bold'])
+            shb_show = colored('B shtr', 'green', attrs=['bold'])
 
     if maintenance is True:
         ring_show = colored(' maint ', 'magenta', attrs=None)
@@ -231,12 +233,13 @@ while waiting:
         elif 'linkam' in thisinst.lower():
             instrument = 'lnkam'
             if linkam is None:
-                slot = 0
+                slot = 0.0
             else:
                 try:
                     slot = linkam.get()
                 except:
-                    slot = 0
+                    slot = 0.0
+            if slot is None: slot = 0.0
             slot = f'{slot:.1f}'
         elif 'lakeshore' in thisinst.lower():
             instrument = 'dsplx'
@@ -259,9 +262,10 @@ while waiting:
         rs  = rack_string((rackA1, rackB1,rackC1, rackC2, rackC3))
         vs  = vac_string(vac)
         ts  = temperature_string(temperatures)
+        lns = ln2_string(ln2)
         vas = valves_string(fe_valves, valves, maintenance)
         shutters = f'[{bl_show}] [{bmps_show}] [{sha_show}] [{shb_show}]'
-        line1 = f"{shutters} {bright('Racks')}: {rs} {strut} {bright('Vac')}: {vs} {strut} {bright('TC')}: {ts} {strut} {bright('GV')}: {vas}\n"
+        line1 = f"{shutters} {bright('Racks')}: {rs} {strut} {bright('Vac')}: {vs} {strut} {bright('TC')}: {ts} {strut} {bright('GV')}: {vas}  {lns}\n"
 
         ## --- middle line: mono, element/edge, ion chambers, scan timer
         el  = colored(rkvs.get('BMM:pds:element').decode('utf-8'), 'yellow', attrs=['bold'])
