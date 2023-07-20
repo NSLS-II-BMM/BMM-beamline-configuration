@@ -45,10 +45,10 @@ signal.signal(signal.SIGINT, signal_handler)
 count = 0
 
 ## ----- various PVs and other scalars
-i0           = epics.PV('XF:06BM-BI{EM:2}EM180:Current1:MeanValue_RBV')
-it           = epics.PV('XF:06BM-BI{EM:2}EM180:Current2:MeanValue_RBV')
-ir           = epics.PV('XF:06BM-BI{EM:2}EM180:Current3:MeanValue_RBV')
-iy           = epics.PV('XF:06BM-BI{EM:2}EM180:Current4:MeanValue_RBV')
+i0           = epics.PV('XF:06BM-BI{EM:1}EM180:Current1:MeanValue_RBV')
+it           = epics.PV('XF:06BM-BI{EM:1}EM180:Current2:MeanValue_RBV')
+ir           = epics.PV('XF:06BM-BI{EM:1}EM180:Current3:MeanValue_RBV')
+iy           = epics.PV('XF:06BM-BI{EM:1}EM180:Current4:MeanValue_RBV')
 #bicron       = epics.PV('XF:06BM-ES:1{Sclr:1}.S25')
 ring_current = epics.PV('SR:OPS-BI{DCCT:1}I:Real-I')
 sleep(0.25)
