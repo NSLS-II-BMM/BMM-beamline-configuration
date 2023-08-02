@@ -261,7 +261,7 @@ class DCM():
         self.channelcut    = False
 
     def xtals(self, crystals='111'):
-        if crystals is '311':
+        if crystals == '311':
             self.offset = BMM_dcm.offset_311
             self.bragg.pv.put('OFF', self.offset)
             self.twod = 2*BMM_dcm.dspacing_311
@@ -480,17 +480,17 @@ class Mirror():
             self.ydi = BMM_Motor('m%d_ydi' % m)
             self.xu  = BMM_Motor('m%d_xu' % m)
             self.xd  = BMM_Motor('m%d_xd' % m)
-            if m is 1:
+            if m == 1:
                 self.length = 556
                 self.width = 240
                 self.description = 'M1: collimating mirror'
                 self.hutch = ''
-            elif m is 2:
+            elif m == 2:
                 self.length = 1288
                 self.width = 240
                 self.description = 'M2: focusing mirror'
                 self.xu.invacuum = self.xd.invacuum = True
-            elif m is 3:
+            elif m == 3:
                 self.length = 667
                 self.width = 240
                 self.description = 'M3: harmonic rejection mirror'
@@ -593,21 +593,21 @@ class Mirror():
     def prettyprint_motors(self, color1="white", color2="white"):
         self.current_positions()
         which = self.direction
-        if self.direction is 'vertical':
+        if self.direction == 'vertical':
             which = self.direction + ' position'
             value = self.vert
 
-        elif self.direction is 'lateral':
+        elif self.direction == 'lateral':
             which = self.direction + ' position'
             value = self.lat
 
-        elif self.direction is 'pitch':
+        elif self.direction == 'pitch':
             value = self.pitch
 
-        elif self.direction is 'roll':
+        elif self.direction == 'roll':
             value = self.roll
 
-        elif self.direction is 'yaw':
+        elif self.direction == 'yaw':
             value = self.yaw
 
         text = '\t%s = %.3f' % (colored(which, color1, attrs=['bold']), value)
@@ -705,7 +705,7 @@ class StepScan():
     def units(self, label):
         if 'energy' in label:
             return 'eV'
-        elif 'time' is label:
+        elif label == 'time':
             return 'seconds'
         elif label in ('i0', 'it', 'ir'):
             return 'nA'
@@ -713,7 +713,7 @@ class StepScan():
             return 'counts'
         elif label[:-1] in ('corr'):
             return 'dead-time corrected count rate'
-        elif label is 'encoder':
+        elif label == 'encoder':
             return 'counts'
         else:
             return ''
