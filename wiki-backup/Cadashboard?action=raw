@@ -1,39 +1,45 @@
+
 At the top of the big screen, you see a crude-but-handy beamline monitor.&nbsp; It looks like this:
 
+&nbsp;
 
-
-[[File:Cadashboard.png|1100px|Cadashboard.png]]
+[[File:Cadashboard.png|1000px|Cadashboard.png]]
 
 This provides a (very) concise overview of the state of the beamline.
 
 '''Line 1'''
 
-*BMM is enabled (green) or disable (red)
-*The BM, FE, & user photon shutters are open (green) or closed (red)
-*The ring current
-*The state of vacuum sections 1 through 7 -- green means vaccum level is OK, red means vacuum level is high
-*The state of the in-vacuum motors, 4 on the DCM, 2 on the focusing mirror, 2 on the harmonic rejection mirror -- green means temperature is cool, red means temperature is high
-*The open (green) or closed (red) state of the 3 front end gate valves and the 6 beamline gate valves
+*BMM is enabled (green) or disable (red) 
+*The BM, FE, & user photon shutters are open (green) or closed (red) 
+*The ring current 
+*The state of vacuum sections 1 through 7 -- green means vaccum level is OK, red means vacuum level is high 
+*The state of the in-vacuum motors, 4 on the DCM, 2 on the focusing mirror, 2 on the harmonic rejection mirror -- green means temperature is cool, red means temperature is high 
+*The open (green) or closed (red) state of the 3 front end gate valves and the 6 beamline gate valves 
 
 '''Line 2'''
 
-*The energy position of the monochromator
-*The signals on the I0 and It ion chambers, measured in nanoamps
-*The current operation at the beamline, options are: idle (white), XAFS scan (pink), line scan (cyan), area scan (yellow), or time scan (blue)
+*The energy position of the monochromator 
+*The edge for which the beamline has been configured 
+*The signals on the I0 and It ion chambers, measured in nanoamps 
+*The current operation at the beamline, options are: idle (white), XAFS scan (pink), line scan (cyan), area scan (yellow), or time scan (blue). Estimate times will be displayed 
 
 '''Line 3'''
 <ul style="margin-left: 40px;">
 <li>Positions of common sample motors and size of sample slits</li>
+<li>The reference foil in use</li>
+<li>The bit that look like this <code><kbd>| -&nbsp;&nbsp;&nbsp; |</kbd></code> is a sort of heartbeat monitor verifying that the dashboard is running</li>
 </ul>
 
+&nbsp;
 
+&nbsp;
 
 == Running cadashboard and screen placement ==
 
-#Launch an xterm by typing <code>xterm -title CAdashboard</code> at any command line or by hitting <kbd>Alt-F2</kbd> and typing <code>xterm -title CAdashboard</code>.
-#Run <code>cadashboard</code>.
-#Resize the xterm and move it to the top of the big screen.
-#Right click on the frame, select <tt>More actions</tt>, then <tt>Keep above others</tt>.
-#It is handy to remove the window from the taskbar.&nbsp; This can be done by right click on the fram, then <tt>More actions</tt>, then <tt>Special window settings</tt>. Click <tt>OK</tt> in the info dialog. In the "Window specific settings" dialog click on the "Arrangement and Access tab", enable <tt>Skip taskbar</tt> with arguments <tt>Apply now </tt>and <tt>Yes</tt>.
+#Launch an xterm by typing <code>xterm -title CAdashboard</code> at any command line or by hitting <kbd>Alt-F2</kbd> and typing <code>xterm -title CAdashboard</code>. 
+#Do <code>run-cadashboard</code>. 
+#Resize the xterm and move it where you want it. 
+#Right click on the frame, select <tt>More actions</tt>, then <tt>Keep above others</tt>. 
+#It is handy to remove the window from the taskbar.&nbsp; This can be done by right click on the fram, then <tt>More actions</tt>, then <tt>Special window settings</tt>. Click <tt>OK</tt> in the info dialog. In the "Window specific settings" dialog click on the "Arrangement and Access tab", enable <tt>Skip taskbar</tt> with arguments <tt>Apply now </tt>and <tt>Yes</tt>. 
 
 <code>cadashboard</code> has a mode for XRD using the goniometer.&nbsp; At step 2, run <code>cadashboard xrd</code>, that is, explicitly provide the "xrd" argument to the program.

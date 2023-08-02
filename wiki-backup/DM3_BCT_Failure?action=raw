@@ -1,0 +1,14 @@
+==May 5, 2023: Failure of the DM3_BCT axis==
+
+'''Symptoms''': BCT could not be moved from CSS or bsui.  Immediate encoder loss.  No motion.
+
+After several times restarting the IOC and one power cycle of the motor controller, I finally thought to take a look at the physical device.  This is what I found.
+
+{| class="wikitable"
+|+ Photos of failed DM3_BCT
+|-
+| [[File:BCT3.jpg|left|400x400px|Lead screw decoupled from motor]] || [[File:BCT2.jpg|center|400x400px|Lead screw fallen to table]] || [[File:BCT1.jpg|right|400x400px|Long view]]
+|}
+
+
+'''Solution''': Rethread lead screw through upper carriage.  Reinsert into coupler.  Tighten coupler.

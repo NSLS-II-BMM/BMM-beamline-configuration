@@ -1,0 +1,24 @@
+
+== From Adam Young: ==
+
+The motors can be disabled after a movement and this can be set at the Delta Tau level.
+
+First you will need to connect to each MCS8+ with the beamline laptop and start PEWin.
+
+Then please do the following:
+
+#Click on the 'View' menu at the top of the window. Then click 'Program/PLC Status (and upload)'. 
+#Select PLC1 and click 'Upload'. An editor showing PLC1 will appear. 
+#Scroll down to find the variables P105 to P805. The '1' to '8' part of these variables represent axis 1 to 8 on the MCS8+. The value of these variables determines whether or not the motors will be disabled after a move. They are likely all set to '0' meaning power stays on. The lateral motors are on axis 4 and 5 so P405 and P505 should be set to '1'. 
+#Click on the yellow downwards pointing arrow on the toolbar in the editor. This downloads the modified PLC1 from the editor to the Delta Tau. Close the editor. 
+#In the terminal window issue a 'save' to save the modified configuration to the Delta Tau non-volatile memory and issue '$$$' to refresh the controller. 
+
+== And a follow up from Graeme Elliner: ==
+
+<font size="2"><span style="font-size:11pt">Just done a fast scan of the config file and I think it is probably because P302=1.<br/> Px02 and Px05 (where x is the motor number) are special Pvars for setting the final state of the motor once it has stopped moving, they are used in PLC1x and set as you know in PLC1<br/> <br/> If Px02=1 the PLC to check if the motor is in position and its desired velocity is zero, if these two conditions are set a Flag is set, If the conditions are still met 1second later then the motor is put into OPEN LOOP. This means the motor is still enabled but will ignore the encoder and the motor will hold its current rotary location. This is useful for the motors that have DPTs pushing against them in flexures (trapezoidal roll and pitch assy on the DCMs), it gives a firm base for the DPT to push against but will not try to hold position (as it would in closed loop) when the DPT pushes the top part of the stage and moves the encoder.<br/> If Px05=1 then the PLC checks to see if the motor is in position and has zero velocity, then 1second later it will kill that motor<br/> <br/> Due to the way the code is ordered (it looks for thePx02 first) it will enter Px02 check first, when the conditions are met it will set the first Flag After that check it then see the Px05 check and kills the motor. However on the next pass through the PLC it will again enter the Px02 check, see that the first flag has been set then trigger the open loop command, re-enabling the motor.<br/> <br/> Hence by setting P302=0 in PLC1, it will not go into the check and not accidentally enable the motor.<br/> If this does not fix it then the issue is in EPICS</span></font>
+
+&nbsp;
+
+== Conclusion ==
+
+The above suggestions were done for <code>dm3_bct</code>, a motor that was showing the re-enable behavior.&nbsp; This made that motor tricky to operate in bluesky. Setting P302=0 and P305=1 did the trick.

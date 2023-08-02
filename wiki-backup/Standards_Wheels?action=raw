@@ -1,0 +1,229 @@
+
+The reference wheel is always in place and automatically aligns to the correct sample when the <code>change_edge()</code> command is run. The reference wheel contains the following:
+{| class="wikitable"
+|+
+!Ring / slot
+!Element
+!Material
+!
+!Ring / slot
+!Element
+!Material
+!
+|-
+|Outer 1
+| colspan="2" |empty for alignment
+|
+|Inner 1
+|Cs
+|CsNO<sub>3</sub>
+| rowspan="24" |[[File:Ref wheel.jpg]]
+|-
+|Outer 2
+|Ti
+|foil
+|
+|Inner 2
+|La
+|La(OH)<sub>3</sub>
+|-
+|Outer 3
+|V
+|foil
+|
+|Inner 3
+|Ce
+|Ce<sub>2</sub>O<sub>3</sub>
+|-
+|Outer 4
+|Cr
+|foil
+|
+|Inner 4
+|Pr
+|Pr<sub>6</sub>O<sub>11</sub>
+|-
+|Outer 5
+|Mn
+|metal powder
+|
+|Inner 5
+|Nd
+|Nd<sub>2</sub>O<sub>3</sub>
+|-
+|Outer 6
+|Fe
+|foil
+|
+|Inner 6
+|Sm
+|Sm<sub>2</sub>O<sub>3</sub>
+|-
+|Outer 7
+|Co
+|foil
+|
+|Inner 7
+|Eu
+|Eu<sub>2</sub>O<sub>3</sub>
+|-
+|Outer 8
+|Ni
+|foil
+|
+|Inner 8
+|Gd
+|Gd<sub>2</sub>O<sub>3</sub>
+|-
+|Outer 9
+|Cu
+|foil
+|
+|Inner 9
+|Tb
+|Tb<sub>4</sub>O<sub>9</sub>
+|-
+|Outer 10
+|Zn
+|foil
+|
+|Inner 10
+|Dy
+|Dy<sub>2</sub>O<sub>3</sub>
+|-
+|Outer 11
+|Ga
+|Ga<sub>2</sub>O<sub>3</sub>
+|
+|Inner 11
+|Ho
+|Ho<sub>2</sub>O<sub>3</sub>
+|-
+|Outer 12
+|Ge
+|GeO<sub>2</sub>
+|
+|Inner 12
+|Er
+|Er<sub>2</sub>O<sub>3</sub>
+|-
+|Outer 13
+|As
+|As<sub>2</sub>O<sub>3</sub>
+|
+|Inner 13
+|Tm
+|Tm<sub>2</sub>O<sub>3</sub>
+|-
+|Outer 14
+|Se
+|metal powder
+|
+|Inner 14
+|Yb
+|Yb<sub>2</sub>O<sub>3</sub>
+|-
+|Outer 15
+|Br
+|bromophenol blue
+|
+|Inner 15
+|Lu
+|Lu<sub>2</sub>O<sub>3</sub>
+|-
+|Outer 16
+|Zr
+|foil
+|
+|Inner 16
+|Rb
+|RbCO<sub>3</sub>
+|-
+|Outer 17
+|Nb
+|foil
+|
+|Inner 17
+|Ba
+|''<absent>''
+|-
+|Outer 18
+|Mo
+|foil
+|
+|Inner 18
+|Hf
+|HfO<sub>2</sub>
+|-
+|Outer 19
+|Pt
+|foil
+|
+|Inner 19
+|Ta
+|Ta<sub>2</sub>O<sub>5</sub>
+|-
+|Outer 20
+|Au
+|foil
+|
+|Inner 20
+|W
+|''<absent>''
+|-
+|Outer 21
+|Pb
+|foil
+|
+|Inner 21
+|Re
+|ReO<sub>2</sub>
+|-
+|Outer 22
+|Bi
+|BiO<sub>2</sub>
+|
+|Inner 22
+|Os
+|''<absent>''
+|-
+|Outer 23
+|Sr
+|SrTiO<sub>3</sub>
+|
+|Inner 23
+|Ir
+|''<absent>''
+|-
+|Outer 24
+|Y
+|Y<sub>2</sub>O<sub>3</sub>
+|
+|Inner 24
+|Ru
+|RuO<sub>2</sub>
+|}
+
+* '''For Th L3:''' Bi will be used (outer 20)
+* '''For U L3:''' Y will be used (outer 24)
+* '''For Pu L3:''' Zr will be used (outer 16)
+
+The four missing elements (Ba, W, Os, Ir) will be added when they are acquired.
+
+
+[https://github.com/NSLS-II-BMM/profile_collection/raw/master/startup/standards/standards.xlsx Spreadsheet with standard wheels]
+
+
+
+
+{| class="wikitable"
+|+Standard samples mounted on wheels at BMM
+|-
+!elements !!photo of wheel ||elements !!photo of wheel
+|-
+|<big>Fe</big>||[[File:Fe_standards.jpg|center|400px|Fe standards]]||<big>Ce</big>||[[File:Ce_standards.jpg|center|400px|Ce standards]]
+|-
+|<big>lanthanides</big>||[[File:lanthanide_standards.jpg|center|400px|lanthanide standards]]||<big>V, Sr</big>||[[File:V+Sr_standards.jpg|center|400px|V and Sr standards]]
+|-
+|<big>Cu, Zr</big>||[[File:Cu+Zn_standards.jpg|center|400px|Cu and Zn standards]]||  ||
+|}

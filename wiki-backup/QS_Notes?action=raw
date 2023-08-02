@@ -1,0 +1,24 @@
+== Watching the profile screen output with journalctl ==
+With a terminal open on <code>xf06bm-srv1</code>, do <code>dzdo journalctl -u bluesky-queueserver -f | grep --line-buffered -v "blob data"</code>
+
+== Set the correct conda env ==
+Currently (March 2023), this means:  <code>conda activate /nsls2/conda/envs/2022-2.2-py39-tiled</code>
+
+== Start the qs GUI ==
+It is called <code>queue-monitor</code>.
+
+== The thing about zero-mq ==
+<code>QSERVER_ZMQ_CONTROL_ADDRESS="tcp://xf06bm-srv1.nsls2.bnl.local:60615"</code>
+
+When using the <code>2022-2.2-py39-tiled</code> conda environment and the command line <code>qserver</code> tool, the zmq server address has to be specified this way: <code>qserver --address="tcp://xf06bm-srv1.nsls2.bnl.local:60615"</code>.
+
+I found it helpful to make an alias: <code>alias qs='qserver --address="tcp://xf06bm-srv1.nsls2.bnl.local:60615"'</code>.  With this alias, one can do <code>qs queue get</code> or whatever.
+
+Note that in <code>2023-1</code> conda environments, <code>--addeess</code> is deprecated in favor of <code>--zmq-control-addr</code> and the <code>QSERVER_ZMQ_CONTROL_ADDRESS</code> environment variable exists.
+
+== Relevant repositories ==
+https://github.com/NSLS-II-PDF/mmm-experiments
+
+https://github.com/NSLS-II-BMM/bmm-agents
+
+https://blueskyproject.io/bluesky-queueserver/

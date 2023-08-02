@@ -22,171 +22,183 @@ Set a tenth of second: <code><tt>caput XF:06BM-BI{EM:1}EM180:AveragingTime 0.1</
 
 [[File:Linxs.jpg|right|200px|Linxs.jpg]]
 
-Reference foils are mounted on stage xafs_linxs (alias for <tt>XF:06BMA-BI{XAFS-Ax:LinXS}Mtr</tt>) , thus can be programmed into a measurement macro.&nbsp; The top-most foil is at position xafs_linxs = -90, the bottom-most foil is at +90.
+<s>Reference foils are mounted on stage xafs_linxs (alias for <tt>XF:06BMA-BI{XAFS-Ax:LinXS}Mtr</tt>) , thus can be programmed into a measurement macro.&nbsp; The top-most foil is at position xafs_linxs = -90, the bottom-most foil is at +90.</s>
+
+
 
 == Motor parameters ==
 
 {| style="width: 700px" cellspacing="1" cellpadding="1" border="1"
 |-
-! scope="row" | <br/>
-! scope="col" | VMAX<br/>
-! scope="col" | VELO<br/>
-! scope="col" | MRES<br/>
-! scope="col" | DIR<br/>
-! scope="col" | OFF<br/>
-! scope="col" | HLM<br/>
-! scope="col" | LLM<br/>
-! scope="col" | aka<br/>
+! scope="row" | &nbsp;
+! scope="col" | VMAX
+! scope="col" | VELO
+! scope="col" | MRES
+! scope="col" | DIR
+! scope="col" | OFF
+! scope="col" | HLM
+! scope="col" | LLM
+! scope="col" | aka
 |-
-! scope="row" | linx<br/>
-| 4<br/>
-| 4<br/>
-| 0.0003175<br/>
-| Neg<br/>
-| -60<br/>
-| <br/>
-| <br/>
-| <br/>
-|-
-! scope="row" | liny<br/>
-| 4<br/>
-| 4<br/>
-| 0.0003175<br/>
-| Pos<br/>
-| -25<br/>
-| <br/>
-| <br/>
-| <br/>
-|-
-! scope="row" | lins<br/>
-| 4<br/>
-| 4<br/>
-| 0.0003175<br/>
-| Pos<br/>
-| 0<br/>
-| <br/>
-| <br/>
-| <br/>
-|-
-! scope="row" | linxs<br/>
-| 4<br/>
-| 4<br/>
-| 0.000125<br/>
-| Neg<br/>
-| 18<br/>
-| <br/>
-| <br/>
-| <br/>
-|-
-! scope="row" | pitch<br/>
-| 0.25<br/>
-| 0.25<br/>
-| 0.000078125<br/>
-| Pos<br/>
-| 0.03<br/>
-| 10<br/>
-| -10<br/>
-| <br/>
-|-
-! scope="row" | roll<br/>
-| 0.25<br/>
-| 0.25<br/>
-| 0.000078125<br/>
-| Pos<br/>
-| -0.14<br/>
-| 10<br/>
-| -10<br/>
-| <br/>
-|-
-! scope="row" | roth<sup>1</sup><br/>
-| 1<br/>
-| 0.5<br/>
-| 3.90625e-06<br/>
-| Pos<br/>
-| -4.6<br/>
-| 65.4<br/>
-| -64.6<br/>
-| <br/>
-|-
-! scope="row" | rotb<sup>2</sup><br/>
-| 5<br/>
-| 5<br/>
-| 0.000390625<br/>
-| Neg<br/>
-| 46.532<br/>
-| 7200<br/>
-| -7200<br/>
-| wheel<br/>
-|-
-! scope="row" | ref<br/>
-| 15<br/>
-| 15<br/>
-| 0.0003901<br/>
+! scope="row" | linx
+| 4
+| 4
+| 0.0003175
 | Neg
-| 296.4993435<br/>
-| 7200<br/>
-| -7200<br/>
-| <br/>
+| -60
+| &nbsp;
+| &nbsp;
+| &nbsp;
 |-
-! scope="row" | rots<sup>3</sup><br/>
-| 5<br/>
-| 4<br/>
-| 0.000351748<br/>
-| Neg<br/>
-| 15.9325<br/>
-| 3600<br/>
-| -3600<br/>
-| <br/>
+! scope="row" | liny
+| 4
+| 4
+| 0.0003175
+| Pos
+| -25
+| &nbsp;
+| &nbsp;
+| &nbsp;
 |-
-! scope="row" | tbl_yu<br/>
-| 2<br/>
-| 2<br/>
-| 1.921875E-5<br/>
-| Pos<br/>
-| -64<br/>
-| <br/>
-| <br/>
-| <br/>
+! scope="row" | lins
+| 4
+| 4
+| 0.0003175
+| Pos
+| 122.478
+| 211
+| 0
+| det
 |-
-! scope="row" | tbl_ydi<br/>
-| 2<br/>
-| 2<br/>
-| 1.921875E-5<br/>
-| Pos<br/>
-| 6<br/>
-| <br/>
-| <br/>
-| <br/>
+! scope="row" | linxs
+| 4
+| 4
+| 0.00025
+| Pos
+| 18
+| &nbsp;
+| &nbsp;
+| &nbsp;
 |-
-! scope="row" | tbl_ydo<br/>
-| 2<br/>
-| 2<br/>
-| 1.921875E-5<br/>
-| Pos<br/>
-| -17<br/>
-| <br/>
-| <br/>
-| <br/>
+! scope="row" | pitch
+| 0.25
+| 0.25
+| 0.000078125
+| Pos
+| 0.03
+| 10
+| -10
+| &nbsp;
 |-
-! scope="row" | tbl_xu<br/>
-| 1<br/>
-| 1<br/>
-| 5E-5<br/>
-| Neg<br/>
-| -21.2<br/>
-| <br/>
-| <br/>
-| <br/>
+! scope="row" | roll
+| 0.25
+| 0.25
+| 0.000078125
+| Pos
+| -0.14
+| 10
+| -10
+| &nbsp;
 |-
-! scope="row" | tbl_xd<br/>
-| 1<br/>
-| 1<br/>
-| 5E-5<br/>
-| Neg<br/>
-| 23.4<br/>
-| <br/>
-| <br/>
-| <br/>
+! scope="row" | roth<sup>1</sup>
+| 1
+| 0.5
+| 3.90625e-06
+| Pos
+| -4.6
+| 65.4
+| -64.6
+| &nbsp;
+|-
+! scope="row" | rotb<sup>2</sup>
+| 5
+| 5
+| 0.000390625
+| Neg
+| 46.532
+| 7200
+| -7200
+| wheel
+|-
+! scope="row" | ref
+| 15
+| 15
+| 0.0003901
+| Neg
+| 296.4993435
+| 7200
+| -7200
+| &nbsp;
+|-
+! scope="row" | rots<sup>3</sup>
+| 5
+| 4
+| 0.000351748
+| Neg
+| 15.9325
+| 3600
+| -3600
+| &nbsp;
+|-
+! scope="row" | mtr8
+| 18
+| 18
+| 0.00070375
+| Neg
+| 179.47455
+| 3600
+| -3600
+| garot (GA wheel)
+|-
+! scope="row" | tbl_yu
+| 2
+| 2
+| 1.921875E-5
+| Pos
+| -64
+| &nbsp;
+| &nbsp;
+| &nbsp;
+|-
+! scope="row" | tbl_ydi
+| 2
+| 2
+| 1.921875E-5
+| Pos
+| 6
+| &nbsp;
+| &nbsp;
+| &nbsp;
+|-
+! scope="row" | tbl_ydo
+| 2
+| 2
+| 1.921875E-5
+| Pos
+| -17
+| &nbsp;
+| &nbsp;
+| &nbsp;
+|-
+! scope="row" | tbl_xu
+| 1
+| 1
+| 5E-5
+| Neg
+| -21.2
+| &nbsp;
+| &nbsp;
+| &nbsp;
+|-
+! scope="row" | tbl_xd
+| 1
+| 1
+| 5E-5
+| Neg
+| 23.4
+| &nbsp;
+| &nbsp;
+| &nbsp;
 |}
 
 <sup>1</sup> roth is the huber circle&nbsp;&nbsp;&nbsp; <sup>2</sup> rotb is the large Newmark rotary stage&nbsp;&nbsp; <sup>3</sup> rots is the small Newmark rotary stage

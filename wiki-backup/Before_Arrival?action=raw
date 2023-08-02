@@ -1,3 +1,4 @@
+
 BMM experimental calendar: [https://www.bnl.gov/ps/beamlines/schedule.php?q=6-BM https://www.bnl.gov/ps/beamlines/schedule.php?q=6-BM] &nbsp; ([[Media:Schedule-2020-1.pdf|2020-1 Schedule as PDF]])
 
 = Register for BNL Site Access =
@@ -5,6 +6,12 @@ BMM experimental calendar: [https://www.bnl.gov/ps/beamlines/schedule.php?q=6-BM
 Upon receipt of notification of your beamtime, please verify that all the team members attending your experiment have a valid BNL Guest registration. New registration requests as well as the extensions requests for expired registrations shall be submitted as soon as possible. Approvals for guest registrations can take as long as two months for some non-US citizens.
 
 To apply for a BNL Guest appointment: [https://www.bnl.gov/ps/userguide/beforearrival.php https://www.bnl.gov/ps/userguide/beforearrival.php]
+
+= BNL Domain Account =
+
+When your BNL Guest registration becomes active, you should receive an email with instructions for enabling your BNL domain account. You must complete that step, which includes setting your password and signing up for DUO Federal two-factor authentication. If you need to request an account, go to [https://www.bnl.gov/accounts/ https://www.bnl.gov/accounts/] and click the button that says "Submit account registration form".
+
+Enabling your BNL account is '''non-option''''''al'''. You '''<span style="color:#e74c3c">must</span>''' have an active account in order to unlock the computers at the beamline. Without an active account, a known password, and DUO Federal two=-factor authenticaion, <span style="background-color:#ffff33">you will be unable to perform your experiment</span>.
 
 = Safety Approval Form =
 
@@ -20,17 +27,17 @@ If your experiment requires chemicals, compressed gases, lab access, or other eq
 
 Currently, three labs support user activities at BMM.&nbsp; They are:
 
-*[https://www.bnl.gov/ps/labs/index.php?scroll=3-LL06 Lab 3L-L06: XAS Sample Prep Lab]
-*[https://www.bnl.gov/ps/labs/index.php?scroll=3-LL07 Lab 3L-L07: Environmental Science Wet Lab]
-*[https://www.bnl.gov/ps/labs/index.php?scroll=3-LL09 Lab 3L-L09: XAS Chemistry Lab]
+*[https://www.bnl.gov/ps/labs/index.php?scroll=3-LL06 Lab 3L-L06: XAS Sample Prep Lab] 
+*[https://www.bnl.gov/ps/labs/index.php?scroll=3-LL07 Lab 3L-L07: Environmental Science Wet Lab] 
+*[https://www.bnl.gov/ps/labs/index.php?scroll=3-LL09 Lab 3L-L09: XAS Chemistry Lab] 
 
 If you prepare or treat samples on-site, please include the request for the use of NSLS-II User Laboratories ([https://www.bnl.gov/ps/labs/ https://www.bnl.gov/ps/labs/]) in your Safety Approval Form. Here is some advice on selecting the correct lab:
 
-#'''Unbound nanoparticles''': Please note that supported nanoparticles or nanoparticles in solution are ''not'' considered “unbound”. If your samples are indeed ''unbound'', please contact BMM beamline scientist Bruce Ravel ([mailto:bravel@bnl.gov bravel@bnl.gov]) as soon as possible.
-#'''Solid sample preparation (pellet pressing, spreading on tape etc)''':&nbsp; Request Lab 3L-L06.
-#'''Liquid samples (organic solvents, acids, bases)''': Request Lab 3L-L09.
-#'''Hydrofluoric acid treatment''': Request Lab 3L-L09 and notify Cognizant Space Manager, Syed Khalid at [mailto:khalid@bnl.gov khalid@bnl.gov], as soon as possible.
-#'''Environment and earth science sample preparation and treatment''': Request Lab 3L-L07.
+#'''Unbound nanoparticles''': Please note that supported nanoparticles or nanoparticles in solution are ''not'' considered “unbound”. If your samples are indeed ''unbound'', please contact BMM beamline scientist Bruce Ravel ([mailto:bravel@bnl.gov bravel@bnl.gov]) as soon as possible. 
+#'''Solid sample preparation (pellet pressing, spreading on tape etc)''':&nbsp; Request Lab 3L-L06. 
+#'''Liquid samples (organic solvents, acids, bases)''': Request Lab 3L-L09. 
+#'''Hydrofluoric acid treatment''': Request Lab 3L-L09 and notify Cognizant Space Manager, Syed Khalid at [mailto:khalid@bnl.gov khalid@bnl.gov], as soon as possible. 
+#'''Environment and earth science sample preparation and treatment''': Request Lab 3L-L07. 
 
 Requests for using gloveboxes should be discussed prior to submitting the SAF, with Bruce Ravel ([mailto:bravel@bnl.gov bravel@bnl.gov]) and/or Syed Khalid ([mailto:khalid@bnl.gov khalid@bnl.gov])
 

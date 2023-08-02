@@ -1,0 +1,34 @@
+
+Using a probe to measure the voltage on the IP port of the Vortex ME4.&nbsp; This reading will tell you the internal pressure according to the table in the snapshot below.
+
+[[File:Vortex pressure.jpeg|300px|Vortex pressure.jpeg]] &nbsp;
+
+In short:
+
+{| style="width: 500px" cellspacing="1" cellpadding="1" border="1"
+|-
+| IP reading (Voltage)
+| Pressure
+|-
+| -0.01
+| 5E-9
+|-
+| -0.1
+| 5E-8
+|-
+| -1
+| 5E-7
+|-
+| -10
+| 5E-6
+|}
+
+
+Temperature reading should be 1.5 V when the TEC is at proper temperature.
+
+&nbsp;
+
+Thank to Ryan for this!
+
+
+[https://www.aps.anl.gov/files/download/DET/Detector-Pool/Spectroscopic-Detectors/Vortex_SDD/Vortex_ME4/Vtx-ME4%20Multi-El%20User%20Manual%20Rev.4.pdf Vortex SDD manual] (link to copy at APS detector pool).

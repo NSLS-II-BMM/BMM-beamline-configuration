@@ -1,0 +1,86 @@
+= ''Ad hoc'' XAS Mail-In Program for 2020-2 =
+
+As a starting point, all mail-in experiments will be pretty simple. All mesaurements will be of ''ex situ'' samples.&nbsp; Most experiments will use the standard BMM sample wheel.&nbsp; Others will use the glancing angle stage or some other straghtforward experimental configuration.&nbsp;
+
+The figure on the left shows an empty sample wheel as it normally sits on the sample stage at the beamline. This wheel can be mounted perpendicular to the beam direction (for transmission) or at 45 degrees (for fluorescence).&nbsp; The figure on the right shows an example of a wheel almost fully occupied by samples. Much of this page will refer to experiments done in this way.&nbsp; Other experimental geometries will follow a similar pattern.&nbsp; Any details will be discussed between you and Bruce prior to your experiment.
+
+A wheel can hold up to 24 samples.
+
+[[File:EmptyWheel.jpg|400px|EmptyWheel.jpg]]&nbsp; [[File:FilledWheel.jpg|400px|FilledWheel.jpg]]
+
+
+
+== The Procedure ==
+
+The language for this procedure is very declarative!&nbsp; I apologize if the tone seems aggressive.&nbsp; It is very important that we have clear communication and clear expectations. The more we can establish procedure, the more likely that I will be able to successful measure your data successfully.
+
+#Together, we will determine which parts of your experiment are tenable for a mail-in experiment.
+#You will determine an ''exact'' count of the number of samples you wish to measure.
+#Bruce will send an appropriate number of sample holders to you by mail. You will receive a number of sample holders sufficient to mount all samples.&nbsp; Bruce will not mount loose samples. <span style="color:#8B4513">(Experiments using the glancing angle stage or another, agreed-upon measurement geometry will be handled appropriately.)</span>
+#You will mount all samples on the supplied sample holders.
+#You will completely and accurately fill out the sample description spreadsheet.&nbsp; You will send this spreadsheet to Bruce by e-mail.&nbsp; <span style="color:#8B4513">(Experiments not using the sample wheel will likely use the same spreadsheet for communication.)</span>
+#If you have never used the sample preparation spreadsheet (or have any questions about it's use), we will schedule a 1/2 hour tutorial via Zoom.
+#You will prepare a Safety Approval Form at [https://pass.bnl.gov PASS].
+#You will securely package your samples holders and ship them to Bruce. <span style="color:#8B4513">(If you are local to BNL, other arrangements will be made.)</span> This package must contain:
+##All samples fully contained and mounted on sample holders
+##No loose samples or loose material falling off of samples
+##A return shipping label + envelope/box
+#You will send the tracking number to Bruce by e-mail.
+#Upon receipt, Bruce will unpack the samples and leave them untouched for at least four days to allow any viral load to fall below a ''de minimus'' level.
+#Bruce will mount and measure the samples using the sample description spreadsheet.
+#Once finished, Bruce wiil repack the samples using the original packing material and return them using your label + envelope/box.
+#Your data will be returned as a Zip file shared on Google Drive.
+
+These steps are all non-negotiable.&nbsp; Failure to follow any step '''will''' result in loss -- without compensation -- of your scheduled beamtime.
+
+== Mailing address ==
+
+Samples should be shipped to
+<div style="margin-left: 40px"><div>'''To Sample Shipping Coordinator of NSLS-II'''&nbsp;<br/></div><div>'''National Synchrotron Light Source II'''&nbsp;<br/></div><div>'''740 Brookhaven Avenue'''&nbsp;<br/></div><div>'''Bldg. 740 – Loading Dock'''&nbsp;<br/></div><div>'''Upton, NY 11973-5000'''<br/></div></div>
+Then, include the following on the outside AND inside of the package:
+
+*'''NSLS-II PROPOSAL #'''&nbsp;
+*'''NSLS-II SAF #'''&nbsp;
+*'''NSLS-II Beamline Number (i.e. 6-BM)'''&nbsp;
+
+I recommend using FedEx or UPS, both of which can deliver directly to the NSLS-II stockroom.
+
+<span style="background-color:#FFFF00">You must include return packaging and a pre-paid return label.&nbsp; Any samples without return packaging and a return label will not be measured.</span>
+
+== The Sample Description Spreadsheet ==
+
+This is a lightly formatted spreadsheet that is read by the data acquisition software and interpeted to generate a sequence of commands for an experiment using the sample wheel.
+
+In normal times, editing this spreasheet is part of the training to use the beamline.&nbsp; This is done in person and I am able to help the user verify that the spreadsheet is filled in correctly such that the measurement sequence can run to completion. In these times, that is more difficult. <span style="background-color:#FFFF00">If you are unfamiliar with how this works, we will schedule a 30 minute tutorial over Zoom so I can fully explain how the system works.</span> The use of the spreadsheet and this explanation are ''pre-requisites'' for using the mail-in service.
+
+It is '''essential''' that you fill the spreadsheet correctly.&nbsp; You cannot expect me to have sufficient knowledge about your sample set to identify any problems or correct any mistakes.
+
+An incorrect spreadsheet will likely result in the loss (without compensation) of your scheduled beamtime.
+
+[https://nsls-ii-bmm.github.io/BeamlineManual/xafs.html#sample-wheel-automation The spreadsheet is explained here], in the documentation for the beamline controls software.
+
+Empty spreadsheets: [https://bruce-ravel-site.s3.amazonaws.com/BMM/wheel_template.xlsx Sample wheel] ● [https://bruce-ravel-site.s3.amazonaws.com/BMM/pinwheel_template.xlsx Glancing angle stage]
+
+#Download this file.
+#Edit it to specify the experiments to perform on a wheel.
+#Give it a file name indicative of what is on that wheel.
+#You will need one spreadsheet for ''each'' wheel.
+
+== Sample Holder ==
+
+Most mail-in experiments will use the standard BMM sample wheel, shown to the right.&nbsp; I have a stock of these on hand and will have more made as needed. I will send an appropriate number to each user.[[File:Wheel.png|right|300px|Rendering of the standard BMM sample wheel]]
+
+For those who wish to manufacture their own copies of the sample wheel, here are some files:
+
+*[https://wiki-nsls2.bnl.gov/beamline6BM/index.php/File:BMM_disc_lasercut.pdf PDF Drawing]
+*[https://bruce-ravel-site.s3.amazonaws.com/SampleWheel/BMM_disc_lasercut.dwg AutoCAD drawing]
+*[https://bruce-ravel-site.s3.amazonaws.com/SampleWheel/BMM+sample+wheel+2.ipt AutoDesk Inventor Part file]
+*[https://bruce-ravel-site.s3.amazonaws.com/SampleWheel/BMM+sample+wheel+2.stl STL file for 3D printing]
+
+At BMM, we cut these wheels from 1/8 inch thick sheets of white Delrin: (e.g. [https://www.mcmaster.com/catalog/126/3840 https://www.mcmaster.com/catalog/126/3840]). You may use any approriate material, although plastic is preferable to metal. Feel free to modify the design to fit your needs. Please note that the 15 degree separation between samples is essential as is the placement and sizes of the four mounting holes.&nbsp;
+
+Modifying the placement of the sample or mounting holes will result in a wheel that cannot be used.&nbsp; That said, you may find it helpful to modify the ''shape'' of the sample holes -- for instance, you may find it useful to counterbore holes centered on the slots sized to hold a sample pellet.
+
+== Other sample geometries ==
+
+We can discuss measurement of samples which are ammenable to automated measurement, but for which the sample wheel is not the best vehicle for holding your samples.&nbsp; If your samples can be measured by mounting in some manner on the beamline's standard XY stage, please discuss this with Bruce.&nbsp; Many kinds of experiments can be considered for the mail-in program even if the wheel is not the best sample mounting choice.

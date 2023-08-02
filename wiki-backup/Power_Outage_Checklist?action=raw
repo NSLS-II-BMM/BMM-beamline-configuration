@@ -1,14 +1,14 @@
 = Recovering from a Power Outage =
 
+
 == Computers, motor controllers ==
 
-#Verify that <tt>xf06bm-ws1</tt>, <tt>xf06bm-ws2</tt>, <tt>xf06bm-ws5</tt> have all rebooted
-#Verify that&nbsp;<tt>xf06bm-ioc1</tt> is on the network
-#Verify that the VME crate is powered up and on the network (try pinging 10.6.128.21)
-#Verify that the quad (Siddons, black-box) electrometers are powered up and on the network (try pinging <tt>xf06bm-em1</tt> and <tt>xf06bm-em2</tt>)
-#Verify that the motor controllers are powered up and on the network (try pinging <tt>xf06bm-mc01</tt>, <tt>xf06bm-mc02</tt>, and so on, through 8)
-#Log onto&nbsp;<tt>xf06bm-ws1</tt> as xf06bm and start up <code>bsui</code>, and the synergy server.
-#Log onto&nbsp;<tt>xf06bm-ws2</tt> and start up the synergy client and <code>run-css</code>.
+#Verify that <tt>xf06bm-ws1</tt>, <tt>xf06bm-ws2</tt>, <tt>xf06bm-ws4, xf06bm-ws5, xf06bm_disp1&nbsp;</tt> have all rebooted 
+#Verify that&nbsp;<tt>xf06bm-ioc1</tt> and xf06bm-ioc2 are on the network 
+#Verify that the VME crate is powered up and on the network (try pinging 10.6.128.21) 
+#Verify that the quad (Siddons, black-box) electrometers are powered up and on the network (try pinging <tt>xf06bm-em1</tt> and <tt>xf06bm-em2</tt>) 
+#Verify that the motor controllers are powered up and on the network (try pinging <tt>xf06bm-mc01</tt>, <tt>xf06bm-mc02</tt>, and so on, through 14) 
+#Log onto&nbsp;<tt>xf06bm-ws3</tt> as xf06bm and start up <code>bsui</code>.
 
 == Homing and recovering motor positions ==
 

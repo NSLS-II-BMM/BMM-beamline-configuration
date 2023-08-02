@@ -1,0 +1,47 @@
+
+
+
+
+
+= Sample Wheels, glancing angle stage, Linkam stage =
+
+You should be using <span style="color:#c0392b">'''<big>version 10</big>'''</span> of the automation spreadsheet
+
+[[File:Version number.png|250px|Version number.png]]
+
+{| style="width: 750px" cellspacing="1" cellpadding="1" border="1"
+|-
+! scope="col" | Sample holder type
+! scope="col" | Picture of sample holder
+! scope="col" | Link to spreadsheet template
+|-
+| '''Standard sample wheel'''
+| style="text-align: center" | [[File:Samplewheel.jpg|100px|Samplewheel.jpg]]
+| [https://github.com/NSLS-II-BMM/profile_collection/raw/master/startup/xlsx/wheel.xlsx Standard Wheel template]
+|-
+| '''Glancing angle stage'''
+| style="text-align: center" | [[File:Glancing angle stage.jpg|100px|Glancing angle stage.jpg]]
+| [https://github.com/NSLS-II-BMM/profile_collection/raw/master/startup/xlsx/glancing_angle.xlsx Glancing angle stage template]
+|-
+| '''Double sample wheel'''
+| style="text-align: center" | [[File:Double wheel.jpg|100px|Double wheel.jpg]]
+| [https://github.com/NSLS-II-BMM/profile_collection/raw/master/startup/xlsx/doublewheel.xlsx Double wheel template]
+|-
+| '''Linkam stage'''
+| style="text-align: center" | [[File:Linkam stage.png|100px|Linkam stage.png]]
+| [https://github.com/NSLS-II-BMM/profile_collection/raw/master/startup/xlsx/linkam.xlsx Linkam stage template]
+|-
+| 
+'''LakeShore 331'''
+
+'''Temperature Controller'''
+
+| style="text-align: center" | [[File:331.png|100px|331.png]]
+| [https://github.com/NSLS-II-BMM/profile_collection/raw/master/startup/xlsx/lakeshore.xlsx LakeShore 331 template]
+|-
+| '''Motor grid'''
+| style="text-align: center" | &nbsp;
+| [https://github.com/NSLS-II-BMM/profile_collection/raw/master/startup/xlsx/grid.xlsx Motor grid template]
+|}
+
+&nbsp;

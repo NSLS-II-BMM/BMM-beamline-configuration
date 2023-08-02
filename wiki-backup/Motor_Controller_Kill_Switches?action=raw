@@ -1,3 +1,66 @@
+= New System - DIODE =
+
+The new kill switch system uses DIODE to close the kill switch circuit. Two-conductor cable is run from each motor controller to a remote DIODE box mounted on the inboard wall of the end station.
+
+The Bluesky interface is defined here: [https://github.com/NSLS-II-BMM/profile_collection/blob/master/startup/BMM/killswitch.py https://github.com/NSLS-II-BMM/profile_collection/blob/master/startup/BMM/killswitch.py]
+
+From the docstring of the class:
+<pre>A simple interface to the DIODE kill switches for the Phytron
+amplifiers on the FMBO Delta Tau motor controllers.
+
+In the BMM DIODE box, these are implemented on channels 0 to 4 of
+slot 4.
+
+attributes
+----------
+dcm 
+   kill switch for MC02, monochromator
+slits2
+   kill switch for MC03, DM2 slits
+m2
+   kill switch for MC04, focusing mirror
+m3
+   kill switch for MC05, harmonic rejection mirror
+dm3
+   kill switch for MC06, hutch slits and diagnostics
+
+methods
+-------
+kill(mc)
+   disable Phytron
+enable(mc)
+   activate Phytron
+cycle(mc)
+   disable, wait 5 seconds, reactivate, then re-enable all motors
+
+Specify the motor controller as a string, i.e. 'dcm', 'slits2', 'm2', 'm3', 'dm3'
+
+Here is a common problem which is resolved using a kill switch.
+
+      BMM E.111 [36] ▶ RE(mvr(m2.pitch, 0.05))
+      INFO:BMM_logger:    Moving m2_pitch to 2.550
+
+      Moving m2_pitch to 2.550
+      ERROR:ophyd.objects:Motion failed: m2_yu is in an alarm state status=AlarmStatus.STATE severity=AlarmSeverity.MAJOR
+      ERROR:ophyd.objects:Motion failed: m2_yu is in an alarm state status=AlarmStatus.STATE severity=AlarmSeverity.MAJOR
+      ERROR:ophyd.objects:Motion failed: m2_ydi is in an alarm state status=AlarmStatus.STATE severity=AlarmSeverity.MAJOR
+      ERROR:ophyd.objects:Motion failed: m2_ydi is in an alarm state status=AlarmStatus.STATE severity=AlarmSeverity.MAJOR
+      Out[36]: ()
+
+This is telling you that the amplifiers for two of the M2 jacks
+went into an alarm state. In the vast majority of cases, this
+simply requires killing and reactivating those amplifiers.
+
+The solution to this one is:
+
+      BMM E.111 [1] ▶ ks.cycle('m2')
+      Cycling amplifiers on m2 motor controller
+      killing amplifiers
+      reactivating amplifiers
+      enabling motors</pre>
+
+= Old System - Analog Switches =
+
 There is a row of switches on rack D, the rack next to the control station, that are used to disable the amplifiers for the MCS8 motor controllers.
 
 [[File:Kill switches.jpg|500px|Kill switches.jpg]]
@@ -45,10 +108,12 @@ After power cycling the MCS8, it is '''necessary''' to re-home all the motors co
 
 
 
-== MCS8 Connector ==
+= MCS8 Connector =
 
 The disable plug on the back of the MCS8 controllers is a Binder RS connector, part number 468-885. [https://uk.rs-online.com/web/p/industrial-automation-circular-connectors/0468885/?sra=pstk Here's an example].
 
 And here is the wiring diagram.&nbsp; Short the prongs on the opposite side of the alignment groove.
 
 [[File:Kill switch connector.png|RTENOTITLE]]
+
+[[Media:Binder-instructions.pdf|Tutorial for how to put together the Binder connectors.]] (PDF)

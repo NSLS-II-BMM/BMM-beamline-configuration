@@ -1,86 +1,87 @@
+
 = List of planned hareware and controls upgrades for BMM =
 
 {| style="width: 1000px" cellspacing="1" cellpadding="1" border="1"
 |-
-! scope="col" | Project<br/>
-! scope="col" | Purpose<br/>
-! scope="col" | Status<br/>
-! scope="col" | notes<br/>
+! scope="col" | Project
+! scope="col" | Purpose
+! scope="col" | Status
+! scope="col" | notes
 |-
-| Fiber communication network<br/>
-| Mono fast scanning<br/>
-| ongoing, October 7, 2019<br/>
-| <br/>
+| Fiber communication network
+| Mono fast scanning
+| complete
+| waiting on ion chambers
 |-
-| Controls for data collection with fast scanning<br/>
-| Mono fast scanning<br/>
-| not started, waiting for infrastructure<br/>
-| <br/>
+| Controls for data collection with fast scanning
+| Mono fast scanning
+| not started, waiting for infrastructure
+| &nbsp;
 |-
-| Digital readout for silicon drift detector<br/>
-| Better fluorescence data collection<br/>
-| procuring Express 3 via University of Sheffield<br/>
-| stuck in lawyer land<br/>
+| <s>Digital readout for silicon drift detector</s>
+| <s>Better fluorescence data collection</s>
+| <s>complete</s>
+| ongoing CRADA with University of Sheffield
 |-
-| Digital feedback<br/>
-| Feedback for 2nd xtal / M2 pitch / M3 pitch<br/>
-| waiting on split ion chamber from Pete Siddons<br/>
-| <br/>
+| Digital feedback
+| Feedback for 2nd xtal / M2 pitch / M3 pitch
+| waiting on split ion chamber from Pete Siddons
+| &nbsp;
 |-
-| Self-contained ion chambers<br/>
-| Better ion chamber readout<br/>
-| Waiting on new ion chambers + electronics from Pete Siddons<br/>
-| <br/>
+| Self-contained ion chambers
+| Better ion chamber readout
+| Waiting on new ion chambers + electronics from Pete Siddons
+| &nbsp;
 |-
-| IOC for controlling Linkam temperature controller<br/>
-| Integration of Linkam stage into data acquisition system<br/>
-| Linkham stage ordered, awaiting delivery<br/>
-| <br/>
+| <s>IOC for controlling Linkam temperature controller</s>
+| <s>Integration of Linkam stage into data acquisition system</s>
+| <s>complete</s>
+| &nbsp;
 |-
-| IOC for controlling Lakeshore temperature controller<br/>
-| Integration of Displex into data acquisition system<br/>
-| not started<br/>
-| <br/>
+| <s>IOC for controlling Lakeshore temperature controller</s>
+| <s>Integration of Displex into data acquisition system</s>
+| <s>complete</s>
+| &nbsp;
 |-
-| IOC for controlling BioLogic battery cycler / potentiostat<br/>
-| Tight integration of battery research into data acquisition system<br/>
-| BioLogic in hand, need to form a controls plan<br/>
-| <br/>
+| IOC for controlling BioLogic battery cycler / potentiostat
+| Tight integration of battery research into data acquisition system
+| BioLogic in hand, need to form a controls plan
+| &nbsp;
 |-
-| <s>Rotation Ref stage<br/></s>
-| <s>Configure many more reference foils<br/></s>
-| <s>identified stage, need to install and configure motor. Controls infrastucture underway<br/></s>
-| DONE<br/>
+| <s>Rotation Ref stage</s>
+| <s>Configure many more reference foils</s>
+| <s>identified stage, need to install and configure motor. Controls infrastucture underway</s>
+| DONE
 |-
-| He sample environment<br/>
-| better performance for Ti, push BL to measure Sc, Ca, 5d & L edges<br/>
-| not started<br/>
-| <br/>
+| He sample environment
+| better performance for Ti, push BL to measure Sc, Ca, 5d & L edges
+| not started
+| &nbsp;
 |-
-| Better user Exxact Workstation<br/>
-| Beefy workstation for computational chores<br/>
-| on LAN as xf06bm-ws5<br/>
-| run a larch server, connect to it from ws1 when running Athena&Artemis<br/>
+| <s>Better user Exxact Workstation</s>
+| <s>Beefy workstation for computational chores</s>
+| <s>obsolete</s>
+| headless, used for backup
 |-
-| <s>More hard drives and RAID array for ws5</s><br/>
-| <s>Initial data store for use at BMM</s><br/>
-| <s>Done, NFS mount between ws1 and ws5</s><br/>
-| DONE<br/>
+| <s>More hard drives and RAID array for ws5</s>
+| <s>Initial data store for use at BMM</s>
+| <s>Done, NFS mount between ws1 and ws5</s>
+| DONE
 |-
-| Implement 2nd NAS server<br/>
-| Data storage for BMM and SST<br/>
-| not yet configured<br/>
-| <br/>
+| <s>Implement 2nd NAS server</s>
+| <s>Data storage for BMM and SST</s>
+| <s>DONE</s>
+| &nbsp;
 |-
-| Second AGG switch<br/>
-| increase network capacity at end station<br/>
-| not started<br/>
-| <br/>
+| <s>Second AGG switch</s>
+| <s>increase network capacity at end station</s>
+| <s>Done</s>
+| &nbsp;
 |-
-| Commission nBPM<br/>
-| monochromatic beam diagnostic<br/>
-| not started<br/>
-| <br/>
+| Commission nBPM
+| monochromatic beam diagnostic
+| not started
+| &nbsp;
 |}
 
 The hard drive in the first bay of the new xf06bm-ws5.

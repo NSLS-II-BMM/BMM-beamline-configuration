@@ -1,144 +1,185 @@
+
 __NOTOC__
+
+&nbsp;
 
 = Beamline for Materials Measurement =
 
-{| width="1062" cellspacing="1" cellpadding="1" border="1"
+{| style="width: 100%" width="1062" cellspacing="1" cellpadding="1" border="1"
 |-
-| style="width: 322px;  text-align: center" | <span style="font-size:large">[https://nsls-ii-bmm.github.io/BeamlineManual/index.html BMM Controls User Manual]</span><br/>
-| style="width: 375px;  text-align: center" | <span style="font-size:large">[https://www.bnl.gov/newsroom/news.php?a=212833 NSLS-II Science Highlight about BMM]</span><br/>
-| style="width: 358px;  text-align: center" | <span style="font-size:large">[https://www.nist.gov/mml/materials-measurement-science-division/synchrotron-science-group/beamline-material-measurement BMM at NIST]</span><br/>
+| style="width: 322px;  text-align: center" | <span style="font-size:large">[https://nsls-ii-bmm.github.io/BeamlineManual/index.html BMM Controls User Manual]</span>
+| style="width: 375px;  text-align: center" | <span style="font-size:large">[https://www.bnl.gov/newsroom/news.php?a=212833 NSLS-II Science Highlight about BMM]</span>
+| style="width: 358px;  text-align: center" | <span style="font-size:large">[https://www.nist.gov/mml/materials-measurement-science-division/synchrotron-science-group/beamline-material-measurement BMM at NIST]</span>
 |}
 
 {| style="width: 100%" cellspacing="10" cellpadding="10" border="0"
 |-
 | style="width: 571px" | 
+&nbsp;
+
+
+
+
+
 == <span style="font-size:large">Beamline and NSLS-II Links</span> ==
 
-*<span style="font-size:medium">[http://status.nsls2.bnl.gov/ NSLS-II status]</span>
-*<span style="font-size:medium">[https://www.bnl.gov/ps/nsls2/opschedule.php NSLS-II Operations Schedule] ([[NSLS2_Ops_ics|ics files]])</span>
-*<span style="font-size:medium">[https://pass.bnl.gov/ PASS]</span>
-*<span style="font-size:medium">[https://www.bnl.gov/ps/beamlines/beamline.php?r=6-BM BMM page at Photon Sciences web site]</span>
-*<span style="font-size:medium">[https://www.bnl.gov/ps/beamlines/schedule.php?q=6-BM BMM experiment schedule]</span> &nbsp; ([[Media:Schedule-2020-1.pdf|PDF]])
-*<span style="font-size:medium">[https://github.com/NSLS-II-BMM BMM's GitHub page]</span>
-*<span style="font-size:medium">[https://www.bnl.gov/ps/training/Beamline-BST-Forms/PS-BST-6-BM.pdf BST form] (PDF)</span>
-*<span style="font-size:medium">[https://www.bnl.gov/training/reports/report-05.php BST training list] (select PS-BST-6-BM)</span>
-*[[Media:NSLS-II_Beamline_6-BM_Radiation_Safety_Component_Checklist_TEMPLATE.pdf|<span style="font-size:medium">Radiation Safety Component Checklist</span>]] (PDF)
-*[[Media:Roster_V5_(BMM_Staff_Roster).pdf|<span style="font-size:medium">BMM Staff Roster training form</span>]] (PDF)
-*<span style="font-size:medium">[[Wallpaper|NSLS-II beamline wallpaper for 6BM]]</span>
-*<span style="font-size:medium">[https://public.bnl.gov/sites/rep/SitePages/Home.aspx Research Equipment Pool home page]</span>
+*<span style="font-size:medium">[http://status.nsls2.bnl.gov/ NSLS-II status]</span> 
+*<span style="font-size:medium">[https://www.bnl.gov/nsls2/opschedule.php NSLS-II Operations Schedule] ([[NSLS2_Ops_ics|ics files]])</span> 
+*<span style="font-size:medium">[https://pass.bnl.gov/ PASS]</span> / <span style="font-size:medium">[https://passadmin.bnl.gov/ PASS Admin]</span> 
+*<span style="font-size:medium">[https://www.bnl.gov/nsls2/beamlines/beamline.php?r=6-BM BMM page at Photon Sciences web site]</span> 
+*<span style="font-size:medium">[https://www.bnl.gov/nsls2/beamlines/schedule.php?q=6-BM BMM experiment schedule]</span> &nbsp; ([[Media:Schedule-2022-2.pdf|PDF]]) 
+*<span style="font-size:medium">[https://github.com/NSLS-II-BMM BMM's GitHub page]</span> 
+*<span style="font-size:medium">[https://brookhavenlab.sharepoint.com/sites/NSLS2Training/Courses/Shared%20Documents/Beamline%20BST%20Forms/PS-BST-6-BM.pdf BST form] (PDF)</span> 
+*<span style="font-size:medium">[https://www.bnl.gov/training/reports/report-05.php BST training list] (select PS-BST-6-BM)</span> 
+*[[Media:NSLS-II_Beamline_6-BM_Radiation_Safety_Component_Checklist_TEMPLATE.pdf|<span style="font-size:medium">Radiation Safety Component Checklist</span>]] (PDF) 
+*[[Media:Roster_V5_(BMM_Staff_Roster).pdf|<span style="font-size:medium">BMM Staff Roster training form</span>]] (PDF) 
+*<span style="font-size:medium">Beamline wallpaper location on the local machine: <code>/usr/share/nsls2/wallpapers/beamlines/</code></span> 
+*<span style="font-size:medium">[[PUP_SAFS|Partner User SAFs]]</span> 
 
-----
+&nbsp;
+
+[[Category:Pages with broken file links]]
 
 == Behind the firewall ==
 
 These links are only available at BL or via VPN.
 
-*<span style="font-size:medium">[http://10.6.129.56/ XAS WebCam]</span>
-*<span style="font-size:medium">[http://10.6.129.55/ XRD WebCam]</span>
-*<span style="font-size:medium">[http://xf06bm-ca1.cs.nsls2.local:17665/mgmt/ui/index.html EPICS Archiver]</span>
-*<span style="font-size:medium">[https://controlsweb.nsls2.bnl.gov/IP IP management site]</span>
-*<span style="font-size:medium">Synology NAS Administration</span>
-**<span style="font-size:medium">[http://10.6.128.41:5000/ NAS 1]</span>
-**<span style="font-size:medium">[http://10.6.128.42:5000/ NAS 2]</span>
-*<span style="font-size:medium">[http://10.6.130.58 End Station Moxa configuration]</span>
-*<span style="font-size:medium"><span style="font-size:medium">[https://controlsweb.nsls2.bnl.gov/trac/ Controls & IT trac site]</span></span>
-*<span style="font-size:medium"><span style="font-size:medium">[https://ps.bnl.gov/acc/controls/Beam%20Line%20Cable%20Studies/Forms/AllItems.aspx?RootFolder=/acc/controls/Beam%20Line%20Cable%20Studies/Beam%20Lines/6-BM%20BMM BMM cable study on SharePoint]</span></span>
+*<span style="font-size:medium">[http://xf06bm-cam6/ XAS WebCam]</span> 
+*<span style="font-size:medium">[http://xf06bm-cam5/ XRD WebCam]</span> 
+*<span style="font-size:medium">[http://xf06bm-ca1:17665/mgmt/ui/index.html EPICS Archiver]</span> 
+*<span style="font-size:medium">Synology NAS Administration</span> 
+**<span style="font-size:medium">[http://xf06bm-nas1:5000/ NAS 1]</span> 
+**<span style="font-size:medium">[http://xf06bm-nas2:5000/ NAS 2]</span>   
+*<span style="font-size:medium"><span style="font-size:medium">[https://jira.nsls2.bnl.gov Jira]</span></span> 
+*<span style="font-size:medium">[https://bnlprod.servicenowservices.com/sp Request new IP addresses and DNS entries]</span> 
+*<span style="font-size:medium">[https://localhost:9090/system RHEL Cockpit]</span> (<code>sudo systemctl enable --now cockpit.socket</code>) 
 
+Moxa configureation: point a web browser at<tt><code>xf06bm-tsrv#</code> </tt>where the # is the number of the Moxa. That should take you to the configuration page.
 
+&nbsp;
 
 ----
 
 == <span style="font-size:large">Commissioning</span> ==
 
-*<span style="font-size:medium">[[To_Do_List|To Do List]]</span>
-*<span style="font-size:medium">[[Beamline-Upgrades|Planned Beamline Upgrades]]</span>
-*<span style="font-size:medium">[https://www.bnl.gov/nsls2/project/reviews/170719_IRR_6-BM_Cell22-3PW/ BMM IRR documentation site] (requires password)</span>
-*<span style="font-size:medium">[[XAFS_Table|XAFS Table]]</span>
-*<span style="font-size:medium">[[Fluorescent_Screen_1|Fluorescent Screen 1]]</span>
-*<span style="font-size:medium">[[Diagnostic_Modules|Diagnostic modules]]</span>
-*<span style="font-size:medium">[[XAFS_Table_commissioning|XAFS Table commissioning]]</span>
-*<span style="font-size:medium">[[Power_Outage_Checklist|Power Outage Checklist]] <span style="color:#FF0000"><span style="background-color:#FFFF00">(update me)</span></span></span>
-*<span style="font-size:medium">[[Contact_the_Radiation_Technicians|Contact the RCTs]]</span>
+*<span style="font-size:medium">[[Beamline-Upgrades|Planned Beamline Upgrades]]</span> 
+*<span style="font-size:medium">[https://ps.bnl.gov/docs/SiteAssets/SecondLevel/BMM.aspx# BMM records and docs] / [https://www.bnl.gov/nsls2/project/reviews/170719_IRR_6-BM_Cell22-3PW/ IRR doc site]</span> 
+*<span style="font-size:medium">[[XAFS_Table|XAFS Table]]</span> 
+*<span style="font-size:medium">[[Fluorescent_Screen_1|Fluorescent Screen 1]]</span> 
+*<span style="font-size:medium">[[Diagnostic_Modules|Diagnostic modules]]</span> 
+*<span style="font-size:medium">[[Power_Outage_Checklist|Power Outage Checklist]]</span> 
 
-
-
-
+&nbsp;
 
 | style="width: 708px;  vertical-align: top" | 
-== [[File:Beamline-bananagrams.jpg|center|300px|Beamline Bananagrams!]] ==
-<p style="text-align: center"><span style="font-size:medium">Beamline Banagrams!</span></p>
+
+== [https://what3words.com/ranking.corns.commuted what3words: ///ranking.corns.commuted] ==
+
+[[File:Beamline-bananagrams.jpg|center|400px|Beamline Bananagrams!]]
+<p style="text-align: center"><span style="font-size:medium">Beamline Banagrams!</span></p> 
 ----
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
 
 == <span style="font-size:large">Instrumentation</span> ==
 
-*<span style="font-size:medium">[[IP_Addresses|Map IP addresses ↔ names]]</span>
-*<span style="font-size:medium">[[Motor_Controllers|Motor Controllers]]</span>
-*<span style="font-size:medium">[[Motor_Controller_Kill_Switches|Motor Controller Kill Switches]]</span>
-*<span style="font-size:medium">[[Saturated_Detector|Fixing an over-saturated detector]]</span>
-*<span style="font-size:medium">[[BNC_Cable_Map|BNC cable map]]</span>
-*<span style="font-size:medium">[[Inert_Gas_Plumbing|Inert gas plumbing]]</span>
-*<span style="font-size:medium">[[Beamline_Maintenance_Tools|Beamline Maintenance Tools]]</span>
-*<span style="font-size:medium">[[Analog_Video_Capture|Analog Video Capture]]</span>
-*<span style="font-size:medium">[[Mouse_and_Keyboard_Sharing|Mouse and Keyboard Sharing with Synergy]]</span>
-*<span style="font-size:medium">[[DI_Water_Flow|DI Water Flow]]</span>
-*<span style="font-size:medium">[[HutchSearchInstructions|Hutch search instructions]]</span>
-*<span style="font-size:medium">[[Media:vapix_ptz_52933_en_1307.pdf|Axis webcam cgi interface documentation]] (PDF)</span>
-*<span style="font-size:medium">[[Pilatus_Startup|Starting the Pilatus 100K detector]]</span>
-*<span style="font-size:medium">[[XRF_Spectra|Obtain an XRF spectrum from the analogue readout system]]</span>
+*<span style="font-size:medium">[https://nsls-ii-bmm.github.io/switch-pretty-printer/example_output.html Summary of network switches]</span> 
+*<span style="font-size:medium">[[Motor_Controllers|Motor Controllers]]</span> 
+*<span style="font-size:medium">[[Motor_Controller_Kill_Switches|Motor Controller Kill Switches]]</span> 
+*<span style="font-size:medium">[[BNC_Cable_Map|BNC cable map]]</span> 
+*<span style="font-size:medium">[[Inert_Gas_Plumbing|Inert gas plumbing]]</span> 
+*<span style="font-size:medium">[[Beamline_Maintenance_Tools|Beamline Maintenance Tools]]</span> 
+*<span style="font-size:medium">[[Analog_Video_Capture|Analog Video Capture]]</span> 
+*<span style="font-size:medium">[[DI_Water_Flow|DI Water Flow]]</span> 
+*<span style="font-size:medium">[[Media:vapix_ptz_52933_en_1307.pdf|Axis webcam cgi interface documentation]] (PDF)</span> 
+*<span style="font-size:medium">[[Pilatus_Startup|Starting the Pilatus 100K detector]]</span> 
+*<span style="font-size:medium">[[Kill_After_Move|How to configure an MCS8 axis to be disabled after a move.]]</span> 
+*<span style="font-size:medium">[https://wiki.bnl.gov/nsls2controls/index.php?title=Delta_Tau_PMAC NSLS-II Delta Tau PMAC page]</span> 
+*<span style="font-size:medium">[[Vortex_pressure|Measuring internal Vortex pressure]]</span> 
+*<span style="font-size:medium">[[Hoisting|Hoisting things]]</span> 
+*<span style="font-size:medium">[[DM3_BCT_Failure|BCT Failure]]</span> 
 
 ----
 
 == <span style="font-size:large">Optics</span> ==
 
-*<span style="font-size:medium">[[Monochromator_Calibration|Monochromator calibration]]</span>
-*<span style="font-size:medium">[[DCM_pitch|DCM pitch v. energy]]</span>
-*<span style="font-size:medium">[[Monochromator_Stability|Monochromator stability]]</span>
-*<span style="font-size:medium">[[Beam_profile|Beam Profile]]</span>
-*<span style="font-size:medium">[[Focusing_Mirror|Focusing Mirror]]</span>
-*<span style="font-size:medium">[[DCM_1st_Xtal_Equilibration|DCM 1st Xtal Temperature Equilibration]]</span>
-*<span style="font-size:medium">[[Encoder_Loss_2nd_Xtal_Roll|Encoder Loss on 2nd Crystal Roll]]</span>
+*<span style="font-size:medium">[[Monochromator_Calibration|Monochromator calibration]]</span> 
+*<span style="font-size:medium">[[DCM_pitch|DCM pitch v. energy]]</span> 
+*<span style="font-size:medium">[[Monochromator_Stability|Monochromator stability]]</span> 
+*<span style="font-size:medium">[[Focusing_Mirror|Focusing Mirror]]</span> 
+*<span style="font-size:medium">[[Harmonic_Rejection_Mirror|Harmonic Rejection Mirror]]</span> 
+*<span style="font-size:medium">[[DCM_1st_Xtal_Equilibration|DCM 1st Xtal Temperature Equilibration]]</span> 
+*<span style="font-size:medium">[[Encoder_Loss_2nd_Xtal_Roll|Encoder Loss on 2nd Crystal Roll]]</span> 
 
-| style="width: 708px;  vertical-align: top" | 
-== <span style="font-size:large">Ophyd, BlueSky, EPICS</span> ==
+| style="width: 708px; vertical-align: top" | &nbsp;
 
-*<span style="font-size:medium">[http://nsls-ii.github.io/bluesky/ Bluesky documentation]</span>
-*<span style="font-size:medium">[https://gitter.im/NSLS-II/DAMA DAMA Gitter chat room]</span>
-*<span style="font-size:medium">[[Conda_notes|Doing things with Conda]]</span>
-*<span style="font-size:medium">[[One_Line_Things|One Liners]]</span>
-*<span style="font-size:medium">[[Ipython_Prompt|Ipython Prompt]]</span>
-*<span style="font-size:medium">[[FMBO_EDM_Issues|Issues with FMB-O Supplied EDM screens]]</span>
-*<span style="font-size:medium">[https://cars9.uchicago.edu/software/python/pyepics3/ PyEPICS]</span>
-*<span style="font-size:medium">[https://pandas.pydata.org/pandas-docs/stable/10min.html 10 Minutes to Pandas]</span>
-*<span style="font-size:medium">[[BMM_Conky|BMM's Conky configuration]]</span>
-*<span style="font-size:medium">[[PV_Prefixes|List of PV prefixes]]</span>
-*<span style="font-size:medium">[[Cadashboard|CA Dashboard]]</span>
-*<span style="font-size:medium">[[Xspress3|Xspress3]]</span>
+&nbsp;
 
-----
-
-== <span style="font-size:large">XAFS Links</span> ==
-
-*<span style="font-size:medium">[https://github.com/XraySpectroscopy/XAS-Data-Interchange XDI format]</span>
-*<span style="font-size:medium">[http://xraypy.github.io/xraylarch/ Larch]</span>
-*<span style="font-size:medium">[https://bruceravel.github.io/demeter/ Demeter]</span>
-
-----
+&nbsp;
 
 == <span style="font-size:large">Users</span> ==
 
-*<span style="font-size:medium">[[Before_Arrival|Things to do before your beam time]]</span>
-*<span style="font-size:medium">[https://nsls-ii-bmm.github.io/BeamlineManual/intro.html#starting-and-ending-an-experiment Start a new experiment]</span>
-*<span style="font-size:medium">[[Standards|Standards available at BMM]]</span>
-**<span style="font-size:medium">[[Ti_Standards|Ti Standards]]</span>
-**<span style="font-size:medium">[[Cr_Standards|Cr Standards]]</span>
-*<span style="font-size:medium">[[User_Desktop|Setting up new user's desktop]]</span>
-*<span style="font-size:medium">[[USB_Sticks|Using USB sticks at the beamline computer]]</span>
+*<span style="font-size:medium">[[Before_Arrival|Things to do before your beam time]]</span> 
+*<span style="font-size:medium">[[Automation_Spreadsheets|Sample wheels, glancing angle stage, Linkam stage]]</span> 
+*<span style="font-size:medium">[https://nsls-ii-bmm.github.io/bmm-standards/BMM-standards.html Standards available at BMM]</span> 
+*<span style="font-size:medium">[[Standards_Wheels|Standard samples mounted on wheels]]</span>   
+*<span style="font-size:medium">[[Ti_Standards|Ti Standards]]</span>   
+*<span style="font-size:medium">[https://nsls-ii-bmm.github.io/BeamlineManual/intro.html#starting-and-ending-an-experiment Start a new experiment]</span> 
+*<span style="font-size:medium">[[Mail_In|Ad hoc mail-in program started in 2020-2]]</span> 
+*<span style="font-size:medium">[[HutchSearchInstructions|Hutch search instructions]]</span> 
+*<span style="font-size:medium">[[Sample_Cabinet|Sample storage cabinet]]</span> 
 
+----
+
+&nbsp;
+
+&nbsp;
+
+== <span style="font-size:large">XAFS Links</span> ==
+
+*<span style="font-size:medium">[https://nsls-ii-bmm.github.io/bmm-standards/BMM-standards.html BMM's collection of XAFS standards]</span> 
+*<span style="font-size:medium">[https://github.com/XraySpectroscopy/XAS-Data-Interchange XDI format]</span> 
+*<span style="font-size:medium">[http://xraypy.github.io/xraylarch/ Larch]</span> 
+*<span style="font-size:medium">[https://bruceravel.github.io/demeter/ Demeter]</span> 
+
+&nbsp;
+
+----
+
+
+
+
+
+
+
+== <span style="font-size:large">Ophyd, BlueSky, EPICS</span> ==
+
+*<span style="font-size:medium">[http://nsls-ii.github.io/bluesky/ Bluesky documentation]</span> 
+*<span style="font-size:medium">[https://nsls-ii-bmm.github.io/bluesky-by-example/index.html Bluesky by Example]</span> 
+*<span style="font-size:medium">[https://nikea.slack.com Nikea (Bluesky Project Slack workspace)]</span> 
+*<span style="font-size:medium">[https://gitter.im/NSLS-II/DAMA DAMA Gitter chat room]</span> 
+*<span style="font-size:medium">[[Ipython_Prompt|Ipython Prompt]]</span> 
+*<span style="font-size:medium">[https://cars9.uchicago.edu/software/python/pyepics3/ PyEPICS]</span> 
+*<span style="font-size:medium">[https://pandas.pydata.org/pandas-docs/stable/10min.html 10 Minutes to Pandas]</span> 
+*<span style="font-size:medium">[[BMM_Conky|BMM's Conky configuration]]</span> 
+*<span style="font-size:medium">[[PV_Prefixes|List of PV prefixes]]</span> 
+*<span style="font-size:medium">[[Cadashboard|CA Dashboard]]</span> 
+*<span style="font-size:medium">[https://nsls-ii-bmm.github.io/bluesky-by-example/slack.html Simple Slack integration]</span> 
+*<span style="font-size:medium">[[Tiker_Tiled|Tinker with Tiled data types]]</span>
+*<span style="font-size:medium">[[QS_Notes|Notes on using queueserver]]</span>
+*<span style="font-size:medium">[https://brookhavenlab.sharepoint.com/sites/NSLS-IIDetectorandEquipmentPool/Lists/Equipment/By%20Category%20Sub%20Category%20Name.aspx?as=json&viewid=4c295552-08b5-4b95-9f91-07b46cd04127 Detector and Equipment Pool]</span>
 |}
 
+&nbsp;
 
-
-
+&nbsp;
 
 ----
 
@@ -146,6 +187,6 @@ These links are only available at BL or via VPN.
 
 == <span style="font-size:medium">About MediaWiki</span> ==
 
-*<span style="font-size:medium">[//www.mediawiki.org/wiki/Manual:Configuration_settings Configuration settings list]</span>
-*<span style="font-size:medium">[//www.mediawiki.org/wiki/Manual:FAQ MediaWiki FAQ]</span>
+*<span style="font-size:medium">[//www.mediawiki.org/wiki/Manual:Configuration_settings Configuration settings list]</span> 
+*<span style="font-size:medium">[//www.mediawiki.org/wiki/Manual:FAQ MediaWiki FAQ]</span> 
 *<span style="font-size:medium">Consult the [//meta.wikimedia.org/wiki/Help:Contents User's Guide] for information on using the wiki software.</span>

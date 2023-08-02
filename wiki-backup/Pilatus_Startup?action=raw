@@ -1,17 +1,41 @@
-== Steps to bring the Pilatus 100K to life. ==
+<font face="Cambria, serif"><font style="font-size: 28pt" size="6">Pilatus100k startup</font></font>
 
-#Boot the detector server computer (<tt>xf06bm-pilatus100k</tt>)
-#Be sure dry N2 (from the house supply) is flowing,&nbsp; (~0.5 lpm at ~3 psi, in back of rack)
-#Turn on the detector (switch on the back side)
-#From ws-1, <code>ssh det@xf06bm-pilatus100k</code> and login (Jean & Bruce know the password)
-#<code>cd p2_det</code>
-#<code>./runtvx</code>
-#Two windows will appear, one for the pilatus-specific <tt>camserver</tt>, one for <tt>tvx</tt>, the generic detector interface program.&nbsp; Once both have run their paces and ended with a * prompt, close the <tt>tvx</tt> window by typing <code>exit</code>
-#Minimize the camserver, one need not monitor that constantly.
-#On the 6BM Main CSS screen, click on <code>Detectors</code>, then on <code>Pilatus100K</code>
-#In the plugins menu of the AreaDetector CSS screen, select <code>Pilatus screen</code> to get the MEDM interface. You may need to refresh one or both OPIs, or even restart the IOC on <tt>xf06bm-ioc1</tt>
-#In BlueSky, <code>pilatus</code> is an instance of a Detector object (as described at [https://blueskyproject.io/ophyd/area-detector.html https://blueskyproject.io/ophyd/area-detector.html]) and <code>pil</code> is Bruce's monkey-patched thing to expose the functionality he couldn't figure out from the standard interface
+This information provided by Oksana Ivashkevych<br/>EPICS support for Pilatus100k is residing on Pilatus server xf06BM-pilatus100k in user “det” home folder. Pilatus server runs SUSE Linux with the version not supported now, however, it has all packages and configuration, and runs well. Scientific data are written to NFS mounted folder <tt>/mnt/nfs/nas1</tt> via File saving plugin of areaDetector software.
 
+
+
+== Power and enabled N2 on detector head before starting the software. ==
+
+== Start camserver. ==
+
+“camserver” is vendor provided software, which communicates with detector hardware. It has logs, reports any hardware issues. This information can be useful during troubleshooting. If interested, one can check what script does with more command.
+
+'''''./start_camserver'''''
+
+will start a camserver in procServ shell, which runs on the background and allows several people connect to it, check the message stream. All shell messages are also being logged. You can exit the procServ shell by “Ctr ]” followed by “q”.
+
+=== Optional: verify the hardware is working ===
+
+<br/>If you are troubleshooting and would like to see the detector is taking images properly,<br/><code>'''''cd p2_det'''''<br/>'''''./tvxonly'''''</code><br/>This will start tvx client and present two test images. You <u>'''must'''</u>exit tvx before starting EPICS client, as only one client can be connected to camserver at a time. Type ‘exit’ in tvx shell.
+
+== Start EPICS client ==
+
+<code>./start_epics</code>
+
+You can exit the procServ shell same way by “Ctr ]” followed by “q”.
+
+== Terminating camserv and EPICS cleient. ==
+
+In order to terminate the server and the client one needs to list them as processes using
+
+<code>ps -ef | grep procServ</code>
+
+for example, and use kill command with process ID. This should be done '''ONLY''' if one understands what he/she/they is doing.
+
+
+
+----
+<br/>
 == Files: ==
 
 *[[Media:DP_Pilatus_UserGuide_v2.2.3.pdf|Pilatus User Guide (PDF)]]
