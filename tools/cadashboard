@@ -47,7 +47,10 @@ count = 0
 ## ----- various PVs and other scalars
 i0           = epics.PV('XF:06BM-BI{IC:0}EM180:Current1:MeanValue_RBV')
 it           = epics.PV('XF:06BM-BI{IC:1}EM180:Current1:MeanValue_RBV')
-ir           = epics.PV('XF:06BM-BI{IC:3}EM180:Current1:MeanValue_RBV')
+if rkvs.get('BMM:Ir').decode('utf-8') == 'quadem':
+    ir           = epics.PV('XF:06BM-BI{EM:1}EM180:Current3:MeanValue_RBV')
+else:
+    ir           = epics.PV('XF:06BM-BI{IC:3}EM180:Current1:MeanValue_RBV')
 iy           = epics.PV('XF:06BM-BI{EM:1}EM180:Current4:MeanValue_RBV')
 #bicron       = epics.PV('XF:06BM-ES:1{Sclr:1}.S25')
 ring_current = epics.PV('SR:OPS-BI{DCCT:1}I:Real-I')
@@ -69,7 +72,9 @@ sample       = {'x'     : epics.Motor('XF:06BMA-BI{XAFS-Ax:LinX}Mtr'),
                 'pitch' : epics.Motor('XF:06BMA-BI{XAFS-Ax:Roll}Mtr'),
                 'ref'   : epics.Motor('XF:06BMA-BI{XAFS-Ax:Ref}Mtr'),
                 'refx'  : epics.Motor('XF:06BMA-BI{XAFS-Ax:RefX}Mtr'),
-                'det'   : epics.Motor('XF:06BMA-BI{XAFS-Ax:LinS}Mtr')}
+                #'det'   : epics.Motor('XF:06BMA-BI{XAFS-Ax:LinS}Mtr'),
+                'det'   : epics.Motor('XF:06BMA-BI{XAFS-Ax:Tbl_XD}Mtr'),
+}
 vac          = [epics.PV("XF:06BMA-VA{FS:1-CCG:1}P:Raw-I"),
                 epics.PV("XF:06BMA-VA{Mono:DCM-CCG:1}P:Raw-I"),
                 epics.PV("XF:06BMA-VA{FS:2-CCG:1}P:Raw-I"),
@@ -273,7 +278,7 @@ while waiting:
         i0s = colored('I0', 'white', attrs=['bold']) + f':{i0val:8.3f} nA '
         its = colored('It', 'white', attrs=['bold']) + f':{itval:8.3f} nA '
         irs = colored('Ir', 'white', attrs=['bold']) + f':{irval:8.3f} nA '
-        #iys = colored('Iy', 'white', attrs=['bold']) + f':{iyval:8.3f} nA  '
+        iys = colored('Iy', 'white', attrs=['bold']) + f':{iyval:8.3f} nA  '
         line2 = f"{bright('mono')}: {cyan('%7.1f eV' % current_energy)} {strut} {el} {ed} {strut} Ring: {ring_show} {strut} {i0s} {its} {irs} {strut} {bright('XAS')} {scan}\n"
 
         ## --- bottom line: sample stages, heartbeat

@@ -65,7 +65,9 @@ def rack_string(racks):
 def vac_string(vac):
     string = ''
     for count, pv in enumerate(vac):
-        if pv.get() == 'LO<E-11':
+        if pv.connected is False:
+            color = 'blue'
+        elif pv.get() == 'LO<E-11':
             color = 'blue'
         elif pv.get() in ('OFF', 'WAIT', 'PROT_OFF'):
             color = 'blue'
@@ -137,15 +139,15 @@ def ln2_string(ln2):
     
 def determine_reference(sample):
     mapping = json.loads(rkvs.get('BMM:reference:mapping').decode('utf-8'))
-    slot  = round((-15+sample['ref'].RBV) / (-15)) % 24
+    slot  = round((sample['ref'].RBV) / (-15)) % 24 + 1
     refx = sample['refx'].RBV
-    if refx < -60:
+    if abs(refx - float(rkvs.get('BMM:ref:outer'))) <5:
         ring = 0
     else:
         ring = 1
     for k in mapping.keys():
         if mapping[k][0] == ring and mapping[k][1] == slot and 'empty' not in k:
-            return k
+            return mapping[k][2]
     return 'None'
 
 def remaining():
